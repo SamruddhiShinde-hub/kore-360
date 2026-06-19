@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+::selection { background: #35d07d; color: #07150c; }
+html { scroll-behavior: smooth; }
+a { text-decoration: none; }
+
+@keyframes koreMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+#root {
+  --accent: #35d07d;
+  background: #0b100c;
+  color: #eef2ee;
+  font-family: 'Hanken Grotesk', system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ---- hover utilities (these replace the export's style-hover attribute) ---- */
+.btn-accent:hover { filter: brightness(1.08); }
+.btn-outline:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
+.nav-link:hover { color: #eef2ee !important; }
+.foot-link:hover { color: var(--accent) !important; }
+.card-hover { transition: border-color .18s; }
+.card-hover:hover { border-color: rgba(53, 208, 125, 0.5) !important; }
+.session-card { transition: all .18s; }
+.session-card:hover { border-color: rgba(53, 208, 125, 0.5) !important; transform: translateY(-3px); }
+.resume-drop { transition: all .18s; }
+.resume-drop:hover { border-color: var(--accent) !important; background: rgba(53, 208, 125, 0.08) !important; }
+
+/* ---- scroll reveal ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* ---- responsive: collapse two-column grids on small screens ---- */
+@media (max-width: 860px) {
+  .grid-2col { grid-template-columns: 1fr !important; }
+  .footer-grid { grid-template-columns: 1fr !important; }
+  .nav-inner { flex-wrap: wrap; }
+}
