@@ -45,5 +45,13 @@ a { text-decoration: none; }
 @media (max-width: 860px) {
   .grid-2col { grid-template-columns: 1fr !important; }
   .footer-grid { grid-template-columns: 1fr !important; }
-  .nav-inner { flex-wrap: wrap; }
+}
+
+/* ---- hamburger nav ---- */
+@media (max-width: 768px) {
+  .nav-desktop { display: none !important; }
+  .nav-hamburger { display: block !important; }
+}
+@media (min-width: 769px) {
+  .nav-mobile-menu { display: none !important; }
 }
