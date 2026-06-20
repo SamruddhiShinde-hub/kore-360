@@ -7,7 +7,24 @@
   --kore-purple: #9F3D97;
   --kore-pink: #DB117C;
   --kore-orange: #F05123;
-  --kore-gradient: linear-gradient(135deg, var(--kore-purple) 0%, var(--kore-magenta) 33%, var(--kore-pink) 66%, var(--kore-orange) 100%);
+  --kore-gradient: linear-gradient(135deg, var(--kore-magenta) 0%, var(--kore-orange) 100%);
+
+  /* ---- theme tokens (dark = default) ---- */
+  --surface: #000000;
+  --surface-rgb: 0, 0, 0;
+  --text: #FFFFFF;
+  --text-muted: #A0A0A0;
+  --text-faint: #6b6b6b;
+  --border-rgb: 255, 255, 255;
+}
+
+:root[data-theme='light'] {
+  --surface: #FFFFFF;
+  --surface-rgb: 255, 255, 255;
+  --text: #0A0A0A;
+  --text-muted: #5b5b5b;
+  --text-faint: #8a8a8a;
+  --border-rgb: 0, 0, 0;
 }
 
 * { box-sizing: border-box; }
@@ -23,22 +40,25 @@ a { text-decoration: none; }
 
 #root {
   --accent: #F05123;
-  background: var(--kore-black);
-  color: var(--kore-white);
+  background: var(--surface);
+  color: var(--text);
   font-family: 'Lato', system-ui, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
+  transition: background .2s, color .2s;
 }
 
 /* ---- hover utilities (these replace the export's style-hover attribute) ---- */
 .btn-accent:hover { filter: brightness(1.12); }
-.btn-outline:hover { border-color: var(--kore-pink) !important; color: var(--kore-pink) !important; }
-.nav-link:hover { color: var(--kore-white) !important; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-.foot-link:hover { color: var(--kore-pink) !important; }
+.btn-outline:hover { border-color: var(--kore-orange) !important; color: var(--kore-orange) !important; }
+.nav-link:hover { color: var(--text) !important; text-shadow: 0 0 10px rgba(var(--border-rgb),0.3); }
+.foot-link:hover { color: var(--kore-orange) !important; }
+.theme-toggle { transition: background .15s; }
+.theme-toggle:hover { background: rgba(var(--border-rgb), 0.1) !important; }
 .card-hover { transition: border-color .18s; }
 .card-hover:hover { border-color: var(--kore-magenta) !important; }
 .session-card { transition: all .18s; }
-.session-card:hover { border-color: var(--kore-pink) !important; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(219, 17, 124, 0.1); }
+.session-card:hover { border-color: var(--kore-orange) !important; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(240, 81, 35, 0.12); }
 .resume-drop { transition: all .18s; }
 .resume-drop:hover { border-color: var(--kore-magenta) !important; background: rgba(183, 30, 96, 0.08) !important; }
 
@@ -70,6 +90,7 @@ a { text-decoration: none; }
 @media (max-width: 768px) {
   .nav-desktop { display: none !important; }
   .nav-mobile-controls { display: flex !important; }
+  .nav-inner { padding: 14px 16px !important; gap: 8px !important; }
 }
 @media (min-width: 769px) {
   .nav-mobile-menu { display: none !important; }

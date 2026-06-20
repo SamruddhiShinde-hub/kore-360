@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>KORE 360 · Sports Management Careers with Krish Lalwani</title>
     <meta name="description" content="Careers in sports management with Krish Lalwani. Sessions, courses, jobs and events, all in one place." />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('kore-theme');
+          var theme = stored === 'light' || stored === 'dark'
+            ? stored
+            : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
