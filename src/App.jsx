@@ -9,6 +9,7 @@ import Careers from './components/Careers.jsx';
 import Events from './components/Events.jsx';
 import About from './components/About.jsx';
 import Footer from './components/Footer.jsx';
+import StickyCta from './components/StickyCta.jsx';
 
 export default function App() {
   useEffect(() => {
@@ -18,14 +19,17 @@ export default function App() {
   return (
     <>
       <Nav />
-      <Hero />
-      <Marquee />
-      <Sessions />
-      <Courses />
-      <Careers />
-      <Events />
-      <About />
+      <main>
+        <Hero />
+        <Marquee />
+        <Sessions />
+        <Courses />
+        <Careers />
+        <Events />
+        <About />
+      </main>
       <Footer />
+      <StickyCta />
     </>
   );
 }

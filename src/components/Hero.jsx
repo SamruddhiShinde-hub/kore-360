@@ -36,7 +36,7 @@ function HeroSplit() {
           <img src={IMAGES.heroSplit} alt="Krish Lalwani" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
         </div>
         <div style={{ position: 'absolute', top: '18px', right: '-14px', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.12)', borderRadius: '10px', padding: '12px 16px', boxShadow: '0 18px 40px rgba(0,0,0,0.4)' }}>
-          <div style={{ fontWeight: 900, fontSize: '26px', color: 'var(--kore-orange)' }}>100+</div>
+          <div style={{ fontWeight: 900, fontSize: '26px', color: 'var(--kore-orange-text)' }}>100+</div>
           <div style={{ fontSize: '11px', color: 'var(--text-muted)', letterSpacing: '0.04em' }}>placed in sports</div>
         </div>
         <div style={{ position: 'absolute', bottom: '24px', left: '-16px', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.12)', borderRadius: '10px', padding: '12px 16px', boxShadow: '0 18px 40px rgba(0,0,0,0.4)' }}>
@@ -53,9 +53,15 @@ function HeroCentered() {
   useEffect(() => {
     const img = imgRef.current;
     if (!img) return;
+    let ticking = false;
     const onScroll = () => {
-      const y = window.scrollY || window.pageYOffset || 0;
-      img.style.transform = `scale(1.2) translateY(${y * 0.12}px)`;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY || window.pageYOffset || 0;
+        img.style.transform = `scale(1.2) translateY(${y * 0.12}px)`;
+        ticking = false;
+      });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -64,7 +70,7 @@ function HeroCentered() {
 
   return (
     <div style={{ position: 'relative', minHeight: '86vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '96px 32px 72px', overflow: 'hidden' }}>
-      <img ref={imgRef} src={IMAGES.heroCentered} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: 'scale(1.2)', transformOrigin: 'center', willChange: 'transform' }} />
+      <img ref={imgRef} src={IMAGES.heroCentered} alt="" fetchPriority="high" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: 'scale(1.2)', transformOrigin: 'center', willChange: 'transform' }} />
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,rgba(var(--surface-rgb),0.72) 0%,rgba(var(--surface-rgb),0.64) 42%,rgba(var(--surface-rgb),0.94) 100%)' }} />
       <Reveal style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '1040px' }}>
         <div style={{ ...eyebrow, marginBottom: '24px' }}>{HERO.eyebrow}</div>
@@ -80,7 +86,7 @@ function HeroCentered() {
       <Reveal delay={1} style={{ position: 'relative', zIndex: 2, display: 'flex', justifyContent: 'center', gap: '14px', flexWrap: 'wrap', marginTop: '52px' }}>
         {HERO.stats.map((s, i) => (
           <div key={i} style={{ background: 'rgba(var(--surface-rgb),0.55)', backdropFilter: 'blur(8px)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '10px', padding: '14px 24px', textAlign: 'center' }}>
-            <div style={{ fontWeight: 900, fontSize: '28px', color: i === 0 ? 'var(--kore-magenta)' : i === 2 ? 'var(--kore-orange)' : 'var(--text)' }}>{s.value}</div>
+            <div style={{ fontWeight: 900, fontSize: '28px', color: i === 0 ? 'var(--kore-magenta)' : i === 2 ? 'var(--kore-orange-text)' : 'var(--text)' }}>{s.value}</div>
             <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{s.label}</div>
           </div>
         ))}
