@@ -3,8 +3,8 @@
 //  Edit everything about your site's text, prices and links here.
 // ============================================================
 
-// Accent colour used across the whole site. Try '#2f80ed' or '#f5b13d'.
-export const ACCENT = '#35d07d';
+// Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
+export const ACCENT = '#F05123';
 
 // Which hero layout to show: 'split' | 'centered' | 'editorial'
 export const HERO_VARIANT = 'centered';

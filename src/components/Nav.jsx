@@ -16,8 +16,8 @@ export default function Nav() {
   return (
     <header
       style={{
-        position: 'sticky', top: 0, zIndex: 60, backdropFilter: 'blur(12px)',
-        background: 'rgba(11,16,12,0.82)', borderBottom: '1px solid rgba(255,255,255,0.08)',
+        position: 'absolute', top: 0, left: 0, right: 0, zIndex: 60,
+        background: 'transparent', borderBottom: '1px solid rgba(255,255,255,0.18)',
       }}
     >
       <div
@@ -28,23 +28,23 @@ export default function Nav() {
         }}
       >
         {/* Logo */}
-        <a href="#top" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#eef2ee' }}>
-          <span style={{ width: '20px', height: '20px', border: '3px solid var(--accent)', borderRadius: '50%', display: 'inline-block' }} />
-          <span style={{ fontFamily: "'Archivo',sans-serif", fontWeight: 900, fontSize: '20px', letterSpacing: '-0.01em' }}>
-            KORE&nbsp;<span style={{ color: 'var(--accent)' }}>360</span>
+        <a href="#top" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: '#FFFFFF' }}>
+          <span style={{ width: '20px', height: '20px', border: '3px solid var(--kore-pink)', borderRadius: '50%', display: 'inline-block' }} />
+          <span style={{ fontWeight: 900, fontSize: '20px', letterSpacing: '-0.01em' }}>
+            KORE&nbsp;<span className="text-gradient">360</span>
           </span>
         </a>
 
         {/* Desktop nav */}
         <nav className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
           {navLinks.map((l) => (
-            <a key={l.href} href={l.href} className="nav-link" style={{ fontSize: '14px', fontWeight: 600, color: '#9aa89c' }}>
+            <a key={l.href} href={l.href} className="nav-link" style={{ fontSize: '14px', fontWeight: 600, color: '#A0A0A0' }}>
               {l.label}
             </a>
           ))}
           <a
             href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent"
-            style={{ fontSize: '14px', fontWeight: 700, color: '#07150c', background: 'var(--accent)', padding: '10px 16px', borderRadius: '7px' }}
+            style={{ fontSize: '14px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '10px 16px', borderRadius: '7px' }}
           >
             Book a 1:1 call · ₹1,499
           </a>
@@ -58,7 +58,7 @@ export default function Nav() {
             aria-expanded={open}
             style={{
               background: 'none', border: 'none',
-              cursor: 'pointer', padding: '4px', color: '#eef2ee',
+              cursor: 'pointer', padding: '4px', color: '#FFFFFF',
             }}
           >
             {open ? (
@@ -77,7 +77,7 @@ export default function Nav() {
 
           <a
             href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent"
-            style={{ fontSize: '13px', fontWeight: 700, color: '#07150c', background: 'var(--accent)', padding: '9px 12px', borderRadius: '7px', whiteSpace: 'nowrap' }}
+            style={{ fontSize: '13px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '9px 12px', borderRadius: '7px', whiteSpace: 'nowrap' }}
           >
             Book a 1:1 call · ₹1,499
           </a>
@@ -89,7 +89,7 @@ export default function Nav() {
         <div
           className="nav-mobile-menu"
           style={{
-            background: 'rgba(11,16,12,0.97)',
+            background: 'rgba(0,0,0,0.97)',
             borderTop: '1px solid rgba(255,255,255,0.08)',
             padding: '16px 32px 24px',
             display: 'flex', flexDirection: 'column', gap: '20px',
@@ -99,7 +99,7 @@ export default function Nav() {
             <a
               key={l.href} href={l.href} className="nav-link"
               onClick={close}
-              style={{ fontSize: '16px', fontWeight: 600, color: '#9aa89c' }}
+              style={{ fontSize: '16px', fontWeight: 600, color: '#A0A0A0' }}
             >
               {l.label}
             </a>

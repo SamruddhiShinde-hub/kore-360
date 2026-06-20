@@ -1,8 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap');
+
+:root {
+  --kore-white: #FFFFFF;
+  --kore-black: #000000;
+  --kore-magenta: #B71E60;
+  --kore-purple: #9F3D97;
+  --kore-pink: #DB117C;
+  --kore-orange: #F05123;
+  --kore-gradient: linear-gradient(135deg, var(--kore-purple) 0%, var(--kore-magenta) 33%, var(--kore-pink) 66%, var(--kore-orange) 100%);
+}
 
 * { box-sizing: border-box; }
 body { margin: 0; }
-::selection { background: #35d07d; color: #07150c; }
+::selection { background: var(--kore-orange); color: var(--kore-black); }
 html { scroll-behavior: smooth; }
 a { text-decoration: none; }
 
@@ -12,25 +22,34 @@ a { text-decoration: none; }
 }
 
 #root {
-  --accent: #35d07d;
-  background: #0b100c;
-  color: #eef2ee;
-  font-family: 'Hanken Grotesk', system-ui, sans-serif;
+  --accent: #F05123;
+  background: var(--kore-black);
+  color: var(--kore-white);
+  font-family: 'Lato', system-ui, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
 /* ---- hover utilities (these replace the export's style-hover attribute) ---- */
-.btn-accent:hover { filter: brightness(1.08); }
-.btn-outline:hover { border-color: var(--accent) !important; color: var(--accent) !important; }
-.nav-link:hover { color: #eef2ee !important; }
-.foot-link:hover { color: var(--accent) !important; }
+.btn-accent:hover { filter: brightness(1.12); }
+.btn-outline:hover { border-color: var(--kore-pink) !important; color: var(--kore-pink) !important; }
+.nav-link:hover { color: var(--kore-white) !important; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+.foot-link:hover { color: var(--kore-pink) !important; }
 .card-hover { transition: border-color .18s; }
-.card-hover:hover { border-color: rgba(53, 208, 125, 0.5) !important; }
+.card-hover:hover { border-color: var(--kore-magenta) !important; }
 .session-card { transition: all .18s; }
-.session-card:hover { border-color: rgba(53, 208, 125, 0.5) !important; transform: translateY(-3px); }
+.session-card:hover { border-color: var(--kore-pink) !important; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(219, 17, 124, 0.1); }
 .resume-drop { transition: all .18s; }
-.resume-drop:hover { border-color: var(--accent) !important; background: rgba(53, 208, 125, 0.08) !important; }
+.resume-drop:hover { border-color: var(--kore-magenta) !important; background: rgba(183, 30, 96, 0.08) !important; }
+
+/* ---- gradient text for hero/wordmark accents ---- */
+.text-gradient {
+  background: var(--kore-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
 
 /* ---- scroll reveal ---- */
 .reveal {
