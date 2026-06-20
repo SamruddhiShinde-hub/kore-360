@@ -50,7 +50,7 @@ a { text-decoration: none; }
 /* ---- hamburger nav ---- */
 @media (max-width: 768px) {
   .nav-desktop { display: none !important; }
-  .nav-hamburger { display: block !important; }
+  .nav-mobile-controls { display: flex !important; }
 }
 @media (min-width: 769px) {
   .nav-mobile-menu { display: none !important; }
