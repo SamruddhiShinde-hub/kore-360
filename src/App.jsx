@@ -17,7 +17,6 @@ export default function App() {
 
   return (
     <>
-      <span id="top" />
       <Nav />
       <Hero />
       <Marquee />

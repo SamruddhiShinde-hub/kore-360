@@ -83,7 +83,11 @@ export default function Nav() {
         }}
       >
         {/* Logo */}
-        <a href="#top" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text)' }}>
+        <a
+          href="/"
+          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+          style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text)' }}
+        >
           <span style={{ width: '20px', height: '20px', border: '3px solid var(--kore-orange)', borderRadius: '50%', display: 'inline-block' }} />
           <span style={{ fontWeight: 900, fontSize: '20px', letterSpacing: '-0.01em' }}>
             KORE&nbsp;<span className="text-gradient">360</span>
