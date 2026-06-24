@@ -89,12 +89,8 @@ a { text-decoration: none; }
   .grid-2col { grid-template-columns: 1fr !important; }
   .footer-grid { grid-template-columns: 1fr !important; }
 }
-@media (max-width: 700px) {
-  .course-row { flex-direction: column !important; }
-  .course-row .course-image { min-height: 200px !important; }
-}
 @media (max-width: 600px) {
-  .course-banner { min-height: 260px !important; }
+  .course-card { min-height: 380px !important; }
 }
 
 /* ---- hero: swap to a portrait photo of Krish, full-bleed behind the copy, on mobile ---- */
