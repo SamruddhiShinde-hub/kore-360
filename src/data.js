@@ -3,6 +3,9 @@
 //  Edit everything about your site's text, prices and links here.
 // ============================================================
 
+import heroCenteredImg from './assets/hero-centered.jpg';
+import heroMobileImg from './assets/hero-mobile.jpg';
+
 // Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
 export const ACCENT = '#F05123';
 
@@ -14,14 +17,13 @@ export const LINKS = {
   bookCall: 'https://superprofile.bio/bookings/krishlalwaniofficial?sessionId=699dc00d94cdda00134ba9a0',
   ebook: 'https://superprofile.bio/vp/behind-the-field---krish-lalwani-697',
   instagram: 'https://www.instagram.com/krishlalwaniofficial/',
-  resume: '#',
   event: '#',
 };
 
 // ---- Hero copy ----
 export const HERO = {
   eyebrow: 'KORE 360 · SPORTS MANAGEMENT',
-  headlineLines: ['Get inside', 'the game.'],
+  headlineLines: ['Get inside', 'the game'],
   blurb:
     "Five years in the industry. 60+ calls. 100+ people placed. I'm Krish Lalwani — and this is how you actually build a career in sport.",
   primaryCta: 'Book a 1:1 clarity call · ₹1,499',
@@ -66,7 +68,8 @@ export const EVENT_TYPES = ['Keynotes & talks', 'Panels & moderation', 'Campus &
 // ---- Images (replace these placeholder URLs with your own photos) ----
 export const IMAGES = {
   heroSplit: 'https://picsum.photos/seed/kore-krish-split/900/1100',
-  heroCentered: 'https://loremflickr.com/1920/1200/cricket,stadium,match?lock=5',
+  heroCentered: heroCenteredImg,
+  heroMobile: heroMobileImg,
   heroEditorial: 'https://picsum.photos/seed/kore-krish-edit/900/1200',
   events: 'https://loremflickr.com/1000/1000/cricket,match,outdoor?lock=61',
   about: 'https://loremflickr.com/900/1100/cricket,stadium,spectators?lock=53',

@@ -1,4 +1,4 @@
-import { CAREERS, HERO, LINKS } from '../data.js';
+import { CAREERS, HERO } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
 
@@ -23,12 +23,6 @@ function CapIcon() {
 }
 
 const ICONS = [CapIcon, BriefcaseIcon];
-
-const TALENT_POOL_BENEFITS = [
-  'Zero commitment to join',
-  'First look at new internships and jobs',
-  'No spam — just real opportunities in sport',
-];
 
 export default function Careers() {
   return (
@@ -70,38 +64,6 @@ export default function Careers() {
             );
           })}
         </div>
-
-        <Reveal
-          className="grid-2col"
-          style={{
-            background: 'linear-gradient(135deg, rgba(183,30,96,0.08), rgba(240,81,35,0.08))',
-            border: '1px solid rgba(240,81,35,0.25)', boxShadow: '0 18px 40px rgba(240,81,35,0.08)',
-            borderRadius: '16px', padding: '34px', display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '36px', alignItems: 'center',
-          }}
-        >
-          <div>
-            <div style={{ fontWeight: 800, fontSize: '24px', letterSpacing: '-0.01em', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '26px' }} aria-hidden="true">🚀</span>
-              Not ready to apply? Join the talent pool.
-            </div>
-            <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 26px', display: 'flex', flexDirection: 'column', gap: '9px' }}>
-              {TALENT_POOL_BENEFITS.map((b) => (
-                <li key={b} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '15px', color: 'var(--text-muted)' }}>
-                  <span style={{ color: 'var(--kore-orange-text)', fontWeight: 900 }}>✓</span>{b}
-                </li>
-              ))}
-            </ul>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
-              <a href={LINKS.resume} target="_blank" rel="noreferrer" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '15px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '13px 22px', borderRadius: '8px' }}>Submit your resume</a>
-              <a href="#sessions" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '15px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.25)', padding: '13px 22px', borderRadius: '8px' }}>Explore ways to work with Krish</a>
-            </div>
-          </div>
-          <a href={LINKS.resume} target="_blank" rel="noreferrer" className="resume-drop" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '10px', textAlign: 'center', border: '2px dashed rgba(183,30,96,0.4)', borderRadius: '12px', padding: '30px 20px', background: 'rgba(183,30,96,0.04)', color: 'var(--text)' }}>
-            <div style={{ width: '42px', height: '42px', borderRadius: '50%', border: '2px solid var(--kore-magenta)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--kore-magenta)', fontSize: '22px', fontWeight: 700 }}>↥</div>
-            <div style={{ fontWeight: 700, fontSize: '15px' }}>Submit your resume</div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>PDF or DOC · we'll be in touch</div>
-          </a>
-        </Reveal>
       </div>
     </section>
   );

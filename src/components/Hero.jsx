@@ -68,28 +68,26 @@ function HeroCentered() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const words = HERO.headlineLines[0].split(' ');
+  const accentPhrase = HERO.headlineLines.slice(1).join(' ');
+
   return (
-    <div style={{ position: 'relative', minHeight: '86vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '96px 32px 72px', overflow: 'hidden' }}>
-      <img ref={imgRef} src={IMAGES.heroCentered} alt="" fetchPriority="high" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: 'scale(1.2)', transformOrigin: 'center', willChange: 'transform' }} />
-      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,rgba(var(--surface-rgb),0.72) 0%,rgba(var(--surface-rgb),0.64) 42%,rgba(var(--surface-rgb),0.94) 100%)' }} />
-      <Reveal style={{ position: 'relative', zIndex: 2, textAlign: 'center', maxWidth: '1040px' }}>
-        <div style={{ ...eyebrow, marginBottom: '24px' }}>{HERO.eyebrow}</div>
-        <h1 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.88, fontSize: 'clamp(52px,10vw,150px)', margin: '0 0 26px', color: 'var(--text)', textShadow: '0 4px 40px rgba(var(--surface-rgb),0.5)' }}>
-          <HeadingBreaks lines={HERO.headlineLines} />
+    <div className="hero-shell" style={{ position: 'relative', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-start', padding: '96px 32px 64px', overflow: 'hidden' }}>
+      <img ref={imgRef} src={IMAGES.heroCentered} alt="" className="hero-bg-desktop" fetchPriority="high" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: 'scale(1.2)', transformOrigin: 'center', willChange: 'transform' }} />
+      <img src={IMAGES.heroMobile} alt="" className="hero-bg-mobile" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'none' }} />
+      <div className="hero-scrim" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 25%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.72) 100%)' }} />
+      <Reveal className="hero-copy" style={{ position: 'relative', zIndex: 2, textAlign: 'left', maxWidth: '1040px' }}>
+        <h1 className="hero-heading" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.88, fontSize: 'clamp(28px,5.6vw,76px)', margin: '0 0 22px', color: '#FFFFFF', whiteSpace: 'nowrap', textAlign: 'left' }}>
+          {words.map((w, i) => (
+            <span className="hero-heading-word" key={i}>{w} </span>
+          ))}
+          <span className="hero-heading-word hero-heading-accent">{accentPhrase}</span>
         </h1>
-        <p style={{ fontSize: 'clamp(16px,1.5vw,21px)', lineHeight: 1.55, color: 'var(--text)', maxWidth: '620px', margin: '0 auto 34px' }}>{HERO.blurb}</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', justifyContent: 'center' }}>
+        <p className="hero-blurb" style={{ fontSize: 'clamp(16px,1.5vw,21px)', lineHeight: 1.55, color: '#FFFFFF', maxWidth: '620px', margin: '0 0 30px' }}>{HERO.blurb}</p>
+        <div className="hero-cta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
           <a href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</a>
-          <a href={LINKS.ebook} target="_blank" rel="noreferrer" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.35)', background: 'rgba(var(--surface-rgb),0.3)', padding: '15px 26px', borderRadius: '8px' }}>{HERO.secondaryCta}</a>
+          <a href={LINKS.ebook} target="_blank" rel="noreferrer" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.5)', background: 'rgba(var(--surface-rgb),0.55)', padding: '15px 26px', borderRadius: '8px' }}>{HERO.secondaryCta}</a>
         </div>
-      </Reveal>
-      <Reveal delay={1} style={{ position: 'relative', zIndex: 2, display: 'flex', justifyContent: 'center', gap: '14px', flexWrap: 'wrap', marginTop: '52px' }}>
-        {HERO.stats.map((s, i) => (
-          <div key={i} style={{ background: 'rgba(var(--surface-rgb),0.55)', backdropFilter: 'blur(8px)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '10px', padding: '14px 24px', textAlign: 'center' }}>
-            <div style={{ fontWeight: 900, fontSize: '28px', color: i === 0 ? 'var(--kore-magenta)' : i === 2 ? 'var(--kore-orange-text)' : 'var(--text)' }}>{s.value}</div>
-            <div style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{s.label}</div>
-          </div>
-        ))}
       </Reveal>
     </div>
   );

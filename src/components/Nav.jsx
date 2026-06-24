@@ -1,5 +1,6 @@
 import { useState, useLayoutEffect } from 'react';
 import { LINKS } from '../data.js';
+import logo from '../assets/logo.png';
 
 const navLinks = [
   { label: 'Sessions', href: '#sessions' },
@@ -60,7 +61,7 @@ export default function Nav() {
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       style={{
         background: 'none', border: 'none', cursor: 'pointer', padding: '6px',
-        color: 'var(--text)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        color: '#FFFFFF', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
         borderRadius: '50%',
       }}
     >
@@ -72,7 +73,8 @@ export default function Nav() {
     <header
       style={{
         position: 'absolute', top: 0, left: 0, right: 0, zIndex: 60,
-        background: 'transparent', borderBottom: '1px solid rgba(var(--border-rgb),0.18)',
+        background: 'linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.32) 65%, rgba(0,0,0,0) 100%)',
+        borderBottom: '1px solid rgba(255,255,255,0.12)',
       }}
     >
       <div
@@ -88,16 +90,13 @@ export default function Nav() {
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text)' }}
         >
-          <span style={{ width: '20px', height: '20px', border: '3px solid var(--kore-orange)', borderRadius: '50%', display: 'inline-block' }} />
-          <span style={{ fontWeight: 900, fontSize: '20px', letterSpacing: '-0.01em' }}>
-            KORE&nbsp;<span className="text-gradient">360</span>
-          </span>
+          <img src={logo} alt="Kore 360 Logo" style={{ height: '64px', width: 'auto', display: 'block' }} />
         </a>
 
         {/* Desktop nav */}
         <nav className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
           {navLinks.map((l) => (
-            <a key={l.href} href={l.href} className="nav-link" style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-muted)' }}>
+            <a key={l.href} href={l.href} className="nav-link-bar" style={{ fontSize: '14px', fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>
               {l.label}
             </a>
           ))}
@@ -119,7 +118,7 @@ export default function Nav() {
             aria-expanded={open}
             style={{
               background: 'none', border: 'none',
-              cursor: 'pointer', padding: '4px', color: 'var(--text)',
+              cursor: 'pointer', padding: '4px', color: '#FFFFFF',
             }}
           >
             {open ? (

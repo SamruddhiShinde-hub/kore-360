@@ -54,6 +54,8 @@ a { text-decoration: none; }
 .btn-outline { transition: border-color .15s, color .15s, transform .15s; }
 .btn-outline:hover { border-color: var(--kore-orange) !important; color: var(--kore-orange-text) !important; transform: translateY(-2px); }
 .nav-link:hover { color: var(--text) !important; text-shadow: 0 0 10px rgba(var(--border-rgb),0.3); }
+.nav-link-bar { transition: color .15s, text-shadow .15s; }
+.nav-link-bar:hover { color: #FFFFFF !important; text-shadow: 0 0 10px rgba(255,255,255,0.4); }
 .foot-link:hover { color: var(--kore-orange-text) !important; }
 .theme-toggle { transition: background .15s; }
 .theme-toggle:hover { background: rgba(var(--border-rgb), 0.1) !important; }
@@ -61,8 +63,6 @@ a { text-decoration: none; }
 .card-hover:hover { border-color: var(--kore-magenta) !important; transform: translateY(-6px); box-shadow: 0 16px 30px rgba(183,30,96,0.16); }
 .session-card { transition: all .18s; }
 .session-card:hover { border-color: var(--kore-orange) !important; transform: translateY(-6px); box-shadow: 0 16px 30px rgba(240, 81, 35, 0.16); }
-.resume-drop { transition: all .18s; }
-.resume-drop:hover { border-color: var(--kore-magenta) !important; background: rgba(183, 30, 96, 0.08) !important; }
 .role-pill { transition: border-color .15s, color .15s, transform .15s; }
 .role-pill:hover { border-color: var(--kore-orange) !important; color: var(--kore-orange-text) !important; transform: translateY(-2px); }
 
@@ -95,6 +95,21 @@ a { text-decoration: none; }
 }
 @media (max-width: 600px) {
   .course-banner { min-height: 260px !important; }
+}
+
+/* ---- hero: swap to a portrait photo of Krish, full-bleed behind the copy, on mobile ---- */
+.hero-bg-mobile { display: none; }
+.hero-heading-word { display: inline; }
+@media (max-width: 700px) {
+  .hero-bg-desktop { display: none !important; }
+  .hero-bg-mobile { display: block !important; }
+  .hero-shell { padding: 90px 24px 110px !important; }
+  .hero-scrim { background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.25) 22%, rgba(0,0,0,0.58) 48%, rgba(0,0,0,0.82) 75%, rgba(0,0,0,0.88) 100%) !important; }
+  .hero-heading { white-space: normal !important; font-size: 44px !important; }
+  .hero-heading-word { display: block; }
+  .hero-blurb { font-size: 17px !important; }
+  .hero-cta-row { flex-direction: column !important; align-items: stretch !important; }
+  .hero-cta-row > a { width: 100% !important; justify-content: center !important; text-align: center; font-size: 17px !important; padding: 17px 26px !important; }
 }
 
 /* ---- hamburger nav ---- */
