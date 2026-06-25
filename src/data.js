@@ -36,6 +36,9 @@ export const LINKS = {
   ebook: 'https://superprofile.bio/vp/behind-the-field---krish-lalwani-697',
   instagram: 'https://www.instagram.com/krishlalwaniofficial/',
   event: '#',
+  phone: '+91 96892 88000',
+  phoneTel: 'tel:+919689288000',
+  whatsapp: 'https://wa.me/919689288000',
 };
 
 // ---- Hero copy ----

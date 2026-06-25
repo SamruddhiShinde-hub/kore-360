@@ -183,4 +183,5 @@ a { text-decoration: none; }
 }
 @media (min-width: 769px) {
   .nav-mobile-menu { display: none !important; }
+  .fab-call { display: none !important; }
 }

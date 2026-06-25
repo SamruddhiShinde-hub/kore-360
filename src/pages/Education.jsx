@@ -69,7 +69,7 @@ export default function Education() {
 
         <Reveal style={{ marginTop: '12px', textAlign: 'center', borderTop: '1px solid rgba(var(--border-rgb),0.08)', paddingTop: '40px' }}>
           <p style={{ fontSize: '15px', color: 'var(--text-muted)', margin: '0 0 18px', textAlign: 'justify' }}>Not sure which one to start with? The clarity call is the most personal — the e-book is the cheapest way to find out if this industry is for you.</p>
-          <a href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}>Book a 1:1 clarity call →</a>
+          <a href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}>Talk to Krish 1:1 →</a>
         </Reveal>
       </div>
     </>
