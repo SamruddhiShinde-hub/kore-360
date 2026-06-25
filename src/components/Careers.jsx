@@ -1,6 +1,7 @@
 import { CAREERS, HERO } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
+import DecathlonBanner from './DecathlonBanner.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)'];
 
@@ -63,6 +64,10 @@ export default function Careers() {
               </Reveal>
             );
           })}
+        </div>
+
+        <div style={{ marginTop: '24px' }}>
+          <DecathlonBanner />
         </div>
       </div>
     </section>
