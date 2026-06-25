@@ -22,38 +22,34 @@ export default function Education() {
             return (
               <Reveal
                 key={i} delay={i} className="card-hover"
-                style={{ position: 'relative', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.09)', borderRadius: '16px', padding: '36px', overflow: 'hidden' }}
+                style={{ position: 'relative', background: 'rgba(var(--border-rgb),0.035)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '16px', padding: '28px', overflow: 'hidden' }}
               >
                 {s.featured && (
                   <div style={{ position: 'absolute', top: '-1px', right: '24px', background: 'var(--kore-gradient)', color: '#000000', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', padding: '5px 9px', borderRadius: '0 0 6px 6px' }}>
                     MOST BOOKED
                   </div>
                 )}
-                <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '20px', marginBottom: '22px' }}>
-                  <div>
-                    <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: accent, marginBottom: '10px' }}>{s.tag}</div>
-                    <div style={{ fontWeight: 800, fontSize: '27px', letterSpacing: '-0.01em' }}>{s.name}</div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontWeight: 900, fontSize: '30px', color: 'var(--text)' }}>{s.price}</div>
-                    <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>{s.meta}</div>
-                  </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '12px', marginBottom: '8px' }}>
+                  <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: accent, fontWeight: 700 }}>{s.tag}</div>
+                  <div style={{ fontWeight: 900, fontSize: '26px', color: 'var(--text)', lineHeight: 1, flex: 'none' }}>{s.price}</div>
                 </div>
+                <div style={{ fontWeight: 800, fontSize: '24px', letterSpacing: '-0.01em', marginBottom: '4px' }}>{s.name}</div>
+                <div style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '20px' }}>{s.meta}</div>
 
-                <p style={{ fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '680px', margin: '0 0 28px', textAlign: 'justify' }}>{s.desc}</p>
+                <p style={{ fontSize: '15px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '680px', margin: '0 0 24px', textAlign: 'justify' }}>{s.desc}</p>
 
-                <div className="grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '32px', borderTop: '1px solid rgba(var(--border-rgb),0.08)', paddingTop: '24px', marginBottom: '24px' }}>
+                <div className="grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '24px', background: 'rgba(var(--border-rgb),0.03)', border: '1px solid rgba(var(--border-rgb),0.08)', borderRadius: '12px', padding: '20px', marginBottom: '24px' }}>
                   <div>
                     <div style={labelStyle}>FORMAT</div>
-                    <p style={{ fontSize: '14.5px', lineHeight: 1.5, color: 'var(--text)', margin: '0 0 18px', textAlign: 'justify' }}>{d.format}</p>
+                    <p style={{ fontSize: '14px', lineHeight: 1.5, color: 'var(--text)', margin: '0 0 16px', textAlign: 'justify' }}>{d.format}</p>
                     <div style={labelStyle}>WHO IT'S FOR</div>
-                    <p style={{ fontSize: '14.5px', lineHeight: 1.5, color: 'var(--text)', margin: 0, textAlign: 'justify' }}>{d.whoFor}</p>
+                    <p style={{ fontSize: '14px', lineHeight: 1.5, color: 'var(--text)', margin: 0, textAlign: 'justify' }}>{d.whoFor}</p>
                   </div>
-                  <div>
+                  <div className="education-included">
                     <div style={labelStyle}>WHAT'S INCLUDED</div>
                     <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
                       {d.includes.map((item) => (
-                        <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '14.5px', lineHeight: 1.5, color: 'var(--text)' }}>
+                        <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '14px', lineHeight: 1.5, color: 'var(--text)' }}>
                           <span style={{ color: accent, fontWeight: 900, flex: 'none' }}>✓</span>{item}
                         </li>
                       ))}
