@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { LINKS } from '../data.js';
-import logo from '../assets/logo.webp';
+import logo from '../assets/logo.png';
 
 const exploreLinks = [
   { label: 'Education', to: '/education' },
