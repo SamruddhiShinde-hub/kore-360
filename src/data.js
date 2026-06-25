@@ -3,15 +3,15 @@
 //  Edit everything about your site's text, prices and links here.
 // ============================================================
 
-import heroCenteredImg from './assets/hero-centered.jpg';
-import heroMobileImg from './assets/hero-mobile.jpg';
-import sportsMarketingImg from './assets/sports_marketing.jpg';
-import teamOperationsImg from './assets/team_operations.jpg';
-import athleteManagementImg from './assets/athlete_management.jpg';
-import eventOpsImg from './assets/event_ops.jpg';
-import starterCourseImg from './assets/the_sports_management_starter.jpg';
-import marketingCourseImg from './assets/marketing_and_sponsorship.jpg';
-import networkingCourseImg from './assets/land_the_job_role.jpg';
+import heroCenteredImg from './assets/hero-centered.webp';
+import heroMobileImg from './assets/hero-mobile.webp';
+import sportsMarketingImg from './assets/sports_marketing.webp';
+import teamOperationsImg from './assets/team_operations.webp';
+import athleteManagementImg from './assets/athlete_management.webp';
+import eventOpsImg from './assets/event_ops.webp';
+import starterCourseImg from './assets/the_sports_management_starter.webp';
+import marketingCourseImg from './assets/marketing_and_sponsorship.webp';
+import networkingCourseImg from './assets/land_the_job_role.webp';
 
 // Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
 export const ACCENT = '#F05123';

@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { LINKS } from '../data.js';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo.webp';
 
 const navLinks = [
   { label: 'Education', to: '/education' },
