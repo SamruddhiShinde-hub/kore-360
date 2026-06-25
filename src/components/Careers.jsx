@@ -48,6 +48,10 @@ export default function Careers() {
           ))}
         </div>
 
+        <div style={{ marginBottom: '24px' }}>
+          <DecathlonBanner />
+        </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '20px', marginBottom: '20px' }}>
           {CAREERS.map((k, i) => {
             const Icon = ICONS[i % ICONS.length];
@@ -64,10 +68,6 @@ export default function Careers() {
               </Reveal>
             );
           })}
-        </div>
-
-        <div style={{ marginTop: '24px' }}>
-          <DecathlonBanner />
         </div>
       </div>
     </section>
