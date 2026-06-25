@@ -1,12 +1,12 @@
 import { useState, useLayoutEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { LINKS } from '../data.js';
 import logo from '../assets/logo.png';
 
 const navLinks = [
-  { label: 'Sessions', href: '#sessions' },
-  { label: 'Courses', href: '#courses' },
-  { label: 'Careers', href: '#careers' },
-  { label: 'Events', href: '#events' },
+  { label: 'Education', to: '/education' },
+  { label: 'Management', to: '/management' },
+  { label: 'Talent', to: '/talent' },
 ];
 
 function getInitialTheme() {
@@ -45,6 +45,7 @@ function MoonIcon() {
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
+  const location = useLocation();
 
   useLayoutEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -85,20 +86,25 @@ export default function Nav() {
         }}
       >
         {/* Logo */}
-        <a
-          href="/"
-          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+        <Link
+          to="/"
+          onClick={(e) => {
+            if (location.pathname === '/') {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
           style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text)' }}
         >
           <img src={logo} alt="Kore 360 Logo" style={{ height: '64px', width: 'auto', display: 'block' }} />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
           {navLinks.map((l) => (
-            <a key={l.href} href={l.href} className="nav-link-bar" style={{ fontSize: '14px', fontWeight: 600, color: 'rgba(255,255,255,0.85)' }}>
+            <Link key={l.to} to={l.to} className="nav-link-bar" style={{ fontSize: '14px', fontWeight: 600, color: location.pathname === l.to ? '#FFFFFF' : 'rgba(255,255,255,0.85)' }}>
               {l.label}
-            </a>
+            </Link>
           ))}
           {themeToggleButton}
           <a
@@ -156,13 +162,13 @@ export default function Nav() {
           }}
         >
           {navLinks.map((l) => (
-            <a
-              key={l.href} href={l.href} className="nav-link"
+            <Link
+              key={l.to} to={l.to} className="nav-link"
               onClick={close}
               style={{ fontSize: '16px', fontWeight: 600, color: 'var(--text-muted)' }}
             >
               {l.label}
-            </a>
+            </Link>
           ))}
         </div>
       )}

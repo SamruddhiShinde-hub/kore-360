@@ -1,17 +1,16 @@
+import { Link } from 'react-router-dom';
 import { LINKS } from '../data.js';
 import logo from '../assets/logo.png';
 
 const exploreLinks = [
-  { label: 'Sessions', href: '#sessions' },
-  { label: 'Courses', href: '#courses' },
-  { label: 'Careers', href: '#careers' },
-  { label: 'Events', href: '#events' },
+  { label: 'Education', to: '/education' },
+  { label: 'Management', to: '/management' },
+  { label: 'Talent', to: '/talent' },
 ];
 
 const connectLinks = [
   { label: 'Instagram', href: LINKS.instagram, external: true },
-  { label: 'Book a 1:1', href: '#sessions' },
-  { label: 'Events', href: '#events' },
+  { label: 'Book a 1:1', href: LINKS.bookCall, external: true },
 ];
 
 export default function Footer() {
@@ -22,13 +21,13 @@ export default function Footer() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <img src={logo} alt="Kore 360 Logo" style={{ height: '64px', width: 'auto', display: 'block' }} />
           </div>
-          <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '320px', margin: 0 }}>Careers in sports management — built with Krish Lalwani. Sessions, courses, jobs and events, all in one place.</p>
+          <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '320px', margin: 0 }}>Careers in sports management — built with Krish Lalwani. Education, management and talent, all in one place.</p>
         </div>
         <div>
           <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: 'var(--text-faint)', marginBottom: '16px' }}>EXPLORE</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
             {exploreLinks.map((l) => (
-              <a key={l.label} href={l.href} className="foot-link" style={{ fontSize: '14.5px', color: 'var(--text-muted)' }}>{l.label}</a>
+              <Link key={l.label} to={l.to} className="foot-link" style={{ fontSize: '14.5px', color: 'var(--text-muted)' }}>{l.label}</Link>
             ))}
           </div>
         </div>

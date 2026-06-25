@@ -1,26 +1,47 @@
+import { useState } from 'react';
 import { MARQUEE } from '../data.js';
+import Reveal from './Reveal.jsx';
 
 export default function Marquee() {
+  const [active, setActive] = useState(0);
+  const current = MARQUEE[active];
+
   return (
-    <div style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)', background: 'var(--surface)', padding: '28px 32px' }}>
+    <div style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)', background: 'var(--surface)', padding: '28px 32px 64px' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ fontSize: '11px', letterSpacing: '0.14em', color: 'var(--text-faint)', marginBottom: '14px', textAlign: 'center' }}>EXPLORE BY INTEREST</div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center' }}>
-          {MARQUEE.map((word) => (
-            <a
-              key={word}
-              href="#courses"
-              className="role-pill"
-              style={{
-                fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.03em',
-                color: 'var(--text-muted)', border: '1px solid rgba(var(--border-rgb),0.16)',
-                borderRadius: '999px', padding: '8px 16px', display: 'inline-block',
-              }}
-            >
-              {word}
-            </a>
-          ))}
+        <div className="interest-tabs" style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', justifyContent: 'center', marginBottom: '40px' }}>
+          {MARQUEE.map((item, i) => {
+            const isActive = i === active;
+            return (
+              <button
+                key={item.label}
+                type="button"
+                onClick={() => setActive(i)}
+                className={`role-pill${isActive ? ' is-active' : ''}`}
+                style={{
+                  fontFamily: 'inherit', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.03em',
+                  color: isActive ? '#000000' : 'var(--text-muted)',
+                  background: isActive ? 'var(--kore-gradient)' : 'transparent',
+                  border: isActive ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
+                  borderRadius: '999px', padding: '8px 16px', display: 'inline-block', cursor: 'pointer', flex: '0 0 auto',
+                }}
+              >
+                {item.label}
+              </button>
+            );
+          })}
         </div>
+
+        <Reveal key={active} className="grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', alignItems: 'center' }}>
+          <div style={{ borderRadius: '16px', overflow: 'hidden', aspectRatio: '4/3' }}>
+            <img src={current.img} alt={current.label} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+          </div>
+          <div>
+            <div style={{ fontWeight: 800, fontSize: '26px', letterSpacing: '-0.01em', textTransform: 'capitalize', marginBottom: '14px' }}>{current.label}</div>
+            <p style={{ fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text-muted)', margin: 0 }}>{current.desc}</p>
+          </div>
+        </Reveal>
       </div>
     </div>
   );

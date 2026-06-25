@@ -9,7 +9,7 @@ export default function Events() {
         <div className="grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 0.9fr', gap: '56px', alignItems: 'center' }}>
           <Reveal>
             <Eyebrow color="var(--kore-magenta-text)">04 — EVENTS</Eyebrow>
-            <h2 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.92, fontSize: 'clamp(36px,5.2vw,68px)', margin: '0 0 18px' }}>Book Krish for your event</h2>
+            <h2 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.92, fontSize: 'clamp(36px,5.2vw,68px)', margin: '0 0 18px' }}>Book KORE 360 for an event</h2>
             <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '520px', margin: '0 0 28px' }}>Keynotes, panels, campus sessions and brand appearances on careers and the business of sport. Tell us the date — we'll handle the rest.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '32px' }}>
               {EVENT_TYPES.map((e, i) => (

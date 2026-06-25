@@ -65,6 +65,7 @@ a { text-decoration: none; }
 .session-card:hover { border-color: var(--kore-orange) !important; transform: translateY(-6px); box-shadow: 0 16px 30px rgba(240, 81, 35, 0.16); }
 .role-pill { transition: border-color .15s, color .15s, transform .15s; }
 .role-pill:hover { border-color: var(--kore-orange) !important; color: var(--kore-orange-text) !important; transform: translateY(-2px); }
+.role-pill.is-active:hover { color: #000000 !important; }
 
 /* ---- gradient text for hero/wordmark accents ---- */
 .text-gradient {
@@ -91,6 +92,37 @@ a { text-decoration: none; }
 }
 @media (max-width: 600px) {
   .course-card { min-height: 380px !important; }
+  .ig-grid { grid-template-columns: repeat(2,1fr) !important; }
+}
+
+/* ---- instagram grid hover zoom ---- */
+.ig-photo { transition: transform .25s; }
+.ig-photo:hover { transform: scale(1.05); }
+
+/* ---- testimonials slider ---- */
+.testimonial-track { scrollbar-width: none; }
+.testimonial-track::-webkit-scrollbar { display: none; }
+.testimonial-arrow { transition: border-color .15s, transform .15s, background .15s, color .15s; }
+.testimonial-arrow:hover { border-color: transparent !important; background: var(--kore-gradient) !important; color: #000000 !important; transform: translateY(-50%) scale(1.06); }
+@media (max-width: 900px) {
+  .testimonial-card { flex-basis: calc(50% - 10px) !important; }
+}
+@media (max-width: 600px) {
+  .testimonial-card { flex-basis: 84% !important; }
+  .testimonial-arrow-prev { left: -6px !important; }
+  .testimonial-arrow-next { right: -6px !important; }
+}
+
+/* ---- explore-by-interest tabs: horizontal scroll instead of wrapping on mobile ---- */
+@media (max-width: 700px) {
+  .interest-tabs {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .interest-tabs::-webkit-scrollbar { display: none; }
 }
 
 /* ---- hero: swap to a portrait photo of Krish, full-bleed behind the copy, on mobile ---- */

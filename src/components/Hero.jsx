@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { HERO, HERO_VARIANT, LINKS, IMAGES } from '../data.js';
 import Reveal from './Reveal.jsx';
 
@@ -25,9 +26,9 @@ function HeroSplit() {
         <h1 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.9, fontSize: 'clamp(48px,7.2vw,108px)', margin: '0 0 24px' }}>
           <HeadingBreaks lines={HERO.headlineLines} />
         </h1>
-        <p style={{ fontSize: 'clamp(16px,1.5vw,20px)', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '480px', margin: '0 0 34px' }}>{HERO.blurb}</p>
+        <p style={{ fontSize: 'clamp(16px,1.5vw,20px)', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '480px', margin: '0 0 34px', whiteSpace: 'pre-line' }}>{HERO.blurb}</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px' }}>
-          <a href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</a>
+          <Link to="/education" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</Link>
           <a href={LINKS.ebook} target="_blank" rel="noreferrer" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: 'var(--text)', background: 'transparent', border: '1px solid rgba(var(--border-rgb),0.22)', padding: '15px 26px', borderRadius: '8px' }}>{HERO.secondaryCta}</a>
         </div>
       </Reveal>
@@ -83,9 +84,9 @@ function HeroCentered() {
           ))}
           <span className="hero-heading-word hero-heading-accent">{accentPhrase}</span>
         </h1>
-        <p className="hero-blurb" style={{ fontSize: 'clamp(16px,1.5vw,21px)', lineHeight: 1.55, color: '#FFFFFF', maxWidth: '620px', margin: '0 0 30px' }}>{HERO.blurb}</p>
+        <p className="hero-blurb" style={{ fontSize: 'clamp(16px,1.5vw,21px)', lineHeight: 1.55, color: '#FFFFFF', maxWidth: '700px', margin: '0 0 30px', whiteSpace: 'pre-line' }}>{HERO.blurb}</p>
         <div className="hero-cta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
-          <a href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</a>
+          <Link to="/education" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</Link>
           <a href={LINKS.ebook} target="_blank" rel="noreferrer" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.5)', background: 'rgba(var(--surface-rgb),0.55)', padding: '15px 26px', borderRadius: '8px' }}>{HERO.secondaryCta}</a>
         </div>
       </Reveal>
@@ -105,9 +106,9 @@ function HeroEditorial() {
           <h1 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.025em', lineHeight: 0.86, fontSize: 'clamp(50px,8.5vw,128px)', margin: '0 0 28px' }}>
             Get<br />inside<br />the game.
           </h1>
-          <p style={{ fontSize: 'clamp(16px,1.4vw,20px)', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '520px', margin: '0 0 30px' }}>{HERO.blurb}</p>
+          <p style={{ fontSize: 'clamp(16px,1.4vw,20px)', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '520px', margin: '0 0 30px', whiteSpace: 'pre-line' }}>{HERO.blurb}</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px' }}>
-            <a href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</a>
+            <Link to="/education" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</Link>
             <a href={LINKS.ebook} target="_blank" rel="noreferrer" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.22)', padding: '15px 26px', borderRadius: '8px' }}>{HERO.secondaryCta}</a>
           </div>
         </Reveal>
