@@ -12,7 +12,7 @@ export default function Sessions() {
         <Reveal as="h2" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(36px,5vw,64px)', margin: '0 0 14px' }}>
           Pick how you learn
         </Reveal>
-        <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px' }}>
+        <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px', textAlign: 'justify' }}>
           From a ₹99 read to a 1:1 game plan — start wherever you are.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(248px,1fr))', gap: '18px' }}>
@@ -32,7 +32,7 @@ export default function Sessions() {
                   </li>
                 ))}
               </ul>
-              <p style={{ fontSize: '14.5px', lineHeight: 1.5, color: 'var(--text-muted)', margin: '0 0 22px', flex: 1 }}>{s.desc}</p>
+              <p style={{ fontSize: '14.5px', lineHeight: 1.5, color: 'var(--text-muted)', margin: '0 0 22px', flex: 1, textAlign: 'justify' }}>{s.desc}</p>
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
                 <div style={{ fontWeight: 900, fontSize: '30px', color: 'var(--text)' }}>{s.price}</div>
               </div>

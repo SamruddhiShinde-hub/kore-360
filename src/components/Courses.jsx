@@ -14,7 +14,7 @@ export default function Courses() {
         <Reveal as="h2" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(36px,5vw,64px)', margin: '0 0 14px' }}>
           Go deeper with a course
         </Reveal>
-        <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px' }}>
+        <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px', textAlign: 'justify' }}>
           Structured, self-paced programs that take you from curious to career-ready.
         </p>
 
@@ -34,7 +34,7 @@ export default function Courses() {
                 <div style={{ flex: 1 }} />
                 <div style={{ width: '28px', height: '3px', background: ACCENTS[i % ACCENTS.length], marginBottom: '14px', borderRadius: '2px' }} />
                 <div style={{ fontWeight: 800, fontSize: '23px', lineHeight: 1.15, letterSpacing: '-0.01em', color: '#FFFFFF', marginBottom: '10px' }}>{c.name}</div>
-                <p style={{ fontSize: '14px', lineHeight: 1.5, color: 'rgba(255,255,255,0.75)', margin: '0 0 22px' }}>{c.desc}</p>
+                <p style={{ fontSize: '14px', lineHeight: 1.5, color: 'rgba(255,255,255,0.75)', margin: '0 0 22px', textAlign: 'justify' }}>{c.desc}</p>
                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.15)', paddingTop: '18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
                     <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginRight: '6px' }}>from</span>

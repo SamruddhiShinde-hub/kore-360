@@ -42,7 +42,7 @@ export default function Testimonials() {
         <Reveal as="h2" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(36px,5vw,64px)', margin: '0 0 14px' }}>
           Hear it from them
         </Reveal>
-        <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px' }}>
+        <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px', textAlign: 'justify' }}>
           Real people, real placements — in their own words.
         </p>
 
@@ -68,7 +68,7 @@ export default function Testimonials() {
                   </div>
                 </button>
                 <div style={{ padding: '20px' }}>
-                  <p style={{ fontSize: '13.5px', lineHeight: 1.5, color: 'var(--text-muted)', fontStyle: 'italic', margin: '0 0 12px' }}>&ldquo;{t.quote}&rdquo;</p>
+                  <p style={{ fontSize: '13.5px', lineHeight: 1.5, color: 'var(--text-muted)', fontStyle: 'italic', margin: '0 0 12px', textAlign: 'justify' }}>&ldquo;{t.quote}&rdquo;</p>
                   <div style={{ fontWeight: 800, fontSize: '14.5px' }}>{t.name}</div>
                   <div style={{ fontSize: '12.5px', color: 'var(--text-faint)' }}>{t.result}</div>
                 </div>

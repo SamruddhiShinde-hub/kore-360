@@ -21,7 +21,7 @@ export default function FAQ() {
         <Reveal as="h2" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(36px,5vw,56px)', margin: '0 0 14px' }}>
           Questions, answered
         </Reveal>
-        <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', margin: '0 0 44px' }}>
+        <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', margin: '0 0 44px', textAlign: 'justify' }}>
           Still unsure? Here's what people usually ask before booking.
         </p>
 
@@ -40,7 +40,7 @@ export default function FAQ() {
                   <ChevronIcon open={isOpen} />
                 </button>
                 {isOpen && (
-                  <p style={{ fontSize: '15px', lineHeight: 1.6, color: 'var(--text-muted)', margin: '0 0 22px', maxWidth: '700px' }}>{f.a}</p>
+                  <p style={{ fontSize: '15px', lineHeight: 1.6, color: 'var(--text-muted)', margin: '0 0 22px', maxWidth: '700px', textAlign: 'justify' }}>{f.a}</p>
                 )}
               </Reveal>
             );

@@ -21,7 +21,7 @@ export default function Footer() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <img src={logo} alt="Kore 360 Logo" style={{ height: '64px', width: 'auto', display: 'block' }} />
           </div>
-          <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '320px', margin: 0 }}>Careers in sports management — built with Krish Lalwani. Education, management and talent, all in one place.</p>
+          <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '320px', margin: 0, textAlign: 'justify' }}>Careers in sports management — built with Krish Lalwani. Education, management and talent, all in one place.</p>
         </div>
         <div>
           <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: 'var(--text-faint)', marginBottom: '16px' }}>EXPLORE</div>

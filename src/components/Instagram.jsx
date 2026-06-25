@@ -25,7 +25,6 @@ export default function Instagram() {
     <section id="instagram" style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)', background: 'var(--surface)' }}>
       <div style={{ maxWidth: '760px', margin: '0 auto', padding: '92px 32px', textAlign: 'center' }}>
         <Reveal>
-          <div style={{ fontSize: '11px', letterSpacing: '0.18em', color: 'var(--text-faint)', marginBottom: '10px' }}>FOLLOW ME</div>
           <div style={{ fontWeight: 900, fontSize: 'clamp(30px,5vw,52px)', letterSpacing: '-0.02em', marginBottom: '16px' }}>@krishlalwaniofficial</div>
           <a href={LINKS.instagram} target="_blank" rel="noreferrer" className="foot-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 700, color: 'var(--kore-orange-text)', marginBottom: '44px' }}>
             <InstagramIcon /> Follow on Instagram
@@ -34,7 +33,7 @@ export default function Instagram() {
 
         <div className="ig-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '10px', marginBottom: '44px' }}>
           {POSTS.map((src, i) => (
-            <Reveal key={i} delay={i % 4} style={{ aspectRatio: '1/1', borderRadius: '10px', overflow: 'hidden' }}>
+            <Reveal key={i} delay={i % 4} className={i >= 4 ? 'ig-extra' : ''} style={{ aspectRatio: '1/1', borderRadius: '10px', overflow: 'hidden' }}>
               <a href={LINKS.instagram} target="_blank" rel="noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
                 <img src={src} alt="" loading="lazy" decoding="async" className="ig-photo" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </a>
@@ -43,7 +42,7 @@ export default function Instagram() {
         </div>
 
         <a href={LINKS.instagram} target="_blank" rel="noreferrer" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '15px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '14px 32px', borderRadius: '999px' }}>
-          View more
+          Follow on IG
         </a>
       </div>
     </section>

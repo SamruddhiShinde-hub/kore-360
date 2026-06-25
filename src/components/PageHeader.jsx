@@ -11,7 +11,7 @@ export default function PageHeader({ eyebrow, title, intro }) {
         <Reveal>
           <div style={{ ...eyebrowStyle, marginBottom: '20px' }}>{eyebrow}</div>
           <h1 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(38px,6vw,76px)', color: '#FFFFFF', margin: '0 0 18px' }}>{title}</h1>
-          <p style={{ fontSize: '17.5px', lineHeight: 1.6, color: 'rgba(255,255,255,0.75)', maxWidth: '620px', margin: 0 }}>{intro}</p>
+          <p style={{ fontSize: '17.5px', lineHeight: 1.6, color: 'rgba(255,255,255,0.75)', maxWidth: '620px', margin: 0, textAlign: 'justify' }}>{intro}</p>
         </Reveal>
       </div>
     </div>

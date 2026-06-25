@@ -92,7 +92,17 @@ a { text-decoration: none; }
 }
 @media (max-width: 600px) {
   .course-card { min-height: 380px !important; }
-  .ig-grid { grid-template-columns: repeat(2,1fr) !important; }
+  .ig-grid { grid-template-columns: repeat(2,1fr) !important; max-width: 230px; margin: 0 auto 44px !important; }
+  .ig-extra { display: none !important; }
+}
+
+/* ---- responsive: tighten section spacing on mobile ---- */
+@media (max-width: 700px) {
+  #courses > div, #careers > div, #events > div, #faq > div,
+  #instagram > div, #sessions > div, #testimonials > div {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
 }
 
 /* ---- instagram grid hover zoom ---- */
@@ -121,8 +131,15 @@ a { text-decoration: none; }
     overflow-x: auto;
     padding-bottom: 8px;
     -webkit-overflow-scrolling: touch;
+    /* fade the right edge so a clipped tab still reads as "more to scroll" */
+    mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent 100%);
   }
   .interest-tabs::-webkit-scrollbar { display: none; }
+  .role-pill {
+    font-size: 12px !important;
+    padding: 7px 13px !important;
+  }
 }
 
 /* ---- hero: swap to a portrait photo of Krish, full-bleed behind the copy, on mobile ---- */

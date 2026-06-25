@@ -47,7 +47,7 @@ export default function Management() {
                 </div>
                 <div style={{ fontSize: '11px', letterSpacing: '0.12em', color, marginBottom: '14px' }}>{m.tag}</div>
                 <div style={{ fontWeight: 800, fontSize: '25px', letterSpacing: '-0.01em', marginBottom: '12px' }}>{m.title}</div>
-                <p style={{ fontSize: '15px', lineHeight: 1.55, color: 'var(--text-muted)', margin: '0 0 22px' }}>{m.desc}</p>
+                <p style={{ fontSize: '15px', lineHeight: 1.55, color: 'var(--text-muted)', margin: '0 0 22px', textAlign: 'justify' }}>{m.desc}</p>
                 <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 26px', display: 'flex', flexDirection: 'column', gap: '9px', flex: 1 }}>
                   {m.points.map((p) => (
                     <li key={p} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '14.5px', lineHeight: 1.5, color: 'var(--text-muted)' }}>
