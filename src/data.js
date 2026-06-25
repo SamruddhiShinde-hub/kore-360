@@ -39,6 +39,7 @@ export const LINKS = {
   phone: '+91 96892 88000',
   phoneTel: 'tel:+919689288000',
   whatsapp: 'https://wa.me/919689288000',
+  decathlonForm: 'https://forms.gle/U4p4S2Fpon1RGcPb6',
 };
 
 // ---- Hero copy ----
@@ -179,7 +180,7 @@ export const TESTIMONIALS = [
 
 // ---- FAQ ----
 export const FAQS = [
-  { q: 'How do I know which session is right for me?', a: "Most people end up booking the 1:1 clarity call — it's the only session built around your specific background, not a generic script. In thirty minutes you'll walk away with a personalised route into the industry and an honest read on where you stand, rather than information you still have to figure out how to apply. If you want the cheapest possible starting point first, the e-book covers the basics, and the 15-minute Q&A works if you've already got one or two pointed questions — but the clarity call is the one that actually moves people forward." },
+  { q: 'How do I know which session is right for me?', a: "Most people end up booking the 1:1 clarity call — it's built around your specific background, not a generic script, and you'll leave with a real plan. Want the cheapest starting point first? Try the e-book." },
   { q: 'Do you guarantee a job or placement?', a: "No — and anyone who promises a guaranteed job in this industry isn't being straight with you. What we do guarantee is a clear, honest plan, real introductions where they make sense, and an honest read on where you actually stand." },
   { q: "I have zero sports background — can I still break in?", a: 'Yes. Most of the people KORE 360 has placed didn\'t come from a sports background — they came from marketing, operations, finance and other fields and translated those skills into sport. The e-book and clarity call both start from "zero, but motivated."' },
   { q: 'Are the courses live or self-paced?', a: 'The courses are self-paced — you get access and work through them on your own schedule. The webinar is the one live, fixed-time session; everything else (e-book, courses) you can start the moment you pay.' },
