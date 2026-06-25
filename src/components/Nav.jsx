@@ -96,7 +96,7 @@ export default function Nav() {
           }}
           style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text)' }}
         >
-          <img src={logo} alt="Kore 360 Logo" style={{ height: '64px', width: 'auto', display: 'block' }} />
+          <img src={logo} alt="Kore 360 Logo" width="102" height="64" style={{ height: '64px', width: '102px', display: 'block' }} />
         </Link>
 
         {/* Desktop nav */}

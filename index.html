@@ -11,8 +11,6 @@
     <!-- load non-blocking: print media doesn't apply on screen, so the browser fetches it without blocking render, then onload swaps it to apply everywhere -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" /></noscript>
-    <!-- mirrors data.js IMAGES.heroCentered — keep these in sync; this lets the browser start fetching the LCP image before the JS bundle parses -->
-    <link rel="preload" as="image" fetchpriority="high" href="https://loremflickr.com/1920/1200/cricket,stadium,match?lock=5" />
     <script>
       (function () {
         try {

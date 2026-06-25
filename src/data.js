@@ -156,12 +156,11 @@ export const FAQS = [
   { q: 'How do internships and placements with brand partners actually work?', a: "Through the Talent track, KORE 360 matches you to real internship and placement openings with partner brands and represents you through the process — from intro to offer — rather than just forwarding a job link." },
 ];
 
-// ---- Images (replace these placeholder URLs with your own photos) ----
+// ---- Images ----
 export const IMAGES = {
-  heroSplit: 'https://picsum.photos/seed/kore-krish-split/900/1100',
+  heroSplit: heroMobileImg,
   heroCentered: heroCenteredImg,
   heroMobile: heroMobileImg,
-  heroEditorial: 'https://picsum.photos/seed/kore-krish-edit/900/1200',
-  events: 'https://loremflickr.com/1000/1000/cricket,match,outdoor?lock=61',
-  about: 'https://loremflickr.com/900/1100/cricket,stadium,spectators?lock=53',
+  heroEditorial: heroMobileImg,
+  events: eventOpsImg,
 };
