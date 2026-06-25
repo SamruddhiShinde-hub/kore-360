@@ -12,6 +12,17 @@ import eventOpsImg from './assets/event_ops.jpg';
 import starterCourseImg from './assets/the_sports_management_starter.jpg';
 import marketingCourseImg from './assets/marketing_and_sponsorship.jpg';
 import networkingCourseImg from './assets/land_the_job_role.jpg';
+import bcciLogo from './assets/brand8.jpg';
+import tataIplLogo from './assets/brand10.jpg';
+import t20MumbaiLogo from './assets/brand9.jpg';
+import kheloIndiaLogo from './assets/brand11.jpg';
+import riseWorldwideLogo from './assets/brand1.jpg';
+import legendsLeagueLogo from './assets/brand2.jpg';
+import isplLogo from './assets/brand3.jpg';
+import eclLogo from './assets/brand4.jpg';
+import chennaiSingamsLogo from './assets/brand5.jpg';
+import actorsCricketBashLogo from './assets/brand6.jpg';
+import eSamparkLogo from './assets/brand7.jpg';
 
 // Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
 export const ACCENT = '#F05123';
@@ -119,6 +130,22 @@ export const MANAGEMENT_SERVICES = [
 
 // ---- Talent page: placement & internship partners ----
 export const TALENT_PARTNERS = ['Decathlon', 'MuscleBlaze'];
+
+// ---- Brands & leagues worked with (auto-scrolling logo strip) ----
+// Order matters for the first four; the rest can be in any order.
+export const BRANDS = [
+  { name: 'BCCI', logo: bcciLogo },
+  { name: 'Tata IPL', logo: tataIplLogo },
+  { name: 'T20 Mumbai', logo: t20MumbaiLogo },
+  { name: 'Khelo India', logo: kheloIndiaLogo },
+  { name: 'Rise Worldwide', logo: riseWorldwideLogo },
+  { name: 'Legends League Cricket', logo: legendsLeagueLogo },
+  { name: 'ISPL', logo: isplLogo },
+  { name: 'Entertainers Cricket League', logo: eclLogo },
+  { name: 'Chennai Singams', logo: chennaiSingamsLogo },
+  { name: 'Actors Cricket Bash', logo: actorsCricketBashLogo },
+  { name: 'eSampark', logo: eSamparkLogo },
+];
 
 // ---- Courses ----
 export const COURSES = [

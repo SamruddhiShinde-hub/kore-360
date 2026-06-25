@@ -1,5 +1,6 @@
 import Hero from '../components/Hero.jsx';
 import Marquee from '../components/Marquee.jsx';
+import BrandLogos from '../components/BrandLogos.jsx';
 import Sessions from '../components/Sessions.jsx';
 import Courses from '../components/Courses.jsx';
 import Testimonials from '../components/Testimonials.jsx';
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       <Hero />
       <Marquee />
+      <BrandLogos />
       <Sessions />
       <Courses />
       <Testimonials />
