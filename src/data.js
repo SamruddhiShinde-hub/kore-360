@@ -45,7 +45,7 @@ export const LINKS = {
 // Web3Forms access key (free, no backend needed) — get yours at https://web3forms.com
 // by submitting that site's own form with work.krishlalwani@gmail.com; they email you a
 // key instantly. Paste it below to make the "connect with us" popup actually deliver mail.
-export const WEB3FORMS_ACCESS_KEY = 'REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY';
+export const WEB3FORMS_ACCESS_KEY = 'd8d78189-8a59-4e5d-82e8-4ec732db3f5d';
 
 // ---- Hero copy ----
 export const HERO = {
