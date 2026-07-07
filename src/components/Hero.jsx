@@ -2,7 +2,7 @@ import { useRef, useEffect } from 'react';
 import { HERO, HERO_VARIANT, IMAGES } from '../data.js';
 import Reveal from './Reveal.jsx';
 import mainHeroBg from '../assets/main-hero-background.webp';
-import heroVid from '../assets/hero-section-video.mp4';
+import heroVid from '../assets/landscape-hero-vid.mp4';
 const eyebrow = { fontSize: '13px', letterSpacing: '0.18em', backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' };
 const btnAccent = { display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' };
 
