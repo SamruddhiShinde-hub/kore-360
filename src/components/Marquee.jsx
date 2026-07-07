@@ -78,6 +78,29 @@ export default function Marquee() {
             <p style={{ fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text-muted)', margin: 0, textAlign: 'justify' }}>{current.desc}</p>
           </div>
         </div>
+        
+        {/* Pagination Dots */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '40px' }}>
+          {MARQUEE.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              style={{
+                width: '10px',
+                height: '10px',
+                borderRadius: '50%',
+                background: i === active ? 'var(--kore-gradient)' : 'var(--text-muted)',
+                opacity: i === active ? 1 : 0.3,
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+                transition: 'opacity 0.3s ease, transform 0.3s ease',
+                transform: i === active ? 'scale(1.2)' : 'scale(1)'
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
