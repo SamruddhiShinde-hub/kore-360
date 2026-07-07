@@ -12,7 +12,7 @@ import eventOpsImg from './assets/event_ops.jpg';
 import starterCourseImg from './assets/the_sports_management_starter.jpg';
 import marketingCourseImg from './assets/marketing_and_sponsorship.jpg';
 import networkingCourseImg from './assets/land_the_job_role.jpg';
-import bcciLogo from './assets/brand8.webp';
+import bcciLogo from './assets/brand8-optimized.webp';
 import tataIplLogo from './assets/brand10.webp';
 import t20MumbaiLogo from './assets/brand9.webp';
 import kheloIndiaLogo from './assets/brand11.webp';

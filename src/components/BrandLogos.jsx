@@ -21,7 +21,7 @@ export default function BrandLogos() {
         <div className="brand-marquee-track">
           {[...BRANDS, ...BRANDS].map((b, i) => (
             <div key={i} className="brand-tile" style={{ width: '180px', height: '100px', borderRadius: '12px', background: '#FFFFFF', border: '1px solid rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none', padding: '16px' }}>
-              <img src={b.logo} alt={b.name} loading="lazy" decoding="async" style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }} />
+              <img src={b.logo} alt={b.name} loading="lazy" decoding="async" width="148" height="68" style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' }} />
             </div>
           ))}
         </div>

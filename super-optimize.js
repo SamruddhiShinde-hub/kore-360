@@ -6,12 +6,7 @@ import { fileURLToPath } from 'url';
 const assetsDir = 'e:/React Projects/kore-360-react/kore-360-react/src/assets';
 
 const files = [
-  'main-hero-background.png',
-  'cricket-ground.png',
-  'desktop-cricket-image.jpg',
-  'brand10.jpg',
-  'brand9.jpg',
-  'brand11.jpg'
+  'brand8.webp'
 ];
 
 async function superOptimize() {
@@ -40,13 +35,12 @@ async function superOptimize() {
         pipeline = pipeline.resize({ width: 1024, withoutEnlargement: true });
       }
       
-      await pipeline.webp({ quality: 60, effort: 6 }).toFile(targetFile);
-      console.log(`Created ${targetFile}`);
+      const tempTargetFile = targetFile + '.tmp';
       
-      // Delete the old file if it wasn't already webp
-      if (ext.toLowerCase() !== '.webp') {
-        fs.unlinkSync(filePath);
-      }
+      await pipeline.webp({ quality: 60, effort: 6 }).toFile(tempTargetFile);
+      fs.renameSync(tempTargetFile, targetFile);
+      
+      console.log(`Created ${targetFile}`);
     } catch (err) {
       console.error(`Error processing ${file}:`, err);
     }
