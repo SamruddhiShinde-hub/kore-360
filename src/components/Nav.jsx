@@ -1,6 +1,5 @@
 import { useState, useLayoutEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { LINKS } from '../data.js';
 import logo from '../assets/logo.png';
 
 const navLinks = [
@@ -14,13 +13,13 @@ function getInitialTheme() {
     const stored = localStorage.getItem('kore-theme');
     if (stored === 'light' || stored === 'dark') return stored;
   } catch { /* localStorage unavailable */ }
-  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: light)').matches) return 'light';
-  return 'dark';
+  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+  return 'light';
 }
 
-function SunIcon() {
+function SunIcon({ size = 19 }) {
   return (
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="4" />
       <line x1="12" y1="2" x2="12" y2="4" />
       <line x1="12" y1="20" x2="12" y2="22" />
@@ -34,9 +33,9 @@ function SunIcon() {
   );
 }
 
-function MoonIcon() {
+function MoonIcon({ size = 19 }) {
   return (
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
     </svg>
   );
@@ -59,14 +58,32 @@ export default function Nav() {
     <button
       onClick={toggleTheme}
       className="theme-toggle"
+      role="switch"
+      aria-checked={theme === 'light'}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       style={{
-        background: 'none', border: 'none', cursor: 'pointer', padding: '6px',
-        color: '#FFFFFF', display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-        borderRadius: '50%',
+        position: 'relative', flex: 'none', width: '46px', height: '25px', borderRadius: '999px',
+        background: 'rgba(255,255,255,0.18)', border: '1px solid rgba(255,255,255,0.32)',
+        cursor: 'pointer', padding: '2px', display: 'inline-flex', alignItems: 'center',
       }}
     >
-      {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+      <span style={{ position: 'absolute', left: '6px', display: 'flex', color: 'rgba(255,255,255,0.65)' }}>
+        <MoonIcon size={13} />
+      </span>
+      <span style={{ position: 'absolute', right: '6px', display: 'flex', color: 'rgba(255,255,255,0.65)' }}>
+        <SunIcon size={13} />
+      </span>
+      <span
+        style={{
+          position: 'relative', zIndex: 1, width: '19px', height: '19px', borderRadius: '50%',
+          background: '#FFFFFF', boxShadow: '0 1px 4px rgba(0,0,0,0.45)',
+          transform: theme === 'light' ? 'translateX(21px)' : 'translateX(0)',
+          transition: 'transform .2s ease',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0A0A0A',
+        }}
+      >
+        {theme === 'light' ? <SunIcon size={12} /> : <MoonIcon size={12} />}
+      </span>
     </button>
   );
 
@@ -108,10 +125,10 @@ export default function Nav() {
           ))}
           {themeToggleButton}
           <a
-            href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent"
-            style={{ fontSize: '14px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '10px 16px', borderRadius: '7px' }}
+            href="/#courses" className="btn-accent"
+            style={{ fontSize: '14px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '10px 16px', borderRadius: '7px' }}
           >
-            Book a 1:1 call · ₹1,499
+            See all courses
           </a>
         </nav>
 
@@ -142,10 +159,10 @@ export default function Nav() {
           </button>
 
           <a
-            href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent"
-            style={{ fontSize: '13px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '9px 12px', borderRadius: '7px', whiteSpace: 'nowrap' }}
+            href="/#courses" className="btn-accent"
+            style={{ fontSize: '13px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '9px 12px', borderRadius: '7px', whiteSpace: 'nowrap' }}
           >
-            Book a call
+            See all courses
           </a>
         </div>
       </div>

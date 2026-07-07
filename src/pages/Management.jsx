@@ -33,7 +33,7 @@ export default function Management() {
       <PageHeader
         eyebrow="MANAGEMENT"
         title="Sponsorships and hospitality, handled"
-        intro="Beyond placing people, KORE 360 manages the commercial and on-ground side of sport — sourcing sponsorship partners and running the hospitality experience that keeps them coming back."
+        intro="Beyond placing people, KORE 360 manages the commercial and on-ground side of sport: sourcing sponsorship partners and running the hospitality experience that keeps them coming back."
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 32px 96px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: '24px' }}>
@@ -55,7 +55,7 @@ export default function Management() {
                     </li>
                   ))}
                 </ul>
-                <a href={LINKS.event} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#000000', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}>Get in touch →</a>
+                <a href={LINKS.event} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}>Get in touch →</a>
               </Reveal>
             );
           })}

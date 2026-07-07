@@ -27,11 +27,11 @@ export default function StickyCta() {
         gap: '16px', flexWrap: 'wrap',
       }}
     >
-      <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text)' }}>Ready to explore a career in sport?</div>
+      <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--text)' }}>Ready to explore a career in sports management?</div>
       <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
         <a
           href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent"
-          style={{ fontSize: '13px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '9px 16px', borderRadius: '7px', whiteSpace: 'nowrap' }}
+          style={{ fontSize: '13px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '9px 16px', borderRadius: '7px', whiteSpace: 'nowrap' }}
         >
           Book a clarity call
         </a>

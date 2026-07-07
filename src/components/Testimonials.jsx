@@ -43,7 +43,7 @@ export default function Testimonials() {
           Hear it from them
         </Reveal>
         <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px', textAlign: 'justify' }}>
-          Real people, real placements — in their own words.
+          Real people, real placements, in their own words.
         </p>
 
         <div style={{ position: 'relative' }}>

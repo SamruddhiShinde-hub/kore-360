@@ -30,7 +30,7 @@ export default function Talent() {
       <PageHeader
         eyebrow="TALENT"
         title="Your talent management partner"
-        intro="KORE 360 doesn't just point you at a job board — we represent you. That means matching you to real internships and placements with brands already working in and around sport, and staying in your corner once you're in the door."
+        intro="KORE 360 doesn't just point you at a job board. We represent you, matching you to real internships and placements with brands already working in and around sport, and staying in your corner once you're in the door."
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 32px 0' }}>
         <DecathlonBanner />
@@ -49,7 +49,7 @@ export default function Talent() {
                 <div style={{ fontSize: '11px', letterSpacing: '0.12em', color, marginBottom: '16px' }}>{k.tag}</div>
                 <div style={{ fontWeight: 900, textTransform: 'uppercase', fontSize: '30px', letterSpacing: '-0.01em', marginBottom: '12px' }}>{k.role}</div>
                 <p style={{ fontSize: '15px', lineHeight: 1.55, color: 'var(--text-muted)', margin: '0 0 26px', flex: 1, textAlign: 'justify' }}>{k.desc}</p>
-                <a href={k.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#000000', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}>{k.cta} →</a>
+                <a href={k.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}>{k.cta} →</a>
               </Reveal>
             );
           })}

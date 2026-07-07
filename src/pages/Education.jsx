@@ -12,7 +12,7 @@ export default function Education() {
       <PageHeader
         eyebrow="EDUCATION"
         title="Learn how the industry actually works"
-        intro="From a ₹99 read to a 1:1 game plan with Krish — four ways to get the real picture of how sports management hiring actually works, in as much or as little time as you've got."
+        intro="From a ₹99 read to a 1:1 game plan with Krish: four ways to get the real picture of how sports management hiring actually works, in as much or as little time as you've got."
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 32px 96px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
@@ -25,7 +25,7 @@ export default function Education() {
                 style={{ position: 'relative', background: 'rgba(var(--border-rgb),0.035)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '16px', padding: '28px', overflow: 'hidden' }}
               >
                 {s.featured && (
-                  <div style={{ position: 'absolute', top: '-1px', right: '24px', background: 'var(--kore-gradient)', color: '#000000', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', padding: '5px 9px', borderRadius: '0 0 6px 6px' }}>
+                  <div style={{ position: 'absolute', top: '-1px', right: '24px', background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', padding: '5px 9px', borderRadius: '0 0 6px 6px' }}>
                     MOST BOOKED
                   </div>
                 )}
@@ -59,7 +59,7 @@ export default function Education() {
 
                 <p style={{ fontSize: '14.5px', lineHeight: 1.6, fontStyle: 'italic', color: 'var(--text-muted)', borderLeft: `2px solid ${accent}`, paddingLeft: '14px', margin: '0 0 26px', textAlign: 'justify' }}>{d.outcome}</p>
 
-                <a href={s.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#000000', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}>
+                <a href={s.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}>
                   {s.cta} →
                 </a>
               </Reveal>
@@ -68,8 +68,8 @@ export default function Education() {
         </div>
 
         <Reveal style={{ marginTop: '12px', textAlign: 'center', borderTop: '1px solid rgba(var(--border-rgb),0.08)', paddingTop: '40px' }}>
-          <p style={{ fontSize: '15px', color: 'var(--text-muted)', margin: '0 0 18px', textAlign: 'justify' }}>Not sure which one to start with? The clarity call is the most personal — the e-book is the cheapest way to find out if this industry is for you.</p>
-          <a href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}>Talk to Krish 1:1 →</a>
+          <p style={{ fontSize: '15px', color: 'var(--text-muted)', margin: '0 0 18px', textAlign: 'justify' }}>Not sure which one to start with? The clarity call is the most personal option, and the e-book is the cheapest way to find out if this industry is for you.</p>
+          <a href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}>Talk to Krish 1:1 →</a>
         </Reveal>
       </div>
     </>

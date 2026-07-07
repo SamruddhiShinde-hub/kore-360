@@ -57,8 +57,10 @@ a { text-decoration: none; }
 .nav-link-bar { transition: color .15s, text-shadow .15s; }
 .nav-link-bar:hover { color: #FFFFFF !important; text-shadow: 0 0 10px rgba(255,255,255,0.4); }
 .foot-link:hover { color: var(--kore-orange-text) !important; }
-.theme-toggle { transition: background .15s; }
-.theme-toggle:hover { background: rgba(var(--border-rgb), 0.1) !important; }
+.foot-icon-link { transition: color .15s, border-color .15s; }
+.foot-icon-link:hover { color: var(--kore-orange-text) !important; border-color: var(--kore-orange) !important; }
+.theme-toggle { transition: border-color .15s; }
+.theme-toggle:hover { border-color: rgba(255,255,255,0.6) !important; }
 .card-hover { transition: border-color .18s, transform .18s, box-shadow .18s; }
 .card-hover:hover { border-color: var(--kore-magenta) !important; transform: translateY(-6px); box-shadow: 0 16px 30px rgba(183,30,96,0.16); }
 .session-card { transition: all .18s; }

@@ -22,7 +22,7 @@ export default function FAQ() {
           Questions, answered
         </Reveal>
         <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', margin: '0 0 44px', textAlign: 'justify' }}>
-          Still unsure? Here's what people usually ask before booking.
+          Still unsure? Here's what people usually ask before reaching out.
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>

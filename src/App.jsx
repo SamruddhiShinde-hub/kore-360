@@ -6,6 +6,7 @@ import Footer from './components/Footer.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import SmoothScroll from './components/SmoothScroll.jsx';
 import FloatingActions from './components/FloatingActions.jsx';
+import ConnectPopup from './components/ConnectPopup.jsx';
 import Home from './pages/Home.jsx';
 
 const Education = lazy(() => import('./pages/Education.jsx'));
@@ -35,6 +36,7 @@ export default function App() {
       </main>
       <Footer />
       <FloatingActions />
+      <ConnectPopup />
     </>
   );
 }

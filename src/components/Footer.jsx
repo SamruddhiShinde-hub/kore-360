@@ -5,12 +5,46 @@ import logo from '../assets/logo.png';
 const exploreLinks = [
   { label: 'Education', to: '/education' },
   { label: 'Management', to: '/management' },
-  { label: 'Talent', to: '/talent' },
+  { label: 'Talent Acquisition', to: '/talent' },
 ];
 
 const connectLinks = [
   { label: 'Instagram', href: LINKS.instagram, external: true },
   { label: 'Book a 1:1', href: LINKS.bookCall, external: true },
+];
+
+function MailIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="4" width="20" height="16" rx="3" />
+      <path d="m3 6 9 7 9-7" />
+    </svg>
+  );
+}
+
+function WhatsappIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 21 4.4 16.5A8.5 8.5 0 1 1 8 19.5Z" />
+      <path d="M8.5 9.5c0 3 2.5 5.5 5.5 5.5.5 0 1-.5 1-1v-1l-2-1-1 1a4 4 0 0 1-3-3l1-1-1-2H8c-.5 0-.5.5-.5 1Z" />
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+    </svg>
+  );
+}
+
+const socialIcons = [
+  { label: 'Email', href: `mailto:${LINKS.email}`, Icon: MailIcon },
+  { label: 'WhatsApp', href: LINKS.whatsapp, Icon: WhatsappIcon },
+  { label: 'Instagram', href: LINKS.instagram, Icon: InstagramIcon },
 ];
 
 export default function Footer() {
@@ -21,7 +55,18 @@ export default function Footer() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <img src={logo} alt="Kore 360 Logo" width="102" height="64" style={{ height: '64px', width: '102px', display: 'block' }} />
           </div>
-          <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '320px', margin: 0, textAlign: 'justify' }}>Careers in sports management — built with Krish Lalwani. Education, management and talent, all in one place.</p>
+          <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '320px', margin: '0 0 20px', textAlign: 'justify' }}><strong style={{ color: 'var(--text)' }}>Careers in sports management</strong>, built with <em style={{ whiteSpace: 'nowrap' }}>Krish Lalwani</em>. Education, Management and Talent, all in one place.</p>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {socialIcons.map(({ label, href, Icon }) => (
+              <a
+                key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}
+                className="foot-icon-link"
+                style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', borderRadius: '50%', border: '1px solid rgba(var(--border-rgb),0.16)', color: 'var(--text-muted)' }}
+              >
+                <Icon />
+              </a>
+            ))}
+          </div>
         </div>
         <div>
           <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: 'var(--text-faint)', marginBottom: '16px' }}>EXPLORE</div>

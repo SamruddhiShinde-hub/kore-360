@@ -12,7 +12,7 @@ import eventOpsImg from './assets/event_ops.jpg';
 import starterCourseImg from './assets/the_sports_management_starter.jpg';
 import marketingCourseImg from './assets/marketing_and_sponsorship.jpg';
 import networkingCourseImg from './assets/land_the_job_role.jpg';
-import bcciLogo from './assets/brand8.jpg';
+import bcciLogo from './assets/brand8.webp';
 import tataIplLogo from './assets/brand10.jpg';
 import t20MumbaiLogo from './assets/brand9.jpg';
 import kheloIndiaLogo from './assets/brand11.jpg';
@@ -22,7 +22,6 @@ import isplLogo from './assets/brand3.jpg';
 import eclLogo from './assets/brand4.jpg';
 import chennaiSingamsLogo from './assets/brand5.jpg';
 import actorsCricketBashLogo from './assets/brand6.jpg';
-import eSamparkLogo from './assets/brand7.jpg';
 
 // Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
 export const ACCENT = '#F05123';
@@ -40,16 +39,21 @@ export const LINKS = {
   phoneTel: 'tel:+919689288000',
   whatsapp: 'https://wa.me/919689288000',
   decathlonForm: 'https://forms.gle/U4p4S2Fpon1RGcPb6',
+  email: 'work.krishlalwani@gmail.com',
 };
+
+// Web3Forms access key (free, no backend needed) — get yours at https://web3forms.com
+// by submitting that site's own form with work.krishlalwani@gmail.com; they email you a
+// key instantly. Paste it below to make the "connect with us" popup actually deliver mail.
+export const WEB3FORMS_ACCESS_KEY = 'REPLACE_WITH_YOUR_WEB3FORMS_ACCESS_KEY';
 
 // ---- Hero copy ----
 export const HERO = {
   eyebrow: 'KORE 360 · SPORTS MANAGEMENT',
   headlineLines: ['Get inside', 'the game'],
   blurb:
-    "Five years in the industry. 60+ calls. 100+ people placed.\nI'm Krish Lalwani — and this is how you actually build a career in sport.",
+    "Five years in the industry. 60+ calls. 100+ people placed.\nI'm Krish Lalwani, and this is how you actually build a career in sports.",
   primaryCta: 'See All Courses',
-  secondaryCta: 'Get the e-book · ₹99',
   stats: [
     { value: '5+', label: 'years' },
     { value: '60+', label: 'calls' },
@@ -59,49 +63,49 @@ export const HERO = {
 
 // ---- Explore by interest (tabs: image + blurb per interest) ----
 export const MARQUEE = [
-  { label: 'Sports marketing', desc: "Build the campaigns, partnerships and fan engagement strategies that get a team or league noticed. From digital content calendars to in-stadium activations, this is where brand, sport and audience meet — and where teams are investing more every season as fan attention gets harder to win.", img: sportsMarketingImg },
-  { label: 'Team operations', desc: "Keep a franchise running — logistics, scheduling, compliance and the day-to-day that gets a team onto the field. Travel, kit, accreditation, venue coordination and dozens of small decisions made well before anyone notices them: this is the backbone role every team relies on.", img: teamOperationsImg },
-  { label: 'Athlete management', desc: "Manage contracts, brand deals and the off-field career of the athletes you represent. You're the buffer between the athlete and everything else — negotiations, sponsors, media requests — so they can focus on performing while you build their long-term value.", img: athleteManagementImg },
-  { label: 'Event ops', desc: "Plan and run the live experience — venues, vendors, broadcast and everything that has to work on match day. Ticketing, security, hospitality and contingency plans all come together under one roof, and when it's done right, nobody in the stands even notices the work behind it.", img: eventOpsImg },
+  { label: 'Sports marketing', desc: "Build the campaigns, partnerships and fan engagement strategies that get a team or league noticed. From digital content calendars to in-stadium activations, this is where brands, sports, and audience meet, and where teams are investing more every season as fan attention gets harder to win.", img: sportsMarketingImg },
+  { label: 'Team operations', desc: "Keep a franchise running: logistics, scheduling, compliance and the day-to-day that gets a team onto the field. Travel, kit, accreditation, venue coordination and dozens of small decisions made well before anyone notices them; this is the backbone role every team relies on.", img: teamOperationsImg },
+  { label: 'Athlete management', desc: "Manage contracts, brand deals and the off-field career of the athletes you represent. You're the buffer between the athlete and everything else: negotiations, sponsors, media requests, so they can focus on performing while you build their long-term value.", img: athleteManagementImg },
+  { label: 'Event ops', desc: "Plan and run the live experience: venues, vendors, broadcast and everything that has to work on match day. Ticketing, security, hospitality and contingency plans all come together under one roof, and when it's done right, nobody in the stands even notices the work behind it.", img: eventOpsImg },
 ];
 
 // ---- Sessions ("Work with Krish") ----
 // `details` powers the expanded breakdown on the Education page; the homepage cards only use the fields above it.
 export const SESSIONS = [
   {
-    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', meta: 'PDF · instant download', desc: 'My complete playbook for breaking into sports management — the roles, the routes, the real talk.', cta: 'Buy the e-book', href: 'https://superprofile.bio/vp/behind-the-field---krish-lalwani-697',
+    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', href: 'https://superprofile.bio/vp/behind-the-field---krish-lalwani-697',
     details: {
       format: 'Instant PDF download, ~60 pages',
       whoFor: "Anyone starting from zero who wants the full map before spending on a call",
       includes: ['Every entry route into sports management, mapped out', 'Real job titles and what they actually pay', 'A breakdown of which skills matter for which roles', "Krish's personal do's and don'ts from five years in the industry"],
-      outcome: "Walk away knowing exactly which corner of the industry fits you — before you spend a rupee on anything else.",
+      outcome: "Walk away knowing exactly which corner of the industry fits you before you spend a rupee on anything else.",
     },
   },
   {
-    tag: 'WEBINAR', name: 'Live Webinar', price: '₹499', meta: '60 min · live · listen-only', desc: 'A one-hour live session on how the industry actually hires. Watch and learn — no live Q&A.', cta: 'Book your seat', href: '#',
+    tag: 'WEBINAR', name: 'Live Webinar', price: '₹499', meta: '60 min · Live · Listen-only', desc: 'A one-hour live session on how the industry actually hires.', cta: 'Book your seat', href: '#',
     details: {
-      format: '60-minute live session, listen-only (no live Q&A)',
+      format: '60-minute live session, listen-only',
       whoFor: 'People who want the bigger picture of how hiring actually works in sport, beyond the entry-level playbook',
       includes: ['How teams, leagues and agencies actually hire', 'What recruiters screen for first', 'Common mistakes that get applications rejected', 'Live audience polls and real examples'],
       outcome: 'Leave the session with a clear, realistic picture of what hiring managers in sport are actually looking for.',
     },
   },
   {
-    tag: 'Q&A', name: '1:1 Q&A Call', price: '₹499', meta: '15 min · audio call', desc: 'Fifteen minutes, audio only, just you and me. Bring your questions, leave with answers.', cta: 'Book a Q&A', href: '#',
+    tag: 'Q&A', name: '1:1 Q&A Call', price: '₹499', meta: '10 min · Audio call', desc: 'Ten minutes, audio only, just you and me. Bring your questions, leave with answers.', cta: 'Book a Q&A', href: '#',
     details: {
-      format: '15-minute 1:1 audio call',
+      format: '10-minute 1:1 audio call',
       whoFor: "Anyone with specific, pointed questions who doesn't need a full strategy session",
-      includes: ['Direct answers to your specific questions', 'No script — just a conversation', 'A quick gut-check on a decision you’re weighing'],
+      includes: ['Direct answers to your specific questions', 'No script, just a conversation', 'A quick gut-check on a decision you’re weighing'],
       outcome: 'Get unstuck on the one or two questions that have been sitting in your head.',
     },
   },
   {
-    tag: '1:1 CALL', name: 'Clarity Call', price: '₹1,499', meta: '30 min · video call', desc: 'A thirty-minute video call to map your personal route into the industry.', cta: 'Book a 1:1 clarity call', href: 'https://superprofile.bio/bookings/krishlalwaniofficial?sessionId=699dc00d94cdda00134ba9a0', featured: true,
+    tag: '1:1 CALL', name: 'Clarity Call', price: '₹1,499', meta: '30 min · Video call', desc: 'A thirty-minute video call to map your personal route into the industry.', cta: 'Book a 1:1 clarity call', href: 'https://superprofile.bio/bookings/krishlalwaniofficial?sessionId=699dc00d94cdda00134ba9a0', featured: true,
     details: {
       format: '30-minute 1:1 video call',
       whoFor: "Anyone ready to map out their personal route into the industry, with someone who's done the hiring",
       includes: ['A personalised route into the industry based on your background', 'Honest feedback on your CV/profile if you share it beforehand', 'A short action plan for your next 90 days'],
-      outcome: 'Leave with a concrete plan — not just inspiration — for the next quarter of your job search.',
+      outcome: 'Leave with a concrete plan, not just inspiration, for the next quarter of your job search.',
     },
   },
 ];
@@ -111,7 +115,7 @@ export const MANAGEMENT_SERVICES = [
   {
     tag: 'SPONSORSHIPS',
     title: 'Sponsorship sourcing & negotiation',
-    desc: 'Connect teams, athletes and events with the right brand partners — and structure deals that actually deliver for both sides.',
+    desc: 'Connect teams, athletes and events with the right brand partners, and structure deals that actually deliver for both sides.',
     points: [
       'Identify and approach brands that fit your audience',
       'Structure sponsorship packages and deliverables',
@@ -122,7 +126,7 @@ export const MANAGEMENT_SERVICES = [
   {
     tag: 'HOSPITALITY',
     title: 'Match-day hospitality & guest experience',
-    desc: 'Plan and run the hospitality side of live sport — corporate boxes, VIP guests and partner entertainment.',
+    desc: 'Plan and run the hospitality side of live sport: corporate boxes, VIP guests and partner entertainment.',
     points: [
       'Guest lists, invites and accreditation',
       'Corporate box and lounge experience design',
@@ -148,7 +152,6 @@ export const BRANDS = [
   { name: 'Entertainers Cricket League', logo: eclLogo },
   { name: 'Chennai Singams', logo: chennaiSingamsLogo },
   { name: 'Actors Cricket Bash', logo: actorsCricketBashLogo },
-  { name: 'eSampark', logo: eSamparkLogo },
 ];
 
 // ---- Courses ----
@@ -171,20 +174,20 @@ export const EVENT_TYPES = ['Keynotes & talks', 'Panels & moderation', 'Campus &
 // `video` is a placeholder sample clip — swap in your own video file/URL per testimonial when ready.
 const DUMMY_VIDEO = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
 export const TESTIMONIALS = [
-  { name: 'Ananya R.', result: 'Landed a marketing internship with an IPL franchise', quote: 'The 1:1 call gave me a real plan instead of generic advice — I knew exactly what to do next.', poster: sportsMarketingImg, video: DUMMY_VIDEO },
+  { name: 'Ananya R.', result: 'Landed a marketing internship with an IPL franchise', quote: 'The 1:1 call gave me a real plan instead of generic advice, and I knew exactly what to do next.', poster: sportsMarketingImg, video: DUMMY_VIDEO },
   { name: 'Rohit K.', result: 'Now working in team operations for a national league', quote: "I went from cold-emailing teams to getting interviews within weeks of the clarity call.", poster: teamOperationsImg, video: DUMMY_VIDEO },
-  { name: 'Megha S.', result: 'Placed as an athlete management associate', quote: 'Krish broke down exactly what recruiters look for — it changed how I applied for everything after.', poster: athleteManagementImg, video: DUMMY_VIDEO },
+  { name: 'Megha S.', result: 'Placed as an athlete management associate', quote: 'Krish broke down exactly what recruiters look for, and it changed how I applied for everything after.', poster: athleteManagementImg, video: DUMMY_VIDEO },
   { name: 'Aditya V.', result: 'Booked his first event-ops gig within a month', quote: 'The e-book alone gave me more clarity than weeks of random Googling.', poster: eventOpsImg, video: DUMMY_VIDEO },
   { name: 'Priya N.', result: 'Now networking her way into a sports agency role', quote: 'The networking course taught me how to actually pitch myself, not just send another CV.', poster: networkingCourseImg, video: DUMMY_VIDEO },
 ];
 
 // ---- FAQ ----
 export const FAQS = [
-  { q: 'How do I know which session is right for me?', a: "Most people end up booking the 1:1 clarity call — it's built around your specific background, not a generic script, and you'll leave with a real plan. Want the cheapest starting point first? Try the e-book." },
-  { q: 'Do you guarantee a job or placement?', a: "No — and anyone who promises a guaranteed job in this industry isn't being straight with you. What we do guarantee is a clear, honest plan, real introductions where they make sense, and an honest read on where you actually stand." },
-  { q: "I have zero sports background — can I still break in?", a: 'Yes. Most of the people KORE 360 has placed didn\'t come from a sports background — they came from marketing, operations, finance and other fields and translated those skills into sport. The e-book and clarity call both start from "zero, but motivated."' },
-  { q: 'Are the courses live or self-paced?', a: 'The courses are self-paced — you get access and work through them on your own schedule. The webinar is the one live, fixed-time session; everything else (e-book, courses) you can start the moment you pay.' },
-  { q: 'How do internships and placements with brand partners actually work?', a: "Through the Talent track, KORE 360 matches you to real internship and placement openings with partner brands and represents you through the process — from intro to offer — rather than just forwarding a job link." },
+  { q: 'How do I know which session is right for me?', a: "Want a beginner-friendly starting point? Try the e-book, designed by Krish Lalwani. If you'd rather have something built around your specific background and situation, the 1:1 clarity call gives you a real plan and references, and you can always leave your resume with us." },
+  { q: 'Do you guarantee a job or placement?', a: "Unfortunately, not. Anyone who promises a guaranteed job in this industry isn't being straight with you. What we do guarantee is real introductions, real references, and effort that actually makes a difference. We keep you in mind for the future too, but any call you get after that is earned on your own caliber and interview." },
+  { q: "I'm from a different industry. Are the doors to sports management still open for me?", a: 'Yes. Most of the people KORE 360 has placed didn\'t come from a sports background, they came from marketing, operations, finance and other fields and translated those skills into the industry. The e-book and clarity call both start from wherever you\'re coming from.' },
+  { q: 'Are the courses live or self-paced?', a: 'The courses are self-paced, you get access and work through them on your own schedule. The webinar is the one live, fixed-time session; everything else you can start right away.' },
+  { q: 'How do internships and placements with brand partners actually work?', a: "Through the Talent track, KORE 360 matches you to real internship and placement openings with partner brands and represents you through the process, from intro to offer, rather than just forwarding a job link." },
 ];
 
 // ---- Images ----

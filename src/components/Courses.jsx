@@ -3,8 +3,6 @@ import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
 
 const ACCENTS = ['var(--kore-gradient)', 'var(--kore-magenta)', 'var(--kore-orange)'];
-const BADGE_BG = ['var(--kore-orange)', 'var(--kore-magenta)', 'var(--kore-orange)'];
-const BADGE_TEXT = ['#000000', '#FFFFFF', '#000000'];
 
 export default function Courses() {
   return (
@@ -27,9 +25,9 @@ export default function Courses() {
               <img src={c.img} alt={c.name} loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.92) 100%)' }} />
               <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', height: '100%', padding: '24px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div style={{ fontWeight: 900, fontSize: '38px', color: '#FFFFFF', lineHeight: 1 }}>{String(i + 1).padStart(2, '0')}</div>
-                  <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '6px 12px', borderRadius: '20px', background: BADGE_BG[i % BADGE_BG.length], color: BADGE_TEXT[i % BADGE_TEXT.length] }}>{c.level}</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                  <span style={{ fontWeight: 900, fontSize: '28px', color: '#FFFFFF', lineHeight: 1 }}>{String(i + 1).padStart(2, '0')}</span>
+                  <span style={{ fontWeight: 900, fontSize: '28px', color: '#FFFFFF', lineHeight: 1, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>- {c.level}</span>
                 </div>
                 <div style={{ flex: 1 }} />
                 <div style={{ width: '28px', height: '3px', background: ACCENTS[i % ACCENTS.length], marginBottom: '14px', borderRadius: '2px' }} />
@@ -40,7 +38,7 @@ export default function Courses() {
                     <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginRight: '6px' }}>from</span>
                     <span style={{ fontWeight: 900, fontSize: '21px', color: '#FFFFFF' }}>{c.price}</span>
                   </div>
-                  <a href={c.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: 700, color: '#000000', background: 'var(--kore-orange)', padding: '11px 18px', borderRadius: '8px' }}>Enroll →</a>
+                  <a href={c.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '11px 18px', borderRadius: '8px' }}>Enroll →</a>
                 </div>
               </div>
             </Reveal>

@@ -27,11 +27,11 @@ export default function Instagram() {
         <Reveal>
           <div style={{ fontWeight: 900, fontSize: 'clamp(30px,5vw,52px)', letterSpacing: '-0.02em', marginBottom: '16px' }}>@krishlalwaniofficial</div>
           <a href={LINKS.instagram} target="_blank" rel="noreferrer" className="foot-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 700, color: 'var(--kore-orange-text)', marginBottom: '44px' }}>
-            <InstagramIcon /> Follow on Instagram
+            <InstagramIcon /> Follow for more
           </a>
         </Reveal>
 
-        <div className="ig-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '10px', marginBottom: '44px' }}>
+        <div className="ig-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '10px' }}>
           {POSTS.map((src, i) => (
             <Reveal key={i} delay={i % 4} className={i >= 4 ? 'ig-extra' : ''} style={{ aspectRatio: '1/1', borderRadius: '10px', overflow: 'hidden' }}>
               <a href={LINKS.instagram} target="_blank" rel="noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
@@ -40,10 +40,6 @@ export default function Instagram() {
             </Reveal>
           ))}
         </div>
-
-        <a href={LINKS.instagram} target="_blank" rel="noreferrer" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '15px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '14px 32px', borderRadius: '999px' }}>
-          Follow on IG
-        </a>
       </div>
     </section>
   );

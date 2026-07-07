@@ -48,7 +48,7 @@ export default function Marquee() {
                 className={`role-pill${isActive ? ' is-active' : ''}`}
                 style={{
                   fontFamily: 'inherit', fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.03em',
-                  color: isActive ? '#000000' : 'var(--text-muted)',
+                  color: isActive ? '#FFFFFF' : 'var(--text-muted)',
                   background: isActive ? 'var(--kore-gradient)' : 'transparent',
                   border: isActive ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
                   borderRadius: '999px', padding: '8px 16px', display: 'inline-block', cursor: 'pointer', flex: '0 0 auto',

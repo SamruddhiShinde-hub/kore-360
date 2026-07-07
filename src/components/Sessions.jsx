@@ -13,13 +13,13 @@ export default function Sessions() {
           Pick how you learn
         </Reveal>
         <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px', textAlign: 'justify' }}>
-          From a ₹99 read to a 1:1 game plan — start wherever you are.
+          From a ₹99 read to a 1:1 game plan: start wherever you are.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(248px,1fr))', gap: '18px' }}>
           {SESSIONS.map((s, i) => (
             <Reveal key={i} delay={i} className="session-card" style={{ position: 'relative', display: 'flex', flexDirection: 'column', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.09)', borderRadius: '14px', padding: '26px', minHeight: '340px' }}>
               {s.featured && (
-                <div style={{ position: 'absolute', top: '-1px', right: '18px', background: 'var(--kore-gradient)', color: '#000000', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', padding: '5px 9px', borderRadius: '0 0 6px 6px' }}>
+                <div style={{ position: 'absolute', top: '-1px', right: '18px', background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '10px', fontWeight: 700, letterSpacing: '0.1em', padding: '5px 9px', borderRadius: '0 0 6px 6px' }}>
                   MOST BOOKED
                 </div>
               )}
@@ -36,12 +36,13 @@ export default function Sessions() {
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
                 <div style={{ fontWeight: 900, fontSize: '30px', color: 'var(--text)' }}>{s.price}</div>
               </div>
-              <a href={s.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#000000', background: 'var(--kore-orange)', padding: '13px 18px', borderRadius: '8px' }}>
+              <a href={s.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 18px', borderRadius: '8px' }}>
                 {s.cta}
               </a>
             </Reveal>
           ))}
         </div>
+        <p style={{ fontSize: '13px', color: 'var(--text-faint)', margin: '20px 0 0' }}>No job or placement is guaranteed. These sessions provide guidance and mentorship, not employment.</p>
       </div>
     </section>
   );

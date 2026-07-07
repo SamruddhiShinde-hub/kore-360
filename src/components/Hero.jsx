@@ -1,10 +1,9 @@
 import { useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { HERO, HERO_VARIANT, LINKS, IMAGES } from '../data.js';
+import { HERO, HERO_VARIANT, IMAGES } from '../data.js';
 import Reveal from './Reveal.jsx';
 
 const eyebrow = { fontSize: '13px', letterSpacing: '0.18em', backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' };
-const btnAccent = { display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#000000', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' };
+const btnAccent = { display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' };
 
 function HeadingBreaks({ lines }) {
   return lines.map((line, i) => (
@@ -28,9 +27,7 @@ function HeroSplit() {
         </h1>
         <p style={{ fontSize: 'clamp(16px,1.5vw,20px)', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '480px', margin: '0 0 34px', whiteSpace: 'pre-line', textAlign: 'justify' }}>{HERO.blurb}</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px' }}>
-          <Link to="/education" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</Link>
-          <a href={LINKS.ebook} target="_blank" rel="noreferrer" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: 'var(--text)', background: 'transparent', border: '1px solid rgba(var(--border-rgb),0.22)', padding: '15px 26px', borderRadius: '8px' }}>{HERO.secondaryCta}</a>
-        </div>
+          <a href="#courses" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</a>        </div>
       </Reveal>
       <Reveal delay={1} style={{ position: 'relative' }}>
         <div style={{ position: 'relative', aspectRatio: '4/5', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(var(--border-rgb),0.10)' }}>
@@ -86,8 +83,7 @@ function HeroCentered() {
         </h1>
         <p className="hero-blurb" style={{ fontSize: 'clamp(16px,1.5vw,21px)', lineHeight: 1.55, color: '#FFFFFF', maxWidth: '700px', margin: '0 0 30px', whiteSpace: 'pre-line', textAlign: 'justify' }}>{HERO.blurb}</p>
         <div className="hero-cta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
-          <Link to="/education" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</Link>
-          <a href={LINKS.ebook} target="_blank" rel="noreferrer" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.5)', background: 'rgba(var(--surface-rgb),0.55)', padding: '15px 26px', borderRadius: '8px' }}>{HERO.secondaryCta}</a>
+          <a href="#courses" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</a>
         </div>
       </Reveal>
     </div>
@@ -108,8 +104,7 @@ function HeroEditorial() {
           </h1>
           <p style={{ fontSize: 'clamp(16px,1.4vw,20px)', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '520px', margin: '0 0 30px', whiteSpace: 'pre-line', textAlign: 'justify' }}>{HERO.blurb}</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '14px' }}>
-            <Link to="/education" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</Link>
-            <a href={LINKS.ebook} target="_blank" rel="noreferrer" className="btn-outline" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.22)', padding: '15px 26px', borderRadius: '8px' }}>{HERO.secondaryCta}</a>
+            <a href="#courses" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</a>
           </div>
         </Reveal>
         <Reveal delay={1} style={{ position: 'relative', aspectRatio: '3/4', borderRadius: '12px', overflow: 'hidden', border: '1px solid rgba(var(--border-rgb),0.10)' }}>
