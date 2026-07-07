@@ -70,7 +70,7 @@ export default function Nav() {
         }}
       >
         <Link to="/" className="nav-mobile-logo" style={{ display: 'none', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-          <img src={logo} alt="Kore 360 Logo" style={{ height: '48px', display: 'block', filter: 'brightness(0) invert(1)' }} />
+          <img src={logo} alt="Kore 360 Logo" width="76" height="48" style={{ height: '48px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
         </Link>
 
         {/* Desktop nav */}
