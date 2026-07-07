@@ -16,11 +16,15 @@ export default function Courses() {
           Structured, self-paced programs that take you from curious to career-ready.
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '24px' }}>
+        <div className="courses-grid">
           {COURSES.map((c, i) => (
             <Reveal
               key={i} delay={i} className="course-card card-hover"
-              style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', minHeight: '480px' }}
+              style={{ 
+                position: 'relative', 
+                borderRadius: '16px', 
+                overflow: 'hidden'
+              }}
             >
               <img src={c.img} alt={c.name} loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.92) 100%)' }} />
