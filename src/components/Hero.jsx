@@ -2,8 +2,7 @@ import { useRef, useEffect } from 'react';
 import { HERO, HERO_VARIANT, IMAGES } from '../data.js';
 import Reveal from './Reveal.jsx';
 import mainHeroBg from '../assets/main-hero-background.webp';
-import cricketGround from '../assets/cricket-ground.webp';
-import desktopCricketImage from '../assets/desktop-cricket-image.webp';
+import heroVid from '../assets/hero-vid.mp4';
 const eyebrow = { fontSize: '13px', letterSpacing: '0.18em', backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' };
 const btnAccent = { display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' };
 
@@ -78,16 +77,21 @@ function HeroCentered() {
         height: '55vh',
         marginTop: '6vh'
       }}>
-        <picture>
-          <source media="(max-width: 768px)" srcSet={cricketGround} />
-          <img src={desktopCricketImage} alt="Hero Center" fetchpriority="high" style={{
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
             objectPosition: 'center',
             display: 'block'
-          }} />
-        </picture>
+          }}
+        >
+          <source src={heroVid} type="video/mp4" />
+        </video>
 
         <h1 style={{
           position: 'absolute',
