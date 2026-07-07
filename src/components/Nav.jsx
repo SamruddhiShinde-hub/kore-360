@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
 
@@ -7,6 +7,18 @@ export default function Nav() {
   const location = useLocation();
 
   const close = () => setOpen(false);
+
+  const [theme, setTheme] = useState(() => {
+    return document.documentElement.getAttribute('data-theme') || 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(t => t === 'light' ? 'dark' : 'light');
+  };
 
   return (
     <header
@@ -73,7 +85,47 @@ export default function Nav() {
           </Link>
 
           <Link to="/talent" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Talent</Link>
-          <Link to="#about-us" className="nav-link-bar" style={{ color: '#FFFFFF' }}>About Us</Link>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <Link to="#about-us" className="nav-link-bar" style={{ color: '#FFFFFF' }}>About Us</Link>
+            <button
+              onClick={toggleTheme}
+              style={{
+                position: 'relative',
+                background: theme === 'light' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.4)',
+                border: '1px solid rgba(255,255,255,0.2)',
+                borderRadius: '20px',
+                width: '60px',
+                height: '32px',
+                display: 'flex',
+                alignItems: 'center',
+                cursor: 'pointer',
+                padding: '4px',
+                boxSizing: 'border-box',
+                transition: 'background 0.3s ease'
+              }}
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              <div style={{
+                position: 'absolute',
+                left: theme === 'light' ? '4px' : '32px',
+                width: '22px',
+                height: '22px',
+                background: theme === 'light' ? '#FFFFFF' : '#1A1A1A',
+                borderRadius: '50%',
+                transition: 'left 0.3s ease, background 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+              }}>
+                {theme === 'light' ? (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                ) : (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                )}
+              </div>
+            </button>
+          </div>
         </nav>
 
         {/* Mobile controls */}
