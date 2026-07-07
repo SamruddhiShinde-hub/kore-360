@@ -180,8 +180,21 @@ a { text-decoration: none; }
 /* ---- hamburger nav ---- */
 @media (max-width: 768px) {
   .nav-desktop { display: none !important; }
+  .nav-mobile-logo { display: block !important; }
   .nav-mobile-controls { display: flex !important; }
   .nav-inner { padding: 14px 16px !important; gap: 8px !important; }
+
+  .hero-center-box {
+    width: 100% !important;
+    max-width: none !important;
+    height: 45vh !important;
+  }
+  .hero-container {
+    height: 80vh !important;
+  }
+  .nav-container {
+    padding-top: 44px !important;
+  }
 }
 @media (min-width: 769px) {
   .nav-mobile-menu { display: none !important; }

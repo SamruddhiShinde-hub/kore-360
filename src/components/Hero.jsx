@@ -1,7 +1,9 @@
 import { useRef, useEffect } from 'react';
 import { HERO, HERO_VARIANT, IMAGES } from '../data.js';
 import Reveal from './Reveal.jsx';
-
+import mainHeroBg from '../assets/main-hero-background.png';
+import cricketGround from '../assets/cricket-ground.png';
+import desktopCricketImage from '../assets/desktop-cricket-image.jpg';
 const eyebrow = { fontSize: '13px', letterSpacing: '0.18em', backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' };
 const btnAccent = { display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' };
 
@@ -47,45 +49,65 @@ function HeroSplit() {
 }
 
 function HeroCentered() {
-  const imgRef = useRef(null);
-  useEffect(() => {
-    const img = imgRef.current;
-    if (!img) return;
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const y = window.scrollY || window.pageYOffset || 0;
-        img.style.transform = `scale(1.2) translateY(${y * 0.12}px)`;
-        ticking = false;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const words = HERO.headlineLines[0].split(' ');
-  const accentPhrase = HERO.headlineLines.slice(1).join(' ');
-
   return (
-    <div className="hero-shell" style={{ position: 'relative', height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'flex-start', padding: '96px 32px 64px', overflow: 'hidden' }}>
-      <img ref={imgRef} src={IMAGES.heroCentered} alt="" className="hero-bg-desktop" fetchPriority="high" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: 'scale(1.2)', transformOrigin: 'center', willChange: 'transform' }} />
-      <img src={IMAGES.heroMobile} alt="" className="hero-bg-mobile" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', display: 'none' }} />
-      <div className="hero-scrim" style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0) 25%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.72) 100%)' }} />
-      <Reveal className="hero-copy" style={{ position: 'relative', zIndex: 2, textAlign: 'left', maxWidth: '1040px' }}>
-        <h1 className="hero-heading" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.88, fontSize: 'clamp(28px,5.6vw,76px)', margin: '0 0 22px', color: '#FFFFFF', whiteSpace: 'nowrap', textAlign: 'left' }}>
-          {words.map((w, i) => (
-            <span className="hero-heading-word" key={i}>{w} </span>
-          ))}
-          <span className="hero-heading-word hero-heading-accent">{accentPhrase}</span>
+    <div className="hero-container" style={{
+      position: 'relative',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      overflow: 'hidden',
+      background: '#000'
+    }}>
+      <img src={mainHeroBg} alt="Hero Background" style={{
+        position: 'absolute',
+        inset: '-40px',
+        width: 'calc(100% + 80px)',
+        height: 'calc(100% + 80px)',
+        objectFit: 'cover',
+        display: 'block',
+        zIndex: 0
+      }} />
+
+      <div className="hero-center-box" style={{
+        position: 'relative',
+        zIndex: 1,
+        width: '55%',
+        maxWidth: '850px',
+        height: '55vh',
+        marginTop: '6vh'
+      }}>
+        <picture>
+          <source media="(max-width: 768px)" srcSet={cricketGround} />
+          <img src={desktopCricketImage} alt="Hero Center" style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            display: 'block'
+          }} />
+        </picture>
+
+        <h1 style={{
+          position: 'absolute',
+          bottom: 0,
+          left: '50%',
+          transform: 'translate(-50%, 50%)',
+          margin: 0,
+          textAlign: 'center',
+          fontWeight: 800,
+          letterSpacing: '-0.04em',
+          lineHeight: 0.85,
+          fontSize: 'clamp(50px, 11vw, 150px)',
+          color: '#FFFFFF',
+          whiteSpace: 'nowrap',
+          textTransform: 'uppercase'
+        }}>
+          Get Inside<br/>
+          The Game.
         </h1>
-        <p className="hero-blurb" style={{ fontSize: 'clamp(16px,1.5vw,21px)', lineHeight: 1.55, color: '#FFFFFF', maxWidth: '700px', margin: '0 0 30px', whiteSpace: 'pre-line', textAlign: 'justify' }}>{HERO.blurb}</p>
-        <div className="hero-cta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
-          <a href="#courses" className="btn-accent" style={btnAccent}>{HERO.primaryCta}</a>
-        </div>
-      </Reveal>
+      </div>
     </div>
   );
 }
