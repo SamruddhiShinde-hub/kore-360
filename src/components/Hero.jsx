@@ -1,9 +1,9 @@
 import { useRef, useEffect } from 'react';
 import { HERO, HERO_VARIANT, IMAGES } from '../data.js';
 import Reveal from './Reveal.jsx';
-import mainHeroBg from '../assets/main-hero-background.png';
-import cricketGround from '../assets/cricket-ground.png';
-import desktopCricketImage from '../assets/desktop-cricket-image.jpg';
+import mainHeroBg from '../assets/main-hero-background.webp';
+import cricketGround from '../assets/cricket-ground.webp';
+import desktopCricketImage from '../assets/desktop-cricket-image.webp';
 const eyebrow = { fontSize: '13px', letterSpacing: '0.18em', backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' };
 const btnAccent = { display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' };
 

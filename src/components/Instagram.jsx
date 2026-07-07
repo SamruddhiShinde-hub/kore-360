@@ -34,7 +34,7 @@ export default function Instagram() {
         <div className="ig-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '10px' }}>
           {POSTS.map((src, i) => (
             <Reveal key={i} delay={i % 4} className={i >= 4 ? 'ig-extra' : ''} style={{ aspectRatio: '1/1', borderRadius: '10px', overflow: 'hidden' }}>
-              <a href={LINKS.instagram} target="_blank" rel="noreferrer" style={{ display: 'block', width: '100%', height: '100%' }}>
+              <a href={LINKS.instagram} target="_blank" rel="noreferrer" aria-label="View Instagram post" style={{ display: 'block', width: '100%', height: '100%' }}>
                 <img src={src} alt="" loading="lazy" decoding="async" className="ig-photo" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </a>
             </Reveal>

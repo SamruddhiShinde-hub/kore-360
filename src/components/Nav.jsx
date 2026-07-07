@@ -133,6 +133,7 @@ export default function Nav() {
         <div className="nav-mobile-controls" style={{ display: 'none', position: 'absolute', right: '24px' }}>
           <button
             onClick={() => setOpen((o) => !o)}
+            aria-label="Toggle menu"
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#FFFFFF' }}
           >
             {open ? (
