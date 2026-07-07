@@ -56,7 +56,8 @@ a { text-decoration: none; }
 .nav-link:hover { color: var(--text) !important; text-shadow: 0 0 10px rgba(var(--border-rgb),0.3); }
 .nav-link-bar { transition: color .15s, text-shadow .15s; }
 .nav-link-bar:hover { color: #FFFFFF !important; text-shadow: 0 0 10px rgba(255,255,255,0.4); }
-.foot-link:hover { color: var(--kore-orange-text) !important; }
+.foot-link { transition: color .15s, font-weight .15s; }
+.foot-link:hover { color: #FFFFFF !important; font-weight: bold; }
 .foot-icon-link { transition: color .15s, border-color .15s; }
 .foot-icon-link:hover { color: var(--kore-orange-text) !important; border-color: var(--kore-orange) !important; }
 .theme-toggle { transition: border-color .15s; }
