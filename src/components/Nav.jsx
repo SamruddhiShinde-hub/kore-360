@@ -10,7 +10,7 @@ const navLinks = [
 
 function getInitialTheme() {
   try {
-    const stored = localStorage.getItem('kore-theme');
+    const stored = localStorage.getItem('kore-theme-v2');
     if (stored === 'light' || stored === 'dark') return stored;
   } catch { /* localStorage unavailable */ }
   if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
@@ -48,7 +48,7 @@ export default function Nav() {
 
   useLayoutEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    try { localStorage.setItem('kore-theme', theme); } catch { /* localStorage unavailable */ }
+    try { localStorage.setItem('kore-theme-v2', theme); } catch { /* localStorage unavailable */ }
   }, [theme]);
 
   const close = () => setOpen(false);
