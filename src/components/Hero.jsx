@@ -99,7 +99,7 @@ function HeroCentered() {
           fontWeight: 800,
           letterSpacing: '-0.04em',
           lineHeight: 0.85,
-          fontSize: 'clamp(50px, 11vw, 150px)',
+          fontSize: 'clamp(40px, 9vw, 120px)',
           color: '#FFFFFF',
           whiteSpace: 'nowrap',
           textTransform: 'uppercase'
