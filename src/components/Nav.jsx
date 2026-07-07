@@ -14,6 +14,7 @@ export default function Nav() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('kore-theme-v2', theme);
   }, [theme]);
 
   const toggleTheme = () => {
