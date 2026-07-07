@@ -29,8 +29,8 @@ export default function Talent() {
   return (
     <>
       <PageMeta
-        title="Talent: Internships and Job Placements"
-        description="KORE 360 doesn't just point you at a job board. We represent you, matching you to real internships and placements with brands working in and around sport."
+        title="Sports Jobs, Internships and Placements"
+        description="Browse sports jobs and internships with KORE 360. We don't just point you at a job board, we represent you and match you to real openings with brands working in and around sport."
         path="/talent"
       />
       <PageHeader

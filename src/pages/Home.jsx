@@ -15,8 +15,8 @@ export default function Home() {
   return (
     <>
       <PageMeta
-        title="Sports Management Careers with Krish Lalwani"
-        description="KORE 360 is Krish Lalwani's sports management platform: courses, 1:1 clarity calls, internships and job placements to help you build a real career in sport."
+        title="Sports Management Careers, Courses and Sports Jobs"
+        description="KORE 360 is Krish Lalwani's sports management platform: courses, 1:1 clarity calls, and real sports jobs and internships to help you build a career in sports management."
         path="/"
       />
       <Hero />

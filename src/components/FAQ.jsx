@@ -3,6 +3,16 @@ import { FAQS } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 function ChevronIcon({ open }) {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s', flex: 'none' }}>
@@ -16,6 +26,7 @@ export default function FAQ() {
 
   return (
     <section id="faq" style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)' }}>
+      <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       <div style={{ maxWidth: '820px', margin: '0 auto', padding: '92px 32px' }}>
         <Eyebrow color="var(--kore-magenta-text)">FAQ</Eyebrow>
         <Reveal as="h2" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(36px,5vw,56px)', margin: '0 0 14px' }}>
