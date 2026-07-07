@@ -60,7 +60,7 @@ function HeroCentered() {
       overflow: 'hidden',
       background: '#000'
     }}>
-      <img src={mainHeroBg} alt="Hero Background" style={{
+      <img src={mainHeroBg} alt="Hero Background" fetchpriority="high" style={{
         position: 'absolute',
         inset: '-40px',
         width: 'calc(100% + 80px)',
@@ -80,7 +80,7 @@ function HeroCentered() {
       }}>
         <picture>
           <source media="(max-width: 768px)" srcSet={cricketGround} />
-          <img src={desktopCricketImage} alt="Hero Center" style={{
+          <img src={desktopCricketImage} alt="Hero Center" fetchpriority="high" style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
