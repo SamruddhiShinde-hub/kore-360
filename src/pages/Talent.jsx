@@ -1,6 +1,7 @@
 import { CAREERS, TALENT_PARTNERS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageHeader from '../components/PageHeader.jsx';
+import PageMeta from '../components/PageMeta.jsx';
 import DecathlonBanner from '../components/DecathlonBanner.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)'];
@@ -27,6 +28,11 @@ const ICONS = [CapIcon, BriefcaseIcon];
 export default function Talent() {
   return (
     <>
+      <PageMeta
+        title="Talent: Internships and Job Placements"
+        description="KORE 360 doesn't just point you at a job board. We represent you, matching you to real internships and placements with brands working in and around sport."
+        path="/talent"
+      />
       <PageHeader
         eyebrow="TALENT"
         title="Your talent management partner"

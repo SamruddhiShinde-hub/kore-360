@@ -1,3 +1,4 @@
+import PageMeta from '../components/PageMeta.jsx';
 import Hero from '../components/Hero.jsx';
 import Marquee from '../components/Marquee.jsx';
 import BrandLogos from '../components/BrandLogos.jsx';
@@ -13,6 +14,11 @@ import StickyCta from '../components/StickyCta.jsx';
 export default function Home() {
   return (
     <>
+      <PageMeta
+        title="Sports Management Careers with Krish Lalwani"
+        description="KORE 360 is Krish Lalwani's sports management platform: courses, 1:1 clarity calls, internships and job placements to help you build a real career in sport."
+        path="/"
+      />
       <Hero />
       <Marquee />
       <BrandLogos />

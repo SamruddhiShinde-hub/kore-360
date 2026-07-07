@@ -1,6 +1,7 @@
 import { SESSIONS, LINKS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageHeader from '../components/PageHeader.jsx';
+import PageMeta from '../components/PageMeta.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
 
@@ -9,6 +10,11 @@ const labelStyle = { fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', 
 export default function Education() {
   return (
     <>
+      <PageMeta
+        title="Education: E-Book, Webinar, Q&A and Clarity Calls"
+        description="Learn how sports management hiring actually works, from a ₹99 e-book to a 1:1 clarity call with Krish Lalwani. Pick the format that fits how you learn."
+        path="/education"
+      />
       <PageHeader
         eyebrow="EDUCATION"
         title="Learn how the industry actually works"

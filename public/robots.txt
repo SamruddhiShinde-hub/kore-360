@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://kore360.in/sitemap.xml

@@ -1,6 +1,7 @@
 import { MANAGEMENT_SERVICES, LINKS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageHeader from '../components/PageHeader.jsx';
+import PageMeta from '../components/PageMeta.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)'];
 
@@ -30,6 +31,11 @@ const ICONS = [HandshakeIcon, ConciergeIcon];
 export default function Management() {
   return (
     <>
+      <PageMeta
+        title="Management: Sponsorships and Hospitality"
+        description="KORE 360 manages the commercial and on-ground side of sport: sourcing sponsorship partners and running match-day hospitality that keeps them coming back."
+        path="/management"
+      />
       <PageHeader
         eyebrow="MANAGEMENT"
         title="Sponsorships and hospitality, handled"
