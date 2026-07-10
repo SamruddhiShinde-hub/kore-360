@@ -3,6 +3,21 @@ import { MARQUEE } from '../data.js';
 
 const SWIPE_THRESHOLD = 50;
 
+function ChevronIcon({ flip }) {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: flip ? 'scaleX(-1)' : 'none' }}>
+      <polyline points="15 6 9 12 15 18" />
+    </svg>
+  );
+}
+
+const arrowStyle = {
+  position: 'absolute', top: '50%', transform: 'translateY(-50%)', zIndex: 2,
+  width: '40px', height: '40px', borderRadius: '50%', border: '1px solid rgba(var(--border-rgb),0.18)',
+  background: 'var(--surface)', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+  cursor: 'pointer',
+};
+
 export default function Marquee() {
   const [active, setActive] = useState(0);
   const [fadedOut, setFadedOut] = useState(false);
@@ -60,25 +75,47 @@ export default function Marquee() {
           })}
         </div>
 
-        <div
-          className="grid-2col"
-          onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
-          onTransitionEnd={handleFadeTransitionEnd}
-          style={{
-            display: 'grid', gridTemplateColumns: '420px 1fr', gap: '48px', alignItems: 'center', maxWidth: '980px', margin: '0 auto', touchAction: 'pan-y',
-            opacity: fadedOut ? 0 : 1, transform: fadedOut ? 'translateY(6px)' : 'none',
-            transition: 'opacity .22s ease, transform .22s ease',
-          }}
-        >
-          <div style={{ borderRadius: '16px', overflow: 'hidden', aspectRatio: '4/3', maxWidth: '420px' }}>
-            <img src={current.img} alt={current.label} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        <div style={{ position: 'relative', maxWidth: '980px', margin: '0 auto' }}>
+          <button
+            type="button"
+            onClick={() => goTo((active - 1 + MARQUEE.length) % MARQUEE.length)}
+            aria-label="Previous interest"
+            className="testimonial-arrow testimonial-arrow-prev"
+            style={{ ...arrowStyle, left: '-20px' }}
+          >
+            <ChevronIcon />
+          </button>
+
+          <div
+            className="grid-2col"
+            onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
+            onTransitionEnd={handleFadeTransitionEnd}
+            style={{
+              display: 'grid', gridTemplateColumns: '420px 1fr', gap: '48px', alignItems: 'center', touchAction: 'pan-y',
+              opacity: fadedOut ? 0 : 1, transform: fadedOut ? 'translateY(6px)' : 'none',
+              transition: 'opacity .22s ease, transform .22s ease',
+            }}
+          >
+            <div style={{ borderRadius: '16px', overflow: 'hidden', aspectRatio: '4/3', maxWidth: '420px' }}>
+              <img src={current.img} alt={current.label} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </div>
+            <div style={{ padding: '0 16px' }}>
+              <div style={{ fontWeight: 800, fontSize: '26px', letterSpacing: '-0.01em', textTransform: 'capitalize', marginBottom: '14px' }}>{current.label}</div>
+              <p style={{ fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text-muted)', margin: 0, textAlign: 'justify' }}>{current.desc}</p>
+            </div>
           </div>
-          <div style={{ padding: '0 16px' }}>
-            <div style={{ fontWeight: 800, fontSize: '26px', letterSpacing: '-0.01em', textTransform: 'capitalize', marginBottom: '14px' }}>{current.label}</div>
-            <p style={{ fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text-muted)', margin: 0, textAlign: 'justify' }}>{current.desc}</p>
-          </div>
+
+          <button
+            type="button"
+            onClick={() => goTo((active + 1) % MARQUEE.length)}
+            aria-label="Next interest"
+            className="testimonial-arrow testimonial-arrow-next"
+            style={{ ...arrowStyle, right: '-20px' }}
+          >
+            <ChevronIcon flip />
+          </button>
         </div>
-        
+
         {/* Pagination Dots */}
         <div style={{ display: 'flex', justifyContent: 'center', gap: '2px', marginTop: '40px' }}>
           {MARQUEE.map((_, i) => (
