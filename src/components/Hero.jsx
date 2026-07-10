@@ -1,8 +1,10 @@
 import { useRef, useEffect } from 'react';
 import { HERO, HERO_VARIANT, IMAGES } from '../data.js';
 import Reveal from './Reveal.jsx';
-import mainHeroBg from '../assets/main-hero-background.webp';
-import heroVid from '../assets/landscape-hero-vid.mp4';
+import mainHeroBg from '../assets/Background (1).png';
+import mainHeroBgMobile from '../assets/Background (1) - mobile.png';
+import heroVid from '../assets/homepage-hero-video.mp4';
+import heroVidMobile from '../assets/homepage-mob-video.mp4';
 const eyebrow = { fontSize: '13px', letterSpacing: '0.18em', backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' };
 const btnAccent = { display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' };
 
@@ -59,13 +61,23 @@ function HeroCentered() {
       overflow: 'hidden',
       background: '#000'
     }}>
-      <img src={mainHeroBg} alt="Hero Background" fetchpriority="high" style={{
+      <picture>
+        <source media="(max-width: 768px)" srcSet={mainHeroBgMobile} />
+        <img src={mainHeroBg} alt="Hero Background" fetchpriority="high" style={{
+          position: 'absolute',
+          inset: '-40px',
+          width: 'calc(100% + 80px)',
+          height: 'calc(100% + 80px)',
+          objectFit: 'cover',
+          display: 'block',
+          zIndex: 0
+        }} />
+      </picture>
+
+      <div style={{
         position: 'absolute',
-        inset: '-40px',
-        width: 'calc(100% + 80px)',
-        height: 'calc(100% + 80px)',
-        objectFit: 'cover',
-        display: 'block',
+        inset: 0,
+        background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.25) 65%, rgba(0,0,0,0.75) 100%)',
         zIndex: 0
       }} />
 
@@ -90,6 +102,7 @@ function HeroCentered() {
             display: 'block'
           }}
         >
+          <source src={heroVidMobile} type="video/mp4" media="(max-width: 768px)" />
           <source src={heroVid} type="video/mp4" />
         </video>
 
@@ -103,13 +116,13 @@ function HeroCentered() {
           fontWeight: 800,
           letterSpacing: '-0.04em',
           lineHeight: 0.85,
-          fontSize: 'clamp(40px, 9vw, 120px)',
+          fontSize: 'clamp(32px, 6.5vw, 88px)',
           color: '#FFFFFF',
           whiteSpace: 'nowrap',
           textTransform: 'uppercase'
         }}>
-          Get Inside<br/>
-          The Game.
+          <div style={{ marginBottom: '0.28em' }}>Get Inside</div>
+          <div>The Game</div>
         </h1>
       </div>
     </div>
