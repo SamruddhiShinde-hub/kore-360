@@ -13,7 +13,7 @@ export default function BrandLogos() {
           <h2 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(28px,4vw,44px)', margin: '0 0 8px' }}>
             Brands &amp; leagues we&apos;ve worked with
           </h2>
-          <p style={{ fontSize: '15.5px', color: 'var(--text-muted)', margin: 0, textAlign: 'justify' }}>From the BCCI to India&apos;s biggest leagues, brands KORE 360 has worked alongside.</p>
+          <p style={{ fontSize: '15.5px', color: 'var(--text-muted)', margin: 0, textAlign: 'center' }}>From the BCCI to India&apos;s biggest leagues, brands KORE 360 has worked alongside.</p>
         </Reveal>
       </div>
 

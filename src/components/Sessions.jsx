@@ -8,7 +8,7 @@ export default function Sessions() {
   return (
     <section id="sessions" style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '92px 32px' }}>
-        <Eyebrow color="var(--kore-orange-text)">01 — WORK WITH KRISH</Eyebrow>
+        <Eyebrow color="var(--kore-orange-text)">01 — LEARN WITH KRISH</Eyebrow>
         <Reveal as="h2" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(36px,5vw,64px)', margin: '0 0 14px' }}>
           Pick how you learn
         </Reveal>
