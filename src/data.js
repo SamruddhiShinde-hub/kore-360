@@ -20,7 +20,7 @@ import riseWorldwideLogo from './assets/brand1.jpg';
 import legendsLeagueLogo from './assets/brand2.jpg';
 import isplLogo from './assets/brand3.jpg';
 import eclLogo from './assets/brand4.jpg';
-import chennaiSingamsLogo from './assets/brand5.jpg';
+import chennaiSingamsLogo from './assets/brand5.png';
 import actorsCricketBashLogo from './assets/brand6.jpg';
 
 // Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
