@@ -50,6 +50,17 @@ function HeroSplit() {
 }
 
 function HeroCentered() {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.defaultMuted = true;
+    video.muted = true;
+    const playPromise = video.play();
+    if (playPromise) playPromise.catch(() => {});
+  }, []);
+
   return (
     <div className="hero-container" style={{
       position: 'relative',
@@ -90,16 +101,23 @@ function HeroCentered() {
         marginTop: '6vh'
       }}>
         <video
+          ref={videoRef}
           autoPlay
           muted
+          defaultMuted
           loop
           playsInline
+          webkit-playsinline="true"
+          disablePictureInPicture
+          controls={false}
+          preload="auto"
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
             objectPosition: 'center',
-            display: 'block'
+            display: 'block',
+            pointerEvents: 'none'
           }}
         >
           <source src={heroVidMobile} type="video/mp4" media="(max-width: 768px)" />
