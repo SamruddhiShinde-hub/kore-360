@@ -15,6 +15,33 @@ function readRawBody(req) {
   });
 }
 
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function formatSlotRange(startISO, endISO, timeZone) {
+  const start = new Date(startISO);
+  const end = new Date(endISO);
+  const dateFmt = new Intl.DateTimeFormat('en-IN', { timeZone, weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const timeFmt = new Intl.DateTimeFormat('en-IN', { timeZone, hour: 'numeric', minute: '2-digit', hour12: true });
+  return `${dateFmt.format(start)}, ${timeFmt.format(start)} – ${timeFmt.format(end)}`;
+}
+
+function bookingNotifyEmailHtml(booking, event) {
+  const when = escapeHtml(formatSlotRange(booking.slotStart, booking.slotEnd, AVAILABILITY.timezone));
+  const meetLink = event.hangoutLink;
+  return `
+    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
+      <h2 style="margin-bottom: 4px;">New booking confirmed</h2>
+      <p style="margin: 0 0 16px;"><strong>${escapeHtml(booking.sessionName)}</strong> — Krish Lalwani x ${escapeHtml(booking.userName)}</p>
+      <p style="margin: 0 0 8px;"><strong>When:</strong> ${when} (${escapeHtml(AVAILABILITY.timezone)})</p>
+      <p style="margin: 0 0 8px;"><strong>Attendee:</strong> ${escapeHtml(booking.userName)} (${escapeHtml(booking.userEmail)})</p>
+      ${meetLink ? `<p style="margin: 16px 0;"><a href="${meetLink}" style="background:#1a73e8;color:#fff;padding:10px 16px;border-radius:4px;text-decoration:none;display:inline-block;">Join with Google Meet</a></p>` : ''}
+      ${event.htmlLink ? `<p style="margin: 0;"><a href="${event.htmlLink}">View in Google Calendar</a></p>` : ''}
+    </div>
+  `;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
@@ -56,7 +83,7 @@ export default async function handler(req, res) {
         return res.status(200).end();
       }
 
-      await createBookingEvent({
+      const event = await createBookingEvent({
         summary: `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
         description: `Booked via KORE 360.\nAttendee: ${booking.userName} (${booking.userEmail})`,
         startISO: booking.slotStart,
@@ -73,7 +100,7 @@ export default async function handler(req, res) {
       try {
         await sendNotifyEmail({
           subject: `New booking: ${booking.sessionName} with ${booking.userName}`,
-          body: `${booking.userName} (${booking.userEmail}) just paid for ${booking.sessionName}.\n\nWhen: ${booking.slotStart} – ${booking.slotEnd} (${AVAILABILITY.timezone})\n\nCheck your calendar for the Meet link.`,
+          html: bookingNotifyEmailHtml(booking, event),
         });
       } catch (err) {
         console.error('failed to send booking notify email', err);
