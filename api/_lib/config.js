@@ -4,7 +4,7 @@
 //  booking widget (see src/data.js SESSIONS entries).
 // ============================================================
 export const SESSIONS = {
-  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900 },
+  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 100 }, // TEMP: ₹1 for end-to-end testing, revert to 49900 (₹499) before launch
   qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 49900 },
   clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 149900 },
 };

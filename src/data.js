@@ -82,7 +82,7 @@ export const SESSIONS = [
     },
   },
   {
-    tag: 'WEBINAR', name: 'Live Webinar', price: '₹499', meta: '60 min · Live · Listen-only', desc: 'A one-hour live session on how the industry actually hires.', cta: 'Book your seat', sessionId: 'webinar',
+    tag: 'WEBINAR', name: 'Live Webinar', price: '₹1', meta: '60 min · Live · Listen-only', desc: 'A one-hour live session on how the industry actually hires.', cta: 'Book your seat', sessionId: 'webinar',
     details: {
       format: '60-minute live session, listen-only',
       whoFor: 'People who want the bigger picture of how hiring actually works in sport, beyond the entry-level playbook',
