@@ -1,13 +1,17 @@
+import { useState } from 'react';
 import { SESSIONS, LINKS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import PageMeta from '../components/PageMeta.jsx';
+import BookingModal from '../components/BookingModal.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
 
 const labelStyle = { fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', color: 'var(--text-faint)', marginBottom: '8px' };
 
 export default function Education() {
+  const [booking, setBooking] = useState(null);
+
   return (
     <>
       <PageMeta
@@ -65,13 +69,33 @@ export default function Education() {
 
                 <p style={{ fontSize: '14.5px', lineHeight: 1.6, fontStyle: 'italic', color: 'var(--text-muted)', borderLeft: `2px solid ${accent}`, paddingLeft: '14px', margin: '0 0 26px', textAlign: 'justify' }}>{d.outcome}</p>
 
-                <a href={s.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}>
-                  {s.cta} →
-                </a>
+                {s.sessionId ? (
+                  <button
+                    type="button"
+                    onClick={() => setBooking(s)}
+                    className="btn-tertiary"
+                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+                  >
+                    {s.cta} →
+                  </button>
+                ) : (
+                  <a href={s.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}>
+                    {s.cta} →
+                  </a>
+                )}
               </Reveal>
             );
           })}
         </div>
+
+        {booking && (
+          <BookingModal
+            sessionId={booking.sessionId}
+            sessionName={booking.name}
+            price={booking.price}
+            onClose={() => setBooking(null)}
+          />
+        )}
 
         <Reveal style={{ marginTop: '12px', textAlign: 'center', borderTop: '1px solid rgba(var(--border-rgb),0.08)', paddingTop: '40px' }}>
           <p style={{ fontSize: '15px', color: 'var(--text-muted)', margin: '0 0 18px', textAlign: 'justify' }}>Not sure which one to start with? The clarity call is the most personal option, and the e-book is the cheapest way to find out if this industry is for you.</p>

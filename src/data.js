@@ -82,7 +82,7 @@ export const SESSIONS = [
     },
   },
   {
-    tag: 'WEBINAR', name: 'Live Webinar', price: '₹499', meta: '60 min · Live · Listen-only', desc: 'A one-hour live session on how the industry actually hires.', cta: 'Book your seat', href: '#',
+    tag: 'WEBINAR', name: 'Live Webinar', price: '₹499', meta: '60 min · Live · Listen-only', desc: 'A one-hour live session on how the industry actually hires.', cta: 'Book your seat', sessionId: 'webinar',
     details: {
       format: '60-minute live session, listen-only',
       whoFor: 'People who want the bigger picture of how hiring actually works in sport, beyond the entry-level playbook',
@@ -91,7 +91,7 @@ export const SESSIONS = [
     },
   },
   {
-    tag: 'Q&A', name: '1:1 Q&A Call', price: '₹499', meta: '10 min · Audio call', desc: 'Ten minutes, audio only, just you and me. Bring your questions, leave with answers.', cta: 'Book a Q&A', href: '#',
+    tag: 'Q&A', name: '1:1 Q&A Call', price: '₹499', meta: '10 min · Audio call', desc: 'Ten minutes, audio only, just you and me. Bring your questions, leave with answers.', cta: 'Book a Q&A', sessionId: 'qna',
     details: {
       format: '10-minute 1:1 audio call',
       whoFor: "Anyone with specific, pointed questions who doesn't need a full strategy session",
@@ -100,7 +100,7 @@ export const SESSIONS = [
     },
   },
   {
-    tag: '1:1 CALL', name: 'Clarity Call', price: '₹1,499', meta: '30 min · Video call', desc: 'A thirty-minute video call to map your personal route into the industry.', cta: 'Book a 1:1 clarity call', href: 'https://superprofile.bio/bookings/krishlalwaniofficial?sessionId=699dc00d94cdda00134ba9a0', featured: true,
+    tag: '1:1 CALL', name: 'Clarity Call', price: '₹1,499', meta: '30 min · Video call', desc: 'A thirty-minute video call to map your personal route into the industry.', cta: 'Book a 1:1 clarity call', sessionId: 'clarity', featured: true,
     details: {
       format: '30-minute 1:1 video call',
       whoFor: "Anyone ready to map out their personal route into the industry, with someone who's done the hiring",

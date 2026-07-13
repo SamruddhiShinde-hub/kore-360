@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { SESSIONS } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
+import BookingModal from './BookingModal.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
 
 export default function Sessions() {
+  const [booking, setBooking] = useState(null);
+
   return (
     <section id="sessions" style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '92px 32px' }}>
@@ -36,14 +40,34 @@ export default function Sessions() {
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
                 <div style={{ fontWeight: 900, fontSize: '30px', color: 'var(--text)' }}>{s.price}</div>
               </div>
-              <a href={s.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 18px', borderRadius: '8px' }}>
-                {s.cta}
-              </a>
+              {s.sessionId ? (
+                <button
+                  type="button"
+                  onClick={() => setBooking(s)}
+                  className="btn-tertiary"
+                  style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 18px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+                >
+                  {s.cta}
+                </button>
+              ) : (
+                <a href={s.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 18px', borderRadius: '8px' }}>
+                  {s.cta}
+                </a>
+              )}
             </Reveal>
           ))}
         </div>
         <p style={{ fontSize: '13px', color: 'var(--text-faint)', margin: '20px 0 0' }}>No job or placement is guaranteed. These sessions provide guidance and mentorship, not employment.</p>
       </div>
+
+      {booking && (
+        <BookingModal
+          sessionId={booking.sessionId}
+          sessionName={booking.name}
+          price={booking.price}
+          onClose={() => setBooking(null)}
+        />
+      )}
     </section>
   );
 }
