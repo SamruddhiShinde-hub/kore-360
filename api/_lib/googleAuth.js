@@ -25,10 +25,11 @@ export function getGoogleAuth() {
   return cachedAuth;
 }
 
-// Service accounts can't invite attendees (Google blocks it without Workspace
-// Domain-Wide Delegation), so event creation needs to run as a real Google
-// account instead — authorized once via OAuth, refreshed automatically here.
-export function getCalendarUserAuth() {
+// Service accounts can't invite Calendar attendees or send Gmail (Google blocks
+// both without Workspace Domain-Wide Delegation), so event creation and the
+// booking-notification email run as a real Google account instead — authorized
+// once via OAuth (scopes: calendar.events, gmail.send), refreshed automatically here.
+export function getGoogleUserAuth() {
   if (cachedCalendarUserAuth) return cachedCalendarUserAuth;
 
   const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID;

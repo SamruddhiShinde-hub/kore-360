@@ -1,5 +1,5 @@
 import { google } from 'googleapis';
-import { getGoogleAuth, getCalendarUserAuth } from './googleAuth.js';
+import { getGoogleAuth, getGoogleUserAuth } from './googleAuth.js';
 import { CALENDAR_ID } from './config.js';
 
 function calendarClient() {
@@ -9,7 +9,7 @@ function calendarClient() {
 // Attendee invites must come from a real Google account (see getCalendarUserAuth) —
 // service accounts are blocked from inviting attendees without Workspace Domain-Wide Delegation.
 function calendarUserClient() {
-  return google.calendar({ version: 'v3', auth: getCalendarUserAuth() });
+  return google.calendar({ version: 'v3', auth: getGoogleUserAuth() });
 }
 
 // Returns an array of { start, end } busy intervals (ISO strings) between the given range.
@@ -46,6 +46,12 @@ export async function createBookingEvent({ summary, description, startISO, endIS
           requestId: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
           conferenceSolutionKey: { type: 'hangoutsMeet' },
         },
+      },
+      // Fires on the organizer's (work.krishlalwani@gmail.com) own calendar —
+      // does not depend on the attendee-invite email path above.
+      reminders: {
+        useDefault: false,
+        overrides: [{ method: 'email', minutes: 30 }],
       },
     },
   });

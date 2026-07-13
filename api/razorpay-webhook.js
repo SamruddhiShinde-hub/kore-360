@@ -1,6 +1,7 @@
 import { verifyWebhookSignature } from './_lib/razorpay.js';
 import { findBookingByHoldId, updateBookingRow } from './_lib/sheet.js';
 import { createBookingEvent } from './_lib/calendar.js';
+import { sendNotifyEmail } from './_lib/gmail.js';
 import { AVAILABILITY, NOTIFY_EMAIL } from './_lib/config.js';
 
 export const config = { api: { bodyParser: false } };
@@ -65,6 +66,18 @@ export default async function handler(req, res) {
       });
 
       await updateBookingRow(booking._rowNumber, { status: 'paid' });
+
+      // Best-effort: the booking is already confirmed above, so a Gmail hiccup
+      // here shouldn't turn into a Razorpay retry (which would re-run
+      // createBookingEvent and produce a duplicate calendar event).
+      try {
+        await sendNotifyEmail({
+          subject: `New booking: ${booking.sessionName} with ${booking.userName}`,
+          body: `${booking.userName} (${booking.userEmail}) just paid for ${booking.sessionName}.\n\nWhen: ${booking.slotStart} – ${booking.slotEnd} (${AVAILABILITY.timezone})\n\nCheck your calendar for the Meet link.`,
+        });
+      } catch (err) {
+        console.error('failed to send booking notify email', err);
+      }
     }
     res.status(200).end();
   } catch (err) {
