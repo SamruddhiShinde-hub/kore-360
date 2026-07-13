@@ -1,6 +1,7 @@
 import { google } from 'googleapis';
 
 let cachedAuth = null;
+let cachedCalendarUserAuth = null;
 
 export function getGoogleAuth() {
   if (cachedAuth) return cachedAuth;
@@ -22,4 +23,22 @@ export function getGoogleAuth() {
     ],
   });
   return cachedAuth;
+}
+
+// Service accounts can't invite attendees (Google blocks it without Workspace
+// Domain-Wide Delegation), so event creation needs to run as a real Google
+// account instead — authorized once via OAuth, refreshed automatically here.
+export function getCalendarUserAuth() {
+  if (cachedCalendarUserAuth) return cachedCalendarUserAuth;
+
+  const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
+  const refreshToken = process.env.GOOGLE_OAUTH_REFRESH_TOKEN;
+  if (!clientId || !clientSecret || !refreshToken) {
+    throw new Error('Missing GOOGLE_OAUTH_CLIENT_ID, GOOGLE_OAUTH_CLIENT_SECRET or GOOGLE_OAUTH_REFRESH_TOKEN env vars');
+  }
+
+  cachedCalendarUserAuth = new google.auth.OAuth2(clientId, clientSecret);
+  cachedCalendarUserAuth.setCredentials({ refresh_token: refreshToken });
+  return cachedCalendarUserAuth;
 }

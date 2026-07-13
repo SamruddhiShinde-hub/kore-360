@@ -1,9 +1,15 @@
 import { google } from 'googleapis';
-import { getGoogleAuth } from './googleAuth.js';
+import { getGoogleAuth, getCalendarUserAuth } from './googleAuth.js';
 import { CALENDAR_ID } from './config.js';
 
 function calendarClient() {
   return google.calendar({ version: 'v3', auth: getGoogleAuth() });
+}
+
+// Attendee invites must come from a real Google account (see getCalendarUserAuth) —
+// service accounts are blocked from inviting attendees without Workspace Domain-Wide Delegation.
+function calendarUserClient() {
+  return google.calendar({ version: 'v3', auth: getCalendarUserAuth() });
 }
 
 // Returns an array of { start, end } busy intervals (ISO strings) between the given range.
@@ -24,7 +30,7 @@ export async function getBusyIntervals(timeMinISO, timeMaxISO) {
 // and invites both the customer and the notify address. Google sends the
 // invite email itself (sendUpdates: 'all') — no separate email step needed.
 export async function createBookingEvent({ summary, description, startISO, endISO, timezone, attendeeEmails }) {
-  const calendar = calendarClient();
+  const calendar = calendarUserClient();
   const res = await calendar.events.insert({
     calendarId: CALENDAR_ID,
     conferenceDataVersion: 1,
