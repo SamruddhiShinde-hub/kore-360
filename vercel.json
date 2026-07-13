@@ -3,6 +3,6 @@
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "crons": [
-    { "path": "/api/expire-holds", "schedule": "0 */6 * * *" }
+    { "path": "/api/expire-holds", "schedule": "0 3 * * *" }
   ]
 }
