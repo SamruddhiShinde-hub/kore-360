@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 const DAYS_AHEAD = 21;
 
@@ -25,12 +25,39 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const selectedDateBtnRef = useRef(null);
 
   const dates = useMemo(() => upcomingDates(), []);
 
+  // Default to the first upcoming day that actually has open slots (not just
+  // "today") — sessions like the fixed-date webinar would otherwise open on
+  // a dead-end "no slots available" day that most people won't scroll past.
   useEffect(() => {
-    if (dates.length && !selectedDate) setSelectedDate(dates[0]);
-  }, [dates, selectedDate]);
+    if (!dates.length || selectedDate) return;
+    let cancelled = false;
+    (async () => {
+      for (const d of dates) {
+        if (cancelled) return;
+        try {
+          const res = await fetch(`/api/availability?sessionId=${encodeURIComponent(sessionId)}&date=${toDateKey(d)}`);
+          const data = await res.json();
+          if (cancelled) return;
+          if ((data.slots || []).length > 0) {
+            setSelectedDate(d);
+            return;
+          }
+        } catch {
+          // try the next date
+        }
+      }
+      if (!cancelled) setSelectedDate(dates[0]);
+    })();
+    return () => { cancelled = true; };
+  }, [dates, selectedDate, sessionId]);
+
+  useEffect(() => {
+    selectedDateBtnRef.current?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }, [selectedDate]);
 
   useEffect(() => {
     if (!selectedDate) return;
@@ -103,6 +130,7 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
                 return (
                   <button
                     key={toDateKey(d)}
+                    ref={isSelected ? selectedDateBtnRef : null}
                     type="button"
                     onClick={() => setSelectedDate(d)}
                     style={{
