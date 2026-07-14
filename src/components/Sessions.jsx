@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { SESSIONS } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
@@ -40,7 +41,15 @@ export default function Sessions() {
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
                 <div style={{ fontWeight: 900, fontSize: '30px', color: 'var(--text)' }}>{s.price}</div>
               </div>
-              {s.sessionId ? (
+              {s.sessionId === 'webinar' ? (
+                <Link
+                  to="/live-webinar"
+                  className="btn-tertiary"
+                  style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 18px', borderRadius: '8px' }}
+                >
+                  {s.cta}
+                </Link>
+              ) : s.sessionId ? (
                 <button
                   type="button"
                   onClick={() => setBooking(s)}

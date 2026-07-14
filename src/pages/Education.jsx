@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { SESSIONS, LINKS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageHeader from '../components/PageHeader.jsx';
@@ -69,7 +70,15 @@ export default function Education() {
 
                 <p style={{ fontSize: '14.5px', lineHeight: 1.6, fontStyle: 'italic', color: 'var(--text-muted)', borderLeft: `2px solid ${accent}`, paddingLeft: '14px', margin: '0 0 26px', textAlign: 'justify' }}>{d.outcome}</p>
 
-                {s.sessionId ? (
+                {s.sessionId === 'webinar' ? (
+                  <Link
+                    to="/live-webinar"
+                    className="btn-tertiary"
+                    style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}
+                  >
+                    {s.cta} →
+                  </Link>
+                ) : s.sessionId ? (
                   <button
                     type="button"
                     onClick={() => setBooking(s)}

@@ -13,6 +13,7 @@ const Education = lazy(() => import('./pages/Education.jsx'));
 const Management = lazy(() => import('./pages/Management.jsx'));
 const Talent = lazy(() => import('./pages/Talent.jsx'));
 const BookingConfirmed = lazy(() => import('./pages/BookingConfirmed.jsx'));
+const LiveWebinar = lazy(() => import('./pages/LiveWebinar.jsx'));
 
 export default function App() {
   useEffect(() => {
@@ -32,6 +33,7 @@ export default function App() {
             <Route path="/management" element={<Management />} />
             <Route path="/talent" element={<Talent />} />
             <Route path="/booking-confirmed" element={<BookingConfirmed />} />
+            <Route path="/live-webinar" element={<LiveWebinar />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </Suspense>
