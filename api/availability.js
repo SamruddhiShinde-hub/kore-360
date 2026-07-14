@@ -10,7 +10,9 @@ export default async function handler(req, res) {
 
   try {
     const slots = await computeAvailableSlots(sessionId, date);
-    res.status(200).json({ slots });
+    // Tells the frontend to skip the day/time picker and just show the one
+    // slot as read-only (see SESSIONS[sessionId].fixedStart in config.js).
+    res.status(200).json({ slots, fixed: Boolean(SESSIONS[sessionId].fixedStart) });
   } catch (err) {
     console.error('availability error', err);
     res.status(500).json({ error: 'Failed to compute availability' });

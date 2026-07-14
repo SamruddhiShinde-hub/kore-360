@@ -21,6 +21,7 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
   const [selectedDate, setSelectedDate] = useState(null);
   const [slots, setSlots] = useState([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
+  const [isFixed, setIsFixed] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -67,7 +68,15 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
     const dateKey = toDateKey(selectedDate);
     fetch(`/api/availability?sessionId=${encodeURIComponent(sessionId)}&date=${dateKey}`)
       .then((r) => r.json())
-      .then((data) => { if (!cancelled) setSlots(data.slots || []); })
+      .then((data) => {
+        if (cancelled) return;
+        const fetchedSlots = data.slots || [];
+        setSlots(fetchedSlots);
+        setIsFixed(Boolean(data.fixed));
+        // Fixed sessions (e.g. the webinar) have exactly one possible slot —
+        // no picker needed, just book it.
+        if (data.fixed && fetchedSlots.length === 1) setSelectedSlot(fetchedSlots[0]);
+      })
       .catch(() => { if (!cancelled) setSlots([]); })
       .finally(() => { if (!cancelled) setSlotsLoading(false); });
     return () => { cancelled = true; };
@@ -123,57 +132,70 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
 
         {step === 'picker' && (
           <>
-            <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '10px' }}>PICK A DAY</div>
-            <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '18px' }}>
-              {dates.map((d) => {
-                const isSelected = selectedDate && toDateKey(d) === toDateKey(selectedDate);
-                return (
-                  <button
-                    key={toDateKey(d)}
-                    ref={isSelected ? selectedDateBtnRef : null}
-                    type="button"
-                    onClick={() => setSelectedDate(d)}
-                    style={{
-                      flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
-                      padding: '10px 14px', borderRadius: '10px', cursor: 'pointer',
-                      border: isSelected ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
-                      background: isSelected ? 'var(--kore-gradient)' : 'transparent',
-                      color: isSelected ? '#FFFFFF' : 'var(--text)',
-                    }}
-                  >
-                    <span style={{ fontSize: '11px', letterSpacing: '0.04em' }}>{d.toLocaleDateString('en-IN', { weekday: 'short', timeZone: 'Asia/Kolkata' })}</span>
-                    <span style={{ fontSize: '15px', fontWeight: 800 }}>{d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' })}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '10px' }}>PICK A TIME (IST)</div>
-            {slotsLoading ? (
-              <div style={{ fontSize: '14px', color: 'var(--text-muted)', padding: '20px 0' }}>Loading available times…</div>
-            ) : slots.length === 0 ? (
-              <div style={{ fontSize: '14px', color: 'var(--text-muted)', padding: '20px 0' }}>No slots available this day — try another date.</div>
+            {isFixed ? (
+              <>
+                <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '10px' }}>WHEN</div>
+                <div style={{ fontSize: '15.5px', fontWeight: 700, marginBottom: '22px' }}>
+                  {selectedSlot
+                    ? `${new Date(selectedSlot).toLocaleString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })} IST`
+                    : 'Loading…'}
+                </div>
+              </>
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(84px,1fr))', gap: '8px', marginBottom: '22px' }}>
-                {slots.map((iso) => {
-                  const isSelected = selectedSlot === iso;
-                  return (
-                    <button
-                      key={iso}
-                      type="button"
-                      onClick={() => setSelectedSlot(iso)}
-                      style={{
-                        padding: '10px 8px', borderRadius: '8px', fontSize: '13.5px', fontWeight: 600, cursor: 'pointer',
-                        border: isSelected ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
-                        background: isSelected ? 'var(--kore-gradient)' : 'transparent',
-                        color: isSelected ? '#FFFFFF' : 'var(--text)',
-                      }}
-                    >
-                      {new Date(iso).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
-                    </button>
-                  );
-                })}
-              </div>
+              <>
+                <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '10px' }}>PICK A DAY</div>
+                <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '18px' }}>
+                  {dates.map((d) => {
+                    const isSelected = selectedDate && toDateKey(d) === toDateKey(selectedDate);
+                    return (
+                      <button
+                        key={toDateKey(d)}
+                        ref={isSelected ? selectedDateBtnRef : null}
+                        type="button"
+                        onClick={() => setSelectedDate(d)}
+                        style={{
+                          flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
+                          padding: '10px 14px', borderRadius: '10px', cursor: 'pointer',
+                          border: isSelected ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
+                          background: isSelected ? 'var(--kore-gradient)' : 'transparent',
+                          color: isSelected ? '#FFFFFF' : 'var(--text)',
+                        }}
+                      >
+                        <span style={{ fontSize: '11px', letterSpacing: '0.04em' }}>{d.toLocaleDateString('en-IN', { weekday: 'short', timeZone: 'Asia/Kolkata' })}</span>
+                        <span style={{ fontSize: '15px', fontWeight: 800 }}>{d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' })}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '10px' }}>PICK A TIME (IST)</div>
+                {slotsLoading ? (
+                  <div style={{ fontSize: '14px', color: 'var(--text-muted)', padding: '20px 0' }}>Loading available times…</div>
+                ) : slots.length === 0 ? (
+                  <div style={{ fontSize: '14px', color: 'var(--text-muted)', padding: '20px 0' }}>No slots available this day — try another date.</div>
+                ) : (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(84px,1fr))', gap: '8px', marginBottom: '22px' }}>
+                    {slots.map((iso) => {
+                      const isSelected = selectedSlot === iso;
+                      return (
+                        <button
+                          key={iso}
+                          type="button"
+                          onClick={() => setSelectedSlot(iso)}
+                          style={{
+                            padding: '10px 8px', borderRadius: '8px', fontSize: '13.5px', fontWeight: 600, cursor: 'pointer',
+                            border: isSelected ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
+                            background: isSelected ? 'var(--kore-gradient)' : 'transparent',
+                            color: isSelected ? '#FFFFFF' : 'var(--text)',
+                          }}
+                        >
+                          {new Date(iso).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </>
             )}
 
             <button
@@ -192,7 +214,9 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div style={{ fontSize: '13.5px', color: 'var(--text-muted)', marginBottom: '4px' }}>
               {selectedDate && selectedSlot && new Date(selectedSlot).toLocaleString('en-IN', { weekday: 'long', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
-              {' · '}<button type="button" onClick={() => setStep('picker')} style={{ background: 'none', border: 'none', color: 'var(--kore-orange-text)', cursor: 'pointer', fontSize: '13.5px', padding: 0 }}>change</button>
+              {!isFixed && (
+                <>{' · '}<button type="button" onClick={() => setStep('picker')} style={{ background: 'none', border: 'none', color: 'var(--kore-orange-text)', cursor: 'pointer', fontSize: '13.5px', padding: 0 }}>change</button></>
+              )}
             </div>
             <input
               type="text" required placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)}
