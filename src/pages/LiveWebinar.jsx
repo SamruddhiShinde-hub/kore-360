@@ -34,14 +34,6 @@ function LinkIcon() {
     </svg>
   );
 }
-function BookIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-    </svg>
-  );
-}
-
 const labelStyle = { fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', color: 'var(--text-faint)', marginBottom: '8px' };
 
 const WHATS_INCLUDED = [
@@ -123,15 +115,6 @@ export default function LiveWebinar() {
           </p>
 
           <div style={labelStyle}>EVERYONE WHO REGISTERS GETS</div>
-          <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', background: 'rgba(var(--border-rgb),0.035)', border: '1px solid rgba(var(--border-rgb),0.1)', borderRadius: '12px', padding: '18px', marginBottom: '18px' }}>
-            <span style={{ color: ACCENT, flex: 'none', marginTop: '2px' }}><BookIcon /></span>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '4px' }}>Free ebook — "The Sports Industry Playbook"</div>
-              <p style={{ fontSize: '14px', lineHeight: 1.55, color: 'var(--text-muted)', margin: 0, textAlign: 'justify' }}>
-                A complete guide to every department in sports management, what each one does, and how to start figuring out where you fit. Sent directly to you after registration.
-              </p>
-            </div>
-          </div>
           <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {WHATS_INCLUDED.map((item) => (
               <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '15px', lineHeight: 1.5, color: 'var(--text)' }}>
