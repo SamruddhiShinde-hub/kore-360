@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { SESSIONS, IMAGES, LINKS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
-import BookingModal from '../components/BookingModal.jsx';
 
 const WEBINAR = SESSIONS.find((s) => s.sessionId === 'webinar');
 const ACCENT = 'var(--kore-orange-text)';
@@ -39,9 +38,10 @@ function LinkIcon() {
 const labelStyle = { fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', color: 'var(--text-faint)', marginBottom: '8px' };
 
 export default function LiveWebinar() {
-  const [booking, setBooking] = useState(null);
   const [attendeeCount, setAttendeeCount] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [booking, setBooking] = useState('idle'); // idle | redirecting | error
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     fetch('/api/webinar-attendee-count')
@@ -57,6 +57,20 @@ export default function LiveWebinar() {
       setTimeout(() => setCopied(false), 2000);
     } catch {
       // clipboard not available — no-op
+    }
+  };
+
+  const handleBookSeat = async () => {
+    setErrorMsg('');
+    setBooking('redirecting');
+    try {
+      const res = await fetch('/api/create-webinar-payment-link', { method: 'POST' });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not start payment.');
+      window.location.href = data.url;
+    } catch (err) {
+      setErrorMsg(err.message || 'Something went wrong. Please try again.');
+      setBooking('idle');
     }
   };
 
@@ -141,12 +155,14 @@ export default function LiveWebinar() {
             )}
             <button
               type="button"
-              onClick={() => setBooking(WEBINAR)}
+              disabled={booking === 'redirecting'}
+              onClick={handleBookSeat}
               className="btn-accent"
-              style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 22px', borderRadius: '8px', cursor: 'pointer' }}
+              style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 22px', borderRadius: '8px', cursor: booking === 'redirecting' ? 'default' : 'pointer', opacity: booking === 'redirecting' ? 0.7 : 1 }}
             >
-              {WEBINAR.cta}
+              {booking === 'redirecting' ? 'Taking you to payment…' : WEBINAR.cta}
             </button>
+            {errorMsg && <div style={{ fontSize: '13px', color: 'var(--kore-orange-text)', textAlign: 'center' }}>{errorMsg}</div>}
           </div>
 
           <div>
@@ -161,15 +177,6 @@ export default function LiveWebinar() {
           </div>
         </div>
       </div>
-
-      {booking && (
-        <BookingModal
-          sessionId={booking.sessionId}
-          sessionName={booking.name}
-          price={booking.price}
-          onClose={() => setBooking(null)}
-        />
-      )}
     </>
   );
 }

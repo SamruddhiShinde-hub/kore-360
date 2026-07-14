@@ -37,6 +37,21 @@ export async function appendHold({ holdId, sessionId, sessionName, slotStart, sl
   });
 }
 
+// For flows with no pre-existing hold row (e.g. the webinar's one-click
+// checkout, where Razorpay collects the buyer's details itself) — writes
+// straight to 'paid' instead of going through create-hold first.
+export async function appendPaidBooking({ sessionId, sessionName, slotStart, slotEnd, userName, userEmail, paymentLinkId }) {
+  const sheets = sheetsClient();
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: SHEET_ID,
+    range: SHEET_RANGE,
+    valueInputOption: 'RAW',
+    requestBody: {
+      values: [[`pl-${paymentLinkId}`, sessionId, sessionName, slotStart, slotEnd, userName, userEmail, 'paid', paymentLinkId, new Date().toISOString()]],
+    },
+  });
+}
+
 export async function updateBookingRow(rowNumber, updates) {
   const sheets = sheetsClient();
   const current = await sheets.spreadsheets.values.get({
