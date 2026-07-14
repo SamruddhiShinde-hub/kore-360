@@ -34,8 +34,21 @@ function LinkIcon() {
     </svg>
   );
 }
+function BookIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+    </svg>
+  );
+}
 
 const labelStyle = { fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', color: 'var(--text-faint)', marginBottom: '8px' };
+
+const WHATS_INCLUDED = [
+  '60 minutes live with Krish',
+  'Open Q&A — your questions, answered directly',
+  'A clear picture of how this industry really works',
+];
 
 export default function LiveWebinar() {
   const [attendeeCount, setAttendeeCount] = useState(null);
@@ -74,13 +87,11 @@ export default function LiveWebinar() {
     }
   };
 
-  const d = WEBINAR.details;
-
   return (
     <>
       <PageMeta
-        title="Live Webinar with Krish Lalwani"
-        description={WEBINAR.desc}
+        title="Behind the Field with Krish Lalwani"
+        description="Every match you watch runs on departments most people never see. Join Krish Lalwani live for a behind-the-field look at how the sports industry actually hires."
         path="/live-webinar"
       />
 
@@ -88,8 +99,8 @@ export default function LiveWebinar() {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '132px 32px 0', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 360px', gap: '40px', alignItems: 'end' }} className="grid-2col">
           <Reveal>
             <div style={{ fontSize: '13px', letterSpacing: '0.18em', fontWeight: 700, backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', marginBottom: '20px' }}>LIVE WEBINAR</div>
-            <h1 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(34px,5.5vw,64px)', color: '#FFFFFF', margin: '0 0 18px' }}>
-              The Sports Industry, Unlocked.
+            <h1 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(30px,4.6vw,52px)', color: '#FFFFFF', margin: '0 0 18px' }}>
+              Behind the Field with Krish Lalwani
             </h1>
             <p style={{ fontSize: '17px', lineHeight: 1.6, color: 'rgba(255,255,255,0.75)', maxWidth: '560px', margin: 0, textAlign: 'justify' }}>{WEBINAR.desc}</p>
           </Reveal>
@@ -103,18 +114,38 @@ export default function LiveWebinar() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '56px 32px 96px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 340px', gap: '48px', alignItems: 'start' }} className="grid-2col">
         <div>
           <div style={labelStyle}>ABOUT THE EVENT</div>
-          <p style={{ fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text)', margin: '0 0 28px', textAlign: 'justify' }}>{d.whoFor}</p>
+          <div style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.01em', margin: '0 0 16px' }}>The Sports Industry. Unlocked.</div>
+          <p style={{ fontSize: '15.5px', lineHeight: 1.65, color: 'var(--text)', margin: '0 0 18px', textAlign: 'justify' }}>
+            Every match you watch runs on departments most people never see. This session takes you behind the field, what keeps the game alive, and exactly how to get your first foot inside it.
+          </p>
+          <p style={{ fontSize: '15.5px', lineHeight: 1.65, color: 'var(--text)', margin: '0 0 32px', textAlign: 'justify' }}>
+            In 60 minutes I'll walk you through how this industry actually works, which roles exist across every department, and the entry paths that work for different backgrounds. No textbook theory. What I've seen across 500+ matches and 20+ leagues.
+          </p>
 
-          <div style={labelStyle}>WHAT YOU'LL GET</div>
-          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 28px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {d.includes.map((item) => (
+          <div style={labelStyle}>EVERYONE WHO REGISTERS GETS</div>
+          <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', background: 'rgba(var(--border-rgb),0.035)', border: '1px solid rgba(var(--border-rgb),0.1)', borderRadius: '12px', padding: '18px', marginBottom: '18px' }}>
+            <span style={{ color: ACCENT, flex: 'none', marginTop: '2px' }}><BookIcon /></span>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '15px', marginBottom: '4px' }}>Free ebook — "The Sports Industry Playbook"</div>
+              <p style={{ fontSize: '14px', lineHeight: 1.55, color: 'var(--text-muted)', margin: 0, textAlign: 'justify' }}>
+                A complete guide to every department in sports management, what each one does, and how to start figuring out where you fit. Sent directly to you after registration.
+              </p>
+            </div>
+          </div>
+          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 32px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {WHATS_INCLUDED.map((item) => (
               <li key={item} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px', fontSize: '15px', lineHeight: 1.5, color: 'var(--text)' }}>
                 <span style={{ color: ACCENT, fontWeight: 900, flex: 'none' }}>✓</span>{item}
               </li>
             ))}
           </ul>
 
-          <p style={{ fontSize: '14.5px', lineHeight: 1.6, fontStyle: 'italic', color: 'var(--text-muted)', borderLeft: `2px solid ${ACCENT}`, paddingLeft: '14px', margin: '0 0 44px', textAlign: 'justify' }}>{d.outcome}</p>
+          <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-muted)', margin: '0 0 12px', textAlign: 'justify' }}>
+            This is for you if you're a student figuring out direction, working and want to move into sports, or simply curious about what goes on behind every match.
+          </p>
+          <p style={{ fontSize: '14.5px', lineHeight: 1.6, fontStyle: 'italic', color: 'var(--text-muted)', borderLeft: `2px solid ${ACCENT}`, paddingLeft: '14px', margin: '0 0 44px' }}>
+            No prior experience needed. Open to all backgrounds.
+          </p>
 
           <div style={{ borderTop: '1px solid rgba(var(--border-rgb),0.1)', paddingTop: '32px' }}>
             <div style={labelStyle}>YOUR HOST</div>
