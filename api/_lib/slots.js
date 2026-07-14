@@ -24,6 +24,19 @@ function isHoldExpired(hold) {
 // Returns an array of ISO start-time strings available for the given session on the given date.
 export async function computeAvailableSlots(sessionId, dateStr) {
   const session = getSession(sessionId);
+
+  if (session.fixedStart) {
+    // Shared group session (e.g. the webinar) — always the same single slot,
+    // not the rolling per-booking grid below. Every buyer joins the same
+    // Calendar event, so this deliberately skips the busy/hold checks that
+    // exist to stop Krish's personal time being double-booked.
+    const start = new Date(session.fixedStart);
+    const startDateStr = start.toLocaleDateString('en-CA', { timeZone: AVAILABILITY.timezone });
+    if (dateStr !== startDateStr) return [];
+    if (start.getTime() < Date.now() + MIN_NOTICE_MINUTES * 60 * 1000) return [];
+    return [start.toISOString()];
+  }
+
   const dayStart = istDate(dateStr, 0, 0);
   const dow = dayStart.getUTCDay(); // fine for day-of-week since we only need the calendar date's weekday, computed from an IST midnight instant is safe (no DST shifts)
   if (!AVAILABILITY.workingDays.includes(dow)) return [];

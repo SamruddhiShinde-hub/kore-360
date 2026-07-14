@@ -2,7 +2,7 @@ import { verifyWebhookSignature } from './_lib/razorpay.js';
 import { findBookingByHoldId, updateBookingRow } from './_lib/sheet.js';
 import { createBookingEvent } from './_lib/calendar.js';
 import { sendNotifyEmail } from './_lib/gmail.js';
-import { AVAILABILITY, NOTIFY_EMAIL } from './_lib/config.js';
+import { AVAILABILITY, NOTIFY_EMAIL, WEBINAR_EVENT_ID } from './_lib/config.js';
 
 export const config = { api: { bodyParser: false } };
 
@@ -84,6 +84,7 @@ export default async function handler(req, res) {
       }
 
       const event = await createBookingEvent({
+        eventId: booking.sessionId === 'webinar' ? WEBINAR_EVENT_ID : undefined,
         summary: `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
         description: `Booked via KORE 360.\nAttendee: ${booking.userName} (${booking.userEmail})`,
         startISO: booking.slotStart,
