@@ -82,6 +82,13 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
     return () => { cancelled = true; };
   }, [selectedDate, sessionId]);
 
+  // Fixed sessions have nothing to pick — skip straight to the name/email
+  // form instead of showing a "WHEN: ... · Continue" screen with no choice
+  // to make.
+  useEffect(() => {
+    if (isFixed && selectedSlot && step === 'picker') setStep('details');
+  }, [isFixed, selectedSlot, step]);
+
   const handleClose = (e) => {
     e?.stopPropagation();
     onClose();
@@ -133,14 +140,7 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
         {step === 'picker' && (
           <>
             {isFixed ? (
-              <>
-                <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '10px' }}>WHEN</div>
-                <div style={{ fontSize: '15.5px', fontWeight: 700, marginBottom: '22px' }}>
-                  {selectedSlot
-                    ? `${new Date(selectedSlot).toLocaleString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })} IST`
-                    : 'Loading…'}
-                </div>
-              </>
+              <div style={{ fontSize: '14px', color: 'var(--text-muted)', padding: '20px 0' }}>Loading…</div>
             ) : (
               <>
                 <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '10px' }}>PICK A DAY</div>
@@ -198,15 +198,17 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
               </>
             )}
 
-            <button
-              type="button"
-              disabled={!selectedSlot}
-              onClick={() => setStep('details')}
-              className="btn-accent"
-              style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '13px 22px', borderRadius: '8px', cursor: selectedSlot ? 'pointer' : 'default', opacity: selectedSlot ? 1 : 0.5 }}
-            >
-              Continue
-            </button>
+            {!isFixed && (
+              <button
+                type="button"
+                disabled={!selectedSlot}
+                onClick={() => setStep('details')}
+                className="btn-accent"
+                style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '13px 22px', borderRadius: '8px', cursor: selectedSlot ? 'pointer' : 'default', opacity: selectedSlot ? 1 : 0.5 }}
+              >
+                Continue
+              </button>
+            )}
           </>
         )}
 
