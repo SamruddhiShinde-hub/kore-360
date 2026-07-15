@@ -6,6 +6,7 @@ import logo from '../assets/Final - white logo-14.png';
 const mainHeroBg = '/hero-bg-desktop.webp';
 
 const exploreLinks = [
+  { label: 'About Us', to: '/about' },
   { label: 'Education', to: '/education' },
   { label: 'Management', to: '/management' },
   { label: 'Talent Acquisition', to: '/talent' },

@@ -52,7 +52,7 @@ export default function Nav() {
           <Link to="/education" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>Education</Link>
           <Link to="/management" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>Management</Link>
           <Link to="/talent" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>Talent</Link>
-          <Link to="#about-us" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>About Us</Link>
+          <Link to="/about" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>About Us</Link>
         </div>
       )}
 
@@ -84,7 +84,7 @@ export default function Nav() {
 
           <Link to="/talent" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Talent</Link>
           <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-            <Link to="#about-us" className="nav-link-bar" style={{ color: '#FFFFFF' }}>About Us</Link>
+            <Link to="/about" className="nav-link-bar" style={{ color: '#FFFFFF' }}>About Us</Link>
             <button
               onClick={toggleTheme}
               style={{

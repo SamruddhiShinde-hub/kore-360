@@ -9,6 +9,7 @@ import FloatingActions from './components/FloatingActions.jsx';
 import ConnectPopup from './components/ConnectPopup.jsx';
 import Home from './pages/Home.jsx';
 
+const About = lazy(() => import('./pages/About.jsx'));
 const Education = lazy(() => import('./pages/Education.jsx'));
 const Management = lazy(() => import('./pages/Management.jsx'));
 const Talent = lazy(() => import('./pages/Talent.jsx'));
@@ -32,6 +33,7 @@ export default function App() {
         <Suspense fallback={null}>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/education" element={<Education />} />
             <Route path="/management" element={<Management />} />
             <Route path="/talent" element={<Talent />} />
