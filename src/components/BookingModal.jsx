@@ -16,17 +16,21 @@ function upcomingDates() {
   return dates;
 }
 
-export default function BookingModal({ sessionId, sessionName, price, onClose }) {
-  const [step, setStep] = useState('picker'); // picker | details | redirecting | error
+export default function BookingModal({ sessionId, sessionName, price, initialSlot, onClose }) {
+  // Callers that already picked a slot themselves (e.g. the Clarity Call page's
+  // own day/time picker) skip straight to the name/email step — no need to
+  // re-fetch or re-show a picker for a slot that's already chosen.
+  const [step, setStep] = useState(initialSlot ? 'details' : 'picker'); // picker | details | redirecting | error
   const [selectedDate, setSelectedDate] = useState(null);
   const [slots, setSlots] = useState([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [selectedSlot, setSelectedSlot] = useState(initialSlot || null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const selectedDateBtnRef = useRef(null);
+  const skipPicker = isFixed || Boolean(initialSlot);
 
   const dates = useMemo(() => upcomingDates(), []);
 
@@ -34,7 +38,7 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
   // "today") — sessions like the fixed-date webinar would otherwise open on
   // a dead-end "no slots available" day that most people won't scroll past.
   useEffect(() => {
-    if (!dates.length || selectedDate) return;
+    if (initialSlot || !dates.length || selectedDate) return;
     let cancelled = false;
     (async () => {
       for (const d of dates) {
@@ -61,7 +65,7 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
   }, [selectedDate]);
 
   useEffect(() => {
-    if (!selectedDate) return;
+    if (initialSlot || !selectedDate) return;
     let cancelled = false;
     setSlotsLoading(true);
     setSelectedSlot(null);
@@ -215,8 +219,8 @@ export default function BookingModal({ sessionId, sessionName, price, onClose })
         {(step === 'details' || step === 'redirecting') && (
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div style={{ fontSize: '13.5px', color: 'var(--text-muted)', marginBottom: '4px' }}>
-              {selectedDate && selectedSlot && new Date(selectedSlot).toLocaleString('en-IN', { weekday: 'long', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
-              {!isFixed && (
+              {selectedSlot && new Date(selectedSlot).toLocaleString('en-IN', { weekday: 'long', day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+              {!skipPicker && (
                 <>{' · '}<button type="button" onClick={() => setStep('picker')} style={{ background: 'none', border: 'none', color: 'var(--kore-orange-text)', cursor: 'pointer', fontSize: '13.5px', padding: 0 }}>change</button></>
               )}
             </div>

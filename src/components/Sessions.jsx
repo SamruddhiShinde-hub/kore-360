@@ -6,6 +6,7 @@ import Eyebrow from './Eyebrow.jsx';
 import BookingModal from './BookingModal.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
+const DEDICATED_PAGES = { webinar: '/live-webinar', clarity: '/clarity-call' };
 
 export default function Sessions() {
   const [booking, setBooking] = useState(null);
@@ -41,9 +42,9 @@ export default function Sessions() {
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
                 <div style={{ fontWeight: 900, fontSize: '30px', color: 'var(--text)' }}>{s.price}</div>
               </div>
-              {s.sessionId === 'webinar' ? (
+              {DEDICATED_PAGES[s.sessionId] ? (
                 <Link
-                  to="/live-webinar"
+                  to={DEDICATED_PAGES[s.sessionId]}
                   className="btn-tertiary"
                   style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 18px', borderRadius: '8px' }}
                 >

@@ -7,6 +7,7 @@ import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
+const DEDICATED_PAGES = { webinar: '/live-webinar', clarity: '/clarity-call' };
 
 const labelStyle = { fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', color: 'var(--text-faint)', marginBottom: '8px' };
 
@@ -70,9 +71,9 @@ export default function Education() {
 
                 <p style={{ fontSize: '14.5px', lineHeight: 1.6, fontStyle: 'italic', color: 'var(--text-muted)', borderLeft: `2px solid ${accent}`, paddingLeft: '14px', margin: '0 0 26px', textAlign: 'justify' }}>{d.outcome}</p>
 
-                {s.sessionId === 'webinar' ? (
+                {DEDICATED_PAGES[s.sessionId] ? (
                   <Link
-                    to="/live-webinar"
+                    to={DEDICATED_PAGES[s.sessionId]}
                     className="btn-tertiary"
                     style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}
                   >

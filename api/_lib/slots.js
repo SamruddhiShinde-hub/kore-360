@@ -21,6 +21,34 @@ function isHoldExpired(hold) {
   return Date.now() - created > HOLD_TTL_MINUTES * 60 * 1000;
 }
 
+// Shared by both the single-day and range computations below, once busy/hold
+// data has already been fetched for whatever window covers dateStr.
+function generateDaySlots({ dateStr, session, busy, activeHolds, earliestStart }) {
+  const dayStart = istDate(dateStr, 0, 0);
+  const dow = dayStart.getUTCDay(); // fine for day-of-week since we only need the calendar date's weekday, computed from an IST midnight instant is safe (no DST shifts)
+  if (!AVAILABILITY.workingDays.includes(dow)) return [];
+
+  const windowStart = istDate(dateStr, AVAILABILITY.startHour, 0);
+  const windowEnd = istDate(dateStr, AVAILABILITY.endHour, 0);
+  const stepMs = (session.durationMinutes + AVAILABILITY.bufferMinutes) * 60 * 1000;
+  const durationMs = session.durationMinutes * 60 * 1000;
+
+  const slots = [];
+  for (let start = windowStart.getTime(); start + durationMs <= windowEnd.getTime(); start += stepMs) {
+    const end = start + durationMs;
+    if (start < earliestStart) continue;
+
+    const blockedByCalendar = busy.some((b) => overlaps(start, end, new Date(b.start).getTime(), new Date(b.end).getTime()));
+    if (blockedByCalendar) continue;
+
+    const blockedByHold = activeHolds.some((h) => overlaps(start, end, new Date(h.slotStart).getTime(), new Date(h.slotEnd).getTime()));
+    if (blockedByHold) continue;
+
+    slots.push(new Date(start).toISOString());
+  }
+  return slots;
+}
+
 // Returns an array of ISO start-time strings available for the given session on the given date.
 export async function computeAvailableSlots(sessionId, dateStr) {
   const session = getSession(sessionId);
@@ -37,36 +65,44 @@ export async function computeAvailableSlots(sessionId, dateStr) {
     return [start.toISOString()];
   }
 
-  const dayStart = istDate(dateStr, 0, 0);
-  const dow = dayStart.getUTCDay(); // fine for day-of-week since we only need the calendar date's weekday, computed from an IST midnight instant is safe (no DST shifts)
-  if (!AVAILABILITY.workingDays.includes(dow)) return [];
-
   const windowStart = istDate(dateStr, AVAILABILITY.startHour, 0);
   const windowEnd = istDate(dateStr, AVAILABILITY.endHour, 0);
-  const stepMs = (session.durationMinutes + AVAILABILITY.bufferMinutes) * 60 * 1000;
-  const durationMs = session.durationMinutes * 60 * 1000;
 
   const [busy, holds] = await Promise.all([
     getBusyIntervals(windowStart.toISOString(), windowEnd.toISOString()),
     getActiveHolds(),
   ]);
   const activeHolds = holds.filter((h) => h.status === 'paid' || !isHoldExpired(h));
+  const earliestStart = Date.now() + MIN_NOTICE_MINUTES * 60 * 1000;
 
-  const now = Date.now();
-  const earliestStart = now + MIN_NOTICE_MINUTES * 60 * 1000;
+  return generateDaySlots({ dateStr, session, busy, activeHolds, earliestStart });
+}
 
-  const slots = [];
-  for (let start = windowStart.getTime(); start + durationMs <= windowEnd.getTime(); start += stepMs) {
-    const end = start + durationMs;
-    if (start < earliestStart) continue;
+// Same as computeAvailableSlots but for many days at once, using a single
+// Calendar freebusy query and a single Sheet read spanning the whole range —
+// a day-strip UI calling computeAvailableSlots once per visible day would
+// otherwise multiply Google API calls by the number of days shown.
+export async function computeAvailableSlotsRange(sessionId, dateStrs) {
+  const session = getSession(sessionId);
+  if (dateStrs.length === 0) return [];
 
-    const blockedByCalendar = busy.some((b) => overlaps(start, end, new Date(b.start).getTime(), new Date(b.end).getTime()));
-    if (blockedByCalendar) continue;
-
-    const blockedByHold = activeHolds.some((h) => overlaps(start, end, new Date(h.slotStart).getTime(), new Date(h.slotEnd).getTime()));
-    if (blockedByHold) continue;
-
-    slots.push(new Date(start).toISOString());
+  if (session.fixedStart) {
+    const perDay = await Promise.all(dateStrs.map((d) => computeAvailableSlots(sessionId, d)));
+    return dateStrs.map((date, i) => ({ date, slots: perDay[i] }));
   }
-  return slots;
+
+  const overallStart = istDate(dateStrs[0], AVAILABILITY.startHour, 0);
+  const overallEnd = istDate(dateStrs[dateStrs.length - 1], AVAILABILITY.endHour, 0);
+
+  const [busy, holds] = await Promise.all([
+    getBusyIntervals(overallStart.toISOString(), overallEnd.toISOString()),
+    getActiveHolds(),
+  ]);
+  const activeHolds = holds.filter((h) => h.status === 'paid' || !isHoldExpired(h));
+  const earliestStart = Date.now() + MIN_NOTICE_MINUTES * 60 * 1000;
+
+  return dateStrs.map((dateStr) => ({
+    date: dateStr,
+    slots: generateDaySlots({ dateStr, session, busy, activeHolds, earliestStart }),
+  }));
 }

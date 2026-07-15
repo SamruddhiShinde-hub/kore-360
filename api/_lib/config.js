@@ -23,7 +23,7 @@ export const AVAILABILITY = {
   timezone: 'Asia/Kolkata',
   workingDays: [1, 2, 3, 4, 5, 6], // 0 = Sunday ... 6 = Saturday. Sunday off.
   startHour: 10, // 10:00
-  endHour: 19, // 19:00
+  endHour: 23, // 23:00
   bufferMinutes: 10, // gap kept free between consecutive bookings
   daysAhead: 21, // how far into the future users can book
 };
