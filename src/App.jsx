@@ -16,6 +16,7 @@ const BookingConfirmed = lazy(() => import('./pages/BookingConfirmed.jsx'));
 const LiveWebinar = lazy(() => import('./pages/LiveWebinar.jsx'));
 const ClarityCall = lazy(() => import('./pages/ClarityCall.jsx'));
 const Ebook = lazy(() => import('./pages/Ebook.jsx'));
+const QnaCall = lazy(() => import('./pages/QnaCall.jsx'));
 
 export default function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="/live-webinar" element={<LiveWebinar />} />
             <Route path="/clarity-call" element={<ClarityCall />} />
             <Route path="/ebook" element={<Ebook />} />
+            <Route path="/qa-call" element={<QnaCall />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </Suspense>

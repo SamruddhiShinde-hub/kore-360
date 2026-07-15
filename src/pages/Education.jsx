@@ -7,7 +7,7 @@ import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
-const DEDICATED_PAGES = { webinar: '/live-webinar', clarity: '/clarity-call', ebook: '/ebook' };
+const DEDICATED_PAGES = { webinar: '/live-webinar', clarity: '/clarity-call', ebook: '/ebook', qna: '/qa-call' };
 
 const labelStyle = { fontSize: '11px', fontWeight: 700, letterSpacing: '0.1em', color: 'var(--text-faint)', marginBottom: '8px' };
 
