@@ -1,4 +1,4 @@
-import { AVAILABILITY, HOLD_TTL_MINUTES, getSession } from './config.js';
+import { AVAILABILITY, HOLD_TTL_MINUTES, getSession, getSlotStepMinutes } from './config.js';
 import { getBusyIntervals } from './calendar.js';
 import { getActiveHolds } from './sheet.js';
 
@@ -30,12 +30,12 @@ function dayOfWeek(dateStr) {
 
 // Shared by both the single-day and range computations below, once busy/hold
 // data has already been fetched for whatever window covers dateStr.
-function generateDaySlots({ dateStr, session, busy, activeHolds, earliestStart }) {
+function generateDaySlots({ dateStr, sessionId, session, busy, activeHolds, earliestStart }) {
   if (!AVAILABILITY.workingDays.includes(dayOfWeek(dateStr))) return [];
 
   const windowStart = istDate(dateStr, AVAILABILITY.startHour, 0);
   const windowEnd = istDate(dateStr, AVAILABILITY.endHour, 0);
-  const stepMs = (session.durationMinutes + AVAILABILITY.bufferMinutes) * 60 * 1000;
+  const stepMs = (getSlotStepMinutes(sessionId) + AVAILABILITY.bufferMinutes) * 60 * 1000;
   const durationMs = session.durationMinutes * 60 * 1000;
 
   const slots = [];
@@ -80,7 +80,7 @@ export async function computeAvailableSlots(sessionId, dateStr) {
   const activeHolds = holds.filter((h) => h.status === 'paid' || !isHoldExpired(h));
   const earliestStart = Date.now() + MIN_NOTICE_MINUTES * 60 * 1000;
 
-  return generateDaySlots({ dateStr, session, busy, activeHolds, earliestStart });
+  return generateDaySlots({ dateStr, sessionId, session, busy, activeHolds, earliestStart });
 }
 
 // Same as computeAvailableSlots but for many days at once, using a single
@@ -108,6 +108,6 @@ export async function computeAvailableSlotsRange(sessionId, dateStrs) {
 
   return dateStrs.map((dateStr) => ({
     date: dateStr,
-    slots: generateDaySlots({ dateStr, session, busy, activeHolds, earliestStart }),
+    slots: generateDaySlots({ dateStr, sessionId, session, busy, activeHolds, earliestStart }),
   }));
 }

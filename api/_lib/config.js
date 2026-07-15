@@ -43,3 +43,14 @@ export function getSession(sessionId) {
   if (!session) throw new Error(`Unknown sessionId: ${sessionId}`);
   return session;
 }
+
+// The Q&A call is shorter than the Clarity Call (10 min vs 30), but the two
+// should still offer identical start times on their booking pages — so the
+// Q&A grid steps in Clarity-sized increments instead of its own duration.
+// The call itself still only occupies its real 10 minutes on the calendar
+// (see generateDaySlots' use of session.durationMinutes for that half), so
+// a slot only disappears from the Q&A grid once it's actually booked.
+export function getSlotStepMinutes(sessionId) {
+  if (sessionId === 'qna') return SESSIONS.clarity.durationMinutes;
+  return getSession(sessionId).durationMinutes;
+}
