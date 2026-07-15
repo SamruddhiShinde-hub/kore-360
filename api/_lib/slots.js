@@ -21,12 +21,17 @@ function isHoldExpired(hold) {
   return Date.now() - created > HOLD_TTL_MINUTES * 60 * 1000;
 }
 
+// dateStr is an IST calendar date. Anchoring at UTC noon (rather than IST
+// midnight, which is still the *previous* UTC calendar day since IST is
+// UTC+5:30) is what makes getUTCDay() actually match dateStr's real weekday.
+function dayOfWeek(dateStr) {
+  return new Date(`${dateStr}T12:00:00Z`).getUTCDay();
+}
+
 // Shared by both the single-day and range computations below, once busy/hold
 // data has already been fetched for whatever window covers dateStr.
 function generateDaySlots({ dateStr, session, busy, activeHolds, earliestStart }) {
-  const dayStart = istDate(dateStr, 0, 0);
-  const dow = dayStart.getUTCDay(); // fine for day-of-week since we only need the calendar date's weekday, computed from an IST midnight instant is safe (no DST shifts)
-  if (!AVAILABILITY.workingDays.includes(dow)) return [];
+  if (!AVAILABILITY.workingDays.includes(dayOfWeek(dateStr))) return [];
 
   const windowStart = istDate(dateStr, AVAILABILITY.startHour, 0);
   const windowEnd = istDate(dateStr, AVAILABILITY.endHour, 0);
