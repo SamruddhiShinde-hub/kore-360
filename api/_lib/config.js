@@ -12,7 +12,7 @@ export const SESSIONS = {
   clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 149900 },
   // No slot/Calendar component at all — a straight digital-product purchase
   // fulfilled by emailing the PDF (see razorpay-webhook.js + gmail.js).
-  ebook: { name: 'Behind the Field (E-book)', amountPaise: 9900 },
+  ebook: { name: 'Behind the Field (E-book)', amountPaise: 100 }, // TEMP: ₹1 for end-to-end delivery testing, revert to 9900 (₹99) after confirming the PDF arrives
 };
 
 // Deterministic Calendar event ID for the shared webinar event — lets

@@ -73,7 +73,7 @@ export const MARQUEE = [
 // `details` powers the expanded breakdown on the Education page; the homepage cards only use the fields above it.
 export const SESSIONS = [
   {
-    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', sessionId: 'ebook',
+    tag: 'E-BOOK', name: 'Behind the Field', price: '₹1', meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', sessionId: 'ebook', // TEMP: ₹1 for end-to-end delivery testing, revert to ₹99 after confirming the PDF arrives
     details: {
       format: 'Instant PDF download, ~60 pages',
       whoFor: "Anyone starting from zero who wants the full map before spending on a call",
