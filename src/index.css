@@ -90,7 +90,10 @@ a { text-decoration: none; }
 
 /* ---- responsive: collapse two-column grids on small screens ---- */
 @media (max-width: 860px) {
-  .grid-2col { grid-template-columns: 1fr !important; }
+  /* minmax(0,1fr), not bare 1fr: a plain 1fr track defaults to minmax(auto,1fr),
+     so the collapsed column still grows to fit its widest content (e.g. a
+     horizontally-scrollable row) instead of actually shrinking to the viewport. */
+  .grid-2col { grid-template-columns: minmax(0,1fr) !important; }
   .footer-grid { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 600px) {
