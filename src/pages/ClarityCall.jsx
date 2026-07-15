@@ -232,7 +232,7 @@ export default function ClarityCall() {
             <div style={{ fontSize: '14px', color: 'var(--text-muted)', padding: '20px 0' }}>Loading availability…</div>
           ) : (
             <>
-              <div style={{ display: 'grid', gridTemplateColumns: `repeat(${VISIBLE_DAYS},1fr)`, gap: '6px', marginBottom: '20px' }}>
+              <div style={{ display: 'flex', gap: '6px', overflowX: 'auto', paddingBottom: '2px', marginBottom: '20px' }}>
                 {visibleDays.map((d) => {
                   const date = new Date(`${d.date}T00:00:00+05:30`);
                   const isSelected = d.date === selectedDate;
@@ -244,6 +244,7 @@ export default function ClarityCall() {
                       disabled={!hasSlots}
                       onClick={() => setSelectedDate(d.date)}
                       style={{
+                        flex: '1 0 0', minWidth: '62px',
                         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
                         padding: '8px 4px', borderRadius: '8px', cursor: hasSlots ? 'pointer' : 'default',
                         border: isSelected ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
@@ -253,8 +254,8 @@ export default function ClarityCall() {
                       }}
                     >
                       <span style={{ fontSize: '10px', letterSpacing: '0.04em' }}>{date.toLocaleDateString('en-IN', { weekday: 'short', timeZone: 'Asia/Kolkata' })}</span>
-                      <span style={{ fontSize: '14px', fontWeight: 800 }}>{date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' })}</span>
-                      <span style={{ fontSize: '10px', color: isSelected ? 'rgba(255,255,255,0.85)' : hasSlots ? '#22c55e' : 'var(--text-faint)' }}>{hasSlots ? `${d.slots.length} slots` : 'No slots'}</span>
+                      <span style={{ fontSize: '14px', fontWeight: 800, whiteSpace: 'nowrap' }}>{date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' })}</span>
+                      <span style={{ fontSize: '10px', whiteSpace: 'nowrap', color: isSelected ? 'rgba(255,255,255,0.85)' : hasSlots ? '#22c55e' : 'var(--text-faint)' }}>{hasSlots ? `${d.slots.length} slots` : 'No slots'}</span>
                     </button>
                   );
                 })}
