@@ -43,7 +43,18 @@
     <!-- load non-blocking: print media doesn't apply on screen, so the browser fetches it without blocking render, then onload swaps it to apply everywhere -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" /></noscript>
-    
+
+    <!-- Preload the homepage hero background so it's discoverable by the
+         browser's preload scanner before React/JS runs (fixes Lighthouse's
+         "LCP request discovery" audit). The desktop file is also Footer's
+         background image on every route, so it's never actually unused;
+         the mobile-only file is homepage-exclusive, so non-home pages will
+         show a benign "preloaded but unused" console note on narrow
+         viewports — an accepted tradeoff for a large homepage LCP win in a
+         single-shell SPA that can't preload per-route. -->
+    <link rel="preload" as="image" href="/hero-bg-desktop.webp" fetchpriority="high" media="(min-width: 769px)" />
+    <link rel="preload" as="image" href="/hero-bg-mobile.webp" fetchpriority="high" media="(max-width: 768px)" />
+
     <script>
       (function () {
         try {

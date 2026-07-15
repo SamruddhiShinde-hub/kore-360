@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { LINKS } from '../data.js';
 import logo from '../assets/Final - white logo-14.png';
-import mainHeroBg from '../assets/Background (1).png';
+// Served from public/ — see Hero.jsx for why this is a stable string path
+// rather than a hashed src/assets import.
+const mainHeroBg = '/hero-bg-desktop.webp';
 
 const exploreLinks = [
   { label: 'Education', to: '/education' },
@@ -51,14 +53,14 @@ const socialIcons = [
 export default function Footer() {
   return (
     <footer style={{ position: 'relative', overflow: 'hidden', color: '#FFFFFF' }}>
-      <img src={mainHeroBg} alt="Footer Background" style={{
+      <img src={mainHeroBg} alt="Footer Background" loading="lazy" decoding="async" style={{
         position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', zIndex: 0
       }} />
       <div style={{ position: 'relative', zIndex: 1 }}>
         <div className="footer-grid" style={{ maxWidth: '1200px', margin: '0 auto', padding: '64px 32px 40px', display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: '40px' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <img src={logo} alt="Kore 360 Logo" height="158" style={{ height: '158px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
+              <img src={logo} alt="Kore 360 Logo" width="165" height="158" style={{ height: '158px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
             </div>
             <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'rgba(255,255,255,0.8)', maxWidth: '320px', margin: '0 0 20px', textAlign: 'justify' }}><strong style={{ color: '#FFFFFF' }}>Careers in sports management</strong>, built with <em style={{ whiteSpace: 'nowrap' }}>Krish Lalwani</em>. Education, Management and Talent, all in one place.</p>
             <div style={{ display: 'flex', gap: '10px' }}>

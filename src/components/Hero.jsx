@@ -1,8 +1,12 @@
 import { useRef, useEffect } from 'react';
 import { HERO, HERO_VARIANT, IMAGES } from '../data.js';
 import Reveal from './Reveal.jsx';
-import mainHeroBg from '../assets/Background (1).png';
-import mainHeroBgMobile from '../assets/Background (1) - mobile.png';
+// Served from public/ (not imported from src/assets) so the path is a stable
+// string index.html can preload by URL — see the <link rel=preload> tags
+// there, which need to match this exact path for the browser's preload
+// scanner to find the LCP image before React/JS even runs.
+const mainHeroBg = '/hero-bg-desktop.webp';
+const mainHeroBgMobile = '/hero-bg-mobile.webp';
 import heroVid from '../assets/homepage-hero-video.mp4';
 import heroVidMobile from '../assets/homepage-mob-video.mp4';
 const eyebrow = { fontSize: '13px', letterSpacing: '0.18em', backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' };

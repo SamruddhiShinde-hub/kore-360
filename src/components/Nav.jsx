@@ -70,7 +70,7 @@ export default function Nav() {
         }}
       >
         <Link to="/" className="nav-mobile-logo" style={{ display: 'none', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-          <img src={logo} alt="Kore 360 Logo" height="110" style={{ height: '110px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
+          <img src={logo} alt="Kore 360 Logo" width="115" height="110" style={{ height: '110px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
         </Link>
 
         {/* Desktop nav */}
@@ -79,7 +79,7 @@ export default function Nav() {
           <Link to="/management" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Management</Link>
 
           <Link to="/" onClick={() => window.scrollTo(0, 0)} className="nav-logo" aria-label="Home">
-            <img src={logo} alt="Kore 360 Logo" height="110" style={{ height: '110px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
+            <img src={logo} alt="Kore 360 Logo" width="115" height="110" style={{ height: '110px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
           </Link>
 
           <Link to="/talent" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Talent</Link>
