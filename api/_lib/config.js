@@ -24,10 +24,10 @@ export const WEBINAR_EVENT_ID = `bkgwebinar${new Date(SESSIONS.webinar.fixedStar
 // Working hours (Asia/Kolkata) — adjust to match Krish's real availability.
 export const AVAILABILITY = {
   timezone: 'Asia/Kolkata',
-  workingDays: [1, 2, 3, 4, 5, 6], // 0 = Sunday ... 6 = Saturday. Sunday off.
+  workingDays: [0, 1, 2, 3, 4, 5, 6], // every day, including Sunday
   startHour: 10, // 10:00
   endHour: 23, // 23:00
-  bufferMinutes: 10, // gap kept free between consecutive bookings
+  bufferMinutes: 0, // back-to-back bookings, no gap held between calls
   daysAhead: 21, // how far into the future users can book
 };
 
