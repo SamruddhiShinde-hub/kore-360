@@ -105,24 +105,27 @@ export default function ClarityCall() {
         </div>
       </div>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '56px 32px 96px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 380px', gap: '48px', alignItems: 'start' }} className="grid-2col">
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '56px 32px 0' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '18px', alignItems: 'center', marginBottom: '18px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)' }}><ClockIcon /> 30 mins</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)' }}><VideoIcon /> Google Meet</div>
+        </div>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px' }}>
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(34,197,94,0.12)', color: '#22c55e', fontSize: '13px', fontWeight: 700, padding: '4px 10px', borderRadius: '999px' }}>
+            <StarIcon /> 4.8
+          </span>
+          {CLARITY.featured && (
+            <span style={{ background: 'rgba(var(--border-rgb),0.08)', color: ACCENT, fontSize: '12px', fontWeight: 700, padding: '4px 10px', borderRadius: '999px' }}>Most Popular</span>
+          )}
+          <span style={{ fontSize: '15px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{CLARITY.originalPrice}</span>
+          <span style={{ fontWeight: 900, fontSize: '24px', color: 'var(--text)' }}>{CLARITY.price}</span>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 32px 96px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 380px', gap: '48px', alignItems: 'start' }} className="grid-2col">
         <div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '18px', alignItems: 'center', marginBottom: '18px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)' }}><ClockIcon /> 30 mins</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)' }}><VideoIcon /> Google Meet</div>
-          </div>
-
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', marginBottom: '22px' }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', background: 'rgba(34,197,94,0.12)', color: '#22c55e', fontSize: '13px', fontWeight: 700, padding: '4px 10px', borderRadius: '999px' }}>
-              <StarIcon /> 4.8
-            </span>
-            {CLARITY.featured && (
-              <span style={{ background: 'rgba(var(--border-rgb),0.08)', color: ACCENT, fontSize: '12px', fontWeight: 700, padding: '4px 10px', borderRadius: '999px' }}>Most Popular</span>
-            )}
-            <span style={{ fontSize: '15px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{CLARITY.originalPrice}</span>
-            <span style={{ fontWeight: 900, fontSize: '24px', color: 'var(--text)' }}>{CLARITY.price}</span>
-          </div>
-
+          <div style={labelStyle}>ABOUT SESSION</div>
           <p style={{ fontSize: '15.5px', lineHeight: 1.65, color: 'var(--text)', margin: '0 0 24px', textAlign: 'justify' }}>
             In this exclusive session, you'll engage in a direct and insightful conversation with me. It is designed to provide you with a safe space to discuss the challenges and questions you currently face. During the session, I will attentively listen to your concerns and offer a tailored approach to a solution. Book your 1:1 session now and embark on a journey of personalised support and expertise with me.
           </p>

@@ -46,15 +46,17 @@ export default function QnaCall() {
         </div>
       </div>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '56px 32px 96px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 380px', gap: '48px', alignItems: 'start' }} className="grid-2col">
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '56px 32px 0' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '18px', alignItems: 'center', marginBottom: '18px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)' }}><ClockIcon /> 10 mins</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)' }}><PhoneIcon /> Audio call</div>
+        </div>
+
+        <div style={{ fontWeight: 900, fontSize: '28px', color: 'var(--text)' }}>{QNA.price}</div>
+      </div>
+
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 32px 96px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 380px', gap: '48px', alignItems: 'start' }} className="grid-2col">
         <div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '18px', alignItems: 'center', marginBottom: '18px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)' }}><ClockIcon /> 10 mins</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)' }}><PhoneIcon /> Audio call</div>
-          </div>
-
-          <div style={{ fontWeight: 900, fontSize: '28px', color: 'var(--text)', marginBottom: '22px' }}>{QNA.price}</div>
-
           <div style={labelStyle}>WHO IT'S FOR</div>
           <p style={{ fontSize: '15.5px', lineHeight: 1.65, color: 'var(--text)', margin: '0 0 28px', textAlign: 'justify' }}>{d.whoFor}</p>
 

@@ -79,7 +79,7 @@ export default function Ebook() {
           <p style={{ fontSize: '14.5px', lineHeight: 1.6, fontStyle: 'italic', color: 'var(--text-muted)', borderLeft: `2px solid ${ACCENT}`, paddingLeft: '14px', margin: 0 }}>{d.outcome}</p>
         </div>
 
-        <div style={{ position: 'sticky', top: '24px' }}>
+        <div className="desktop-sticky-card" style={{ position: 'sticky', top: '24px' }}>
           <form onSubmit={handleSubmit} style={{ background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '14px', padding: '22px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
             <div style={{ fontWeight: 900, fontSize: '28px', marginBottom: '4px' }}>{EBOOK.price}</div>
             <input
@@ -90,7 +90,6 @@ export default function Ebook() {
               type="email" required placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}
               style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)' }}
             />
-            <p style={{ fontSize: '12px', color: 'var(--text-faint)', margin: 0 }}>The e-book PDF is sent to this email right after payment.</p>
 
             <div className="sticky-cta-mobile">
               {errorMsg && <div style={{ fontSize: '13px', color: 'var(--kore-orange-text)', marginBottom: '8px' }}>{errorMsg}</div>}
@@ -101,6 +100,8 @@ export default function Ebook() {
                 {status === 'redirecting' ? 'Taking you to payment…' : `${EBOOK.cta} — ${EBOOK.price}`}
               </button>
             </div>
+
+            <p style={{ fontSize: '12px', color: 'var(--text-faint)', margin: 0 }}>The e-book PDF is sent to this email right after payment.</p>
           </form>
         </div>
       </div>

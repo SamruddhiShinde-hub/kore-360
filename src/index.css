@@ -95,6 +95,12 @@ a { text-decoration: none; }
      horizontally-scrollable row) instead of actually shrinking to the viewport. */
   .grid-2col { grid-template-columns: minmax(0,1fr) !important; }
   .footer-grid { grid-template-columns: 1fr !important; }
+  /* This card is only meant to be position:sticky on desktop (see the
+     class name) — left un-overridden here, that position:sticky ancestor
+     fights with the position:fixed CTA nested inside it and makes mobile
+     WebKit/Chrome intermittently drop the fixed bar from compositing
+     during scroll, i.e. the "disappearing button" bug. */
+  .desktop-sticky-card { position: static !important; top: auto !important; order: -1; }
   /* Pins the final CTA (price/timezone + payment button) to the bottom of
      the viewport on booking/checkout pages, so the button that actually
      matters is always reachable without scrolling to the end of the page. */
@@ -106,6 +112,13 @@ a { text-decoration: none; }
     border-top: 1px solid rgba(var(--border-rgb),0.14);
     padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 0px));
     box-shadow: 0 -8px 24px rgba(0,0,0,0.18);
+    /* Forces its own GPU compositing layer — without this, mobile
+       WebKit/Chrome can drop a fixed-position element from compositing
+       mid-scroll (it briefly vanishes, then reflows back in on scroll-end). */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
   }
 }
 @media (max-width: 600px) {

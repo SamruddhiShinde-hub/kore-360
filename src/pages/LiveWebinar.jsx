@@ -145,7 +145,7 @@ export default function LiveWebinar() {
           </div>
         </div>
 
-        <div style={{ position: 'sticky', top: '24px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
+        <div className="desktop-sticky-card" style={{ position: 'sticky', top: '24px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
           <div style={{ background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '14px', padding: '22px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
             <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
               <span style={{ color: ACCENT, flex: 'none', marginTop: '2px' }}><CalendarIcon /></span>

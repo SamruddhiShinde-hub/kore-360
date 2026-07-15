@@ -76,7 +76,7 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
   const visibleDays = daysData ? daysData.slice(dayWindowStart, dayWindowStart + VISIBLE_DAYS) : [];
 
   return (
-    <div style={{ position: 'sticky', top: '24px', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '14px', padding: '22px' }}>
+    <div className="desktop-sticky-card" style={{ position: 'sticky', top: '24px', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '14px', padding: '22px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
         <div style={{ fontWeight: 800, fontSize: '16px' }}>{heading}</div>
         <div style={{ display: 'flex', gap: '6px' }}>
@@ -168,16 +168,16 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
             </div>
           )}
 
-          <div className="sticky-cta-mobile" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
-              <GlobeIcon /> Asia/Calcutta (GMT+5:30)
+          <div className="sticky-cta-mobile" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '14px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-muted)', flex: '1 1 auto', minWidth: 0 }}>
+              <GlobeIcon /> <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Asia/Calcutta (GMT+5:30)</span>
             </div>
             <button
               type="button"
               disabled={!selectedSlot}
               onClick={() => onConfirm(selectedSlot)}
               className="btn-accent"
-              style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '13px 22px', borderRadius: '8px', cursor: selectedSlot ? 'pointer' : 'default', opacity: selectedSlot ? 1 : 0.5 }}
+              style={{ flex: 'none', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '13px 22px', borderRadius: '8px', cursor: selectedSlot ? 'pointer' : 'default', opacity: selectedSlot ? 1 : 0.5, whiteSpace: 'nowrap' }}
             >
               {confirmLabel}
             </button>
