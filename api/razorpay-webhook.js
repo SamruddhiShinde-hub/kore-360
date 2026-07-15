@@ -2,6 +2,7 @@ import { verifyWebhookSignature } from './_lib/razorpay.js';
 import { findBookingByHoldId, findBookingByPaymentLinkId, updateBookingRow, appendPaidBooking } from './_lib/sheet.js';
 import { createBookingEvent } from './_lib/calendar.js';
 import { sendNotifyEmail } from './_lib/gmail.js';
+import { deliverEbookPurchase } from './_lib/ebook.js';
 import { AVAILABILITY, NOTIFY_EMAIL, WEBINAR_EVENT_ID, getSession } from './_lib/config.js';
 
 export const config = { api: { bodyParser: false } };
@@ -141,6 +142,13 @@ export default async function handler(req, res) {
       }
       if (booking.status === 'paid') {
         // Already processed (Razorpay may send the webhook more than once) — no-op.
+        return res.status(200).end();
+      }
+
+      if (booking.sessionId === 'ebook') {
+        // No slot, no Calendar event — just deliver the PDF and stop.
+        await deliverEbookPurchase({ userName: booking.userName, userEmail: booking.userEmail });
+        await updateBookingRow(booking._rowNumber, { status: 'paid' });
         return res.status(200).end();
       }
 

@@ -95,6 +95,18 @@ a { text-decoration: none; }
      horizontally-scrollable row) instead of actually shrinking to the viewport. */
   .grid-2col { grid-template-columns: minmax(0,1fr) !important; }
   .footer-grid { grid-template-columns: 1fr !important; }
+  /* Pins the final CTA (price/timezone + payment button) to the bottom of
+     the viewport on booking/checkout pages, so the button that actually
+     matters is always reachable without scrolling to the end of the page. */
+  .sticky-cta-mobile {
+    position: fixed !important;
+    left: 0; right: 0; bottom: 0;
+    z-index: 250;
+    background: var(--surface);
+    border-top: 1px solid rgba(var(--border-rgb),0.14);
+    padding: 12px 20px calc(12px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -8px 24px rgba(0,0,0,0.18);
+  }
 }
 @media (max-width: 600px) {
   .course-card { min-height: 380px !important; }

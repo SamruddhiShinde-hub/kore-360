@@ -10,6 +10,9 @@ export const SESSIONS = {
   webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-07-22T19:00:00+05:30' },
   qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 49900 },
   clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 149900 },
+  // No slot/Calendar component at all — a straight digital-product purchase
+  // fulfilled by emailing the PDF (see razorpay-webhook.js + gmail.js).
+  ebook: { name: 'Behind the Field (E-book)', amountPaise: 9900 },
 };
 
 // Deterministic Calendar event ID for the shared webinar event — lets

@@ -167,16 +167,18 @@ export default function LiveWebinar() {
                 {attendeeCount > 0 ? `${attendeeCount} attending this event` : 'Be the first to register'}
               </div>
             )}
-            <button
-              type="button"
-              disabled={booking === 'redirecting'}
-              onClick={handleBookSeat}
-              className="btn-accent"
-              style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 22px', borderRadius: '8px', cursor: booking === 'redirecting' ? 'default' : 'pointer', opacity: booking === 'redirecting' ? 0.7 : 1 }}
-            >
-              {booking === 'redirecting' ? 'Taking you to payment…' : WEBINAR.cta}
-            </button>
-            {errorMsg && <div style={{ fontSize: '13px', color: 'var(--kore-orange-text)', textAlign: 'center' }}>{errorMsg}</div>}
+            <div className="sticky-cta-mobile" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {errorMsg && <div style={{ fontSize: '13px', color: 'var(--kore-orange-text)', textAlign: 'center' }}>{errorMsg}</div>}
+              <button
+                type="button"
+                disabled={booking === 'redirecting'}
+                onClick={handleBookSeat}
+                className="btn-accent"
+                style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 22px', borderRadius: '8px', cursor: booking === 'redirecting' ? 'default' : 'pointer', opacity: booking === 'redirecting' ? 0.7 : 1 }}
+              >
+                {booking === 'redirecting' ? 'Taking you to payment…' : `${WEBINAR.cta} — ${WEBINAR.price}`}
+              </button>
+            </div>
           </div>
 
           <div>

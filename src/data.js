@@ -73,7 +73,7 @@ export const MARQUEE = [
 // `details` powers the expanded breakdown on the Education page; the homepage cards only use the fields above it.
 export const SESSIONS = [
   {
-    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', href: 'https://superprofile.bio/vp/behind-the-field---krish-lalwani-697',
+    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', sessionId: 'ebook',
     details: {
       format: 'Instant PDF download, ~60 pages',
       whoFor: "Anyone starting from zero who wants the full map before spending on a call",

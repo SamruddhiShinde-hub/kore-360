@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       customer: { name: booking.userName, email: booking.userEmail },
       notify: { sms: false, email: true },
       notes: { holdId, sessionId: booking.sessionId },
-      callback_url: `${siteUrl}/booking-confirmed?holdId=${holdId}`,
+      callback_url: `${siteUrl}/booking-confirmed?holdId=${holdId}&type=${booking.sessionId}`,
       callback_method: 'get',
     });
 

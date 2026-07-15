@@ -311,19 +311,20 @@ export default function ClarityCall() {
                 </div>
               )}
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-muted)', marginBottom: '18px' }}>
-                <GlobeIcon /> Asia/Calcutta (GMT+5:30)
+              <div className="sticky-cta-mobile" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: 'var(--text-muted)' }}>
+                  <GlobeIcon /> Asia/Calcutta (GMT+5:30)
+                </div>
+                <button
+                  type="button"
+                  disabled={!selectedSlot}
+                  onClick={() => setShowModal(true)}
+                  className="btn-accent"
+                  style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '13px 22px', borderRadius: '8px', cursor: selectedSlot ? 'pointer' : 'default', opacity: selectedSlot ? 1 : 0.5 }}
+                >
+                  Confirm details
+                </button>
               </div>
-
-              <button
-                type="button"
-                disabled={!selectedSlot}
-                onClick={() => setShowModal(true)}
-                className="btn-accent"
-                style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '13px 22px', borderRadius: '8px', cursor: selectedSlot ? 'pointer' : 'default', opacity: selectedSlot ? 1 : 0.5 }}
-              >
-                Confirm details
-              </button>
             </>
           )}
         </div>
