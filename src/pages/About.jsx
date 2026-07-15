@@ -35,22 +35,22 @@ export default function About() {
       />
 
       <section style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '92px 32px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '92px 32px', textAlign: 'center' }}>
           <Eyebrow>WHAT WE DO</Eyebrow>
-          <Reveal as="h2" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.98, fontSize: 'clamp(30px,4.4vw,52px)', margin: '0 0 22px', maxWidth: '820px' }}>
+          <Reveal as="h2" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.98, fontSize: 'clamp(30px,4.4vw,52px)', margin: '0 auto 22px', maxWidth: '820px' }}>
             We cover the full span of sport and live events
           </Reveal>
-          <p style={{ fontSize: '17px', lineHeight: 1.65, color: 'var(--text-muted)', maxWidth: '680px', margin: '0 0 28px', textAlign: 'justify' }}>
+          <p style={{ fontSize: '17px', lineHeight: 1.65, color: 'var(--text-muted)', maxWidth: '680px', margin: '0 auto 28px' }}>
             Events, sponsorship, production and hospitality, with education and talent built on the same ground experience.
           </p>
           <p style={{ fontWeight: 800, fontSize: '22px', letterSpacing: '-0.01em', color: 'var(--text)', margin: '0 0 14px' }}>
             One connected orbit, not a menu of services.
           </p>
-          <p style={{ fontSize: '17px', lineHeight: 1.65, color: 'var(--text-muted)', maxWidth: '680px', margin: '0 0 40px', textAlign: 'justify' }}>
+          <p style={{ fontSize: '17px', lineHeight: 1.65, color: 'var(--text-muted)', maxWidth: '680px', margin: '0 auto 40px' }}>
             You don't come to us for one thing — you come because we handle the whole ground.
           </p>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
             {ORBIT.map((item) => (
               <span key={item} style={pillStyle}>{item}</span>
             ))}
