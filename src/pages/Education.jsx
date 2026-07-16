@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SESSIONS, LINKS } from '../data.js';
+import { SESSIONS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import PageMeta from '../components/PageMeta.jsx';
@@ -86,7 +86,7 @@ export default function Education() {
 
         <Reveal style={{ marginTop: '32px', textAlign: 'center', borderTop: '1px solid rgba(var(--border-rgb),0.08)', paddingTop: '32px' }}>
           <p style={{ fontSize: '15px', color: 'var(--text-muted)', margin: '0 0 18px' }}>Not sure which one to start with? The clarity call is the most personal option, and the e-book is the cheapest way to find out if this industry is for you.</p>
-          <a href={LINKS.bookCall} target="_blank" rel="noreferrer" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}>Talk to Krish 1:1 →</a>
+          <Link to="/clarity-call" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}>Talk to Krish 1:1 →</Link>
         </Reveal>
       </div>
     </>

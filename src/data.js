@@ -103,7 +103,7 @@ export const SESSIONS = [
     },
   },
   {
-    tag: '1:1 CALL', name: 'Clarity Call', price: '₹1,499', originalPrice: '₹1,999', meta: '30 min · Video call', desc: 'A thirty-minute video call to map your personal route into the industry.', cta: 'Book a 1:1 clarity call', sessionId: 'clarity', featured: true,
+    tag: '1:1 CALL', name: 'Clarity Call', price: '₹1,499', originalPrice: '₹1,999', meta: '30 min · Video call', desc: 'A thirty-minute video call to map your personal route into the industry.', cta: 'Book a 1:1', sessionId: 'clarity', featured: true,
     details: {
       format: '30-minute 1:1 video call',
       whoFor: "Anyone ready to map out their personal route into the industry, with someone who's done the hiring",
