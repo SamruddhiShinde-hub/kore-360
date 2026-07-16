@@ -7,7 +7,7 @@ export const SESSIONS = {
   // fixedStart makes this a single shared group session (see slots.js and
   // calendar.js) instead of an individually-scheduled 1:1 slot: every buyer
   // gets added as an attendee to the same Calendar event/Meet link.
-  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-07-26T19:00:00+05:30' },
+  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-07-26T17:00:00+05:30' },
   qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 49900 },
   clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 149900 },
   // No slot/Calendar component at all — a straight digital-product purchase
