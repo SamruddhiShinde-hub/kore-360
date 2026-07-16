@@ -168,9 +168,16 @@ a { text-decoration: none; }
   }
 }
 
-/* ---- education session cards: divider between stacked spec columns on mobile ---- */
-@media (max-width: 860px) {
-  .education-included { padding-top: 20px; border-top: 1px solid rgba(var(--border-rgb),0.08); }
+/* ---- education page: keep the 4 options in a 2x2 grid so they're all
+   visible without scrolling through one giant card at a time on mobile ---- */
+@media (max-width: 600px) {
+  .education-grid { gap: 10px !important; }
+  .education-card { padding: 12px !important; border-radius: 12px !important; }
+  .education-card-name { font-size: 14px !important; margin-bottom: 2px !important; }
+  .education-card-meta { font-size: 10px !important; margin-bottom: 6px !important; }
+  .education-card-desc { display: none !important; }
+  .education-card .education-card-cta { font-size: 11px !important; padding: 7px 10px !important; }
+  .education-card-price { font-size: 15px !important; }
 }
 
 /* ---- brand logos: seamless auto-scrolling strip ---- */
