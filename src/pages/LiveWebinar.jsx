@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SESSIONS, IMAGES, LINKS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
@@ -43,17 +43,9 @@ const WHATS_INCLUDED = [
 ];
 
 export default function LiveWebinar() {
-  const [attendeeCount, setAttendeeCount] = useState(null);
   const [copied, setCopied] = useState(false);
   const [booking, setBooking] = useState('idle'); // idle | redirecting | error
   const [errorMsg, setErrorMsg] = useState('');
-
-  useEffect(() => {
-    fetch('/api/webinar-attendee-count')
-      .then((r) => r.json())
-      .then((data) => { if (typeof data.count === 'number') setAttendeeCount(data.count); })
-      .catch(() => {});
-  }, []);
 
   const handleCopyLink = async () => {
     try {
@@ -167,11 +159,9 @@ export default function LiveWebinar() {
               <span style={{ color: ACCENT, flex: 'none' }}><TicketIcon /></span>
               <div style={{ fontWeight: 700, fontSize: '14.5px' }}>{WEBINAR.price}</div>
             </div>
-            {attendeeCount !== null && (
-              <div style={{ background: 'rgba(var(--border-rgb),0.06)', borderRadius: '8px', padding: '10px 14px', fontSize: '13.5px', fontWeight: 600, color: 'var(--text-muted)', textAlign: 'center' }}>
-                {attendeeCount > 0 ? `${attendeeCount} attending this event` : 'Be the first to register'}
-              </div>
-            )}
+            <div style={{ background: 'rgba(var(--border-rgb),0.06)', borderRadius: '8px', padding: '10px 14px', fontSize: '13.5px', fontWeight: 600, color: 'var(--text-muted)', textAlign: 'center' }}>
+              Limited seats · Session 02
+            </div>
             <div className="sticky-cta-mobile" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {errorMsg && <div style={{ fontSize: '13px', color: 'var(--kore-orange-text)', textAlign: 'center' }}>{errorMsg}</div>}
               <button
