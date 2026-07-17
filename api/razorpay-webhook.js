@@ -2,7 +2,7 @@ import { verifyWebhookSignature } from './_lib/razorpay.js';
 import { findBookingByHoldId, findBookingByPaymentLinkId, updateBookingRow, appendPaidBooking } from './_lib/sheet.js';
 import { createBookingEvent } from './_lib/calendar.js';
 import { sendNotifyEmail } from './_lib/gmail.js';
-import { deliverEbookPurchase } from './_lib/ebook.js';
+import { deliverEbookPurchase, deliverWebinarBonusEbook } from './_lib/ebook.js';
 import { AVAILABILITY, NOTIFY_EMAIL, WEBINAR_EVENT_ID, getSession } from './_lib/config.js';
 
 export const config = { api: { bodyParser: false } };
@@ -93,6 +93,14 @@ async function handleWebinarOneClickPayment({ paymentLink, payment }) {
     });
   } catch (err) {
     console.error('failed to send booking notify email (webinar one-click)', err);
+  }
+
+  if (email) {
+    try {
+      await deliverWebinarBonusEbook({ userName: name, userEmail: email });
+    } catch (err) {
+      console.error('failed to send webinar bonus e-book (webinar one-click)', err);
+    }
   }
 }
 
