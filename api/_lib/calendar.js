@@ -35,9 +35,20 @@ async function addAttendeesToEvent({ eventId, attendeeEmails }) {
   const merged = [...(existing.data.attendees || [])];
   const existingEmails = new Set(merged.map((a) => a.email.toLowerCase()));
   for (const email of attendeeEmails) {
-    if (!existingEmails.has(email.toLowerCase())) {
+    const key = email.toLowerCase();
+    if (!existingEmails.has(key)) {
       merged.push({ email });
-      existingEmails.add(email.toLowerCase());
+      existingEmails.add(key);
+    } else {
+      // Already on the shared event (e.g. NOTIFY_EMAIL after the first
+      // booking, or the same buyer's email booking again). Leaving their
+      // entry untouched means this patch's `attendees` array is byte-
+      // identical to what Google already has, which it appears to treat as
+      // a no-op and silently skips sending a fresh invite email for —
+      // resetting responseStatus forces a real change so sendUpdates:'all'
+      // actually dispatches a notification to them this time too.
+      const entry = merged.find((a) => a.email.toLowerCase() === key);
+      entry.responseStatus = 'needsAction';
     }
   }
   const res = await calendar.events.patch({
