@@ -33,7 +33,7 @@ export async function getBusyIntervals(timeMinISO, timeMaxISO) {
 // event creation) so a stale event — e.g. one first created by since-removed
 // code — self-heals to the current values on the very next booking, instead
 // of being stuck with whatever the first-ever insert happened to set.
-async function addAttendeesToEvent({ eventId, attendeeEmails, summary, description }) {
+async function addAttendeesToEvent({ eventId, attendeeEmails, summary, description, sendUpdates }) {
   const calendar = calendarUserClient();
   const existing = await calendar.events.get({ calendarId: CALENDAR_ID, eventId });
   const merged = [...(existing.data.attendees || [])];
@@ -44,13 +44,6 @@ async function addAttendeesToEvent({ eventId, attendeeEmails, summary, descripti
       merged.push({ email });
       existingEmails.add(key);
     } else {
-      // Already on the shared event (e.g. NOTIFY_EMAIL after the first
-      // booking, or the same buyer's email booking again). Leaving their
-      // entry untouched means this patch's `attendees` array is byte-
-      // identical to what Google already has, which it appears to treat as
-      // a no-op and silently skips sending a fresh invite email for —
-      // resetting responseStatus forces a real change so sendUpdates:'all'
-      // actually dispatches a notification to them this time too.
       const entry = merged.find((a) => a.email.toLowerCase() === key);
       entry.responseStatus = 'needsAction';
     }
@@ -58,15 +51,15 @@ async function addAttendeesToEvent({ eventId, attendeeEmails, summary, descripti
   const res = await calendar.events.patch({
     calendarId: CALENDAR_ID,
     eventId,
-    sendUpdates: 'all',
+    sendUpdates,
     requestBody: { attendees: merged, summary, description, guestsCanSeeOtherGuests: false },
   });
   return res.data;
 }
 
 // Creates the confirmed booking event with an auto-generated Google Meet link
-// and invites both the customer and the notify address. Google sends the
-// invite email itself (sendUpdates: 'all') — no separate email step needed.
+// and invites both the customer and the notify address. See the sendUpdates
+// note below for whether Google emails them itself or the caller needs to.
 //
 // Pass `eventId` for a shared/group session (e.g. the webinar): the first
 // caller creates the event at that deterministic ID, and every later caller
@@ -83,7 +76,17 @@ async function addAttendeesToEvent({ eventId, attendeeEmails, summary, descripti
 // (https://developers.google.com/workspace/calendar/api/v3/reference/events),
 // so setting it has no effect. The only real fix is recipient-side: add the
 // sender to Google Contacts (surfaced on the booking-confirmed page).
-export async function createBookingEvent({ eventId, summary, description, startISO, endISO, timezone, attendeeEmails }) {
+//
+// sendUpdates controls whether Google emails the attendees at all. It's a
+// per-request setting, not per-attendee — on a shared event with many
+// attendees (the webinar), 'all' notifies every existing attendee whenever
+// ANY change is made (e.g. a brand new person joining), not just the one
+// that changed. There is no Calendar API way to notify only the new
+// attendee. Callers with a genuinely shared event should pass 'none' here
+// and deliver a per-buyer email themselves instead (see deliverWebinarInvite
+// in ebook.js); single-attendee sessions (qna, clarity) can safely pass
+// 'all' since Calendar's own invite is the only recipient either way.
+export async function createBookingEvent({ eventId, summary, description, startISO, endISO, timezone, attendeeEmails, sendUpdates = 'all' }) {
   const calendar = calendarUserClient();
   const requestBody = {
     summary,
@@ -114,14 +117,14 @@ export async function createBookingEvent({ eventId, summary, description, startI
     const res = await calendar.events.insert({
       calendarId: CALENDAR_ID,
       conferenceDataVersion: 1,
-      sendUpdates: 'all',
+      sendUpdates,
       requestBody,
     });
     return res.data;
   } catch (err) {
     const status = err.response?.status || err.code;
     if (eventId && status === 409) {
-      return addAttendeesToEvent({ eventId, attendeeEmails, summary, description });
+      return addAttendeesToEvent({ eventId, attendeeEmails, summary, description, sendUpdates });
     }
     throw err;
   }
