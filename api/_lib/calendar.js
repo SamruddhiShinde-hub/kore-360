@@ -28,8 +28,12 @@ export async function getBusyIntervals(timeMinISO, timeMaxISO) {
 
 // Adds attendeeEmails to an already-existing event without duplicating anyone
 // already on it — used when createBookingEvent hits a shared/group event
-// (e.g. the webinar) that a previous booking already created.
-async function addAttendeesToEvent({ eventId, attendeeEmails }) {
+// (e.g. the webinar) that a previous booking already created. Also re-applies
+// summary/description/guestsCanSeeOtherGuests on every call (not just at
+// event creation) so a stale event — e.g. one first created by since-removed
+// code — self-heals to the current values on the very next booking, instead
+// of being stuck with whatever the first-ever insert happened to set.
+async function addAttendeesToEvent({ eventId, attendeeEmails, summary, description }) {
   const calendar = calendarUserClient();
   const existing = await calendar.events.get({ calendarId: CALENDAR_ID, eventId });
   const merged = [...(existing.data.attendees || [])];
@@ -55,7 +59,7 @@ async function addAttendeesToEvent({ eventId, attendeeEmails }) {
     calendarId: CALENDAR_ID,
     eventId,
     sendUpdates: 'all',
-    requestBody: { attendees: merged },
+    requestBody: { attendees: merged, summary, description, guestsCanSeeOtherGuests: false },
   });
   return res.data;
 }
@@ -84,6 +88,10 @@ export async function createBookingEvent({ eventId, summary, description, startI
   const requestBody = {
     summary,
     description,
+    // Hides the full guest list from each attendee (they still see "Krish
+    // Lalwani - organizer", just not everyone else registered) — otherwise
+    // every buyer sees every other buyer's email on the shared webinar event.
+    guestsCanSeeOtherGuests: false,
     start: { dateTime: startISO, timeZone: timezone },
     end: { dateTime: endISO, timeZone: timezone },
     attendees: attendeeEmails.map((email) => ({ email })),
@@ -113,7 +121,7 @@ export async function createBookingEvent({ eventId, summary, description, startI
   } catch (err) {
     const status = err.response?.status || err.code;
     if (eventId && status === 409) {
-      return addAttendeesToEvent({ eventId, attendeeEmails });
+      return addAttendeesToEvent({ eventId, attendeeEmails, summary, description });
     }
     throw err;
   }

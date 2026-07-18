@@ -31,7 +31,7 @@ function formatSlotRange(startISO, endISO, timeZone) {
 // event may be null if Calendar event creation failed (see the try/catch
 // around createBookingEvent below) — Krish still gets notified of the paid
 // booking, just without a Meet link that one time.
-function bookingNotifyEmailHtml(booking, event) {
+function bookingNotifyEmailHtml(booking, event, phone) {
   const when = escapeHtml(formatSlotRange(booking.slotStart, booking.slotEnd, AVAILABILITY.timezone));
   const meetLink = event?.hangoutLink;
   return `
@@ -40,6 +40,7 @@ function bookingNotifyEmailHtml(booking, event) {
       <p style="margin: 0 0 16px;"><strong>${escapeHtml(booking.sessionName)}</strong> — Krish Lalwani x ${escapeHtml(booking.userName)}</p>
       <p style="margin: 0 0 8px;"><strong>When:</strong> ${when} (${escapeHtml(AVAILABILITY.timezone)})</p>
       <p style="margin: 0 0 8px;"><strong>Attendee:</strong> ${escapeHtml(booking.userName)} (${escapeHtml(booking.userEmail)})</p>
+      ${phone ? `<p style="margin: 0 0 8px;"><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ''}
       ${meetLink ? `<p style="margin: 16px 0;"><a href="${meetLink}" style="background:#1a73e8;color:#fff;padding:10px 16px;border-radius:4px;text-decoration:none;display:inline-block;">Join with Google Meet</a></p>` : ''}
       ${!event ? `<p style="margin: 0; color:#b71e60;"><strong>Calendar event creation failed</strong> — check Vercel logs and create/add the attendee manually.</p>` : ''}
       ${event?.htmlLink ? `<p style="margin: 0;"><a href="${event.htmlLink}">View in Google Calendar</a></p>` : ''}
@@ -74,7 +75,11 @@ export default async function handler(req, res) {
       console.log(`razorpay webhook: ignoring event type "${payload.event}"`);
     } else {
       const paymentLink = payload.payload?.payment_link?.entity;
+      const payment = payload.payload?.payment?.entity;
       const notes = paymentLink?.notes || {};
+      // Razorpay always collects a contact number during checkout regardless
+      // of session type — not something our own booking form asks for.
+      const phone = payment?.contact || '';
 
       const holdId = notes.holdId;
       if (!holdId) {
@@ -108,24 +113,17 @@ export default async function handler(req, res) {
       // best-effort: one failure must not take another down with it.
       await updateBookingRow(booking._rowNumber, { status: 'paid' });
 
-      // The webinar is a shared event — every buyer is added as an attendee
-      // to the same Calendar event (see WEBINAR_EVENT_ID), and only the
-      // FIRST buyer's insert actually sets summary/description; every later
-      // buyer just gets patched into the attendees list (addAttendeesToEvent
-      // in calendar.js), so a per-buyer name baked into either field would
-      // show the first buyer's name to every subsequent one. Keep both
-      // generic for the webinar; only single-attendee sessions (qna,
-      // clarity) get a name baked in, since there it's genuinely "the" one
-      // attendee.
-      const isSharedEvent = booking.sessionId === 'webinar';
+      // For the webinar (a shared event — every buyer is added as an
+      // attendee to the same Calendar event, see WEBINAR_EVENT_ID),
+      // summary/description are re-applied on every booking, not just the
+      // first insert (see addAttendeesToEvent in calendar.js), so this
+      // always reflects the most recent booking's actual name/phone/email.
       let event = null;
       try {
         event = await createBookingEvent({
-          eventId: isSharedEvent ? WEBINAR_EVENT_ID : undefined,
-          summary: isSharedEvent ? `${booking.sessionName} — Krish Lalwani` : `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
-          description: isSharedEvent
-            ? 'Booked via KORE 360. All registered attendees share this event and Google Meet link.'
-            : `Booked via KORE 360.\nAttendee: ${booking.userName} (${booking.userEmail})`,
+          eventId: booking.sessionId === 'webinar' ? WEBINAR_EVENT_ID : undefined,
+          summary: `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
+          description: `Booked via KORE 360.\nAttendee: ${booking.userName}\nPhone: ${phone || 'not captured'}\nEmail: ${booking.userEmail}`,
           startISO: booking.slotStart,
           endISO: booking.slotEnd,
           timezone: AVAILABILITY.timezone,
@@ -138,7 +136,7 @@ export default async function handler(req, res) {
       try {
         await sendNotifyEmail({
           subject: `New booking: ${booking.sessionName} with ${booking.userName}`,
-          html: bookingNotifyEmailHtml(booking, event),
+          html: bookingNotifyEmailHtml(booking, event, phone),
         });
       } catch (err) {
         console.error('failed to send booking notify email', err);
