@@ -178,6 +178,7 @@ export default function LiveWebinar() {
           sessionId={WEBINAR.sessionId}
           sessionName={WEBINAR.name}
           price={WEBINAR.price}
+          initialSlot={WEBINAR.fixedStart}
           onClose={() => setBooking(false)}
         />
       )}

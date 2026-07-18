@@ -84,8 +84,11 @@ export const SESSIONS = [
   {
     tag: 'WEBINAR', name: 'Live Webinar', price: '₹1', meta: '60 min · Live · Sun, 26 Jul, 5:00 PM IST', desc: 'A one-hour live session on how the industry actually hires.', cta: 'Book your seat', sessionId: 'webinar',
     // Must match SESSIONS.webinar.fixedStart in api/_lib/config.js — kept as
-    // display strings here since the API config isn't safe to import client-side.
-    eventDate: 'Sunday, 26 July 2026', eventTime: '5:00 – 6:00 PM IST',
+    // plain values here since the API config isn't safe to import client-side.
+    // fixedStart also lets the booking modal skip its own day/time picker
+    // (there's only ever one slot) instead of showing a confusing "no slots
+    // on this day" flash while it works that out itself.
+    eventDate: 'Sunday, 26 July 2026', eventTime: '5:00 – 6:00 PM IST', fixedStart: '2026-07-26T17:00:00+05:30',
     details: {
       format: '60-minute live session, listen-only',
       whoFor: 'People who want the bigger picture of how hiring actually works in sport, beyond the entry-level playbook',
