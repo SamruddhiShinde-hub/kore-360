@@ -1,8 +1,8 @@
 import { verifyWebhookSignature } from './_lib/razorpay.js';
 import { findBookingByHoldId, updateBookingRow } from './_lib/sheet.js';
-import { createBookingEvent } from './_lib/calendar.js';
+import { createBookingEvent, ensureWebinarRoom, createAttendeeEvent } from './_lib/calendar.js';
 import { sendNotifyEmail } from './_lib/gmail.js';
-import { deliverEbookPurchase, deliverWebinarInvite, deliverWebinarBonusEbook } from './_lib/ebook.js';
+import { deliverEbookPurchase, deliverWebinarBonusEbook } from './_lib/ebook.js';
 import { AVAILABILITY, NOTIFY_EMAIL, WEBINAR_EVENT_ID } from './_lib/config.js';
 
 export const config = { api: { bodyParser: false } };
@@ -29,11 +29,13 @@ function formatSlotRange(startISO, endISO, timeZone) {
 }
 
 // event may be null if Calendar event creation failed (see the try/catch
-// around createBookingEvent below) — Krish still gets notified of the paid
-// booking, just without a Meet link that one time.
-function bookingNotifyEmailHtml(booking, event, phone) {
+// around createBookingEvent/createAttendeeEvent below) — Krish still gets
+// notified of the paid booking, just without a Meet link that one time.
+// meetLink is passed separately rather than read off event.hangoutLink
+// because the webinar's per-buyer event (createAttendeeEvent) carries the
+// Meet link in its location field, not its own conferenceData.
+function bookingNotifyEmailHtml(booking, event, phone, meetLink) {
   const when = escapeHtml(formatSlotRange(booking.slotStart, booking.slotEnd, AVAILABILITY.timezone));
-  const meetLink = event?.hangoutLink;
   return `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
       <h2 style="margin-bottom: 4px;">New booking confirmed</h2>
@@ -113,32 +115,46 @@ export default async function handler(req, res) {
       // best-effort: one failure must not take another down with it.
       await updateBookingRow(booking._rowNumber, { status: 'paid' });
 
-      // For the webinar (a shared event — every buyer is added as an
-      // attendee to the same Calendar event, see WEBINAR_EVENT_ID),
-      // summary/description are re-applied on every booking, not just the
-      // first insert (see addAttendeesToEvent in calendar.js), so this
-      // always reflects the most recent booking's actual name/phone/email.
-      //
-      // sendUpdates: 'none' for the webinar specifically — Google's
-      // sendUpdates is per-request, not per-attendee, so 'all' would email
-      // EVERY existing attendee whenever a new person books, not just the
-      // new one. deliverWebinarInvite below is the sole, single-recipient
-      // notification channel for the webinar instead. qna/clarity events
-      // only ever have the one buyer as attendee, so 'all' there is exactly
-      // right — it's the only way those buyers get their join link at all.
-      const isSharedEvent = booking.sessionId === 'webinar';
+      const isWebinar = booking.sessionId === 'webinar';
       let event = null;
+      let meetLink;
       try {
-        event = await createBookingEvent({
-          eventId: isSharedEvent ? WEBINAR_EVENT_ID : undefined,
-          summary: `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
-          description: `Booked via KORE 360.\nAttendee: ${booking.userName}\nPhone: ${phone || 'not captured'}\nEmail: ${booking.userEmail}`,
-          startISO: booking.slotStart,
-          endISO: booking.slotEnd,
-          timezone: AVAILABILITY.timezone,
-          attendeeEmails: [booking.userEmail, NOTIFY_EMAIL],
-          sendUpdates: isSharedEvent ? 'none' : 'all',
-        });
+        if (isWebinar) {
+          // The webinar is many buyers sharing one live session/Meet room,
+          // but each buyer gets their OWN Calendar event pointing at that
+          // shared room (see ensureWebinarRoom/createAttendeeEvent in
+          // calendar.js) — a genuine, single-attendee event is the only way
+          // Google's native invite email reaches just this buyer and not
+          // everyone else already registered.
+          const room = await ensureWebinarRoom({
+            eventId: WEBINAR_EVENT_ID,
+            summary: `${booking.sessionName} — Krish Lalwani`,
+            description: 'Live Webinar Meet room. Individual attendees are invited via their own separate events, not this one.',
+            startISO: booking.slotStart,
+            endISO: booking.slotEnd,
+            timezone: AVAILABILITY.timezone,
+          });
+          meetLink = room.hangoutLink;
+          event = await createAttendeeEvent({
+            summary: `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
+            description: `Booked via KORE 360.\nAttendee: ${booking.userName}\nPhone: ${phone || 'not captured'}\nEmail: ${booking.userEmail}`,
+            startISO: booking.slotStart,
+            endISO: booking.slotEnd,
+            timezone: AVAILABILITY.timezone,
+            attendeeEmails: [booking.userEmail, NOTIFY_EMAIL],
+            meetLink,
+          });
+        } else {
+          event = await createBookingEvent({
+            summary: `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
+            description: `Booked via KORE 360.\nAttendee: ${booking.userName}\nPhone: ${phone || 'not captured'}\nEmail: ${booking.userEmail}`,
+            startISO: booking.slotStart,
+            endISO: booking.slotEnd,
+            timezone: AVAILABILITY.timezone,
+            attendeeEmails: [booking.userEmail, NOTIFY_EMAIL],
+          });
+          meetLink = event.hangoutLink;
+        }
       } catch (err) {
         console.error('failed to create calendar event', err);
       }
@@ -146,30 +162,17 @@ export default async function handler(req, res) {
       try {
         await sendNotifyEmail({
           subject: `New booking: ${booking.sessionName} with ${booking.userName}`,
-          html: bookingNotifyEmailHtml(booking, event, phone),
+          html: bookingNotifyEmailHtml(booking, event, phone, meetLink),
         });
       } catch (err) {
         console.error('failed to send booking notify email', err);
       }
 
-      // Webinar buyers get two single-recipient app-sent emails: the join
-      // link (since the Calendar event above uses sendUpdates:'none' and
-      // can't notify just this one buyer) and the bonus e-book. Both run
-      // even if the calendar event above failed — must go out regardless.
-      if (booking.sessionId === 'webinar') {
-        try {
-          await deliverWebinarInvite({
-            userName: booking.userName,
-            userEmail: booking.userEmail,
-            meetLink: event?.hangoutLink,
-            when: formatSlotRange(booking.slotStart, booking.slotEnd, AVAILABILITY.timezone),
-            timezone: AVAILABILITY.timezone,
-          });
-          console.log(`webinar invite email sent to ${booking.userEmail}`);
-        } catch (err) {
-          console.error('failed to send webinar invite email', err);
-        }
-
+      // Webinar buyers additionally get the bonus e-book — the join link
+      // itself now comes from their own dedicated Calendar invite above, no
+      // separate app-sent "you're booked in" email needed. Runs even if the
+      // calendar event above failed — must go out regardless.
+      if (isWebinar) {
         try {
           await deliverWebinarBonusEbook({ userName: booking.userName, userEmail: booking.userEmail });
           console.log(`webinar bonus e-book sent to ${booking.userEmail}`);

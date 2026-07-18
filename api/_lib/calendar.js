@@ -26,45 +26,11 @@ export async function getBusyIntervals(timeMinISO, timeMaxISO) {
   return calendarBusy.map((b) => ({ start: b.start, end: b.end }));
 }
 
-// Adds attendeeEmails to an already-existing event without duplicating anyone
-// already on it — used when createBookingEvent hits a shared/group event
-// (e.g. the webinar) that a previous booking already created. Also re-applies
-// summary/description/guestsCanSeeOtherGuests on every call (not just at
-// event creation) so a stale event — e.g. one first created by since-removed
-// code — self-heals to the current values on the very next booking, instead
-// of being stuck with whatever the first-ever insert happened to set.
-async function addAttendeesToEvent({ eventId, attendeeEmails, summary, description, sendUpdates }) {
-  const calendar = calendarUserClient();
-  const existing = await calendar.events.get({ calendarId: CALENDAR_ID, eventId });
-  const merged = [...(existing.data.attendees || [])];
-  const existingEmails = new Set(merged.map((a) => a.email.toLowerCase()));
-  for (const email of attendeeEmails) {
-    const key = email.toLowerCase();
-    if (!existingEmails.has(key)) {
-      merged.push({ email });
-      existingEmails.add(key);
-    } else {
-      const entry = merged.find((a) => a.email.toLowerCase() === key);
-      entry.responseStatus = 'needsAction';
-    }
-  }
-  const res = await calendar.events.patch({
-    calendarId: CALENDAR_ID,
-    eventId,
-    sendUpdates,
-    requestBody: { attendees: merged, summary, description, guestsCanSeeOtherGuests: false },
-  });
-  return res.data;
-}
-
-// Creates the confirmed booking event with an auto-generated Google Meet link
-// and invites both the customer and the notify address. See the sendUpdates
-// note below for whether Google emails them itself or the caller needs to.
-//
-// Pass `eventId` for a shared/group session (e.g. the webinar): the first
-// caller creates the event at that deterministic ID, and every later caller
-// gets a 409 from Google (event already exists) and is routed to just add
-// their attendee to the existing event instead of creating a duplicate.
+// Creates a single-attendee booking event with an auto-generated Google Meet
+// link, and invites the customer + notify address via Google's own invite
+// email. Used for qna/clarity: each booking gets its own dedicated event, so
+// there's never anyone else on it to accidentally notify — sendUpdates:'all'
+// here only ever reaches the one buyer (+ Krish).
 //
 // Note on "Invitation from an unknown sender": that Gmail banner is a
 // spam-prevention heuristic based on whether the recipient has prior
@@ -76,25 +42,11 @@ async function addAttendeesToEvent({ eventId, attendeeEmails, summary, descripti
 // (https://developers.google.com/workspace/calendar/api/v3/reference/events),
 // so setting it has no effect. The only real fix is recipient-side: add the
 // sender to Google Contacts (surfaced on the booking-confirmed page).
-//
-// sendUpdates controls whether Google emails the attendees at all. It's a
-// per-request setting, not per-attendee — on a shared event with many
-// attendees (the webinar), 'all' notifies every existing attendee whenever
-// ANY change is made (e.g. a brand new person joining), not just the one
-// that changed. There is no Calendar API way to notify only the new
-// attendee. Callers with a genuinely shared event should pass 'none' here
-// and deliver a per-buyer email themselves instead (see deliverWebinarInvite
-// in ebook.js); single-attendee sessions (qna, clarity) can safely pass
-// 'all' since Calendar's own invite is the only recipient either way.
-export async function createBookingEvent({ eventId, summary, description, startISO, endISO, timezone, attendeeEmails, sendUpdates = 'all' }) {
+export async function createBookingEvent({ summary, description, startISO, endISO, timezone, attendeeEmails }) {
   const calendar = calendarUserClient();
   const requestBody = {
     summary,
     description,
-    // Hides the full guest list from each attendee (they still see "Krish
-    // Lalwani - organizer", just not everyone else registered) — otherwise
-    // every buyer sees every other buyer's email on the shared webinar event.
-    guestsCanSeeOtherGuests: false,
     start: { dateTime: startISO, timeZone: timezone },
     end: { dateTime: endISO, timeZone: timezone },
     attendees: attendeeEmails.map((email) => ({ email })),
@@ -111,21 +63,102 @@ export async function createBookingEvent({ eventId, summary, description, startI
       overrides: [{ method: 'email', minutes: 30 }],
     },
   };
-  if (eventId) requestBody.id = eventId;
+
+  const res = await calendar.events.insert({
+    calendarId: CALENDAR_ID,
+    conferenceDataVersion: 1,
+    sendUpdates: 'all',
+    requestBody,
+  });
+  return res.data;
+}
+
+// Idempotently ensures the webinar's shared Meet "room" event exists at the
+// deterministic eventId and returns it (with its hangoutLink). This event is
+// infrastructure only — it exists purely to hold one stable Meet link for
+// the whole session and is never used to invite buyers directly, because
+// Google's sendUpdates is per-request, not per-attendee: adding a new
+// attendee to a shared event with sendUpdates:'all' notifies every attendee
+// already on it, not just the new one, and there's no API way to target
+// just the new one (see createAttendeeEvent below for how buyers actually
+// get invited). sendUpdates:'none' throughout — nobody should ever be
+// notified about changes to the room event itself.
+export async function ensureWebinarRoom({ eventId, summary, description, startISO, endISO, timezone }) {
+  const calendar = calendarUserClient();
+  const requestBody = {
+    id: eventId,
+    summary,
+    description,
+    start: { dateTime: startISO, timeZone: timezone },
+    end: { dateTime: endISO, timeZone: timezone },
+    attendees: [],
+    conferenceData: {
+      createRequest: {
+        requestId: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+        conferenceSolutionKey: { type: 'hangoutsMeet' },
+      },
+    },
+  };
 
   try {
     const res = await calendar.events.insert({
       calendarId: CALENDAR_ID,
       conferenceDataVersion: 1,
-      sendUpdates,
+      sendUpdates: 'none',
       requestBody,
     });
     return res.data;
   } catch (err) {
     const status = err.response?.status || err.code;
-    if (eventId && status === 409) {
-      return addAttendeesToEvent({ eventId, attendeeEmails, summary, description, sendUpdates });
+    if (status !== 409) throw err;
+
+    // Room already exists — most commonly because this is a later booking
+    // for the same webinar slot, but could also be a room created before
+    // this room/per-attendee-event split existed, which may have
+    // accumulated buyer attendees the old (shared-event) way. Strip any
+    // attendees back off: going forward this event is Meet-link
+    // infrastructure only, so nobody but the organizer belongs on it.
+    const existing = await calendar.events.get({ calendarId: CALENDAR_ID, eventId });
+    if ((existing.data.attendees || []).length > 0) {
+      const res = await calendar.events.patch({
+        calendarId: CALENDAR_ID,
+        eventId,
+        sendUpdates: 'none',
+        requestBody: { attendees: [] },
+      });
+      return res.data;
     }
-    throw err;
+    return existing.data;
   }
+}
+
+// Creates one buyer's own dedicated Calendar event for the webinar, pointing
+// at the shared Meet room's link (meetLink, from ensureWebinarRoom) via the
+// event's location field rather than its own conferenceData — reusing an
+// existing Meet room's conferenceData across separate events isn't reliably
+// supported by the API, whereas a plain link in the description/location
+// always works. Because this event's only attendees are this one buyer and
+// Krish, sendUpdates:'all' — Google's real, native invite email — reaches
+// only them, never anyone else registered for the session.
+export async function createAttendeeEvent({ summary, description, startISO, endISO, timezone, attendeeEmails, meetLink }) {
+  const calendar = calendarUserClient();
+  const requestBody = {
+    summary,
+    description,
+    location: meetLink,
+    start: { dateTime: startISO, timeZone: timezone },
+    end: { dateTime: endISO, timeZone: timezone },
+    attendees: attendeeEmails.map((email) => ({ email })),
+    reminders: {
+      useDefault: false,
+      overrides: [{ method: 'email', minutes: 30 }],
+    },
+  };
+
+  const res = await calendar.events.insert({
+    calendarId: CALENDAR_ID,
+    sendUpdates: 'all',
+    requestBody,
+  });
+  return res.data;
 }

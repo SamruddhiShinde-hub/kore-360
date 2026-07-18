@@ -21,27 +21,6 @@ function buyerEmailHtml(userName) {
   `;
 }
 
-// meetLink is always the shared webinar Calendar event's own Google Meet
-// link (see WEBINAR_EVENT_ID in config.js / calendar.js) — every buyer is
-// added as an attendee to that same event, so this is guaranteed to be the
-// exact same link the organizer (work.krishlalwani@gmail.com) has. Sent as a
-// normal Gmail-API message, addressed to exactly one buyer, because the
-// Calendar event itself is created with sendUpdates:'none' — Google's
-// sendUpdates is a per-request setting, not per-attendee, so notifying just
-// the new buyer via Calendar's own invite is not possible on a shared event
-// without also re-notifying every existing attendee of the same change.
-function webinarInviteEmailHtml({ userName, when, timezone, meetLink }) {
-  return `
-    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
-      <h2 style="margin-bottom: 4px;">You're booked in, ${escapeHtml(userName)}!</h2>
-      <p style="margin: 0 0 8px;"><strong>Live Webinar</strong> with Krish Lalwani</p>
-      <p style="margin: 0 0 16px;"><strong>When:</strong> ${escapeHtml(when)} (${escapeHtml(timezone)})</p>
-      ${meetLink ? `<p style="margin: 0 0 16px;"><a href="${meetLink}" style="background:#1a73e8;color:#fff;padding:10px 16px;border-radius:4px;text-decoration:none;display:inline-block;">Join with Google Meet</a></p>` : '<p style="margin: 0 0 16px;">Your Google Meet link is being finalized — reach out if you don\'t hear back shortly.</p>'}
-      <p style="margin: 0;">Any trouble with the link, just reply to this email.</p>
-    </div>
-  `;
-}
-
 function webinarBonusEbookEmailHtml(userName) {
   return `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
@@ -75,19 +54,11 @@ export async function deliverEbookPurchase({ userName, userEmail }) {
   }
 }
 
-// The reliable, single-recipient copy of the join link — see
-// webinarInviteEmailHtml above for why this exists instead of relying on
-// Calendar's own invite. Best-effort: the caller already has the booking
-// confirmed, so a Gmail hiccup here shouldn't block or retry the webhook.
-export async function deliverWebinarInvite({ userName, userEmail, meetLink, when, timezone }) {
-  await sendNotifyEmail({
-    to: userEmail,
-    subject: "You're booked in — Live Webinar with Krish Lalwani",
-    html: webinarInviteEmailHtml({ userName, when, timezone, meetLink }),
-  });
-}
-
-// Best-effort, same reasoning as deliverWebinarInvite.
+// The only app-sent email for a webinar booking — the join link now comes
+// from the buyer's own dedicated Calendar invite (see createAttendeeEvent in
+// calendar.js), not from here. Best-effort: the caller already has the
+// booking confirmed, so a Gmail hiccup here shouldn't block or retry the
+// webhook.
 export async function deliverWebinarBonusEbook({ userName, userEmail }) {
   const pdf = readFileSync(EBOOK_PATH);
   await sendEmailWithAttachment({
