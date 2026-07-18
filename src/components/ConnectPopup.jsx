@@ -2,6 +2,14 @@ import { useEffect, useState } from 'react';
 import { WEB3FORMS_ACCESS_KEY } from '../data.js';
 
 const SHOW_DELAY_MS = 8000;
+const OPEN_EVENT = 'kore-open-connect-popup';
+
+// Lets any button elsewhere in the app (e.g. Management page's "Get in
+// touch" cards) open this same modal on click, without needing to lift its
+// state up through the tree — ConnectPopup is mounted once at the App root.
+export function openConnectPopup() {
+  window.dispatchEvent(new CustomEvent(OPEN_EVENT));
+}
 
 export default function ConnectPopup() {
   const [visible, setVisible] = useState(false);
@@ -17,6 +25,14 @@ export default function ConnectPopup() {
 
     const timer = setTimeout(() => setVisible(true), SHOW_DELAY_MS);
     return () => clearTimeout(timer);
+  }, []);
+
+  // A deliberate click should always open the modal, even if the ambient
+  // auto-popup already showed (and was dismissed) once this session.
+  useEffect(() => {
+    const onOpen = () => setVisible(true);
+    window.addEventListener(OPEN_EVENT, onOpen);
+    return () => window.removeEventListener(OPEN_EVENT, onOpen);
   }, []);
 
   const close = () => {

@@ -1,7 +1,8 @@
-import { MANAGEMENT_SERVICES, LINKS } from '../data.js';
+import { MANAGEMENT_SERVICES } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import PageMeta from '../components/PageMeta.jsx';
+import { openConnectPopup } from '../components/ConnectPopup.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)'];
 
@@ -61,7 +62,7 @@ export default function Management() {
                     </li>
                   ))}
                 </ul>
-                <a href={LINKS.event} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px' }}>Get in touch →</a>
+                <button type="button" onClick={openConnectPopup} className="btn-tertiary" style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '13px 22px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Get in touch →</button>
               </Reveal>
             );
           })}
