@@ -108,12 +108,24 @@ export default async function handler(req, res) {
       // best-effort: one failure must not take another down with it.
       await updateBookingRow(booking._rowNumber, { status: 'paid' });
 
+      // The webinar is a shared event — every buyer is added as an attendee
+      // to the same Calendar event (see WEBINAR_EVENT_ID), and only the
+      // FIRST buyer's insert actually sets summary/description; every later
+      // buyer just gets patched into the attendees list (addAttendeesToEvent
+      // in calendar.js), so a per-buyer name baked into either field would
+      // show the first buyer's name to every subsequent one. Keep both
+      // generic for the webinar; only single-attendee sessions (qna,
+      // clarity) get a name baked in, since there it's genuinely "the" one
+      // attendee.
+      const isSharedEvent = booking.sessionId === 'webinar';
       let event = null;
       try {
         event = await createBookingEvent({
-          eventId: booking.sessionId === 'webinar' ? WEBINAR_EVENT_ID : undefined,
-          summary: `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
-          description: `Booked via KORE 360.\nAttendee: ${booking.userName} (${booking.userEmail})`,
+          eventId: isSharedEvent ? WEBINAR_EVENT_ID : undefined,
+          summary: isSharedEvent ? `${booking.sessionName} — Krish Lalwani` : `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
+          description: isSharedEvent
+            ? 'Booked via KORE 360. All registered attendees share this event and Google Meet link.'
+            : `Booked via KORE 360.\nAttendee: ${booking.userName} (${booking.userEmail})`,
           startISO: booking.slotStart,
           endISO: booking.slotEnd,
           timezone: AVAILABILITY.timezone,
