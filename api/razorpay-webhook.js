@@ -2,7 +2,7 @@ import { verifyWebhookSignature } from './_lib/razorpay.js';
 import { findBookingByHoldId, updateBookingRow } from './_lib/sheet.js';
 import { createBookingEvent } from './_lib/calendar.js';
 import { sendNotifyEmail } from './_lib/gmail.js';
-import { deliverEbookPurchase, deliverWebinarConfirmation } from './_lib/ebook.js';
+import { deliverEbookPurchase, deliverWebinarConfirmation, deliverWebinarBonusEbook } from './_lib/ebook.js';
 import { AVAILABILITY, NOTIFY_EMAIL, WEBINAR_EVENT_ID } from './_lib/config.js';
 
 export const config = { api: { bodyParser: false } };
@@ -119,8 +119,9 @@ export default async function handler(req, res) {
 
       // Webinar buyers additionally get an explicit confirmation email with
       // the join link (event.hangoutLink — the same shared event/link Krish
-      // gets above, since every webinar booking shares WEBINAR_EVENT_ID) and
-      // the bonus e-book, on top of Google Calendar's own invite email.
+      // gets above, since every webinar booking shares WEBINAR_EVENT_ID), on
+      // top of Google Calendar's own invite email, followed by a separate
+      // email with the free e-book as promised at registration.
       if (booking.sessionId === 'webinar') {
         try {
           await deliverWebinarConfirmation({
@@ -132,6 +133,12 @@ export default async function handler(req, res) {
           });
         } catch (err) {
           console.error('failed to send webinar confirmation email', err);
+        }
+
+        try {
+          await deliverWebinarBonusEbook({ userName: booking.userName, userEmail: booking.userEmail });
+        } catch (err) {
+          console.error('failed to send webinar bonus e-book', err);
         }
       }
     }
