@@ -4,11 +4,11 @@
 //  booking widget (see src/data.js SESSIONS entries).
 // ============================================================
 export const SESSIONS = {
-  // fixedStart makes this a single shared group session (see slots.js and
-  // calendar.js) instead of an individually-scheduled 1:1 slot: every buyer
-  // gets added as an attendee to the same Calendar event/Meet link.
-  // TEMP: dropped to ₹1 for a live checkout test — restore amountPaise: 49900 afterwards.
-  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 100, fixedStart: '2026-07-26T17:00:00+05:30' },
+  // fixedStart makes this a single shared group session (see slots.js) —
+  // every buyer shares the same time slot and Meet room, though each gets
+  // their own individual Calendar event pointing at it (see
+  // ensureWebinarRoom/createAttendeeEvent in calendar.js).
+  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-07-26T17:00:00+05:30' },
   qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 49900 },
   clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 149900 },
   // No slot/Calendar component at all — a straight digital-product purchase

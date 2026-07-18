@@ -82,7 +82,7 @@ export const SESSIONS = [
     },
   },
   {
-    tag: 'WEBINAR', name: 'Live Webinar', price: '₹1', meta: '60 min · Live · Sun, 26 Jul, 5:00 PM IST', desc: 'A one-hour live session on how the industry actually hires.', cta: 'Book your seat', sessionId: 'webinar',
+    tag: 'WEBINAR', name: 'Live Webinar', price: '₹499', meta: '60 min · Live · Sun, 26 Jul, 5:00 PM IST', desc: 'A one-hour live session on how the industry actually hires.', cta: 'Book your seat', sessionId: 'webinar',
     // Must match SESSIONS.webinar.fixedStart in api/_lib/config.js — kept as
     // plain values here since the API config isn't safe to import client-side.
     // fixedStart also lets the booking modal skip its own day/time picker
