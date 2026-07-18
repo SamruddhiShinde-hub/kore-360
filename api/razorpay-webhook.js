@@ -1,9 +1,9 @@
 import { verifyWebhookSignature } from './_lib/razorpay.js';
-import { findBookingByHoldId, findBookingByPaymentLinkId, updateBookingRow, appendPaidBooking } from './_lib/sheet.js';
+import { findBookingByHoldId, updateBookingRow } from './_lib/sheet.js';
 import { createBookingEvent } from './_lib/calendar.js';
 import { sendNotifyEmail } from './_lib/gmail.js';
-import { deliverEbookPurchase, deliverWebinarBonusEbook } from './_lib/ebook.js';
-import { AVAILABILITY, NOTIFY_EMAIL, WEBINAR_EVENT_ID, getSession } from './_lib/config.js';
+import { deliverEbookPurchase, deliverWebinarConfirmation } from './_lib/ebook.js';
+import { AVAILABILITY, NOTIFY_EMAIL, WEBINAR_EVENT_ID } from './_lib/config.js';
 
 export const config = { api: { bodyParser: false } };
 
@@ -43,67 +43,6 @@ function bookingNotifyEmailHtml(booking, event) {
   `;
 }
 
-// One-click webinar checkout has no pre-existing hold row and no name/email
-// collected by us — Razorpay's own checkout gathers the buyer's contact
-// info, which we read back here. Email is not guaranteed to be present
-// (some Razorpay checkout configs treat it as optional), so this still
-// records the booking and notifies Krish even when it's missing, rather
-// than silently losing a paid signup.
-async function handleWebinarOneClickPayment({ paymentLink, payment }) {
-  const existing = await findBookingByPaymentLinkId(paymentLink.id);
-  if (existing?.status === 'paid') return; // already processed (Razorpay redelivery)
-
-  const email = payment?.email || paymentLink?.customer?.email || '';
-  const name = paymentLink?.customer?.name || payment?.contact || 'Guest';
-  const session = getSession('webinar');
-  const startISO = session.fixedStart;
-  const endISO = new Date(new Date(startISO).getTime() + session.durationMinutes * 60000).toISOString();
-
-  if (!email) {
-    console.warn(`webinar payment ${paymentLink.id} completed with no email captured by Razorpay checkout`);
-  }
-
-  const event = await createBookingEvent({
-    eventId: WEBINAR_EVENT_ID,
-    summary: `${session.name} — Krish Lalwani x ${name}`,
-    description: `Booked via KORE 360 (one-click checkout).\nAttendee: ${name}${email ? ` (${email})` : ' — no email captured, check Razorpay dashboard for contact number'}`,
-    startISO,
-    endISO,
-    timezone: AVAILABILITY.timezone,
-    attendeeEmails: email ? [email, NOTIFY_EMAIL] : [NOTIFY_EMAIL],
-  });
-
-  await appendPaidBooking({
-    sessionId: 'webinar',
-    sessionName: session.name,
-    slotStart: startISO,
-    slotEnd: endISO,
-    userName: name,
-    userEmail: email,
-    paymentLinkId: paymentLink.id,
-  });
-
-  try {
-    await sendNotifyEmail({
-      subject: `New booking: ${session.name} with ${name}${email ? '' : ' (no email captured!)'}`,
-      html: bookingNotifyEmailHtml(
-        { sessionName: session.name, userName: name, userEmail: email || 'not captured — check Razorpay dashboard', slotStart: startISO, slotEnd: endISO },
-        event
-      ),
-    });
-  } catch (err) {
-    console.error('failed to send booking notify email (webinar one-click)', err);
-  }
-
-  if (email) {
-    try {
-      await deliverWebinarBonusEbook({ userName: name, userEmail: email });
-    } catch (err) {
-      console.error('failed to send webinar bonus e-book (webinar one-click)', err);
-    }
-  }
-}
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
@@ -129,13 +68,7 @@ export default async function handler(req, res) {
   try {
     if (payload.event === 'payment_link.paid') {
       const paymentLink = payload.payload?.payment_link?.entity;
-      const payment = payload.payload?.payment?.entity;
       const notes = paymentLink?.notes || {};
-
-      if (notes.sessionId === 'webinar' && !notes.holdId) {
-        await handleWebinarOneClickPayment({ paymentLink, payment });
-        return res.status(200).end();
-      }
 
       const holdId = notes.holdId;
       if (!holdId) {
@@ -182,6 +115,24 @@ export default async function handler(req, res) {
         });
       } catch (err) {
         console.error('failed to send booking notify email', err);
+      }
+
+      // Webinar buyers additionally get an explicit confirmation email with
+      // the join link (event.hangoutLink — the same shared event/link Krish
+      // gets above, since every webinar booking shares WEBINAR_EVENT_ID) and
+      // the bonus e-book, on top of Google Calendar's own invite email.
+      if (booking.sessionId === 'webinar') {
+        try {
+          await deliverWebinarConfirmation({
+            userName: booking.userName,
+            userEmail: booking.userEmail,
+            meetLink: event.hangoutLink,
+            when: formatSlotRange(booking.slotStart, booking.slotEnd, AVAILABILITY.timezone),
+            timezone: AVAILABILITY.timezone,
+          });
+        } catch (err) {
+          console.error('failed to send webinar confirmation email', err);
+        }
       }
     }
     res.status(200).end();
