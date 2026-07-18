@@ -41,6 +41,7 @@ const WHATS_INCLUDED = [
   '60 minutes live with Krish',
   'Open Q&A — your questions, answered directly',
   'A clear picture of how this industry really works',
+  "Krish's e-book, Behind the Field, free",
 ];
 
 export default function LiveWebinar() {
