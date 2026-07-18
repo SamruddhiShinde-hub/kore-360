@@ -63,7 +63,7 @@ export default function LiveWebinar() {
       <PageMeta
         title="Behind the Field with Krish Lalwani"
         description="Every match you watch runs on departments most people never see. Join Krish Lalwani live for a behind-the-field look at how the sports industry actually hires."
-        path="/live-webinar"
+        path="/education/live-webinar"
       />
 
       <div style={{ position: 'relative', overflow: 'hidden', background: '#000000', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>

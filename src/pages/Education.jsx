@@ -7,7 +7,7 @@ import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
-const DEDICATED_PAGES = { webinar: '/live-webinar', clarity: '/clarity-call', ebook: '/ebook', qna: '/qa-call' };
+const DEDICATED_PAGES = { webinar: '/education/live-webinar', clarity: '/education/clarity-call', ebook: '/education/ebook', qna: '/education/qa-call' };
 
 export default function Education() {
   const [booking, setBooking] = useState(null);
@@ -86,7 +86,7 @@ export default function Education() {
 
         <Reveal style={{ marginTop: '32px', textAlign: 'center', borderTop: '1px solid rgba(var(--border-rgb),0.08)', paddingTop: '32px' }}>
           <p style={{ fontSize: '15px', color: 'var(--text-muted)', margin: '0 0 18px' }}>Not sure which one to start with? The clarity call is the most personal option, and the e-book is the cheapest way to find out if this industry is for you.</p>
-          <Link to="/clarity-call" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}>Talk to Krish 1:1 →</Link>
+          <Link to="/education/clarity-call" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}>Talk to Krish 1:1 →</Link>
         </Reveal>
       </div>
     </>

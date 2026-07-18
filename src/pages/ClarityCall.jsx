@@ -90,7 +90,7 @@ export default function ClarityCall() {
       <PageMeta
         title="Career Clarity with Krish"
         description={CLARITY.desc}
-        path="/clarity-call"
+        path="/education/clarity-call"
       />
 
       <div style={{ position: 'relative', overflow: 'hidden', background: '#000000', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>

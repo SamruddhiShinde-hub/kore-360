@@ -45,7 +45,7 @@ export default function Ebook() {
 
   return (
     <>
-      <PageMeta title="Behind the Field — E-book" description={EBOOK.desc} path="/ebook" />
+      <PageMeta title="Behind the Field — E-book" description={EBOOK.desc} path="/education/ebook" />
 
       <div style={{ position: 'relative', overflow: 'hidden', background: '#000000', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
         <picture>

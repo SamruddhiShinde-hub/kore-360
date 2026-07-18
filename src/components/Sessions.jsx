@@ -6,7 +6,7 @@ import Eyebrow from './Eyebrow.jsx';
 import BookingModal from './BookingModal.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
-const DEDICATED_PAGES = { webinar: '/live-webinar', clarity: '/clarity-call', ebook: '/ebook', qna: '/qa-call' };
+const DEDICATED_PAGES = { webinar: '/education/live-webinar', clarity: '/education/clarity-call', ebook: '/education/ebook', qna: '/education/qa-call' };
 
 export default function Sessions() {
   const [booking, setBooking] = useState(null);

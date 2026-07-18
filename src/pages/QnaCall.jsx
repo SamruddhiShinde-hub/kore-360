@@ -32,7 +32,7 @@ export default function QnaCall() {
 
   return (
     <>
-      <PageMeta title="1:1 Q&A Call with Krish" description={QNA.desc} path="/qa-call" />
+      <PageMeta title="1:1 Q&A Call with Krish" description={QNA.desc} path="/education/qa-call" />
 
       <div style={{ position: 'relative', overflow: 'hidden', background: '#000000', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
         <picture>
