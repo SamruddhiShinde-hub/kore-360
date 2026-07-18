@@ -1,6 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import PageHeader from '../components/PageHeader.jsx';
 import PageMeta from '../components/PageMeta.jsx';
+import { LINKS } from '../data.js';
 
 const COPY = {
   ebook: {
@@ -10,8 +11,12 @@ const COPY = {
   },
   session: {
     title: 'Payment received',
+    // Gmail/Calendar flags first-time invites from a sender it hasn't seen
+    // the recipient interact with before as "unknown sender" and may not
+    // auto-add them to the calendar — adding the sender to contacts is the
+    // only real fix for that (nothing on our end can override it).
     intro: 'Your slot is confirmed. A calendar invite with the Google Meet link is on its way to your email — it can take a couple of minutes to arrive.',
-    followUp: "If you don't see the invite within 15 minutes, check your spam folder or reach out and we'll sort it out.",
+    followUp: `If you don't see the invite within 15 minutes, check your spam folder. Gmail may also flag it as coming from an unknown sender the first time — add ${LINKS.email} to your contacts so it comes through cleanly. Reach out if it still doesn't show up and we'll sort it out.`,
   },
 };
 

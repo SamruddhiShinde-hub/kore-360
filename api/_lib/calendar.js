@@ -57,17 +57,22 @@ async function addAttendeesToEvent({ eventId, attendeeEmails }) {
 // caller creates the event at that deterministic ID, and every later caller
 // gets a 409 from Google (event already exists) and is routed to just add
 // their attendee to the existing event instead of creating a duplicate.
+//
+// Note on "Invitation from an unknown sender": that Gmail banner is a
+// spam-prevention heuristic based on whether the recipient has prior
+// interaction with/has contacted the organizer's email — see
+// https://workspaceupdates.googleblog.com/2022/07/invitations-from-known-senders-only-google-calendar.html.
+// It is NOT related to the organizer's display name (which is already
+// "Krish Lalwani" on the account itself) and there's no request field here
+// that overrides it — `organizer` is documented as read-only on insert
+// (https://developers.google.com/workspace/calendar/api/v3/reference/events),
+// so setting it has no effect. The only real fix is recipient-side: add the
+// sender to Google Contacts (surfaced on the booking-confirmed page).
 export async function createBookingEvent({ eventId, summary, description, startISO, endISO, timezone, attendeeEmails }) {
   const calendar = calendarUserClient();
   const requestBody = {
     summary,
     description,
-    // Without this, invite emails can render as coming from an "unknown
-    // sender" instead of a named organizer — this is a display hint only
-    // (the organizer is always whoever CALENDAR_ID's credentials belong to),
-    // but Google still needs the actual Google Account's profile name set
-    // to "Krish Lalwani" (myaccount.google.com) for every client to honor it.
-    organizer: { email: CALENDAR_ID, displayName: 'Krish Lalwani' },
     start: { dateTime: startISO, timeZone: timezone },
     end: { dateTime: endISO, timeZone: timezone },
     attendees: attendeeEmails.map((email) => ({ email })),
