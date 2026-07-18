@@ -62,6 +62,12 @@ export async function createBookingEvent({ eventId, summary, description, startI
   const requestBody = {
     summary,
     description,
+    // Without this, invite emails can render as coming from an "unknown
+    // sender" instead of a named organizer — this is a display hint only
+    // (the organizer is always whoever CALENDAR_ID's credentials belong to),
+    // but Google still needs the actual Google Account's profile name set
+    // to "Krish Lalwani" (myaccount.google.com) for every client to honor it.
+    organizer: { email: CALENDAR_ID, displayName: 'Krish Lalwani' },
     start: { dateTime: startISO, timeZone: timezone },
     end: { dateTime: endISO, timeZone: timezone },
     attendees: attendeeEmails.map((email) => ({ email })),

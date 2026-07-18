@@ -21,23 +21,6 @@ function buyerEmailHtml(userName) {
   `;
 }
 
-// meetLink is always the shared webinar Calendar event's own Google Meet
-// link (see WEBINAR_EVENT_ID in config.js / calendar.js) — every buyer is
-// added as an attendee to that same event, so this is guaranteed to be the
-// exact same link the organizer (work.krishlalwani@gmail.com) has.
-function webinarConfirmationEmailHtml({ userName, when, timezone, meetLink }) {
-  return `
-    <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
-      <h2 style="margin-bottom: 4px;">You're booked in, ${escapeHtml(userName)}!</h2>
-      <p style="margin: 0 0 8px;"><strong>Live Webinar</strong> with Krish Lalwani</p>
-      <p style="margin: 0 0 16px;"><strong>When:</strong> ${escapeHtml(when)} (${escapeHtml(timezone)})</p>
-      ${meetLink ? `<p style="margin: 0 0 16px;"><a href="${meetLink}" style="background:#1a73e8;color:#fff;padding:10px 16px;border-radius:4px;text-decoration:none;display:inline-block;">Join with Google Meet</a></p>` : ''}
-      <p style="margin: 0 0 16px;">You'll also get a calendar invite with this same link. Keep an eye on your inbox — your free e-book is on its way in a separate email.</p>
-      <p style="margin: 0;">Any trouble with either, just reply to this email.</p>
-    </div>
-  `;
-}
-
 function webinarBonusEbookEmailHtml(userName) {
   return `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
@@ -71,21 +54,11 @@ export async function deliverEbookPurchase({ userName, userEmail }) {
   }
 }
 
-// Webinar booking confirmation: the join link (same one the organizer has),
-// sent alongside — not in place of — the Calendar invite. Best-effort by
-// design: the caller already has the booking confirmed and the invite sent,
-// so a Gmail hiccup here shouldn't block or retry the webhook.
-export async function deliverWebinarConfirmation({ userName, userEmail, meetLink, when, timezone }) {
-  await sendNotifyEmail({
-    to: userEmail,
-    subject: "You're booked in — Live Webinar with Krish Lalwani",
-    html: webinarConfirmationEmailHtml({ userName, when, timezone, meetLink }),
-  });
-}
-
-// Separate follow-up email (sent after the join-link confirmation above) with
-// the free e-book attached, as promised at registration. Best-effort, same
-// reasoning as deliverWebinarConfirmation.
+// The only app-sent email for a webinar booking — the join link itself comes
+// from Google Calendar's own invite email (sendUpdates: 'all' in
+// calendar.js), not from here. Best-effort: the caller already has the
+// booking confirmed, so a Gmail hiccup here shouldn't block or retry the
+// webhook.
 export async function deliverWebinarBonusEbook({ userName, userEmail }) {
   const pdf = readFileSync(EBOOK_PATH);
   await sendEmailWithAttachment({

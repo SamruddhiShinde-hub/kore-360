@@ -2,7 +2,7 @@ import { verifyWebhookSignature } from './_lib/razorpay.js';
 import { findBookingByHoldId, updateBookingRow } from './_lib/sheet.js';
 import { createBookingEvent } from './_lib/calendar.js';
 import { sendNotifyEmail } from './_lib/gmail.js';
-import { deliverEbookPurchase, deliverWebinarConfirmation, deliverWebinarBonusEbook } from './_lib/ebook.js';
+import { deliverEbookPurchase, deliverWebinarBonusEbook } from './_lib/ebook.js';
 import { AVAILABILITY, NOTIFY_EMAIL, WEBINAR_EVENT_ID } from './_lib/config.js';
 
 export const config = { api: { bodyParser: false } };
@@ -132,28 +132,10 @@ export default async function handler(req, res) {
         console.error('failed to send booking notify email', err);
       }
 
-      // Webinar buyers additionally get an explicit confirmation email with
-      // the join link (event.hangoutLink — the same shared event/link Krish
-      // gets above, since every webinar booking shares WEBINAR_EVENT_ID), on
-      // top of Google Calendar's own invite email, followed by a separate
-      // email with the free e-book as promised at registration. Both run
-      // even if the calendar event above failed (meetLink just comes back
-      // empty and the email already handles that case) — these two emails
-      // must go out regardless.
+      // Webinar buyers only get the Calendar invite (above, with the join
+      // link) and this e-book email — no separate "you're booked in" email.
+      // Runs even if the calendar event above failed — must go out regardless.
       if (booking.sessionId === 'webinar') {
-        try {
-          await deliverWebinarConfirmation({
-            userName: booking.userName,
-            userEmail: booking.userEmail,
-            meetLink: event?.hangoutLink,
-            when: formatSlotRange(booking.slotStart, booking.slotEnd, AVAILABILITY.timezone),
-            timezone: AVAILABILITY.timezone,
-          });
-          console.log(`webinar confirmation email sent to ${booking.userEmail}`);
-        } catch (err) {
-          console.error('failed to send webinar confirmation email', err);
-        }
-
         try {
           await deliverWebinarBonusEbook({ userName: booking.userName, userEmail: booking.userEmail });
           console.log(`webinar bonus e-book sent to ${booking.userEmail}`);
