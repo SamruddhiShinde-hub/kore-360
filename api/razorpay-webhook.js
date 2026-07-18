@@ -2,7 +2,7 @@ import { verifyWebhookSignature } from './_lib/razorpay.js';
 import { findBookingByHoldId, updateBookingRow } from './_lib/sheet.js';
 import { createBookingEvent } from './_lib/calendar.js';
 import { sendNotifyEmail } from './_lib/gmail.js';
-import { deliverEbookPurchase, deliverWebinarInvite, deliverWebinarBonusEbook } from './_lib/ebook.js';
+import { deliverEbookPurchase, deliverWebinarBonusEbook } from './_lib/ebook.js';
 import { AVAILABILITY, NOTIFY_EMAIL, WEBINAR_EVENT_ID } from './_lib/config.js';
 
 export const config = { api: { bodyParser: false } };
@@ -144,25 +144,12 @@ export default async function handler(req, res) {
         console.error('failed to send booking notify email', err);
       }
 
-      // Webinar buyers get two app-sent emails: the join link (not relying
-      // on Calendar's own invite notification, which is subject to Gmail's
-      // known-senders-only filter and wasn't reliably reaching buyers) and
-      // the bonus e-book. Both run even if the calendar event above failed —
-      // must go out regardless.
+      // Webinar buyers only get the Calendar invite (above, with the join
+      // link — accepted as sometimes showing "unknown sender", see the
+      // commit on Gmail's known-senders-only filter) and this e-book email.
+      // No separate app-sent "you're booked in" email. Runs even if the
+      // calendar event above failed — must go out regardless.
       if (booking.sessionId === 'webinar') {
-        try {
-          await deliverWebinarInvite({
-            userName: booking.userName,
-            userEmail: booking.userEmail,
-            meetLink: event?.hangoutLink,
-            when: formatSlotRange(booking.slotStart, booking.slotEnd, AVAILABILITY.timezone),
-            timezone: AVAILABILITY.timezone,
-          });
-          console.log(`webinar invite email sent to ${booking.userEmail}`);
-        } catch (err) {
-          console.error('failed to send webinar invite email', err);
-        }
-
         try {
           await deliverWebinarBonusEbook({ userName: booking.userName, userEmail: booking.userEmail });
           console.log(`webinar bonus e-book sent to ${booking.userEmail}`);
