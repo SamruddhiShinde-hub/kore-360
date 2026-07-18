@@ -28,9 +28,12 @@ function formatSlotRange(startISO, endISO, timeZone) {
   return `${dateFmt.format(start)}, ${timeFmt.format(start)} – ${timeFmt.format(end)}`;
 }
 
+// event may be null if Calendar event creation failed (see the try/catch
+// around createBookingEvent below) — Krish still gets notified of the paid
+// booking, just without a Meet link that one time.
 function bookingNotifyEmailHtml(booking, event) {
   const when = escapeHtml(formatSlotRange(booking.slotStart, booking.slotEnd, AVAILABILITY.timezone));
-  const meetLink = event.hangoutLink;
+  const meetLink = event?.hangoutLink;
   return `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
       <h2 style="margin-bottom: 4px;">New booking confirmed</h2>
@@ -38,7 +41,8 @@ function bookingNotifyEmailHtml(booking, event) {
       <p style="margin: 0 0 8px;"><strong>When:</strong> ${when} (${escapeHtml(AVAILABILITY.timezone)})</p>
       <p style="margin: 0 0 8px;"><strong>Attendee:</strong> ${escapeHtml(booking.userName)} (${escapeHtml(booking.userEmail)})</p>
       ${meetLink ? `<p style="margin: 16px 0;"><a href="${meetLink}" style="background:#1a73e8;color:#fff;padding:10px 16px;border-radius:4px;text-decoration:none;display:inline-block;">Join with Google Meet</a></p>` : ''}
-      ${event.htmlLink ? `<p style="margin: 0;"><a href="${event.htmlLink}">View in Google Calendar</a></p>` : ''}
+      ${!event ? `<p style="margin: 0; color:#b71e60;"><strong>Calendar event creation failed</strong> — check Vercel logs and create/add the attendee manually.</p>` : ''}
+      ${event?.htmlLink ? `<p style="margin: 0;"><a href="${event.htmlLink}">View in Google Calendar</a></p>` : ''}
     </div>
   `;
 }
@@ -66,7 +70,9 @@ export default async function handler(req, res) {
   // Always 200 quickly once verified, so Razorpay doesn't retry-storm us; do the work inline
   // since Vercel functions have enough time budget for this light workload.
   try {
-    if (payload.event === 'payment_link.paid') {
+    if (payload.event !== 'payment_link.paid') {
+      console.log(`razorpay webhook: ignoring event type "${payload.event}"`);
+    } else {
       const paymentLink = payload.payload?.payment_link?.entity;
       const notes = paymentLink?.notes || {};
 
@@ -93,21 +99,30 @@ export default async function handler(req, res) {
         return res.status(200).end();
       }
 
-      const event = await createBookingEvent({
-        eventId: booking.sessionId === 'webinar' ? WEBINAR_EVENT_ID : undefined,
-        summary: `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
-        description: `Booked via KORE 360.\nAttendee: ${booking.userName} (${booking.userEmail})`,
-        startISO: booking.slotStart,
-        endISO: booking.slotEnd,
-        timezone: AVAILABILITY.timezone,
-        attendeeEmails: [booking.userEmail, NOTIFY_EMAIL],
-      });
-
+      // Payment is the source of truth here, not our downstream Google
+      // integrations — mark paid before touching Calendar/Gmail so a hiccup
+      // in either (e.g. the Calendar event insert has previously failed in
+      // production with a Google auth error) can never leave a paying buyer
+      // stuck in "hold" limbo with the webhook retrying forever and no email
+      // ever going out. Everything below this point is independently
+      // best-effort: one failure must not take another down with it.
       await updateBookingRow(booking._rowNumber, { status: 'paid' });
 
-      // Best-effort: the booking is already confirmed above, so a Gmail hiccup
-      // here shouldn't turn into a Razorpay retry (which would re-run
-      // createBookingEvent and produce a duplicate calendar event).
+      let event = null;
+      try {
+        event = await createBookingEvent({
+          eventId: booking.sessionId === 'webinar' ? WEBINAR_EVENT_ID : undefined,
+          summary: `${booking.sessionName} — Krish Lalwani x ${booking.userName}`,
+          description: `Booked via KORE 360.\nAttendee: ${booking.userName} (${booking.userEmail})`,
+          startISO: booking.slotStart,
+          endISO: booking.slotEnd,
+          timezone: AVAILABILITY.timezone,
+          attendeeEmails: [booking.userEmail, NOTIFY_EMAIL],
+        });
+      } catch (err) {
+        console.error('failed to create calendar event', err);
+      }
+
       try {
         await sendNotifyEmail({
           subject: `New booking: ${booking.sessionName} with ${booking.userName}`,
@@ -121,22 +136,27 @@ export default async function handler(req, res) {
       // the join link (event.hangoutLink — the same shared event/link Krish
       // gets above, since every webinar booking shares WEBINAR_EVENT_ID), on
       // top of Google Calendar's own invite email, followed by a separate
-      // email with the free e-book as promised at registration.
+      // email with the free e-book as promised at registration. Both run
+      // even if the calendar event above failed (meetLink just comes back
+      // empty and the email already handles that case) — these two emails
+      // must go out regardless.
       if (booking.sessionId === 'webinar') {
         try {
           await deliverWebinarConfirmation({
             userName: booking.userName,
             userEmail: booking.userEmail,
-            meetLink: event.hangoutLink,
+            meetLink: event?.hangoutLink,
             when: formatSlotRange(booking.slotStart, booking.slotEnd, AVAILABILITY.timezone),
             timezone: AVAILABILITY.timezone,
           });
+          console.log(`webinar confirmation email sent to ${booking.userEmail}`);
         } catch (err) {
           console.error('failed to send webinar confirmation email', err);
         }
 
         try {
           await deliverWebinarBonusEbook({ userName: booking.userName, userEmail: booking.userEmail });
+          console.log(`webinar bonus e-book sent to ${booking.userEmail}`);
         } catch (err) {
           console.error('failed to send webinar bonus e-book', err);
         }
