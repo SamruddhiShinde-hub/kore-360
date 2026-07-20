@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SESSIONS, IMAGES, LINKS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
 import SlotPicker from '../components/SlotPicker.jsx';
+import { track, priceToNumber } from '../lib/analytics.js';
 
 const CLARITY = SESSIONS.find((s) => s.sessionId === 'clarity');
 const ACCENT = 'var(--kore-orange-text)';
@@ -67,6 +68,14 @@ export default function ClarityCall() {
   const [showModal, setShowModal] = useState(false);
   const [shared, setShared] = useState(false);
   const testimonialsRef = useRef(null);
+
+  useEffect(() => {
+    track('view_item', {
+      currency: 'INR',
+      value: priceToNumber(CLARITY.price),
+      items: [{ item_id: CLARITY.sessionId, item_name: CLARITY.name, item_category: 'session', price: priceToNumber(CLARITY.price) }],
+    });
+  }, []);
 
   const handleShare = async () => {
     const shareData = { title: 'Career Clarity with Krish Lalwani', text: CLARITY.desc, url: window.location.href };

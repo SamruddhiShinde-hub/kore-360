@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { track, priceToNumber } from '../lib/analytics.js';
 
 const DAYS_AHEAD = 21;
 
@@ -33,6 +34,15 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
   const skipPicker = isFixed || Boolean(initialSlot);
 
   const dates = useMemo(() => upcomingDates(), []);
+
+  useEffect(() => {
+    track('begin_checkout', {
+      currency: 'INR',
+      value: priceToNumber(price),
+      items: [{ item_id: sessionId, item_name: sessionName, item_category: 'session', price: priceToNumber(price) }],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Default to the first upcoming day that actually has open slots (not just
   // "today") — sessions like the fixed-date webinar would otherwise open on
@@ -119,6 +129,12 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
       const linkData = await linkRes.json();
       if (!linkRes.ok) throw new Error(linkData.error || 'Could not start payment.');
 
+      track('add_payment_info', {
+        currency: 'INR',
+        value: priceToNumber(price),
+        payment_type: 'razorpay',
+        items: [{ item_id: sessionId, item_name: sessionName, item_category: 'session', price: priceToNumber(price) }],
+      });
       window.location.href = linkData.url;
     } catch (err) {
       setErrorMsg(err.message || 'Something went wrong. Please try again.');

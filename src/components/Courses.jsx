@@ -1,6 +1,7 @@
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
 import { openConnectPopup } from './ConnectPopup.jsx';
+import { track } from '../lib/analytics.js';
 
 const ACCENTS = ['var(--kore-gradient)', 'var(--kore-magenta)', 'var(--kore-orange)'];
 
@@ -54,7 +55,9 @@ export default function Courses() {
           </p>
 
           <button
-            type="button" onClick={openConnectPopup} className="btn-accent"
+            type="button"
+            onClick={() => { track('waitlist_signup_click', { content_type: 'courses' }); openConnectPopup(); }}
+            className="btn-accent"
             style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 26px', borderRadius: '8px', cursor: 'pointer', fontFamily: 'inherit', marginBottom: '30px' }}
           >
             Notify me when it's live →

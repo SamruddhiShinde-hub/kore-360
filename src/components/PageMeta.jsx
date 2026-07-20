@@ -37,6 +37,19 @@ export default function PageMeta({ title, description, path = '/' }) {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute('href', url);
+
+    // Every routed page renders PageMeta with its own title/path, which
+    // makes this the one place that reliably fires after the new page's
+    // title is set — a virtual pageview hooked into the router directly
+    // (e.g. ScrollToTop) would fire before this effect and report the
+    // previous page's title for a moment on every navigation.
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'page_view',
+      page_location: url,
+      page_path: path,
+      page_title: fullTitle,
+    });
   }, [title, description, path]);
 
   return null;

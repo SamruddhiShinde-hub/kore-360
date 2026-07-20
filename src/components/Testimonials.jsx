@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { TESTIMONIALS } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
+import { track } from '../lib/analytics.js';
 
 function PlayIcon() {
   return (
@@ -56,7 +57,7 @@ export default function Testimonials() {
               <Reveal key={t.name} delay={i % 4} className="testimonial-card card-hover" style={{ flex: '0 0 calc(25% - 15px)', scrollSnapAlign: 'start', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.09)', borderRadius: '16px', overflow: 'hidden' }}>
                 <button
                   type="button"
-                  onClick={() => setActive(i)}
+                  onClick={() => { track('testimonial_play', { item_id: t.name }); setActive(i); }}
                   aria-label={`Play testimonial from ${t.name}`}
                   style={{ position: 'relative', display: 'block', width: '100%', aspectRatio: '4/3', border: 'none', padding: 0, margin: 0, cursor: 'pointer', background: 'none' }}
                 >

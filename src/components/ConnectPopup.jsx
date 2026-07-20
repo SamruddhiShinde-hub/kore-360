@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { WEB3FORMS_ACCESS_KEY } from '../data.js';
+import { track } from '../lib/analytics.js';
 
 const SHOW_DELAY_MS = 8000;
 const OPEN_EVENT = 'kore-open-connect-popup';
@@ -82,6 +83,7 @@ export default function ConnectPopup() {
       const data = await res.json();
       if (data.success) {
         setStatus('sent');
+        track('generate_lead', { method: 'whatsapp_form' });
         try { sessionStorage.setItem('kore-connect-popup-seen', '1'); } catch { /* storage unavailable */ }
       } else {
         setStatus('error');

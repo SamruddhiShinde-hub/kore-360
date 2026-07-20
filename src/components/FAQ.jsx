@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { FAQS } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
+import { track } from '../lib/analytics.js';
 
 const faqSchema = {
   '@context': 'https://schema.org',
@@ -43,7 +44,10 @@ export default function FAQ() {
               <Reveal key={f.q} delay={i} style={{ borderTop: i === 0 ? '1px solid rgba(var(--border-rgb),0.1)' : 'none', borderBottom: '1px solid rgba(var(--border-rgb),0.1)' }}>
                 <button
                   type="button"
-                  onClick={() => setOpenIndex(isOpen ? -1 : i)}
+                  onClick={() => {
+                    if (!isOpen) track('faq_open', { item_id: f.q });
+                    setOpenIndex(isOpen ? -1 : i);
+                  }}
                   aria-expanded={isOpen}
                   style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', background: 'none', border: 'none', padding: '22px 0', cursor: 'pointer', textAlign: 'left', color: 'var(--text)', fontFamily: 'inherit' }}
                 >

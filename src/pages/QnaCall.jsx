@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SESSIONS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
 import SlotPicker from '../components/SlotPicker.jsx';
+import { track, priceToNumber } from '../lib/analytics.js';
 
 const QNA = SESSIONS.find((s) => s.sessionId === 'qna');
 const ACCENT = 'var(--kore-orange-text)';
@@ -27,6 +28,14 @@ function PhoneIcon() {
 export default function QnaCall() {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    track('view_item', {
+      currency: 'INR',
+      value: priceToNumber(QNA.price),
+      items: [{ item_id: QNA.sessionId, item_name: QNA.name, item_category: 'session', price: priceToNumber(QNA.price) }],
+    });
+  }, []);
 
   const d = QNA.details;
 

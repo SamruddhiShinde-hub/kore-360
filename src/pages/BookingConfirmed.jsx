@@ -1,7 +1,9 @@
+import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import PageHeader from '../components/PageHeader.jsx';
 import PageMeta from '../components/PageMeta.jsx';
-import { LINKS } from '../data.js';
+import { LINKS, SESSIONS } from '../data.js';
+import { track, priceToNumber } from '../lib/analytics.js';
 
 const COPY = {
   ebook: {
@@ -22,7 +24,26 @@ const COPY = {
 
 export default function BookingConfirmed() {
   const [searchParams] = useSearchParams();
-  const copy = COPY[searchParams.get('type')] || COPY.session;
+  const type = searchParams.get('type');
+  const holdId = searchParams.get('holdId');
+  const copy = COPY[type] || COPY.session;
+
+  useEffect(() => {
+    // Razorpay appends its own status param to this callback URL — only
+    // count it as revenue when the payment actually went through, so an
+    // abandoned or cancelled attempt landing here doesn't inflate GA4.
+    const paid = searchParams.get('razorpay_payment_link_status') === 'paid';
+    if (!paid || !holdId) return;
+    const session = SESSIONS.find((s) => s.sessionId === type);
+    if (!session) return;
+    track('purchase', {
+      transaction_id: holdId, // same holdId on a refresh = GA4 dedupes it, no double-counted sale
+      currency: 'INR',
+      value: priceToNumber(session.price),
+      items: [{ item_id: session.sessionId, item_name: session.name, item_category: 'session', price: priceToNumber(session.price) }],
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

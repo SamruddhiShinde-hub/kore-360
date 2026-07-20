@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { MARQUEE } from '../data.js';
+import { track } from '../lib/analytics.js';
 
 const SWIPE_THRESHOLD = 50;
 
@@ -27,6 +28,7 @@ export default function Marquee() {
 
   const goTo = (i) => {
     if (i === active || fadedOut) return;
+    track('select_content', { content_type: 'career_interest', item_id: MARQUEE[i].label });
     pendingIndex.current = i;
     setFadedOut(true);
   };

@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SESSIONS, IMAGES, LINKS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
+import { track, priceToNumber } from '../lib/analytics.js';
 
 const WEBINAR = SESSIONS.find((s) => s.sessionId === 'webinar');
 const ACCENT = 'var(--kore-orange-text)';
@@ -47,6 +48,14 @@ const WHATS_INCLUDED = [
 export default function LiveWebinar() {
   const [copied, setCopied] = useState(false);
   const [booking, setBooking] = useState(false);
+
+  useEffect(() => {
+    track('view_item', {
+      currency: 'INR',
+      value: priceToNumber(WEBINAR.price),
+      items: [{ item_id: WEBINAR.sessionId, item_name: WEBINAR.name, item_category: 'session', price: priceToNumber(WEBINAR.price) }],
+    });
+  }, []);
 
   const handleCopyLink = async () => {
     try {

@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SESSIONS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
+import { track, priceToNumber } from '../lib/analytics.js';
 
 const EBOOK = SESSIONS.find((s) => s.sessionId === 'ebook');
 const ACCENT = 'var(--kore-orange-text)';
@@ -12,6 +13,14 @@ export default function Ebook() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle'); // idle | redirecting
   const [errorMsg, setErrorMsg] = useState('');
+
+  useEffect(() => {
+    track('view_item', {
+      currency: 'INR',
+      value: priceToNumber(EBOOK.price),
+      items: [{ item_id: EBOOK.sessionId, item_name: EBOOK.name, item_category: 'session', price: priceToNumber(EBOOK.price) }],
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +43,12 @@ export default function Ebook() {
       const linkData = await linkRes.json();
       if (!linkRes.ok) throw new Error(linkData.error || 'Could not start payment.');
 
+      track('add_payment_info', {
+        currency: 'INR',
+        value: priceToNumber(EBOOK.price),
+        payment_type: 'razorpay',
+        items: [{ item_id: EBOOK.sessionId, item_name: EBOOK.name, item_category: 'session', price: priceToNumber(EBOOK.price) }],
+      });
       window.location.href = linkData.url;
     } catch (err) {
       setErrorMsg(err.message || 'Something went wrong. Please try again.');
