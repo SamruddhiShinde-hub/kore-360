@@ -39,6 +39,13 @@ export const SHEET_ID = process.env.GOOGLE_SHEET_ID;
 export const SHEET_RANGE = 'Sheet1!A:J';
 export const NOTIFY_EMAIL = 'work.krishlalwani@gmail.com';
 
+// "Let's connect" WhatsApp popup leads — a separate sheet from the booking
+// sheet above (not a secret, so no env var needed; it's just the ID from
+// the sheet's own URL). Must be shared as Editor with the same service
+// account this file's SHEET_ID already uses, or writes to it will fail.
+export const CONNECT_LEADS_SHEET_ID = '1T3Y4nlPeiLbMB__KvBYPoKkAhgffHe15oCif1Qhbxqo';
+export const CONNECT_LEADS_SHEET_RANGE = 'Sheet1!A:D';
+
 export function getSession(sessionId) {
   const session = SESSIONS[sessionId];
   if (!session) throw new Error(`Unknown sessionId: ${sessionId}`);

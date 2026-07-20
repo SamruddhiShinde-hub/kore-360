@@ -84,6 +84,13 @@ export default function ConnectPopup() {
       if (data.success) {
         setStatus('sent');
         track('generate_lead', { method: 'whatsapp_form' });
+        // Best-effort: the email above is the actual delivery — a hiccup
+        // saving to the sheet shouldn't stop the user from seeing "sent".
+        fetch('/api/submit-connect-lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: form.name.value, whatsapp, reason: form.reason.value }),
+        }).catch(() => {});
         try { sessionStorage.setItem('kore-connect-popup-seen', '1'); } catch { /* storage unavailable */ }
       } else {
         setStatus('error');

@@ -1,6 +1,6 @@
 import { google } from 'googleapis';
 import { getGoogleAuth } from './googleAuth.js';
-import { SHEET_ID, SHEET_RANGE } from './config.js';
+import { SHEET_ID, SHEET_RANGE, CONNECT_LEADS_SHEET_ID, CONNECT_LEADS_SHEET_RANGE } from './config.js';
 
 // Column order matches the sheet header row:
 // holdId | sessionId | sessionName | slotStart | slotEnd | userName | userEmail | status | paymentLinkId | createdAt
@@ -84,4 +84,18 @@ export async function findBookingByPaymentLinkId(paymentLinkId) {
 export async function getActiveHolds() {
   const bookings = await getAllBookings();
   return bookings.filter((b) => b.status === 'hold' || b.status === 'paid');
+}
+
+// The "Let's connect" WhatsApp popup — a separate spreadsheet from the
+// booking sheet above, since these are leads, not paid bookings.
+export async function appendConnectLead({ name, whatsapp, reason }) {
+  const sheets = sheetsClient();
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: CONNECT_LEADS_SHEET_ID,
+    range: CONNECT_LEADS_SHEET_RANGE,
+    valueInputOption: 'RAW',
+    requestBody: {
+      values: [[new Date().toISOString(), name, whatsapp, reason]],
+    },
+  });
 }
