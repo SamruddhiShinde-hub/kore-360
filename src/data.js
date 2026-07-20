@@ -37,7 +37,7 @@ export const LINKS = {
   event: '#',
   phone: '+91 96892 88000',
   phoneTel: 'tel:+919689288000',
-  whatsapp: 'https://wa.me/919689288000',
+  whatsapp: 'https://wa.me/919175412117',
   decathlonForm: 'https://forms.gle/U4p4S2Fpon1RGcPb6',
   email: 'work.krishlalwani@gmail.com',
 };

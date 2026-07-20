@@ -4,6 +4,10 @@ import { WEB3FORMS_ACCESS_KEY } from '../data.js';
 const SHOW_DELAY_MS = 8000;
 const OPEN_EVENT = 'kore-open-connect-popup';
 
+// Digits, spaces, +, -, and parentheses only — allows "with country code" input like "+91 98765 43210".
+const PHONE_CHARS_REGEX = /^[0-9+\-\s()]*$/;
+const PHONE_VALID_REGEX = /^\+?[0-9][0-9\s\-()]{6,19}$/;
+
 // Lets any button elsewhere in the app (e.g. Management page's "Get in
 // touch" cards) open this same modal on click, without needing to lift its
 // state up through the tree — ConnectPopup is mounted once at the App root.
@@ -15,6 +19,18 @@ export default function ConnectPopup() {
   const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState('idle');
   const [error, setError] = useState('');
+  const [whatsapp, setWhatsapp] = useState('');
+  const [whatsappError, setWhatsappError] = useState('');
+
+  const handleWhatsappChange = (e) => {
+    const value = e.target.value;
+    if (!PHONE_CHARS_REGEX.test(value)) {
+      setWhatsappError('Only numbers are allowed, e.g. +91 98765 43210.');
+      return;
+    }
+    setWhatsappError('');
+    setWhatsapp(value);
+  };
 
   useEffect(() => {
     let alreadyHandled = false;
@@ -42,6 +58,10 @@ export default function ConnectPopup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!PHONE_VALID_REGEX.test(whatsapp.trim())) {
+      setWhatsappError('Please enter a valid phone number, with country code.');
+      return;
+    }
     setStatus('sending');
     setError('');
     const form = e.target;
@@ -50,7 +70,7 @@ export default function ConnectPopup() {
       subject: 'New connect request from KORE 360 website',
       from_name: 'KORE 360 website',
       name: form.name.value,
-      whatsapp: form.whatsapp.value,
+      whatsapp,
       message: form.reason.value,
     };
     try {
@@ -121,10 +141,17 @@ export default function ConnectPopup() {
                 name="name" type="text" required placeholder="Your name"
                 style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)' }}
               />
-              <input
-                name="whatsapp" type="tel" required placeholder="WhatsApp number, with country code"
-                style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)' }}
-              />
+              <div>
+                <input
+                  name="whatsapp" type="tel" required placeholder="WhatsApp number, with country code"
+                  value={whatsapp} onChange={handleWhatsappChange}
+                  aria-invalid={whatsappError ? 'true' : 'false'}
+                  style={{ width: '100%', boxSizing: 'border-box', fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: `1px solid ${whatsappError ? 'var(--kore-orange-text)' : 'rgba(var(--border-rgb),0.2)'}`, background: 'transparent', color: 'var(--text)' }}
+                />
+                {whatsappError && (
+                  <div style={{ fontSize: '12.5px', color: 'var(--kore-orange-text)', marginTop: '6px' }}>{whatsappError}</div>
+                )}
+              </div>
               <textarea
                 name="reason" required rows={3} placeholder="What would you like to connect about? e.g. course guidance, a speaking request, a partnership idea"
                 style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)', resize: 'vertical' }}
