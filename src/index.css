@@ -122,41 +122,8 @@ a { text-decoration: none; }
   }
 }
 @media (max-width: 600px) {
-  .course-card { min-height: 380px !important; }
   .ig-grid { grid-template-columns: repeat(2,1fr) !important; max-width: 230px; margin: 0 auto 44px !important; }
   .ig-extra { display: none !important; }
-}
-
-/* ---- courses grid layout ---- */
-.courses-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  height: clamp(480px, 55vh, 700px);
-}
-.courses-grid > div:nth-child(1) {
-  grid-column: 1;
-  grid-row: 1;
-}
-.courses-grid > div:nth-child(2) {
-  grid-column: 1;
-  grid-row: 2;
-}
-.courses-grid > div:nth-child(3) {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-}
-
-@media (max-width: 860px) {
-  .courses-grid {
-    grid-template-columns: 1fr;
-    height: auto;
-  }
-  .courses-grid > div {
-    grid-column: auto !important;
-    grid-row: auto !important;
-    min-height: 480px;
-  }
 }
 
 /* ---- responsive: tighten section spacing on mobile ---- */

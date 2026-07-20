@@ -1,8 +1,18 @@
-import { COURSES } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
+import { openConnectPopup } from './ConnectPopup.jsx';
 
 const ACCENTS = ['var(--kore-gradient)', 'var(--kore-magenta)', 'var(--kore-orange)'];
+
+function GraduationCapIcon() {
+  return (
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 10 12 5 2 10l10 5 10-5Z" />
+      <path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5" />
+      <path d="M22 10v6" />
+    </svg>
+  );
+}
 
 export default function Courses() {
   return (
@@ -13,41 +23,49 @@ export default function Courses() {
           Go deeper with a course
         </Reveal>
         <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px', textAlign: 'justify' }}>
-          Structured, self-paced programs that take you from curious to career-ready.
+          Structured, self-paced programs that take you from curious to career-ready — currently in the works.
         </p>
 
-        <div className="courses-grid">
-          {COURSES.map((c, i) => (
-            <Reveal
-              key={i} delay={i} className="course-card card-hover"
-              style={{ 
-                position: 'relative', 
-                borderRadius: '16px', 
-                overflow: 'hidden'
-              }}
-            >
-              <img src={c.img} alt={c.name} loading="lazy" decoding="async" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.92) 100%)' }} />
-              <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', height: '100%', padding: '24px' }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
-                  <span style={{ fontWeight: 900, fontSize: '28px', color: '#FFFFFF', lineHeight: 1 }}>{String(i + 1).padStart(2, '0')}</span>
-                  <span style={{ fontWeight: 900, fontSize: '28px', color: '#FFFFFF', lineHeight: 1, textTransform: 'uppercase', letterSpacing: '-0.03em' }}>- {c.level}</span>
-                </div>
-                <div style={{ flex: 1 }} />
-                <div style={{ width: '28px', height: '3px', background: ACCENTS[i % ACCENTS.length], marginBottom: '14px', borderRadius: '2px' }} />
-                <div style={{ fontWeight: 800, fontSize: '23px', lineHeight: 1.15, letterSpacing: '-0.01em', color: '#FFFFFF', marginBottom: '10px' }}>{c.name}</div>
-                <p style={{ fontSize: '14px', lineHeight: 1.5, color: 'rgba(255,255,255,0.75)', margin: '0 0 22px', textAlign: 'justify' }}>{c.desc}</p>
-                <div style={{ borderTop: '1px solid rgba(255,255,255,0.15)', paddingTop: '18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <div>
-                    <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.6)', marginRight: '6px' }}>from</span>
-                    <span style={{ fontWeight: 900, fontSize: '21px', color: '#FFFFFF' }}>{c.price}</span>
-                  </div>
-                  <a href={c.href} target="_blank" rel="noreferrer" className="btn-tertiary" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-orange)', padding: '11px 18px', borderRadius: '8px' }}>Enroll →</a>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal
+          style={{
+            position: 'relative', overflow: 'hidden', borderRadius: '20px',
+            border: '1px solid rgba(var(--border-rgb),0.12)', background: 'rgba(var(--border-rgb),0.035)',
+            padding: 'clamp(40px,6vw,72px) clamp(24px,5vw,56px)',
+            textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center',
+          }}
+        >
+          <div style={{ position: 'absolute', top: '-120px', left: '-80px', width: '280px', height: '280px', borderRadius: '50%', background: 'var(--kore-magenta)', opacity: 0.18, filter: 'blur(70px)' }} />
+          <div style={{ position: 'absolute', bottom: '-140px', right: '-100px', width: '320px', height: '320px', borderRadius: '50%', background: 'var(--kore-orange)', opacity: 0.16, filter: 'blur(80px)' }} />
+
+          <div style={{ position: 'relative', width: '72px', height: '72px', borderRadius: '18px', background: 'var(--kore-gradient)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '26px', boxShadow: '0 18px 40px rgba(0,0,0,0.35)' }}>
+            <GraduationCapIcon />
+          </div>
+
+          <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', color: 'var(--kore-orange-text)', marginBottom: '18px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--kore-orange)', boxShadow: '0 0 0 4px rgba(var(--border-rgb),0.12)' }} />
+            COMING SOON
+          </div>
+
+          <div style={{ position: 'relative', fontWeight: 900, fontSize: 'clamp(24px,3.2vw,34px)', letterSpacing: '-0.01em', lineHeight: 1.15, maxWidth: '620px', marginBottom: '14px' }}>
+            Stay tuned — the courses are being built right now.
+          </div>
+          <p style={{ position: 'relative', fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '480px', margin: '0 0 30px', textAlign: 'center' }}>
+            We're putting together structured, career-ready programs. Leave your details and we'll let you know the moment they're live.
+          </p>
+
+          <button
+            type="button" onClick={openConnectPopup} className="btn-accent"
+            style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 26px', borderRadius: '8px', cursor: 'pointer', fontFamily: 'inherit', marginBottom: '30px' }}
+          >
+            Notify me when it's live →
+          </button>
+
+          <div style={{ position: 'relative', display: 'flex', gap: '10px' }}>
+            {ACCENTS.map((accent, i) => (
+              <span key={i} style={{ width: '28px', height: '4px', borderRadius: '2px', background: accent }} />
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
