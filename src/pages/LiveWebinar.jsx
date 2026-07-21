@@ -4,6 +4,7 @@ import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
 import { track, priceToNumber } from '../lib/analytics.js';
+import webinarFlyer from '../assets/Horizontal - Flyer.png';
 
 const WEBINAR = SESSIONS.find((s) => s.sessionId === 'webinar');
 const ACCENT = 'var(--kore-orange-text)';
@@ -75,25 +76,12 @@ export default function LiveWebinar() {
         path="/education/live-webinar"
       />
 
-      <div style={{ position: 'relative', overflow: 'hidden', background: '#000000', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-        <picture>
-          <source media="(max-width: 768px)" srcSet="/hero-bg-mobile.webp" />
-          <img src="/hero-bg-desktop.webp" alt="" aria-hidden="true" style={{ position: 'absolute', inset: '-40px', width: 'calc(100% + 80px)', height: 'calc(100% + 80px)', objectFit: 'cover', display: 'block', zIndex: 0 }} />
-        </picture>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.25) 65%, rgba(0,0,0,0.75) 100%)', zIndex: 0 }} />
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto', padding: '132px 32px 0', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 360px', gap: '40px', alignItems: 'end' }} className="grid-2col">
+      <div style={{ background: '#000000', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '132px 32px 48px' }}>
           <Reveal>
-            <div style={{ fontSize: '13px', letterSpacing: '0.18em', fontWeight: 700, backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', marginBottom: '20px' }}>LIVE WEBINAR</div>
-            <h1 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(30px,4.6vw,52px)', color: '#FFFFFF', margin: '0 0 18px' }}>
-              Behind the Field with Krish Lalwani
-            </h1>
-            <p style={{ fontSize: '17px', lineHeight: 1.6, color: 'rgba(255,255,255,0.75)', maxWidth: '560px', margin: 0, textAlign: 'justify' }}>{WEBINAR.desc}</p>
-          </Reveal>
-          <Reveal delay={1} style={{ borderRadius: '16px 16px 0 0', overflow: 'hidden', aspectRatio: '4/3' }}>
-            <img src={IMAGES.heroCentered} alt="Krish Lalwani" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <img src={webinarFlyer} alt="Behind the Field with Krish Lalwani — Session 02, Sunday 26 July 2026, 5:00-6:00 PM IST, live on Google Meet" style={{ width: '100%', height: 'auto', maxHeight: '440px', objectFit: 'contain', display: 'block', margin: '0 auto', borderRadius: '10px' }} />
           </Reveal>
         </div>
-        <div style={{ position: 'relative', zIndex: 1, height: '40px' }} />
       </div>
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '56px 32px 96px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 340px', gap: '48px', alignItems: 'start' }} className="grid-2col">
