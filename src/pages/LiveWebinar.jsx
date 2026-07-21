@@ -141,7 +141,10 @@ export default function LiveWebinar() {
             </div>
             <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
               <span style={{ color: ACCENT, flex: 'none' }}><TicketIcon /></span>
-              <div style={{ fontWeight: 700, fontSize: '14.5px' }}>{WEBINAR.price}</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px' }}>
+                <span style={{ fontSize: '13px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{WEBINAR.originalPrice}</span>
+                <span style={{ fontWeight: 700, fontSize: '14.5px' }}>{WEBINAR.price}</span>
+              </div>
             </div>
             <div
               className="limited-seats-badge"
