@@ -52,6 +52,9 @@ a { text-decoration: none; }
 .btn-accent:hover { filter: brightness(1.12); transform: translateY(-2px); box-shadow: 0 10px 24px rgba(183,30,96,0.3); }
 .btn-tertiary:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 10px 22px rgba(240,81,35,0.32); }
 .btn-outline { transition: border-color .15s, color .15s, transform .15s; }
+/* E-book form: extra CTA right under the email field, mobile only —
+   desktop already has the same button inline further down the card. */
+.mobile-inline-cta { display: none; }
 .btn-outline:hover { border-color: var(--kore-orange) !important; color: var(--kore-orange-text) !important; transform: translateY(-2px); }
 .nav-link:hover { color: var(--text) !important; text-shadow: 0 0 10px rgba(var(--border-rgb),0.3); }
 .nav-link-bar { transition: color .15s, text-shadow .15s; }
@@ -109,6 +112,7 @@ a { text-decoration: none; }
     color: #FFFFFF !important;
     cursor: pointer;
   }
+  .mobile-inline-cta { display: block; }
   /* Pins the final CTA (price/timezone + payment button) to the bottom of
      the viewport on booking/checkout pages, so the button that actually
      matters is always reachable without scrolling to the end of the page. */

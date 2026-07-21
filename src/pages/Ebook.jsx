@@ -111,6 +111,13 @@ export default function Ebook() {
               style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)' }}
             />
 
+            <button
+              type="submit" disabled={status === 'redirecting'} className="btn-accent mobile-inline-cta"
+              style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 22px', borderRadius: '8px', cursor: status === 'redirecting' ? 'default' : 'pointer', opacity: status === 'redirecting' ? 0.7 : 1 }}
+            >
+              {status === 'redirecting' ? 'Taking you to payment…' : `${EBOOK.cta} — ${EBOOK.price}`}
+            </button>
+
             <div className="sticky-cta-mobile">
               {errorMsg && <div style={{ fontSize: '13px', color: 'var(--kore-orange-text)', marginBottom: '8px' }}>{errorMsg}</div>}
               <button
