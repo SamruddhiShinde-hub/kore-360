@@ -8,7 +8,7 @@ export const SESSIONS = {
   // every buyer shares the same time slot and Meet room, though each gets
   // their own individual Calendar event pointing at it (see
   // ensureWebinarRoom/createAttendeeEvent in calendar.js).
-  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-07-26T17:00:00+05:30' },
+  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-08-08T17:00:00+05:30' },
   qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 49900 },
   clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 149900 },
   // No slot/Calendar component at all — a straight digital-product purchase
