@@ -1,4 +1,4 @@
-import { getSession } from './_lib/config.js';
+import { getSession, getAmountPaise } from './_lib/config.js';
 import { findBookingByHoldId, updateBookingRow } from './_lib/sheet.js';
 import { getRazorpayClient } from './_lib/razorpay.js';
 
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
     const razorpay = getRazorpayClient();
     const link = await razorpay.paymentLink.create({
-      amount: session.amountPaise,
+      amount: getAmountPaise(booking.sessionId, booking.slotStart),
       currency: 'INR',
       accept_partial: false,
       description: `${session.name} — KORE 360`,

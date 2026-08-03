@@ -52,6 +52,25 @@ export function getSession(sessionId) {
   return session;
 }
 
+// Clarity Call flash price: ₹999 (99900 paise) instead of the regular
+// ₹1,499 (149900 paise) for calls actually booked on these IST calendar
+// dates. Must match CLARITY_PROMO_DATES/prices in src/data.js — that file
+// only controls the display price, this is what Razorpay actually charges.
+const CLARITY_PROMO_DATES = ['2026-08-04', '2026-08-05', '2026-08-06'];
+const CLARITY_PROMO_AMOUNT_PAISE = 99900;
+
+// Resolves the amount to actually charge for a session, accounting for the
+// Clarity Call's date-limited flash price. `slotStart` is the ISO datetime
+// of the booked call; irrelevant (and safely ignored) for other sessions.
+export function getAmountPaise(sessionId, slotStart) {
+  const session = getSession(sessionId);
+  if (sessionId === 'clarity' && slotStart) {
+    const dateKey = new Date(slotStart).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+    if (CLARITY_PROMO_DATES.includes(dateKey)) return CLARITY_PROMO_AMOUNT_PAISE;
+  }
+  return session.amountPaise;
+}
+
 // The Q&A call is shorter than the Clarity Call (10 min vs 30), but the two
 // should still offer identical start times on their booking pages — so the
 // Q&A grid steps in Clarity-sized increments instead of its own duration.

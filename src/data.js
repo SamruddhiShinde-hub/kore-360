@@ -26,6 +26,38 @@ import actorsCricketBashLogo from './assets/brand6.jpg';
 // Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
 export const ACCENT = '#F05123';
 
+// ---- Clarity Call flash pricing ----
+// ₹999 (from ₹1,499) for calls actually booked on these IST calendar dates.
+// Must match CLARITY_PROMO_DATES/CLARITY_PROMO_AMOUNT_PAISE in
+// api/_lib/config.js — that's what Razorpay actually charges; these values
+// are display-only (see the note on SESSIONS below re: client vs API config).
+const CLARITY_PROMO_DATES = ['2026-08-04', '2026-08-05', '2026-08-06'];
+const CLARITY_PROMO_PRICE = '₹999';
+const CLARITY_REGULAR_PRICE = '₹1,499';
+const CLARITY_ORIGINAL_PRICE = '₹1,999';
+
+function istDateKey(date) {
+  return date.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+}
+
+function isClarityPromoDate(date) {
+  return CLARITY_PROMO_DATES.includes(istDateKey(date));
+}
+
+// Effective price for a Clarity Call booked at a given ISO datetime (or, with
+// no date given, right now) — used both for the site-wide display price and
+// to re-check the price shown once a user picks a specific slot in the
+// booking modal, since a slot outside the promo window should fall back to
+// the regular price even while the promo is otherwise live.
+export function getClarityPricing(dateIso) {
+  const promo = isClarityPromoDate(dateIso ? new Date(dateIso) : new Date());
+  return {
+    price: promo ? CLARITY_PROMO_PRICE : CLARITY_REGULAR_PRICE,
+    originalPrice: CLARITY_ORIGINAL_PRICE,
+    promoActive: promo,
+  };
+}
+
 // Which hero layout to show: 'split' | 'centered' | 'editorial'
 export const HERO_VARIANT = 'centered';
 
@@ -106,7 +138,7 @@ export const SESSIONS = [
     },
   },
   {
-    tag: '1:1 CALL', name: 'Clarity Call', price: '₹1,499', originalPrice: '₹1,999', meta: '30 min · Video call', desc: 'A thirty-minute video call to map your personal route into the industry.', cta: 'Book a 1:1', sessionId: 'clarity', featured: true,
+    tag: '1:1 CALL', name: 'Clarity Call', ...getClarityPricing(), meta: '30 min · Video call', desc: 'A thirty-minute video call to map your personal route into the industry.', cta: 'Book a 1:1', sessionId: 'clarity', featured: true,
     details: {
       format: '30-minute 1:1 video call',
       whoFor: "Anyone ready to map out their personal route into the industry, with someone who's done the hiring",

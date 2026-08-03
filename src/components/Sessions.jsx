@@ -39,8 +39,16 @@ export default function Sessions() {
                 ))}
               </ul>
               <p style={{ fontSize: '14.5px', lineHeight: 1.5, color: 'var(--text-muted)', margin: '0 0 22px', flex: 1, textAlign: 'justify' }}>{s.desc}</p>
-              <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px' }}>
-                <div style={{ fontWeight: 900, fontSize: '30px', color: 'var(--text)' }}>{s.price}</div>
+              <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', flexWrap: 'wrap' }}>
+                  {s.promoActive && (
+                    <span style={{ fontSize: '15px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{s.originalPrice}</span>
+                  )}
+                  <div style={{ fontWeight: 900, fontSize: '30px', color: 'var(--text)' }}>{s.price}</div>
+                </div>
+                {s.promoActive && (
+                  <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '11px', fontWeight: 800, letterSpacing: '0.03em', padding: '4px 9px', borderRadius: '999px' }}>50% OFF</span>
+                )}
               </div>
               {DEDICATED_PAGES[s.sessionId] ? (
                 <Link

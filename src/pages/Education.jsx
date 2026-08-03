@@ -45,8 +45,16 @@ export default function Education() {
 
                 <p className="education-card-desc" style={{ fontSize: '13px', lineHeight: 1.45, color: 'var(--text-muted)', margin: '0 0 14px', flex: 1 }}>{s.desc}</p>
 
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px' }}>
-                  <div className="education-card-price" style={{ fontWeight: 900, fontSize: '20px', color: 'var(--text)', lineHeight: 1 }}>{s.price}</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', flexWrap: 'wrap' }}>
+                    {s.promoActive && (
+                      <span style={{ fontSize: '12px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{s.originalPrice}</span>
+                    )}
+                    <div className="education-card-price" style={{ fontWeight: 900, fontSize: '20px', color: 'var(--text)', lineHeight: 1 }}>{s.price}</div>
+                    {s.promoActive && (
+                      <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '9px', fontWeight: 800, padding: '3px 7px', borderRadius: '999px', whiteSpace: 'nowrap' }}>50% OFF</span>
+                    )}
+                  </div>
                   {DEDICATED_PAGES[s.sessionId] ? (
                     <Link
                       to={DEDICATED_PAGES[s.sessionId]}

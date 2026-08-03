@@ -134,6 +134,9 @@ export default function ClarityCall() {
           )}
           <span style={{ fontSize: '15px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{CLARITY.originalPrice}</span>
           <span style={{ fontWeight: 900, fontSize: '24px', color: 'var(--text)' }}>{CLARITY.price}</span>
+          {CLARITY.promoActive && (
+            <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '12px', fontWeight: 800, letterSpacing: '0.02em', padding: '4px 10px', borderRadius: '999px' }}>50% OFF</span>
+          )}
         </div>
       </div>
 

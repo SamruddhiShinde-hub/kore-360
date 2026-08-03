@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { track, priceToNumber } from '../lib/analytics.js';
+import { getClarityPricing } from '../data.js';
 
 const DAYS_AHEAD = 21;
 
@@ -35,11 +36,18 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
 
   const dates = useMemo(() => upcomingDates(), []);
 
+  // The Clarity Call's flash price only applies to calls actually booked on
+  // the promo dates — re-derive it from the selected slot (not just "is the
+  // promo live today") so picking a day outside the window falls back to
+  // the regular price, matching what Razorpay will actually charge.
+  const clarityPricing = sessionId === 'clarity' ? getClarityPricing(selectedSlot) : null;
+  const displayPrice = clarityPricing ? clarityPricing.price : price;
+
   useEffect(() => {
     track('begin_checkout', {
       currency: 'INR',
-      value: priceToNumber(price),
-      items: [{ item_id: sessionId, item_name: sessionName, item_category: 'session', price: priceToNumber(price) }],
+      value: priceToNumber(displayPrice),
+      items: [{ item_id: sessionId, item_name: sessionName, item_category: 'session', price: priceToNumber(displayPrice) }],
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -131,9 +139,9 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
 
       track('add_payment_info', {
         currency: 'INR',
-        value: priceToNumber(price),
+        value: priceToNumber(displayPrice),
         payment_type: 'razorpay',
-        items: [{ item_id: sessionId, item_name: sessionName, item_category: 'session', price: priceToNumber(price) }],
+        items: [{ item_id: sessionId, item_name: sessionName, item_category: 'session', price: priceToNumber(displayPrice) }],
       });
       window.location.href = linkData.url;
     } catch (err) {
@@ -155,7 +163,15 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
         <button onClick={handleClose} aria-label="Close" style={{ position: 'absolute', top: '14px', right: '14px', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: '20px', lineHeight: 1, padding: '4px' }}>×</button>
 
         <div style={{ fontWeight: 900, fontSize: '22px', letterSpacing: '-0.01em', marginBottom: '4px' }}>{sessionName}</div>
-        <div style={{ fontSize: '14.5px', color: 'var(--text-muted)', marginBottom: '22px' }}>{price}</div>
+        <div style={{ fontSize: '14.5px', color: 'var(--text-muted)', marginBottom: '22px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          {clarityPricing?.promoActive && (
+            <span style={{ textDecoration: 'line-through', color: 'var(--text-faint)' }}>{clarityPricing.originalPrice}</span>
+          )}
+          <span>{displayPrice}</span>
+          {clarityPricing?.promoActive && (
+            <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px' }}>50% OFF</span>
+          )}
+        </div>
 
         {step === 'picker' && (
           <>
