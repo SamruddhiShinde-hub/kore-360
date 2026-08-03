@@ -134,10 +134,9 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
               <button
                 key={p.key}
                 type="button"
-                disabled={buckets[p.key].length === 0}
                 onClick={() => setSelectedPeriod(p.key)}
                 style={{
-                  flex: 1, fontFamily: 'inherit', fontSize: '13px', fontWeight: 700, padding: '8px 10px', borderRadius: '999px', border: 'none', cursor: buckets[p.key].length ? 'pointer' : 'default',
+                  flex: 1, fontFamily: 'inherit', fontSize: '13px', fontWeight: 700, padding: '8px 10px', borderRadius: '999px', border: 'none', cursor: 'pointer',
                   background: selectedPeriod === p.key ? 'var(--surface)' : 'transparent',
                   boxShadow: selectedPeriod === p.key ? '0 1px 4px rgba(0,0,0,0.15)' : 'none',
                   color: buckets[p.key].length === 0 ? 'var(--text-faint)' : 'var(--text)',
