@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { CLARITY_PROMO_DATES } from '../data.js';
 
 const DAYS_WINDOW = 21;
 const VISIBLE_DAYS = 5;
@@ -94,6 +95,7 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
               const date = new Date(`${d.date}T00:00:00+05:30`);
               const isSelected = d.date === selectedDate;
               const hasSlots = d.slots.length > 0;
+              const showPromoTag = sessionId === 'clarity' && hasSlots && CLARITY_PROMO_DATES.includes(d.date);
               return (
                 <button
                   key={d.date}
@@ -112,7 +114,11 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
                 >
                   <span style={{ fontSize: '10px', letterSpacing: '0.04em' }}>{date.toLocaleDateString('en-IN', { weekday: 'short', timeZone: 'Asia/Kolkata' })}</span>
                   <span style={{ fontSize: '14px', fontWeight: 800, whiteSpace: 'nowrap' }}>{date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' })}</span>
-                  <span style={{ fontSize: '10px', whiteSpace: 'nowrap', color: isSelected ? 'rgba(255,255,255,0.85)' : hasSlots ? '#22c55e' : 'var(--text-faint)' }}>{hasSlots ? `${d.slots.length} slots` : 'No slots'}</span>
+                  {showPromoTag ? (
+                    <span style={{ fontSize: '9px', fontWeight: 800, whiteSpace: 'nowrap', padding: '1px 6px', borderRadius: '999px', background: isSelected ? 'rgba(255,255,255,0.28)' : 'var(--kore-gradient)', color: '#FFFFFF' }}>50% OFF</span>
+                  ) : (
+                    <span style={{ fontSize: '10px', whiteSpace: 'nowrap', color: isSelected ? 'rgba(255,255,255,0.85)' : hasSlots ? '#22c55e' : 'var(--text-faint)' }}>{hasSlots ? `${d.slots.length} slots` : 'No slots'}</span>
+                  )}
                 </button>
               );
             })}
