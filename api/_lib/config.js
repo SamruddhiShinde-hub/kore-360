@@ -32,6 +32,12 @@ export const AVAILABILITY = {
   daysAhead: 21, // how far into the future users can book
 };
 
+// IST calendar dates with zero bookable slots for any non-fixed session
+// (Q&A, Clarity Call) — e.g. Krish is unavailable, or a date is deliberately
+// closed to push bookings toward the flash-price window. The webinar is
+// unaffected (it's a single fixedStart slot, not this rolling grid).
+export const BLOCKED_DATES = ['2026-08-03'];
+
 export const HOLD_TTL_MINUTES = 15;
 
 export const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;

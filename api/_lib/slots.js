@@ -1,4 +1,4 @@
-import { AVAILABILITY, HOLD_TTL_MINUTES, getSession, getSlotStepMinutes } from './config.js';
+import { AVAILABILITY, BLOCKED_DATES, HOLD_TTL_MINUTES, getSession, getSlotStepMinutes } from './config.js';
 import { getBusyIntervals } from './calendar.js';
 import { getActiveHolds } from './sheet.js';
 
@@ -31,6 +31,7 @@ function dayOfWeek(dateStr) {
 // Shared by both the single-day and range computations below, once busy/hold
 // data has already been fetched for whatever window covers dateStr.
 function generateDaySlots({ dateStr, sessionId, session, busy, activeHolds, earliestStart }) {
+  if (BLOCKED_DATES.includes(dateStr)) return [];
   if (!AVAILABILITY.workingDays.includes(dayOfWeek(dateStr))) return [];
 
   const windowStart = istDate(dateStr, AVAILABILITY.startHour, 0);
