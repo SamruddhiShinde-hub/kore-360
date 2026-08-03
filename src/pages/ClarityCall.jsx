@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { SESSIONS, IMAGES, LINKS } from '../data.js';
+import { SESSIONS, IMAGES, LINKS, getClarityPricing } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
@@ -67,7 +67,13 @@ export default function ClarityCall() {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [shared, setShared] = useState(false);
+  const [pickerDate, setPickerDate] = useState(null);
   const testimonialsRef = useRef(null);
+
+  // Mirrors whatever day is highlighted in the slot picker so the price up
+  // top always matches what booking that day would actually charge — ₹999
+  // only while a promo date (4-6 Aug) is selected, ₹1,499 for any other day.
+  const pricing = getClarityPricing(pickerDate);
 
   useEffect(() => {
     track('view_item', {
@@ -132,9 +138,9 @@ export default function ClarityCall() {
           {CLARITY.featured && (
             <span style={{ background: 'rgba(var(--border-rgb),0.08)', color: ACCENT, fontSize: '12px', fontWeight: 700, padding: '4px 10px', borderRadius: '999px' }}>Most Popular</span>
           )}
-          <span style={{ fontSize: '15px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{CLARITY.originalPrice}</span>
-          <span style={{ fontWeight: 900, fontSize: '24px', color: 'var(--text)' }}>{CLARITY.price}</span>
-          {CLARITY.promoActive && (
+          <span style={{ fontSize: '15px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{pricing.originalPrice}</span>
+          <span style={{ fontWeight: 900, fontSize: '24px', color: 'var(--text)' }}>{pricing.price}</span>
+          {pricing.promoActive && (
             <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '12px', fontWeight: 800, letterSpacing: '0.02em', padding: '4px 10px', borderRadius: '999px' }}>50% OFF</span>
           )}
         </div>
@@ -185,6 +191,7 @@ export default function ClarityCall() {
         <SlotPicker
           sessionId="clarity"
           onConfirm={(slot) => { setSelectedSlot(slot); setShowModal(true); }}
+          onDateChange={setPickerDate}
         />
       </div>
 

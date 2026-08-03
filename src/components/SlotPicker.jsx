@@ -31,12 +31,20 @@ function periodOf(iso) {
 // Real day/time picker (day-strip with live slot counts + Morning/Midday/
 // Evening filter) shared by every individually-scheduled session page
 // (Clarity Call, Q&A) — same availability window, same mechanics.
-export default function SlotPicker({ sessionId, heading = 'When should we connect?', confirmLabel = 'Confirm details', onConfirm }) {
+export default function SlotPicker({ sessionId, heading = 'When should we connect?', confirmLabel = 'Confirm details', onConfirm, onDateChange }) {
   const [daysData, setDaysData] = useState(null);
   const [dayWindowStart, setDayWindowStart] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPeriod, setSelectedPeriod] = useState('morning');
   const [selectedSlot, setSelectedSlot] = useState(null);
+
+  // Lets a parent page (e.g. the Clarity Call price display) react to
+  // whichever day is currently highlighted here, not just the final
+  // confirmed slot.
+  useEffect(() => {
+    onDateChange?.(selectedDate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDate]);
 
   useEffect(() => {
     let cancelled = false;
