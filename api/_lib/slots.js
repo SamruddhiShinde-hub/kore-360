@@ -1,4 +1,4 @@
-import { AVAILABILITY, BLOCKED_DATES, HOLD_TTL_MINUTES, getSession, getSlotStepMinutes } from './config.js';
+import { AVAILABILITY, BLOCKED_DATES, CLARITY_FIXED_HOURS, HOLD_TTL_MINUTES, getSession, getSlotStepMinutes } from './config.js';
 import { getBusyIntervals } from './calendar.js';
 import { getActiveHolds } from './sheet.js';
 
@@ -34,13 +34,21 @@ function generateDaySlots({ dateStr, sessionId, session, busy, activeHolds, earl
   if (BLOCKED_DATES.includes(dateStr)) return [];
   if (!AVAILABILITY.workingDays.includes(dayOfWeek(dateStr))) return [];
 
-  const windowStart = istDate(dateStr, AVAILABILITY.startHour, 0);
-  const windowEnd = istDate(dateStr, AVAILABILITY.endHour, 0);
-  const stepMs = (getSlotStepMinutes(sessionId) + AVAILABILITY.bufferMinutes) * 60 * 1000;
   const durationMs = session.durationMinutes * 60 * 1000;
 
+  let candidateStarts;
+  if (sessionId === 'clarity') {
+    candidateStarts = CLARITY_FIXED_HOURS.map((h) => istDate(dateStr, h, 0).getTime());
+  } else {
+    const windowStart = istDate(dateStr, AVAILABILITY.startHour, 0).getTime();
+    const windowEnd = istDate(dateStr, AVAILABILITY.endHour, 0).getTime();
+    const stepMs = (getSlotStepMinutes(sessionId) + AVAILABILITY.bufferMinutes) * 60 * 1000;
+    candidateStarts = [];
+    for (let start = windowStart; start + durationMs <= windowEnd; start += stepMs) candidateStarts.push(start);
+  }
+
   const slots = [];
-  for (let start = windowStart.getTime(); start + durationMs <= windowEnd.getTime(); start += stepMs) {
+  for (const start of candidateStarts) {
     const end = start + durationMs;
     if (start < earliestStart) continue;
 

@@ -4,6 +4,18 @@ import { track } from '../lib/analytics.js';
 
 const SHOW_DELAY_MS = 8000;
 const OPEN_EVENT = 'kore-open-connect-popup';
+const CLARITY_PATH = '/education/clarity-call';
+
+// True when the very first page of this browser session is the Clarity Call
+// landing page (typed URL, ad click, social bio link, etc.) rather than
+// someone browsing in from elsewhere on the site — the lead-capture popup
+// would compete with that page's own booking CTA.
+function isDirectClarityLanding() {
+  if (window.location.pathname.replace(/\/$/, '') !== CLARITY_PATH) return false;
+  const ref = document.referrer;
+  if (!ref) return true;
+  try { return new URL(ref).origin !== window.location.origin; } catch { return true; }
+}
 
 // Digits, spaces, +, -, and parentheses only — allows "with country code" input like "+91 98765 43210".
 const PHONE_CHARS_REGEX = /^[0-9+\-\s()]*$/;
@@ -39,6 +51,7 @@ export default function ConnectPopup() {
       alreadyHandled = sessionStorage.getItem('kore-connect-popup-seen') === '1';
     } catch { /* storage unavailable */ }
     if (alreadyHandled) return;
+    if (isDirectClarityLanding()) return;
 
     const timer = setTimeout(() => setVisible(true), SHOW_DELAY_MS);
     return () => clearTimeout(timer);

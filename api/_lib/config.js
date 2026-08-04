@@ -26,11 +26,16 @@ export const WEBINAR_EVENT_ID = `bkgwebinar${new Date(SESSIONS.webinar.fixedStar
 export const AVAILABILITY = {
   timezone: 'Asia/Kolkata',
   workingDays: [0, 1, 2, 3, 4, 5, 6], // every day, including Sunday
-  startHour: 10, // 10:00
+  startHour: 9, // 9:00 — widened from 10:00 so the freebusy window covers CLARITY_FIXED_HOURS' 9am start
   endHour: 23, // 23:00
   bufferMinutes: 0, // back-to-back bookings, no gap held between calls
   daysAhead: 21, // how far into the future users can book
 };
+
+// The Clarity Call no longer offers a rolling 30-min grid — just these three
+// fixed IST start times per day (see generateDaySlots in slots.js). Q&A is
+// unaffected and keeps the regular stepped grid.
+export const CLARITY_FIXED_HOURS = [9, 15, 21]; // 9am, 3pm, 9pm
 
 // IST calendar dates with zero bookable slots for any non-fixed session
 // (Q&A, Clarity Call) — e.g. Krish is unavailable, or a date is deliberately
@@ -62,7 +67,7 @@ export function getSession(sessionId) {
 // ₹1,499 (149900 paise) for calls actually booked on these IST calendar
 // dates. Must match CLARITY_PROMO_DATES/prices in src/data.js — that file
 // only controls the display price, this is what Razorpay actually charges.
-const CLARITY_PROMO_DATES = ['2026-08-04', '2026-08-05', '2026-08-06'];
+const CLARITY_PROMO_DATES = ['2026-08-05', '2026-08-06', '2026-08-07'];
 const CLARITY_PROMO_AMOUNT_PAISE = 99900;
 
 // Resolves the amount to actually charge for a session, accounting for the

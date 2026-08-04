@@ -28,15 +28,18 @@ function periodOf(iso) {
   return 'evening';
 }
 
-// Real day/time picker (day-strip with live slot counts + Morning/Midday/
-// Evening filter) shared by every individually-scheduled session page
-// (Clarity Call, Q&A) — same availability window, same mechanics.
+// Real day/time picker (day-strip + Morning/Midday/Evening filter) shared by
+// every individually-scheduled session page (Clarity Call, Q&A) — same
+// availability window, same mechanics. The Clarity Call is the one exception:
+// it only ever offers CLARITY_FIXED_HOURS (see api/_lib/config.js), so for it
+// this renders a flat list of those slots instead of the period tabs.
 export default function SlotPicker({ sessionId, heading = 'When should we connect?', confirmLabel = 'Confirm details', onConfirm, onDateChange }) {
   const [daysData, setDaysData] = useState(null);
   const [dayWindowStart, setDayWindowStart] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPeriod, setSelectedPeriod] = useState('morning');
   const [selectedSlot, setSelectedSlot] = useState(null);
+  const showPeriodTabs = sessionId !== 'clarity';
 
   // Lets a parent page (e.g. the Clarity Call price display) react to
   // whichever day is currently highlighted here, not just the final
@@ -76,6 +79,7 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
 
   useEffect(() => {
     setSelectedSlot(null);
+    if (!showPeriodTabs) return;
     if (buckets.morning.length) setSelectedPeriod('morning');
     else if (buckets.midday.length) setSelectedPeriod('midday');
     else if (buckets.evening.length) setSelectedPeriod('evening');
@@ -83,11 +87,20 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
   }, [selectedDate]);
 
   const visibleDays = daysData ? daysData.slice(dayWindowStart, dayWindowStart + VISIBLE_DAYS) : [];
+  const visibleSlots = showPeriodTabs ? buckets[selectedPeriod] : daySlots;
 
   return (
     <div className="desktop-sticky-card" style={{ position: 'sticky', top: '24px', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '14px', padding: '22px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-        <div style={{ fontWeight: 800, fontSize: '16px' }}>{heading}</div>
+        <div>
+          <div style={{ fontWeight: 800, fontSize: '16px' }}>{heading}</div>
+          {sessionId === 'clarity' && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11.5px', fontWeight: 700, color: '#ef4444', marginTop: '4px' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ef4444', display: 'inline-block' }} />
+              Limited slots remaining
+            </div>
+          )}
+        </div>
         <div style={{ display: 'flex', gap: '6px' }}>
           <button type="button" onClick={() => setDayWindowStart((v) => Math.max(0, v - VISIBLE_DAYS))} disabled={dayWindowStart === 0} aria-label="Earlier days" style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px solid rgba(var(--border-rgb),0.16)', background: 'transparent', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: dayWindowStart === 0 ? 'default' : 'pointer', opacity: dayWindowStart === 0 ? 0.4 : 1 }}><ArrowIcon dir="left" /></button>
           <button type="button" onClick={() => setDayWindowStart((v) => Math.min((daysData?.length || VISIBLE_DAYS) - VISIBLE_DAYS, v + VISIBLE_DAYS))} disabled={!daysData || dayWindowStart + VISIBLE_DAYS >= daysData.length} aria-label="Later days" style={{ width: '28px', height: '28px', borderRadius: '50%', border: '1px solid rgba(var(--border-rgb),0.16)', background: 'transparent', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><ArrowIcon /></button>
@@ -125,7 +138,7 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
                   {showPromoTag ? (
                     <span style={{ fontSize: '9px', fontWeight: 800, whiteSpace: 'nowrap', padding: '1px 6px', borderRadius: '999px', background: isSelected ? 'rgba(255,255,255,0.28)' : 'var(--kore-gradient)', color: '#FFFFFF' }}>50% OFF</span>
                   ) : (
-                    <span style={{ fontSize: '10px', whiteSpace: 'nowrap', color: isSelected ? 'rgba(255,255,255,0.85)' : hasSlots ? '#22c55e' : 'var(--text-faint)' }}>{hasSlots ? `${d.slots.length} slots` : 'No slots'}</span>
+                    <span style={{ fontSize: '10px', whiteSpace: 'nowrap', color: isSelected ? 'rgba(255,255,255,0.85)' : hasSlots ? '#22c55e' : 'var(--text-faint)' }}>{hasSlots ? 'Available' : 'No slots'}</span>
                   )}
                 </button>
               );
@@ -133,34 +146,36 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
           </div>
 
           <div style={{ fontWeight: 700, fontSize: '14px', marginBottom: '10px' }}>Select your preferred time slot</div>
-          <div style={{ display: 'flex', background: 'rgba(var(--border-rgb),0.06)', borderRadius: '999px', padding: '4px', marginBottom: '16px' }}>
-            {[
-              { key: 'morning', label: 'Morning' },
-              { key: 'midday', label: 'Midday' },
-              { key: 'evening', label: 'Evening' },
-            ].map((p) => (
-              <button
-                key={p.key}
-                type="button"
-                onClick={() => setSelectedPeriod(p.key)}
-                style={{
-                  flex: 1, fontFamily: 'inherit', fontSize: '13px', fontWeight: 700, padding: '8px 10px', borderRadius: '999px', border: 'none', cursor: 'pointer',
-                  background: selectedPeriod === p.key ? 'var(--surface)' : 'transparent',
-                  boxShadow: selectedPeriod === p.key ? '0 1px 4px rgba(0,0,0,0.15)' : 'none',
-                  color: buckets[p.key].length === 0 ? 'var(--text-faint)' : 'var(--text)',
-                  opacity: buckets[p.key].length === 0 ? 0.5 : 1,
-                }}
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
+          {showPeriodTabs && (
+            <div style={{ display: 'flex', background: 'rgba(var(--border-rgb),0.06)', borderRadius: '999px', padding: '4px', marginBottom: '16px' }}>
+              {[
+                { key: 'morning', label: 'Morning' },
+                { key: 'midday', label: 'Midday' },
+                { key: 'evening', label: 'Evening' },
+              ].map((p) => (
+                <button
+                  key={p.key}
+                  type="button"
+                  onClick={() => setSelectedPeriod(p.key)}
+                  style={{
+                    flex: 1, fontFamily: 'inherit', fontSize: '13px', fontWeight: 700, padding: '8px 10px', borderRadius: '999px', border: 'none', cursor: 'pointer',
+                    background: selectedPeriod === p.key ? 'var(--surface)' : 'transparent',
+                    boxShadow: selectedPeriod === p.key ? '0 1px 4px rgba(0,0,0,0.15)' : 'none',
+                    color: buckets[p.key].length === 0 ? 'var(--text-faint)' : 'var(--text)',
+                    opacity: buckets[p.key].length === 0 ? 0.5 : 1,
+                  }}
+                >
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          )}
 
-          {buckets[selectedPeriod].length === 0 ? (
+          {visibleSlots.length === 0 ? (
             <div style={{ fontSize: '13.5px', color: 'var(--text-muted)', padding: '10px 0', marginBottom: '18px' }}>No slots in this window — try another day or time of day.</div>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(78px,1fr))', gap: '8px', marginBottom: '18px' }}>
-              {buckets[selectedPeriod].map((iso) => {
+              {visibleSlots.map((iso) => {
                 const isSelected = selectedSlot === iso;
                 return (
                   <button
