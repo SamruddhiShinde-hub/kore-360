@@ -7,14 +7,13 @@ const OPEN_EVENT = 'kore-open-connect-popup';
 const CLARITY_PATH = '/education/clarity-call';
 
 // True when the very first page of this browser session is the Clarity Call
-// landing page (typed URL, ad click, social bio link, etc.) rather than
-// someone browsing in from elsewhere on the site — the lead-capture popup
-// would compete with that page's own booking CTA.
+// landing page — i.e. it's where ConnectPopup itself first mounts, since
+// that only happens once per full page load. Deliberately ignores
+// document.referrer entirely: whatever the source (WhatsApp, Instagram, a
+// Google ad, a typed URL, anything), landing straight on this page means the
+// lead-capture popup would compete with the page's own booking CTA.
 function isDirectClarityLanding() {
-  if (window.location.pathname.replace(/\/$/, '') !== CLARITY_PATH) return false;
-  const ref = document.referrer;
-  if (!ref) return true;
-  try { return new URL(ref).origin !== window.location.origin; } catch { return true; }
+  return window.location.pathname.replace(/\/$/, '') === CLARITY_PATH;
 }
 
 // Digits, spaces, +, -, and parentheses only — allows "with country code" input like "+91 98765 43210".
