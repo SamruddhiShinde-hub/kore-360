@@ -54,14 +54,14 @@ export default function Testimonials() {
 
           <div ref={trackRef} className="testimonial-track" style={{ display: 'flex', gap: '20px', overflowX: 'auto', scrollSnapType: 'x mandatory', scrollBehavior: 'smooth' }}>
             {TESTIMONIALS.map((t, i) => (
-              <Reveal key={t.name} delay={i % 4} className="testimonial-card card-hover" style={{ flex: '0 0 calc(25% - 15px)', scrollSnapAlign: 'start', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.09)', borderRadius: '16px', overflow: 'hidden' }}>
+              <Reveal key={t.video} delay={i % 4} className="testimonial-card card-hover" style={{ flex: '0 0 calc(25% - 15px)', scrollSnapAlign: 'start', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.09)', borderRadius: '16px', overflow: 'hidden' }}>
                 <button
                   type="button"
-                  onClick={() => { track('testimonial_play', { item_id: t.name }); setActive(i); }}
-                  aria-label={`Play testimonial from ${t.name}`}
+                  onClick={() => { track('testimonial_play', { item_id: `testimonial_${i + 1}` }); setActive(i); }}
+                  aria-label="Play testimonial video"
                   style={{ position: 'relative', display: 'block', width: '100%', aspectRatio: '4/3', border: 'none', padding: 0, margin: 0, cursor: 'pointer', background: 'none' }}
                 >
-                  <img src={t.poster} alt={t.name} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <img src={t.poster} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.32)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <span style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'var(--kore-gradient)', color: '#000000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <PlayIcon />
@@ -69,9 +69,7 @@ export default function Testimonials() {
                   </div>
                 </button>
                 <div style={{ padding: '20px' }}>
-                  <p style={{ fontSize: '13.5px', lineHeight: 1.5, color: 'var(--text-muted)', fontStyle: 'italic', margin: '0 0 12px', textAlign: 'justify' }}>&ldquo;{t.quote}&rdquo;</p>
-                  <div style={{ fontWeight: 800, fontSize: '14.5px' }}>{t.name}</div>
-                  <div style={{ fontSize: '12.5px', color: 'var(--text-faint)' }}>{t.result}</div>
+                  <p style={{ fontSize: '14.5px', lineHeight: 1.5, color: 'var(--text)', fontWeight: 700, margin: 0 }}>{t.caption}</p>
                 </div>
               </Reveal>
             ))}

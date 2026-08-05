@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { SESSIONS, IMAGES, LINKS, getClarityPricing } from '../data.js';
+import { useEffect, useState } from 'react';
+import { SESSIONS, IMAGES, LINKS, getClarityPricing, TESTIMONIALS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
@@ -14,14 +14,6 @@ const REVIEW_TAGS = [
   { label: 'Great guidance', count: 3 },
   { label: 'Helpful', count: 2 },
   { label: 'Informative', count: 1 },
-];
-
-// Real testimonials supplied for this page — not invented.
-const TESTIMONIALS = [
-  { name: 'Rohit', location: 'Mumbai', tag: 'Career switcher', quote: 'Got real clarity on how to start in sports. Before this I was confused, now I know my next 2-3 steps clearly' },
-  { name: 'Shreyas', location: 'Pune', tag: 'Career switcher', quote: "Not generic advice at all. Everything was practical and based on real experience. Helped me understand how th…" },
-  { name: 'Anmol', location: '', tag: 'Student', quote: 'I was overthinking a lot before the call. This session simplified things and gave me confidence to start taking action.' },
-  { name: 'Yaseen', location: 'Bangalore', tag: 'Career switcher', quote: 'Best part was understanding different roles in sports. I had no idea about half of these opportunities before this' },
 ];
 
 function ClockIcon() {
@@ -45,10 +37,10 @@ function StarIcon() {
     </svg>
   );
 }
-function ArrowIcon({ dir = 'right' }) {
+function PlayIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transform: dir === 'left' ? 'rotate(180deg)' : 'none' }}>
-      <path d="M5 12h14M13 6l6 6-6 6" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 5v14l11-7z" />
     </svg>
   );
 }
@@ -68,7 +60,7 @@ export default function ClarityCall() {
   const [showModal, setShowModal] = useState(false);
   const [shared, setShared] = useState(false);
   const [pickerDate, setPickerDate] = useState(null);
-  const testimonialsRef = useRef(null);
+  const [activeVideo, setActiveVideo] = useState(null);
 
   // Mirrors whatever day is highlighted in the slot picker so the price up
   // top always matches what booking that day would actually charge — ₹999
@@ -94,10 +86,6 @@ export default function ClarityCall() {
       setShared(true);
       setTimeout(() => setShared(false), 2000);
     } catch { /* clipboard unavailable */ }
-  };
-
-  const scrollTestimonials = (dir) => {
-    testimonialsRef.current?.scrollBy({ left: dir === 'left' ? -320 : 320, behavior: 'smooth' });
   };
 
   return (
@@ -171,19 +159,23 @@ export default function ClarityCall() {
               ))}
             </div>
 
-            <div style={{ position: 'relative' }}>
-              <div ref={testimonialsRef} style={{ display: 'flex', gap: '14px', overflowX: 'auto', scrollSnapType: 'x mandatory', paddingBottom: '4px' }}>
-                {TESTIMONIALS.map((t) => (
-                  <div key={t.name} style={{ flex: '0 0 auto', width: 'min(300px, 82vw)', scrollSnapAlign: 'start', background: 'rgba(var(--border-rgb),0.035)', border: '1px solid rgba(var(--border-rgb),0.1)', borderRadius: '12px', padding: '18px' }}>
-                    <p style={{ fontSize: '14px', lineHeight: 1.55, color: 'var(--text)', margin: '0 0 16px', textAlign: 'justify' }}>{t.quote}</p>
-                    <div style={{ fontSize: '13px', fontWeight: 700 }}>{t.name}{t.location ? ` (${t.location})` : ''}<span style={{ fontWeight: 400, color: 'var(--text-faint)' }}>, {t.tag}</span></div>
-                  </div>
-                ))}
-              </div>
-              <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
-                <button type="button" onClick={() => scrollTestimonials('left')} aria-label="Previous reviews" style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid rgba(var(--border-rgb),0.16)', background: 'transparent', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><ArrowIcon dir="left" /></button>
-                <button type="button" onClick={() => scrollTestimonials('right')} aria-label="Next reviews" style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid rgba(var(--border-rgb),0.16)', background: 'transparent', color: 'var(--text)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}><ArrowIcon /></button>
-              </div>
+            <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '6px' }}>
+              {TESTIMONIALS.map((t, i) => (
+                <button
+                  key={t.video}
+                  type="button"
+                  onClick={() => setActiveVideo(i)}
+                  aria-label="Play testimonial video"
+                  style={{ position: 'relative', flex: '0 0 150px', aspectRatio: '3/4', borderRadius: '12px', overflow: 'hidden', border: 'none', padding: 0, cursor: 'pointer', background: '#000000' }}
+                >
+                  <img src={t.poster} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.05) 45%, rgba(0,0,0,0.8) 100%)' }} />
+                  <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '46px', height: '46px', borderRadius: '50%', background: 'var(--kore-gradient)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <PlayIcon />
+                  </span>
+                  <div style={{ position: 'absolute', left: '10px', right: '10px', bottom: '10px', color: '#FFFFFF', fontSize: '12.5px', fontWeight: 800, lineHeight: 1.3, textAlign: 'left' }}>{t.caption}</div>
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -203,6 +195,25 @@ export default function ClarityCall() {
           initialSlot={selectedSlot}
           onClose={() => setShowModal(false)}
         />
+      )}
+
+      {activeVideo !== null && (
+        <div
+          role="dialog" aria-modal="true" aria-label="Testimonial video"
+          onClick={() => setActiveVideo(null)}
+          style={{ position: 'fixed', inset: 0, zIndex: 300, background: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px' }}
+        >
+          <div onClick={(e) => e.stopPropagation()} style={{ position: 'relative', width: '100%', maxWidth: '420px' }}>
+            <video key={TESTIMONIALS[activeVideo].video} src={TESTIMONIALS[activeVideo].video} controls autoPlay style={{ width: '100%', maxHeight: '80vh', borderRadius: '12px', display: 'block', background: '#000000' }} />
+            <button
+              onClick={() => setActiveVideo(null)}
+              aria-label="Close video"
+              style={{ position: 'absolute', top: '-44px', right: 0, background: 'none', border: 'none', color: '#FFFFFF', fontSize: '28px', cursor: 'pointer', lineHeight: 1 }}
+            >
+              ×
+            </button>
+          </div>
+        </div>
       )}
     </>
   );

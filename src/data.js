@@ -12,6 +12,16 @@ import eventOpsImg from './assets/event_ops.jpg';
 import starterCourseImg from './assets/the_sports_management_starter.jpg';
 import marketingCourseImg from './assets/marketing_and_sponsorship.jpg';
 import networkingCourseImg from './assets/land_the_job_role.jpg';
+import testimonial1Video from './assets/testimonial-1.mp4';
+import testimonial1Poster from './assets/testimonial-1-poster.jpg';
+import testimonial2Video from './assets/testimonial-2.mp4';
+import testimonial2Poster from './assets/testimonial-2-poster.jpg';
+import testimonial3Video from './assets/testimonial-3.mp4';
+import testimonial3Poster from './assets/testimonial-3-poster.jpg';
+import testimonial4Video from './assets/testimonial-4.mp4';
+import testimonial4Poster from './assets/testimonial-4-poster.jpg';
+import testimonial5Video from './assets/testimonial-5.mp4';
+import testimonial5Poster from './assets/testimonial-5-poster.jpg';
 import bcciLogo from './assets/brand8-tiny.webp';
 import tataIplLogo from './assets/brand10.jpg';
 import t20MumbaiLogo from './assets/brand9-tiny.webp';
@@ -224,14 +234,15 @@ export const CAREERS = [
 export const EVENT_TYPES = ['Keynotes & talks', 'Panels & moderation', 'Campus & community workshops', 'Brand appearances'];
 
 // ---- Testimonials (video) ----
-// `video` is a placeholder sample clip — swap in your own video file/URL per testimonial when ready.
-const DUMMY_VIDEO = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+// Real client-call recordings — shared by the homepage testimonials carousel
+// and the Clarity Call page's video grid. Captions are generic marketing
+// copy, deliberately not attributed to a specific name.
 export const TESTIMONIALS = [
-  { name: 'Ananya R.', result: 'Landed a marketing internship with an IPL franchise', quote: 'The 1:1 call gave me a real plan instead of generic advice, and I knew exactly what to do next.', poster: sportsMarketingImg, video: DUMMY_VIDEO },
-  { name: 'Rohit K.', result: 'Now working in team operations for a national league', quote: "I went from cold-emailing teams to getting interviews within weeks of the clarity call.", poster: teamOperationsImg, video: DUMMY_VIDEO },
-  { name: 'Megha S.', result: 'Placed as an athlete management associate', quote: 'Krish broke down exactly what recruiters look for, and it changed how I applied for everything after.', poster: athleteManagementImg, video: DUMMY_VIDEO },
-  { name: 'Aditya V.', result: 'Booked his first event-ops gig within a month', quote: 'The e-book alone gave me more clarity than weeks of random Googling.', poster: eventOpsImg, video: DUMMY_VIDEO },
-  { name: 'Priya N.', result: 'Now networking her way into a sports agency role', quote: 'The networking course taught me how to actually pitch myself, not just send another CV.', poster: networkingCourseImg, video: DUMMY_VIDEO },
+  { caption: 'Real clarity, real next steps.', poster: testimonial1Poster, video: testimonial1Video },
+  { caption: 'Direct advice, not generic tips.', poster: testimonial2Poster, video: testimonial2Video },
+  { caption: 'Clarity on roles I never knew existed.', poster: testimonial3Poster, video: testimonial3Video },
+  { caption: 'A concrete plan, not just inspiration.', poster: testimonial4Poster, video: testimonial4Video },
+  { caption: 'The confidence to start taking action.', poster: testimonial5Poster, video: testimonial5Video },
 ];
 
 // ---- FAQ ----

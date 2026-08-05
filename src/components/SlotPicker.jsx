@@ -135,10 +135,8 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
                 >
                   <span style={{ fontSize: '10px', letterSpacing: '0.04em' }}>{date.toLocaleDateString('en-IN', { weekday: 'short', timeZone: 'Asia/Kolkata' })}</span>
                   <span style={{ fontSize: '14px', fontWeight: 800, whiteSpace: 'nowrap' }}>{date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' })}</span>
-                  {showPromoTag ? (
+                  {showPromoTag && (
                     <span style={{ fontSize: '9px', fontWeight: 800, whiteSpace: 'nowrap', padding: '1px 6px', borderRadius: '999px', background: isSelected ? 'rgba(255,255,255,0.28)' : 'var(--kore-gradient)', color: '#FFFFFF' }}>50% OFF</span>
-                  ) : (
-                    <span style={{ fontSize: '10px', whiteSpace: 'nowrap', color: isSelected ? 'rgba(255,255,255,0.85)' : hasSlots ? '#22c55e' : 'var(--text-faint)' }}>{hasSlots ? 'Available' : 'No slots'}</span>
                   )}
                 </button>
               );
