@@ -52,7 +52,7 @@ export default function Testimonials() {
             <ChevronIcon />
           </button>
 
-          <div ref={trackRef} className="testimonial-track" style={{ display: 'flex', gap: '20px', overflowX: 'auto', scrollSnapType: 'x mandatory', scrollBehavior: 'smooth' }}>
+          <div ref={trackRef} className="testimonial-track" style={{ display: 'flex', gap: '20px', overflowX: 'auto', scrollSnapType: 'x mandatory', scrollBehavior: 'smooth', padding: '24px 0 50px', margin: '-24px 0 -50px' }}>
             {TESTIMONIALS.map((t, i) => (
               <Reveal key={t.video} delay={i % 4} className="testimonial-card card-hover" style={{ flex: '0 0 calc(25% - 15px)', scrollSnapAlign: 'start', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.09)', borderRadius: '16px', overflow: 'hidden' }}>
                 <button
