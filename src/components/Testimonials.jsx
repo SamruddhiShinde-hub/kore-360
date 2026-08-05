@@ -47,8 +47,8 @@ export default function Testimonials() {
           Real people, real placements, in their own words.
         </p>
 
-        <div style={{ position: 'relative' }}>
-          <button type="button" onClick={() => scrollByPage(-1)} aria-label="Previous testimonials" className="testimonial-arrow testimonial-arrow-prev" style={{ ...arrowStyle, left: '-20px' }}>
+        <div style={{ position: 'relative', padding: '0 46px' }}>
+          <button type="button" onClick={() => scrollByPage(-1)} aria-label="Previous testimonials" className="testimonial-arrow" style={{ ...arrowStyle, left: 0 }}>
             <ChevronIcon />
           </button>
 
@@ -75,7 +75,7 @@ export default function Testimonials() {
             ))}
           </div>
 
-          <button type="button" onClick={() => scrollByPage(1)} aria-label="Next testimonials" className="testimonial-arrow testimonial-arrow-next" style={{ ...arrowStyle, right: '-20px' }}>
+          <button type="button" onClick={() => scrollByPage(1)} aria-label="Next testimonials" className="testimonial-arrow" style={{ ...arrowStyle, right: 0 }}>
             <ChevronIcon flip />
           </button>
         </div>
