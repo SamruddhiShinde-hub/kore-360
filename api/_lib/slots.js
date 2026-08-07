@@ -29,8 +29,12 @@ function dayOfWeek(dateStr) {
 }
 
 // Shared by both the single-day and range computations below, once busy/hold
-// data has already been fetched for whatever window covers dateStr.
-function generateDaySlots({ dateStr, sessionId, session, busy, activeHolds, earliestStart }) {
+// data has already been fetched for whatever window covers dateStr. Returns
+// every candidate slot with a `booked` flag rather than silently dropping
+// taken ones, so the frontend can show them (greyed out) instead of hiding
+// them — slots within the minimum-notice window are still omitted entirely
+// since those were never offered to begin with.
+function generateDaySlotsDetailed({ dateStr, sessionId, session, busy, activeHolds, earliestStart }) {
   if (BLOCKED_DATES.includes(dateStr)) return [];
   if (!AVAILABILITY.workingDays.includes(dayOfWeek(dateStr))) return [];
 
@@ -53,14 +57,18 @@ function generateDaySlots({ dateStr, sessionId, session, busy, activeHolds, earl
     if (start < earliestStart) continue;
 
     const blockedByCalendar = busy.some((b) => overlaps(start, end, new Date(b.start).getTime(), new Date(b.end).getTime()));
-    if (blockedByCalendar) continue;
+    const blockedByHold = !blockedByCalendar && activeHolds.some((h) => overlaps(start, end, new Date(h.slotStart).getTime(), new Date(h.slotEnd).getTime()));
 
-    const blockedByHold = activeHolds.some((h) => overlaps(start, end, new Date(h.slotStart).getTime(), new Date(h.slotEnd).getTime()));
-    if (blockedByHold) continue;
-
-    slots.push(new Date(start).toISOString());
+    slots.push({ time: new Date(start).toISOString(), booked: blockedByCalendar || blockedByHold });
   }
   return slots;
+}
+
+// Available-only view, for callers that just need bookable start times (slot
+// validation on hold creation, the day-strip "does this day have openings"
+// check).
+function generateDaySlots(args) {
+  return generateDaySlotsDetailed(args).filter((s) => !s.booked).map((s) => s.time);
 }
 
 // Returns an array of ISO start-time strings available for the given session on the given date.
@@ -92,17 +100,39 @@ export async function computeAvailableSlots(sessionId, dateStr) {
   return generateDaySlots({ dateStr, sessionId, session, busy, activeHolds, earliestStart });
 }
 
-// Same as computeAvailableSlots but for many days at once, using a single
-// Calendar freebusy query and a single Sheet read spanning the whole range —
-// a day-strip UI calling computeAvailableSlots once per visible day would
-// otherwise multiply Google API calls by the number of days shown.
-export async function computeAvailableSlotsRange(sessionId, dateStrs) {
+// Detailed variants of the two functions above, for the frontend pickers —
+// these show already-booked slots (greyed out, unselectable) instead of
+// silently omitting them. `fixedStart` sessions never have a taken slot to
+// show (a fresh Calendar event is created per buyer), so those just wrap the
+// available-only result with booked: false.
+export async function computeSlotsDetailed(sessionId, dateStr) {
+  const session = getSession(sessionId);
+
+  if (session.fixedStart) {
+    const slots = await computeAvailableSlots(sessionId, dateStr);
+    return slots.map((time) => ({ time, booked: false }));
+  }
+
+  const windowStart = istDate(dateStr, AVAILABILITY.startHour, 0);
+  const windowEnd = istDate(dateStr, AVAILABILITY.endHour, 0);
+
+  const [busy, holds] = await Promise.all([
+    getBusyIntervals(windowStart.toISOString(), windowEnd.toISOString()),
+    getActiveHolds(),
+  ]);
+  const activeHolds = holds.filter((h) => h.status === 'paid' || !isHoldExpired(h));
+  const earliestStart = Date.now() + MIN_NOTICE_MINUTES * 60 * 1000;
+
+  return generateDaySlotsDetailed({ dateStr, sessionId, session, busy, activeHolds, earliestStart });
+}
+
+export async function computeSlotsRangeDetailed(sessionId, dateStrs) {
   const session = getSession(sessionId);
   if (dateStrs.length === 0) return [];
 
   if (session.fixedStart) {
     const perDay = await Promise.all(dateStrs.map((d) => computeAvailableSlots(sessionId, d)));
-    return dateStrs.map((date, i) => ({ date, slots: perDay[i] }));
+    return dateStrs.map((date, i) => ({ date, slots: perDay[i].map((time) => ({ time, booked: false })) }));
   }
 
   const overallStart = istDate(dateStrs[0], AVAILABILITY.startHour, 0);
@@ -117,6 +147,6 @@ export async function computeAvailableSlotsRange(sessionId, dateStrs) {
 
   return dateStrs.map((dateStr) => ({
     date: dateStr,
-    slots: generateDaySlots({ dateStr, sessionId, session, busy, activeHolds, earliestStart }),
+    slots: generateDaySlotsDetailed({ dateStr, sessionId, session, busy, activeHolds, earliestStart }),
   }));
 }

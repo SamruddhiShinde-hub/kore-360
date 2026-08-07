@@ -32,10 +32,10 @@ export const AVAILABILITY = {
   daysAhead: 21, // how far into the future users can book
 };
 
-// The Clarity Call no longer offers a rolling 30-min grid — just these three
-// fixed IST start times per day (see generateDaySlots in slots.js). Q&A is
+// The Clarity Call no longer offers a rolling 30-min grid — just these fixed
+// IST start times per day (see generateDaySlots in slots.js). Q&A is
 // unaffected and keeps the regular stepped grid.
-export const CLARITY_FIXED_HOURS = [9, 15, 21]; // 9am, 3pm, 9pm
+export const CLARITY_FIXED_HOURS = [9, 11, 15, 19, 21]; // 9am, 11am, 3pm, 7pm, 9pm
 
 // IST calendar dates with zero bookable slots for any non-fixed session
 // (Q&A, Clarity Call) — e.g. Krish is unavailable, or a date is deliberately

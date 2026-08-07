@@ -69,18 +69,34 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
     return () => { cancelled = true; };
   }, [sessionId]);
 
-  const daySlots = useMemo(() => daysData?.find((d) => d.date === selectedDate)?.slots || [], [daysData, selectedDate]);
+  // Combine available + already-booked slots into one time-sorted list so
+  // booked times still show up (greyed out, unselectable) instead of just
+  // vanishing from the grid.
+  const daySlots = useMemo(() => {
+    const day = daysData?.find((d) => d.date === selectedDate);
+    if (!day) return [];
+    const available = (day.slots || []).map((time) => ({ time, booked: false }));
+    const booked = (day.bookedSlots || []).map((time) => ({ time, booked: true }));
+    return [...available, ...booked].sort((a, b) => new Date(a.time) - new Date(b.time));
+  }, [daysData, selectedDate]);
 
   const buckets = useMemo(() => {
     const m = { morning: [], midday: [], evening: [] };
-    daySlots.forEach((iso) => m[periodOf(iso)].push(iso));
+    daySlots.forEach((s) => m[periodOf(s.time)].push(s));
     return m;
   }, [daySlots]);
 
   useEffect(() => {
     setSelectedSlot(null);
     if (!showPeriodTabs) return;
-    if (buckets.morning.length) setSelectedPeriod('morning');
+    // Prefer a period that actually has something bookable; only fall back
+    // to a booked-only period (still worth showing, just nothing to pick)
+    // if every period is fully taken.
+    const hasAvailable = (p) => buckets[p].some((s) => !s.booked);
+    if (hasAvailable('morning')) setSelectedPeriod('morning');
+    else if (hasAvailable('midday')) setSelectedPeriod('midday');
+    else if (hasAvailable('evening')) setSelectedPeriod('evening');
+    else if (buckets.morning.length) setSelectedPeriod('morning');
     else if (buckets.midday.length) setSelectedPeriod('midday');
     else if (buckets.evening.length) setSelectedPeriod('evening');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,21 +132,22 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
               const date = new Date(`${d.date}T00:00:00+05:30`);
               const isSelected = d.date === selectedDate;
               const hasSlots = d.slots.length > 0;
+              const hasAnySlots = hasSlots || (d.bookedSlots?.length || 0) > 0;
               const showPromoTag = sessionId === 'clarity' && hasSlots && CLARITY_PROMO_DATES.includes(d.date);
               return (
                 <button
                   key={d.date}
                   type="button"
-                  disabled={!hasSlots}
+                  disabled={!hasAnySlots}
                   onClick={() => setSelectedDate(d.date)}
                   style={{
                     flex: '1 0 0', minWidth: '62px',
                     display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
-                    padding: '8px 4px', borderRadius: '8px', cursor: hasSlots ? 'pointer' : 'default',
+                    padding: '8px 4px', borderRadius: '8px', cursor: hasAnySlots ? 'pointer' : 'default',
                     border: isSelected ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
                     background: isSelected ? 'var(--kore-gradient)' : 'transparent',
                     color: isSelected ? '#FFFFFF' : hasSlots ? 'var(--text)' : 'var(--text-faint)',
-                    opacity: hasSlots ? 1 : 0.5,
+                    opacity: hasAnySlots ? 1 : 0.5,
                   }}
                 >
                   <span style={{ fontSize: '10px', letterSpacing: '0.04em' }}>{date.toLocaleDateString('en-IN', { weekday: 'short', timeZone: 'Asia/Kolkata' })}</span>
@@ -173,21 +190,27 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
             <div style={{ fontSize: '13.5px', color: 'var(--text-muted)', padding: '10px 0', marginBottom: '18px' }}>No slots in this window — try another day or time of day.</div>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(78px,1fr))', gap: '8px', marginBottom: '18px' }}>
-              {visibleSlots.map((iso) => {
-                const isSelected = selectedSlot === iso;
+              {visibleSlots.map(({ time, booked }) => {
+                const isSelected = selectedSlot === time;
                 return (
                   <button
-                    key={iso}
+                    key={time}
                     type="button"
-                    onClick={() => setSelectedSlot(iso)}
+                    disabled={booked}
+                    onClick={() => setSelectedSlot(time)}
+                    title={booked ? 'Already booked' : undefined}
                     style={{
-                      padding: '9px 6px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: 'pointer',
+                      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
+                      padding: '9px 6px', borderRadius: '8px', fontSize: '13px', fontWeight: 600, cursor: booked ? 'not-allowed' : 'pointer',
                       border: isSelected ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
-                      background: isSelected ? 'var(--kore-gradient)' : 'transparent',
-                      color: isSelected ? '#FFFFFF' : 'var(--text)',
+                      background: isSelected ? 'var(--kore-gradient)' : booked ? 'rgba(var(--border-rgb),0.06)' : 'transparent',
+                      color: isSelected ? '#FFFFFF' : booked ? 'var(--text-faint)' : 'var(--text)',
+                      opacity: booked ? 0.6 : 1,
+                      textDecoration: booked ? 'line-through' : 'none',
                     }}
                   >
-                    {new Date(iso).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+                    {new Date(time).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+                    {booked && <span style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.04em', textDecoration: 'none' }}>BOOKED</span>}
                   </button>
                 );
               })}

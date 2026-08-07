@@ -1,4 +1,4 @@
-import { computeAvailableSlotsRange } from './_lib/slots.js';
+import { computeSlotsRangeDetailed } from './_lib/slots.js';
 import { SESSIONS } from './_lib/config.js';
 
 export default async function handler(req, res) {
@@ -17,8 +17,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    const results = await computeAvailableSlotsRange(sessionId, dateStrs);
-    res.status(200).json({ days: results });
+    const results = await computeSlotsRangeDetailed(sessionId, dateStrs);
+    // `slots` stays available-only (used to decide which days are pickable);
+    // `bookedSlots` lets the frontend show already-taken times instead of
+    // just hiding them.
+    const days = results.map(({ date, slots }) => ({
+      date,
+      slots: slots.filter((s) => !s.booked).map((s) => s.time),
+      bookedSlots: slots.filter((s) => s.booked).map((s) => s.time),
+    }));
+    res.status(200).json({ days });
   } catch (err) {
     console.error('availability-range error', err);
     res.status(500).json({ error: 'Failed to compute availability' });

@@ -25,6 +25,7 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
   const [step, setStep] = useState(initialSlot ? 'details' : 'picker'); // picker | details | redirecting | error
   const [selectedDate, setSelectedDate] = useState(null);
   const [slots, setSlots] = useState([]);
+  const [bookedSlots, setBookedSlots] = useState([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [isFixed, setIsFixed] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState(initialSlot || null);
@@ -35,6 +36,15 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
   const skipPicker = isFixed || Boolean(initialSlot);
 
   const dates = useMemo(() => upcomingDates(), []);
+
+  // Combine available + already-booked slots into one time-sorted list so
+  // booked times still show up (greyed out, unselectable) instead of just
+  // vanishing from the grid.
+  const displaySlots = useMemo(() => {
+    const available = slots.map((time) => ({ time, booked: false }));
+    const booked = bookedSlots.map((time) => ({ time, booked: true }));
+    return [...available, ...booked].sort((a, b) => new Date(a.time) - new Date(b.time));
+  }, [slots, bookedSlots]);
 
   // The Clarity Call's flash price only applies to calls actually booked on
   // the promo dates — re-derive it from the selected slot (not just "is the
@@ -94,12 +104,13 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
         if (cancelled) return;
         const fetchedSlots = data.slots || [];
         setSlots(fetchedSlots);
+        setBookedSlots(data.bookedSlots || []);
         setIsFixed(Boolean(data.fixed));
         // Fixed sessions (e.g. the webinar) have exactly one possible slot —
         // no picker needed, just book it.
         if (data.fixed && fetchedSlots.length === 1) setSelectedSlot(fetchedSlots[0]);
       })
-      .catch(() => { if (!cancelled) setSlots([]); })
+      .catch(() => { if (!cancelled) { setSlots([]); setBookedSlots([]); } })
       .finally(() => { if (!cancelled) setSlotsLoading(false); });
     return () => { cancelled = true; };
   }, [selectedDate, sessionId]);
@@ -207,25 +218,31 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
                 <div style={{ fontSize: '13px', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '10px' }}>PICK A TIME (IST)</div>
                 {slotsLoading ? (
                   <div style={{ fontSize: '14px', color: 'var(--text-muted)', padding: '20px 0' }}>Loading available times…</div>
-                ) : slots.length === 0 ? (
+                ) : displaySlots.length === 0 ? (
                   <div style={{ fontSize: '14px', color: 'var(--text-muted)', padding: '20px 0' }}>No slots available this day — try another date.</div>
                 ) : (
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(84px,1fr))', gap: '8px', marginBottom: '22px' }}>
-                    {slots.map((iso) => {
-                      const isSelected = selectedSlot === iso;
+                    {displaySlots.map(({ time, booked }) => {
+                      const isSelected = selectedSlot === time;
                       return (
                         <button
-                          key={iso}
+                          key={time}
                           type="button"
-                          onClick={() => setSelectedSlot(iso)}
+                          disabled={booked}
+                          onClick={() => setSelectedSlot(time)}
+                          title={booked ? 'Already booked' : undefined}
                           style={{
-                            padding: '10px 8px', borderRadius: '8px', fontSize: '13.5px', fontWeight: 600, cursor: 'pointer',
+                            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px',
+                            padding: '10px 8px', borderRadius: '8px', fontSize: '13.5px', fontWeight: 600, cursor: booked ? 'not-allowed' : 'pointer',
                             border: isSelected ? '1px solid transparent' : '1px solid rgba(var(--border-rgb),0.16)',
-                            background: isSelected ? 'var(--kore-gradient)' : 'transparent',
-                            color: isSelected ? '#FFFFFF' : 'var(--text)',
+                            background: isSelected ? 'var(--kore-gradient)' : booked ? 'rgba(var(--border-rgb),0.06)' : 'transparent',
+                            color: isSelected ? '#FFFFFF' : booked ? 'var(--text-faint)' : 'var(--text)',
+                            opacity: booked ? 0.6 : 1,
+                            textDecoration: booked ? 'line-through' : 'none',
                           }}
                         >
-                          {new Date(iso).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+                          {new Date(time).toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+                          {booked && <span style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.04em', textDecoration: 'none' }}>BOOKED</span>}
                         </button>
                       );
                     })}

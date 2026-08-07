@@ -1,4 +1,4 @@
-import { computeAvailableSlots } from './_lib/slots.js';
+import { computeSlotsDetailed } from './_lib/slots.js';
 import { SESSIONS } from './_lib/config.js';
 
 export default async function handler(req, res) {
@@ -9,10 +9,14 @@ export default async function handler(req, res) {
   if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) return res.status(400).json({ error: 'Invalid or missing date (expected YYYY-MM-DD)' });
 
   try {
-    const slots = await computeAvailableSlots(sessionId, date);
+    const detailed = await computeSlotsDetailed(sessionId, date);
+    // `slots` stays available-only for back-compat; `bookedSlots` lets the
+    // frontend show already-taken times instead of just hiding them.
+    const slots = detailed.filter((s) => !s.booked).map((s) => s.time);
+    const bookedSlots = detailed.filter((s) => s.booked).map((s) => s.time);
     // Tells the frontend to skip the day/time picker and just show the one
     // slot as read-only (see SESSIONS[sessionId].fixedStart in config.js).
-    res.status(200).json({ slots, fixed: Boolean(SESSIONS[sessionId].fixedStart) });
+    res.status(200).json({ slots, bookedSlots, fixed: Boolean(SESSIONS[sessionId].fixedStart) });
   } catch (err) {
     console.error('availability error', err);
     res.status(500).json({ error: 'Failed to compute availability' });
