@@ -146,6 +146,10 @@ export const SESSIONS = [
     // (there's only ever one slot) instead of showing a confusing "no slots
     // on this day" flash while it works that out itself.
     eventDate: 'Saturday, 8 August 2026', eventTime: '5:00 – 6:00 PM IST', fixedStart: '2026-08-08T17:00:00+05:30',
+    // Takes the webinar off sale on the frontend — must be kept in sync with
+    // SESSIONS.webinar.soldOut in api/_lib/config.js, which is what actually
+    // blocks the booking API. Flip both back to reopen booking.
+    soldOut: true,
     details: {
       format: '60-minute live session, listen-only',
       whoFor: 'People who want the bigger picture of how hiring actually works in sport, beyond the entry-level playbook',

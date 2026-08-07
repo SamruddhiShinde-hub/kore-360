@@ -74,6 +74,7 @@ function generateDaySlots(args) {
 // Returns an array of ISO start-time strings available for the given session on the given date.
 export async function computeAvailableSlots(sessionId, dateStr) {
   const session = getSession(sessionId);
+  if (session.soldOut) return [];
 
   if (session.fixedStart) {
     // Shared group session (e.g. the webinar) — always the same single slot,

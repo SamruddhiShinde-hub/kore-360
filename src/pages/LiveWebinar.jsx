@@ -158,29 +158,38 @@ export default function LiveWebinar() {
                 <span style={{ fontWeight: 700, fontSize: '14.5px' }}>{WEBINAR.price}</span>
               </div>
             </div>
-            <div
-              className="limited-seats-badge"
-              role="button"
-              tabIndex={0}
-              onClick={() => { if (window.matchMedia('(max-width: 860px)').matches) setBooking(true); }}
-              onKeyDown={(e) => {
-                if ((e.key === 'Enter' || e.key === ' ') && window.matchMedia('(max-width: 860px)').matches) {
-                  e.preventDefault();
-                  setBooking(true);
-                }
-              }}
-              style={{ background: 'rgba(var(--border-rgb),0.06)', borderRadius: '8px', padding: '10px 14px', fontSize: '13.5px', fontWeight: 600, color: 'var(--text-muted)', textAlign: 'center' }}
-            >
-              Limited seats · Session 02
-            </div>
+            {WEBINAR.soldOut ? (
+              <div
+                style={{ background: 'rgba(var(--border-rgb),0.06)', borderRadius: '8px', padding: '10px 14px', fontSize: '13.5px', fontWeight: 700, color: 'var(--text-muted)', textAlign: 'center' }}
+              >
+                Sold out — all seats taken
+              </div>
+            ) : (
+              <div
+                className="limited-seats-badge"
+                role="button"
+                tabIndex={0}
+                onClick={() => { if (window.matchMedia('(max-width: 860px)').matches) setBooking(true); }}
+                onKeyDown={(e) => {
+                  if ((e.key === 'Enter' || e.key === ' ') && window.matchMedia('(max-width: 860px)').matches) {
+                    e.preventDefault();
+                    setBooking(true);
+                  }
+                }}
+                style={{ background: 'rgba(var(--border-rgb),0.06)', borderRadius: '8px', padding: '10px 14px', fontSize: '13.5px', fontWeight: 600, color: 'var(--text-muted)', textAlign: 'center' }}
+              >
+                Limited seats · Session 02
+              </div>
+            )}
             <div className="sticky-cta-mobile" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <button
                 type="button"
+                disabled={WEBINAR.soldOut}
                 onClick={() => setBooking(true)}
                 className="btn-accent"
-                style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 22px', borderRadius: '8px', cursor: 'pointer' }}
+                style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: WEBINAR.soldOut ? 'var(--text-faint)' : 'var(--kore-gradient)', border: 'none', padding: '14px 22px', borderRadius: '8px', cursor: WEBINAR.soldOut ? 'default' : 'pointer', opacity: WEBINAR.soldOut ? 0.7 : 1 }}
               >
-                {`${WEBINAR.cta} — ${WEBINAR.price}`}
+                {WEBINAR.soldOut ? 'Sold Out' : `${WEBINAR.cta} — ${WEBINAR.price}`}
               </button>
             </div>
           </div>

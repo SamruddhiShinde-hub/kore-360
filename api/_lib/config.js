@@ -8,7 +8,10 @@ export const SESSIONS = {
   // every buyer shares the same time slot and Meet room, though each gets
   // their own individual Calendar event pointing at it (see
   // ensureWebinarRoom/createAttendeeEvent in calendar.js).
-  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-08-08T17:00:00+05:30' },
+  // soldOut: true takes the webinar off sale entirely — computeAvailableSlots
+  // and create-hold both refuse it, regardless of what the frontend shows.
+  // Flip back to false (or drop the field) to reopen booking.
+  webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-08-08T17:00:00+05:30', soldOut: true },
   qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 49900 },
   clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 149900 },
   // No slot/Calendar component at all — a straight digital-product purchase

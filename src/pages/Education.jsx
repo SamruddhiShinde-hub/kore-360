@@ -55,7 +55,15 @@ export default function Education() {
                       <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '9px', fontWeight: 800, padding: '3px 7px', borderRadius: '999px', whiteSpace: 'nowrap' }}>50% OFF</span>
                     )}
                   </div>
-                  {DEDICATED_PAGES[s.sessionId] ? (
+                  {s.soldOut && DEDICATED_PAGES[s.sessionId] ? (
+                    <Link
+                      to={DEDICATED_PAGES[s.sessionId]}
+                      className="education-card-cta"
+                      style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '13px', fontWeight: 700, color: 'var(--text-faint)', background: 'rgba(var(--border-rgb),0.08)', padding: '9px 14px', borderRadius: '7px', whiteSpace: 'nowrap' }}
+                    >
+                      Sold Out
+                    </Link>
+                  ) : DEDICATED_PAGES[s.sessionId] ? (
                     <Link
                       to={DEDICATED_PAGES[s.sessionId]}
                       className="btn-tertiary education-card-cta"

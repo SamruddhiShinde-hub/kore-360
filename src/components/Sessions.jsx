@@ -50,7 +50,15 @@ export default function Sessions() {
                   <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '11px', fontWeight: 800, letterSpacing: '0.03em', padding: '4px 9px', borderRadius: '999px' }}>50% OFF</span>
                 )}
               </div>
-              {DEDICATED_PAGES[s.sessionId] ? (
+              {s.soldOut && DEDICATED_PAGES[s.sessionId] ? (
+                <Link
+                  to={DEDICATED_PAGES[s.sessionId]}
+                  className="btn-tertiary"
+                  style={{ marginTop: '16px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '15px', fontWeight: 700, color: 'var(--text-faint)', background: 'rgba(var(--border-rgb),0.08)', padding: '13px 18px', borderRadius: '8px' }}
+                >
+                  Sold Out
+                </Link>
+              ) : DEDICATED_PAGES[s.sessionId] ? (
                 <Link
                   to={DEDICATED_PAGES[s.sessionId]}
                   className="btn-tertiary"
