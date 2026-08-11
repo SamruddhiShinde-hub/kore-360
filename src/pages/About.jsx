@@ -62,7 +62,8 @@ export default function About() {
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '80px 32px' }}>
           <Reveal style={{ background: 'rgba(var(--border-rgb),0.035)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '16px', padding: '56px 40px', textAlign: 'center' }}>
             <p style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 1.1, fontSize: 'clamp(26px,3.6vw,42px)', margin: 0, maxWidth: '760px', marginLeft: 'auto', marginRight: 'auto' }}>
-              We're not an agency.{' '}
+              We're not an agency.
+              <br />
               <span style={{ backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' }}>
                 We're a home for everyone who lives the game.
               </span>
