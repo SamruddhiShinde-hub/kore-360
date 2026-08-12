@@ -46,6 +46,30 @@ export const CLARITY_FIXED_HOURS = [9, 11, 15, 19, 21]; // 9am, 11am, 3pm, 7pm, 
 // unaffected (it's a single fixedStart slot, not this rolling grid).
 export const BLOCKED_DATES = ['2026-08-03'];
 
+// Manually block off specific IST hours on specific dates for the Clarity
+// Call / Q&A grid, on top of whatever the live Calendar/holds already block —
+// for calls Krish booked through other platforms that never touch this
+// Calendar. Keys are IST calendar dates, values are hours-of-day (24h,
+// matching CLARITY_FIXED_HOURS) to mark as booked. 2026-08-15 is fully booked
+// out; the rest have a partial mix.
+export const MANUAL_BOOKED_HOURS = {
+  '2026-08-12': [19],
+  '2026-08-13': [9, 21],
+  '2026-08-14': [11],
+  '2026-08-15': [9, 11, 15, 19, 21],
+  '2026-08-16': [15, 19],
+  '2026-08-17': [9],
+  '2026-08-18': [11, 21],
+  '2026-08-19': [19],
+  '2026-08-20': [9, 15],
+  '2026-08-21': [21],
+  '2026-08-22': [9, 11, 19],
+  '2026-08-23': [15],
+  '2026-08-24': [11, 21],
+  '2026-08-25': [9, 19],
+  '2026-08-26': [15, 21],
+};
+
 export const HOLD_TTL_MINUTES = 15;
 
 export const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;

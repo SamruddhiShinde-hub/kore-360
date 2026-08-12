@@ -1,4 +1,4 @@
-import { AVAILABILITY, BLOCKED_DATES, CLARITY_FIXED_HOURS, HOLD_TTL_MINUTES, getSession, getSlotStepMinutes } from './config.js';
+import { AVAILABILITY, BLOCKED_DATES, CLARITY_FIXED_HOURS, HOLD_TTL_MINUTES, MANUAL_BOOKED_HOURS, getSession, getSlotStepMinutes } from './config.js';
 import { getBusyIntervals } from './calendar.js';
 import { getActiveHolds } from './sheet.js';
 
@@ -26,6 +26,11 @@ function isHoldExpired(hold) {
 // UTC+5:30) is what makes getUTCDay() actually match dateStr's real weekday.
 function dayOfWeek(dateStr) {
   return new Date(`${dateStr}T12:00:00Z`).getUTCDay();
+}
+
+function istHour(ms) {
+  const hourStr = new Date(ms).toLocaleString('en-US', { hour: 'numeric', hour12: false, timeZone: 'Asia/Kolkata' });
+  return parseInt(hourStr, 10) % 24;
 }
 
 // Shared by both the single-day and range computations below, once busy/hold
@@ -58,8 +63,9 @@ function generateDaySlotsDetailed({ dateStr, sessionId, session, busy, activeHol
 
     const blockedByCalendar = busy.some((b) => overlaps(start, end, new Date(b.start).getTime(), new Date(b.end).getTime()));
     const blockedByHold = !blockedByCalendar && activeHolds.some((h) => overlaps(start, end, new Date(h.slotStart).getTime(), new Date(h.slotEnd).getTime()));
+    const blockedManually = (MANUAL_BOOKED_HOURS[dateStr] || []).includes(istHour(start));
 
-    slots.push({ time: new Date(start).toISOString(), booked: blockedByCalendar || blockedByHold });
+    slots.push({ time: new Date(start).toISOString(), booked: blockedByCalendar || blockedByHold || blockedManually });
   }
   return slots;
 }
