@@ -132,7 +132,9 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
               const date = new Date(`${d.date}T00:00:00+05:30`);
               const isSelected = d.date === selectedDate;
               const hasSlots = d.slots.length > 0;
-              const hasAnySlots = hasSlots || (d.bookedSlots?.length || 0) > 0;
+              const hasBookedSlots = (d.bookedSlots?.length || 0) > 0;
+              const hasAnySlots = hasSlots || hasBookedSlots;
+              const fullyBooked = !hasSlots && hasBookedSlots;
               const showPromoTag = sessionId === 'clarity' && hasSlots && CLARITY_PROMO_DATES.includes(d.date);
               return (
                 <button
@@ -151,7 +153,10 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
                   }}
                 >
                   <span style={{ fontSize: '10px', letterSpacing: '0.04em' }}>{date.toLocaleDateString('en-IN', { weekday: 'short', timeZone: 'Asia/Kolkata' })}</span>
-                  <span style={{ fontSize: '14px', fontWeight: 800, whiteSpace: 'nowrap' }}>{date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' })}</span>
+                  <span style={{ fontSize: '14px', fontWeight: 800, whiteSpace: 'nowrap', textDecoration: fullyBooked ? 'line-through' : 'none' }}>{date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', timeZone: 'Asia/Kolkata' })}</span>
+                  {fullyBooked && (
+                    <span style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.04em', whiteSpace: 'nowrap', padding: '1px 6px', borderRadius: '999px', background: isSelected ? 'rgba(255,255,255,0.28)' : 'rgba(var(--border-rgb),0.1)', color: isSelected ? '#FFFFFF' : 'var(--text-faint)' }}>BOOKED</span>
+                  )}
                   {showPromoTag && (
                     <span style={{ fontSize: '9px', fontWeight: 800, whiteSpace: 'nowrap', padding: '1px 6px', borderRadius: '999px', background: isSelected ? 'rgba(255,255,255,0.28)' : 'var(--kore-gradient)', color: '#FFFFFF' }}>50% OFF</span>
                   )}
