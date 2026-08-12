@@ -157,6 +157,11 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
                   {fullyBooked && (
                     <span style={{ fontSize: '9px', fontWeight: 800, letterSpacing: '0.04em', whiteSpace: 'nowrap', padding: '1px 6px', borderRadius: '999px', background: isSelected ? 'rgba(255,255,255,0.28)' : 'rgba(var(--border-rgb),0.1)', color: isSelected ? '#FFFFFF' : 'var(--text-faint)' }}>BOOKED</span>
                   )}
+                  {hasSlots && (
+                    <span style={{ fontSize: '9px', fontWeight: 700, whiteSpace: 'nowrap', color: isSelected ? 'rgba(255,255,255,0.85)' : 'var(--text-muted)' }}>
+                      {d.slots.length} slot{d.slots.length === 1 ? '' : 's'} left
+                    </span>
+                  )}
                   {showPromoTag && (
                     <span style={{ fontSize: '9px', fontWeight: 800, whiteSpace: 'nowrap', padding: '1px 6px', borderRadius: '999px', background: isSelected ? 'rgba(255,255,255,0.28)' : 'var(--kore-gradient)', color: '#FFFFFF' }}>50% OFF</span>
                   )}
