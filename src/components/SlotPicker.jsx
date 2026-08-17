@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { CLARITY_PROMO_DATES } from '../data.js';
 
 const DAYS_WINDOW = 21;
 const VISIBLE_DAYS = 5;
@@ -135,7 +134,7 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
               const hasBookedSlots = (d.bookedSlots?.length || 0) > 0;
               const hasAnySlots = hasSlots || hasBookedSlots;
               const fullyBooked = !hasSlots && hasBookedSlots;
-              const showPromoTag = sessionId === 'clarity' && hasSlots && CLARITY_PROMO_DATES.includes(d.date);
+              const showPromoTag = sessionId === 'clarity' && hasSlots;
               return (
                 <button
                   key={d.date}
