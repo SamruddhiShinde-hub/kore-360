@@ -94,7 +94,7 @@ export function getSession(sessionId) {
 // ₹1,499 (149900 paise) for calls actually booked on these IST calendar
 // dates. Must match CLARITY_PROMO_DATES/prices in src/data.js — that file
 // only controls the display price, this is what Razorpay actually charges.
-const CLARITY_PROMO_DATES = ['2026-08-05', '2026-08-06', '2026-08-07'];
+const CLARITY_PROMO_DATES = ['2026-08-18', '2026-08-19', '2026-08-20'];
 const CLARITY_PROMO_AMOUNT_PAISE = 99900;
 
 // Resolves the amount to actually charge for a session, accounting for the
