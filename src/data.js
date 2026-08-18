@@ -42,7 +42,7 @@ export const ACCENT = '#F05123';
 // CLARITY_PROMO_AMOUNT_PAISE in api/_lib/config.js, which is what Razorpay
 // actually charges; the values here are display-only (see the note on
 // SESSIONS below re: client vs API config).
-export const CLARITY_PROMO_DATES = ['2026-08-18', '2026-08-19', '2026-08-20'];
+export const CLARITY_PROMO_DATES = ['2026-08-18', '2026-08-19', '2026-08-20', '2026-08-21'];
 // The marketing tag/strikethrough (site-wide cards, before a specific call
 // date is picked) runs a little wider than the booking dates themselves —
 // live through the last promo day so the offer is visible in the run-up to
@@ -51,7 +51,7 @@ export const CLARITY_PROMO_DATES = ['2026-08-18', '2026-08-19', '2026-08-20'];
 // against the real CLARITY_PROMO_DATES above and falls back to the regular
 // price for any day outside it.
 const CLARITY_PROMO_DISPLAY_FIRST_DATE = '2026-08-18';
-const CLARITY_PROMO_DISPLAY_LAST_DATE = '2026-08-20';
+const CLARITY_PROMO_DISPLAY_LAST_DATE = '2026-08-21';
 const CLARITY_PROMO_PRICE = '₹999';
 const CLARITY_ORIGINAL_PRICE = '₹1,999';
 
