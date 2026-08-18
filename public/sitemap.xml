@@ -16,4 +16,13 @@
     <loc>https://kore360.in/talent</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://kore360.in/blog</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/blog/what-happens-on-match-day</loc>
+    <lastmod>2026-08-18</lastmod>
+    <priority>0.7</priority>
+  </url>
 </urlset>

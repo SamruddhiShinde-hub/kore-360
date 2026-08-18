@@ -18,6 +18,8 @@ const LiveWebinar = lazy(() => import('./pages/LiveWebinar.jsx'));
 const ClarityCall = lazy(() => import('./pages/ClarityCall.jsx'));
 const Ebook = lazy(() => import('./pages/Ebook.jsx'));
 const QnaCall = lazy(() => import('./pages/QnaCall.jsx'));
+const Blog = lazy(() => import('./pages/Blog.jsx'));
+const WhatHappensOnMatchDay = lazy(() => import('./pages/blog/WhatHappensOnMatchDay.jsx'));
 
 export default function App() {
   useEffect(() => {
@@ -42,6 +44,8 @@ export default function App() {
             <Route path="/education/clarity-call" element={<ClarityCall />} />
             <Route path="/education/ebook" element={<Ebook />} />
             <Route path="/education/qa-call" element={<QnaCall />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/what-happens-on-match-day" element={<WhatHappensOnMatchDay />} />
             {/* Old top-level paths — keep working for anyone with an existing bookmark/shared link. */}
             <Route path="/live-webinar" element={<Navigate to="/education/live-webinar" replace />} />
             <Route path="/clarity-call" element={<Navigate to="/education/clarity-call" replace />} />

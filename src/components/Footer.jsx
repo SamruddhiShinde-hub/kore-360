@@ -10,6 +10,7 @@ const exploreLinks = [
   { label: 'Education', to: '/education' },
   { label: 'Management', to: '/management' },
   { label: 'Talent Acquisition', to: '/talent' },
+  { label: 'Blog', to: '/blog' },
 ];
 
 const connectLinks = [
