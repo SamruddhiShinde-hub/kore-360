@@ -13,9 +13,7 @@ export const SESSIONS = {
   // Flip back to false (or drop the field) to reopen booking.
   webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-08-08T17:00:00+05:30', soldOut: true },
   qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 49900 },
-  // ₹999 standing price (down from the old ₹1,499 list price) — see
-  // src/data.js's CLARITY_PROMO_PRICE, which must match.
-  clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 99900 },
+  clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 199900 },
   // No slot/Calendar component at all — a straight digital-product purchase
   // fulfilled by emailing the PDF (see razorpay-webhook.js + gmail.js).
   ebook: { name: 'Behind the Field (E-book)', amountPaise: 9900 },
@@ -92,11 +90,23 @@ export function getSession(sessionId) {
   return session;
 }
 
-// Resolves the amount to actually charge for a session. `slotStart` is the
-// ISO datetime of the booked call; unused here but kept so callers don't
-// need to change if a future session ever needs date-based pricing.
-export function getAmountPaise(sessionId, _slotStart) {
-  return getSession(sessionId).amountPaise;
+// Clarity Call flash price: ₹999 (99900 paise) instead of the full
+// ₹1,999 (199900 paise) for calls actually booked on these IST calendar
+// dates. Must match CLARITY_PROMO_DATES/prices in src/data.js — that file
+// only controls the display price, this is what Razorpay actually charges.
+const CLARITY_PROMO_DATES = ['2026-08-18', '2026-08-19', '2026-08-20'];
+const CLARITY_PROMO_AMOUNT_PAISE = 99900;
+
+// Resolves the amount to actually charge for a session, accounting for the
+// Clarity Call's date-limited flash price. `slotStart` is the ISO datetime
+// of the booked call; irrelevant (and safely ignored) for other sessions.
+export function getAmountPaise(sessionId, slotStart) {
+  const session = getSession(sessionId);
+  if (sessionId === 'clarity' && slotStart) {
+    const dateKey = new Date(slotStart).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+    if (CLARITY_PROMO_DATES.includes(dateKey)) return CLARITY_PROMO_AMOUNT_PAISE;
+  }
+  return session.amountPaise;
 }
 
 // The Q&A call is shorter than the Clarity Call (10 min vs 30), but the two

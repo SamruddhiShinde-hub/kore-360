@@ -36,23 +36,49 @@ import actorsCricketBashLogo from './assets/brand6.jpg';
 // Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
 export const ACCENT = '#F05123';
 
-// ---- Clarity Call pricing ----
-// ₹999 (from ₹1,999) is now the standing price for every Clarity Call
-// booking, any date — no promo window. Must match CLARITY_PROMO_AMOUNT_PAISE
-// in api/_lib/config.js, which is what Razorpay actually charges; the value
-// here is display-only (see the note on SESSIONS below re: client vs API
-// config).
+// ---- Clarity Call flash pricing ----
+// The amount actually charged is only ₹999 (from the full ₹1,999) for calls
+// booked on these IST calendar dates — must match CLARITY_PROMO_DATES/
+// CLARITY_PROMO_AMOUNT_PAISE in api/_lib/config.js, which is what Razorpay
+// actually charges; the values here are display-only (see the note on
+// SESSIONS below re: client vs API config).
+export const CLARITY_PROMO_DATES = ['2026-08-18', '2026-08-19', '2026-08-20'];
+// The marketing tag/strikethrough (site-wide cards, before a specific call
+// date is picked) runs a little wider than the booking dates themselves —
+// live through the last promo day so the offer is visible in the run-up to
+// and during the window. It's a teaser, not a promise for *every* date: once
+// a user actually picks a call date, getClarityPricing(dateIso) re-checks
+// against the real CLARITY_PROMO_DATES above and falls back to the regular
+// price for any day outside it.
+const CLARITY_PROMO_DISPLAY_FIRST_DATE = '2026-08-18';
+const CLARITY_PROMO_DISPLAY_LAST_DATE = '2026-08-20';
 const CLARITY_PROMO_PRICE = '₹999';
 const CLARITY_ORIGINAL_PRICE = '₹1,999';
 
-// Effective price for a Clarity Call. Flat ₹999 regardless of date; the
-// `dateIso` param is kept so callers (e.g. the booking modal re-checking
-// against a selected slot) don't need to change.
-export function getClarityPricing(_dateIso) {
+function istDateKey(date) {
+  return date.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+}
+
+function isClarityBookingPromoDate(date) {
+  return CLARITY_PROMO_DATES.includes(istDateKey(date));
+}
+
+function isClarityPromoDisplayWindow(date) {
+  const key = istDateKey(date);
+  return key >= CLARITY_PROMO_DISPLAY_FIRST_DATE && key <= CLARITY_PROMO_DISPLAY_LAST_DATE;
+}
+
+// Effective price for a Clarity Call. With no date given, this is the
+// site-wide teaser price (governed by the wider display window above). With
+// an actual booked-call ISO datetime, it's the real, strictly-dated price
+// that will be charged — used to re-check the price shown once a user picks
+// a specific slot in the booking modal.
+export function getClarityPricing(dateIso) {
+  const promo = dateIso ? isClarityBookingPromoDate(new Date(dateIso)) : isClarityPromoDisplayWindow(new Date());
   return {
-    price: CLARITY_PROMO_PRICE,
+    price: promo ? CLARITY_PROMO_PRICE : CLARITY_ORIGINAL_PRICE,
     originalPrice: CLARITY_ORIGINAL_PRICE,
-    promoActive: true,
+    promoActive: promo,
   };
 }
 

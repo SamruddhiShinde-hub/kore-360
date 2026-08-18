@@ -46,6 +46,10 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
     return [...available, ...booked].sort((a, b) => new Date(a.time) - new Date(b.time));
   }, [slots, bookedSlots]);
 
+  // The Clarity Call's flash price only applies to calls actually booked on
+  // the promo dates — re-derive it from the selected slot (not just "is the
+  // promo live today") so picking a day outside the window falls back to
+  // the regular price, matching what Razorpay will actually charge.
   const clarityPricing = sessionId === 'clarity' ? getClarityPricing(selectedSlot) : null;
   const displayPrice = clarityPricing ? clarityPricing.price : price;
 
