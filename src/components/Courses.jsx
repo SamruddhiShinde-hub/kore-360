@@ -19,7 +19,7 @@ export default function Courses() {
   return (
     <section id="courses" style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)', background: 'var(--surface)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '92px 32px' }}>
-        <Eyebrow color="var(--kore-magenta-text)">02 — COURSES</Eyebrow>
+        <Eyebrow color="var(--kore-magenta-text)">02 COURSES</Eyebrow>
         <Reveal as="h2" style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(36px,5vw,64px)', margin: '0 0 14px' }}>
           Go deeper with a course
         </Reveal>

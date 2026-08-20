@@ -29,7 +29,7 @@ export default function Careers() {
   return (
     <section id="careers" style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '92px 32px' }}>
-        <Eyebrow color="var(--kore-magenta-text)">03 — CAREERS</Eyebrow>
+        <Eyebrow color="var(--kore-magenta-text)">03 CAREERS</Eyebrow>
         <h2 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.95, fontSize: 'clamp(36px,5vw,64px)', margin: '0 0 14px' }}>
           Get hired in sports
         </h2>

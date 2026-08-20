@@ -8,7 +8,7 @@ export default function Events() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '92px 32px' }}>
         <div className="grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 0.9fr', gap: '56px', alignItems: 'center' }}>
           <Reveal>
-            <Eyebrow color="var(--kore-magenta-text)">04 — EVENTS</Eyebrow>
+            <Eyebrow color="var(--kore-magenta-text)">04 EVENTS</Eyebrow>
             <h2 style={{ fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-0.02em', lineHeight: 0.92, fontSize: 'clamp(36px,5.2vw,68px)', margin: '0 0 18px' }}>Connect with KORE 360 for an event</h2>
             <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '520px', margin: '0 0 28px', textAlign: 'justify' }}>Keynotes, panels, campus sessions and brand appearances on careers and the business of sport. Tell us the date and we'll handle the rest.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '32px' }}>
