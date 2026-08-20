@@ -169,7 +169,7 @@ a { text-decoration: none; }
 }
 @media (max-width: 600px) {
   .brand-marquee-track { gap: 14px; animation-duration: 22s; }
-  .brand-tile { width: 130px !important; height: 76px !important; padding: 10px !important; }
+  .brand-tile { width: 165px !important; height: 96px !important; padding: 8px !important; }
 }
 
 /* ---- instagram grid hover zoom ---- */
