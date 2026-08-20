@@ -1,6 +1,7 @@
-import { EVENT_TYPES, LINKS, IMAGES } from '../data.js';
+import { EVENT_TYPES, IMAGES } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
+import { openConnectPopup } from './ConnectPopup.jsx';
 
 export default function Events() {
   return (
@@ -19,7 +20,7 @@ export default function Events() {
                 </div>
               ))}
             </div>
-            <a href={LINKS.event} target="_blank" rel="noreferrer" className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}>Connect for an event →</a>
+            <button type="button" onClick={openConnectPopup} className="btn-accent" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>Connect for an event →</button>
           </Reveal>
           <Reveal delay={1} style={{ position: 'relative', aspectRatio: '1/1', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(var(--border-rgb),0.10)' }}>
             <img src={IMAGES.events} alt="Cricket match" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
