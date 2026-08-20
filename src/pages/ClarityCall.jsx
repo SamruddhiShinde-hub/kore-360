@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SESSIONS, IMAGES, LINKS, getClarityPricing, TESTIMONIALS } from '../data.js';
+import { SESSIONS, IMAGES, LINKS, getClarityPricing, TESTIMONIALS, WRITTEN_TESTIMONIALS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
@@ -177,6 +177,16 @@ export default function ClarityCall() {
                   </span>
                   <div style={{ position: 'absolute', left: '10px', right: '10px', bottom: '10px', color: '#FFFFFF', fontSize: '12.5px', fontWeight: 800, lineHeight: 1.3, textAlign: 'left' }}>{t.caption}</div>
                 </button>
+              ))}
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '22px' }}>
+              {WRITTEN_TESTIMONIALS.map((t) => (
+                <div key={t.name} style={{ border: '1px solid rgba(var(--border-rgb),0.1)', borderRadius: '12px', padding: '16px 18px', background: 'rgba(var(--border-rgb),0.03)' }}>
+                  <p style={{ fontSize: '14px', lineHeight: 1.55, color: 'var(--text)', margin: '0 0 10px', textAlign: 'justify' }}>&ldquo;{t.quote}&rdquo;</p>
+                  <div style={{ fontSize: '13px', fontWeight: 800 }}>{t.name}</div>
+                  <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', marginTop: '2px' }}>{t.role}</div>
+                </div>
               ))}
             </div>
           </div>

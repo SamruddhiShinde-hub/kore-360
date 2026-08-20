@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { TESTIMONIALS } from '../data.js';
+import { TESTIMONIALS, WRITTEN_TESTIMONIALS } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
 import { track } from '../lib/analytics.js';
@@ -29,9 +29,15 @@ const arrowStyle = {
 export default function Testimonials() {
   const [active, setActive] = useState(null);
   const trackRef = useRef(null);
+  const writtenTrackRef = useRef(null);
 
   const scrollByPage = (dir) => {
     const el = trackRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.92, behavior: 'smooth' });
+  };
+  const scrollWrittenByPage = (dir) => {
+    const el = writtenTrackRef.current;
     if (!el) return;
     el.scrollBy({ left: dir * el.clientWidth * 0.92, behavior: 'smooth' });
   };
@@ -76,6 +82,30 @@ export default function Testimonials() {
           </div>
 
           <button type="button" onClick={() => scrollByPage(1)} aria-label="Next testimonials" className="testimonial-arrow" style={{ ...arrowStyle, right: 0 }}>
+            <ChevronIcon flip />
+          </button>
+        </div>
+
+        <Reveal as="h3" style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.01em', margin: '48px 0 24px' }}>
+          In their own words
+        </Reveal>
+
+        <div style={{ position: 'relative', padding: '0 46px' }}>
+          <button type="button" onClick={() => scrollWrittenByPage(-1)} aria-label="Previous reviews" className="testimonial-arrow" style={{ ...arrowStyle, left: 0 }}>
+            <ChevronIcon />
+          </button>
+
+          <div ref={writtenTrackRef} className="testimonial-track" style={{ display: 'flex', gap: '20px', overflowX: 'auto', scrollSnapType: 'x mandatory', scrollBehavior: 'smooth', padding: '24px 0 12px', margin: '-24px 0 -12px' }}>
+            {WRITTEN_TESTIMONIALS.map((t, i) => (
+              <Reveal key={t.name} delay={i % 4} className="testimonial-card card-hover" style={{ flex: '0 0 calc(25% - 15px)', scrollSnapAlign: 'start', background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.09)', borderRadius: '16px', padding: '22px' }}>
+                <p style={{ fontSize: '13.5px', lineHeight: 1.55, color: 'var(--text)', margin: '0 0 16px' }}>&ldquo;{t.quote}&rdquo;</p>
+                <div style={{ fontSize: '13px', fontWeight: 800 }}>{t.name}</div>
+                <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', marginTop: '2px' }}>{t.role}</div>
+              </Reveal>
+            ))}
+          </div>
+
+          <button type="button" onClick={() => scrollWrittenByPage(1)} aria-label="Next reviews" className="testimonial-arrow" style={{ ...arrowStyle, right: 0 }}>
             <ChevronIcon flip />
           </button>
         </div>

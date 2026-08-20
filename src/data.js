@@ -248,6 +248,21 @@ export const TESTIMONIALS = [
   { caption: 'The confidence to start taking action.', poster: testimonial5Poster, video: testimonial5Video },
 ];
 
+// Written reviews of the Clarity Call — shown on the homepage testimonials
+// section and on the Clarity Call page's Reviews & Ratings block.
+export const WRITTEN_TESTIMONIALS = [
+  { quote: "I came in unsure where to even begin, and Krish gave me exactly the clarity I needed from someone who's actually in the industry. We ran live mock segments and his feedback was spot on. It was a real eye-opener — now I know where to start.", name: 'Yash Asthana', role: 'Aspiring cricket presenter & ex-Railways U19 player' },
+  { quote: "The session was genuinely amazing. What we think the sports industry is, and what actually happens behind the scenes, are two completely different things. Krish broke it all down and gave me real guidance as a student who's passionate about the sport.", name: 'Vidisha Patel', role: 'Student-athlete (table tennis) exploring sports management' },
+  { quote: "I got such a clear understanding of how everything works behind the scenes. We enjoy cricket on our screens, but this call showed me the entire world of work happening behind it. Really valuable.", name: 'Charan Teja Vallabhaneni', role: 'Data analytics graduate moving into sports' },
+  { quote: "Krish completely changed my mindset. Before this, my classmates and I felt our course was a waste of time. After talking to him, I understood the real game is converting every opportunity you get. Genuinely helpful.", name: 'Shreyas Janorkar', role: 'Sports management student' },
+  { quote: "I loved it. Honestly, I feel free now. I came in with zero clarity between data and presenting, and left knowing exactly how to start building both.", name: 'Soni Kasar', role: 'Aspiring sports presenter & analyst' },
+  { quote: "I had a dream but no references and no idea where to begin — I was honestly a little afraid. After talking to Krish, I gained everything: what to do, which path to choose, and where to start. It was so helpful.", name: 'Jahanvi Rathod', role: 'Pharmacist turned aspiring cricket presenter' },
+  { quote: "Absolutely helpful. The guidance meant a lot and gave me a clear path forward. I'm grateful I can stay in touch and keep reaching out.", name: 'Krish Rohra', role: 'Finance graduate & former club cricketer' },
+  { quote: "It was amazing. So much information, so many doubts cleared, and a clear sense of which departments I can move into. I walked away knowing exactly where to start.", name: 'Anushka Gaikwad', role: 'Marketing professional transitioning into sports' },
+  { quote: "It was really great. You gave me some genuine insights, and exactly like your form promised — no average suggestions, straight to the point. I'm really grateful.", name: 'Harivamsi Samudrala', role: 'Cricketer & B.Com graduate switching careers into sports' },
+  { quote: "It was great. I understood so much more about sports management and all the different departments — exactly what I was looking for.", name: 'Abhishek Surve', role: 'Aspiring sports manager (found KORE 360 through Instagram)' },
+];
+
 // ---- FAQ ----
 export const FAQS = [
   { q: 'How do I know which session is right for me?', a: "Want a beginner-friendly starting point? Try the e-book, designed by Krish Lalwani. If you'd rather have something built around your specific background and situation, the 1:1 clarity call gives you a real plan and references, and you can always leave your resume with us." },
