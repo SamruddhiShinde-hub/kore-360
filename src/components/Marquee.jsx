@@ -77,7 +77,7 @@ export default function Marquee() {
           })}
         </div>
 
-        <div style={{ position: 'relative', maxWidth: '980px', margin: '0 auto' }}>
+        <div style={{ position: 'relative', maxWidth: '1080px', margin: '0 auto' }}>
           <button
             type="button"
             onClick={() => goTo((active - 1 + MARQUEE.length) % MARQUEE.length)}
@@ -93,12 +93,12 @@ export default function Marquee() {
             onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}
             onTransitionEnd={handleFadeTransitionEnd}
             style={{
-              display: 'grid', gridTemplateColumns: '420px 1fr', gap: '48px', alignItems: 'center', touchAction: 'pan-y',
+              display: 'grid', gridTemplateColumns: '540px 1fr', gap: '48px', alignItems: 'center', touchAction: 'pan-y',
               opacity: fadedOut ? 0 : 1, transform: fadedOut ? 'translateY(6px)' : 'none',
               transition: 'opacity .22s ease, transform .22s ease',
             }}
           >
-            <div style={{ borderRadius: '16px', overflow: 'hidden', aspectRatio: '4/3', maxWidth: '420px' }}>
+            <div style={{ borderRadius: '16px', overflow: 'hidden', aspectRatio: '4/3', maxWidth: '540px' }}>
               <img src={current.img} alt={current.label} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
             <div style={{ padding: '0 16px' }}>
@@ -119,15 +119,15 @@ export default function Marquee() {
         </div>
 
         {/* Pagination Dots */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '40px' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '2px', marginTop: '28px' }}>
           {MARQUEE.map((_, i) => (
             <button
               key={i}
               onClick={() => goTo(i)}
               aria-label={`Go to slide ${i + 1}`}
               style={{
-                width: '44px',
-                height: '44px',
+                width: '24px',
+                height: '24px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -138,8 +138,8 @@ export default function Marquee() {
               }}
             >
               <div style={{
-                width: '10px',
-                height: '10px',
+                width: '6px',
+                height: '6px',
                 borderRadius: '50%',
                 background: i === active ? 'var(--kore-gradient)' : 'var(--text-muted)',
                 opacity: i === active ? 1 : 0.3,
