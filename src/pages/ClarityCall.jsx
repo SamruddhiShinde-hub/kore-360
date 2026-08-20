@@ -180,9 +180,9 @@ export default function ClarityCall() {
               ))}
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginTop: '22px' }}>
+            <div style={{ display: 'flex', gap: '14px', overflowX: 'auto', paddingBottom: '6px', marginTop: '22px' }}>
               {WRITTEN_TESTIMONIALS.map((t) => (
-                <div key={t.name} style={{ border: '1px solid rgba(var(--border-rgb),0.1)', borderRadius: '12px', padding: '16px 18px', background: 'rgba(var(--border-rgb),0.03)' }}>
+                <div key={t.name} style={{ flex: '0 0 280px', border: '1px solid rgba(var(--border-rgb),0.1)', borderRadius: '12px', padding: '16px 18px', background: 'rgba(var(--border-rgb),0.03)' }}>
                   <p style={{ fontSize: '14px', lineHeight: 1.55, color: 'var(--text)', margin: '0 0 10px', textAlign: 'justify' }}>&ldquo;{t.quote}&rdquo;</p>
                   <div style={{ fontSize: '13px', fontWeight: 800 }}>{t.name}</div>
                   <div style={{ fontSize: '11.5px', color: 'var(--text-muted)', marginTop: '2px' }}>{t.role}</div>
