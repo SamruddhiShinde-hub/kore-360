@@ -91,20 +91,21 @@ export function getSession(sessionId) {
 }
 
 // Clarity Call flash price: ₹999 (99900 paise) instead of the full
-// ₹1,999 (199900 paise) for calls actually booked on these IST calendar
-// dates. Must match CLARITY_PROMO_DATES/prices in src/data.js — that file
-// only controls the display price, this is what Razorpay actually charges.
-const CLARITY_PROMO_DATES = ['2026-08-18', '2026-08-19', '2026-08-20', '2026-08-21'];
+// ₹1,999 (199900 paise) for calls actually booked on a Tuesday, Wednesday
+// or Thursday (IST) — a recurring weekly offer, not a one-off window. Must
+// match CLARITY_PROMO_WEEKDAYS/prices in src/data.js — that file only
+// controls the display price, this is what Razorpay actually charges.
+const CLARITY_PROMO_WEEKDAYS = ['Tue', 'Wed', 'Thu'];
 const CLARITY_PROMO_AMOUNT_PAISE = 99900;
 
 // Resolves the amount to actually charge for a session, accounting for the
-// Clarity Call's date-limited flash price. `slotStart` is the ISO datetime
+// Clarity Call's day-of-week flash price. `slotStart` is the ISO datetime
 // of the booked call; irrelevant (and safely ignored) for other sessions.
 export function getAmountPaise(sessionId, slotStart) {
   const session = getSession(sessionId);
   if (sessionId === 'clarity' && slotStart) {
-    const dateKey = new Date(slotStart).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
-    if (CLARITY_PROMO_DATES.includes(dateKey)) return CLARITY_PROMO_AMOUNT_PAISE;
+    const weekday = new Date(slotStart).toLocaleDateString('en-US', { weekday: 'short', timeZone: 'Asia/Kolkata' });
+    if (CLARITY_PROMO_WEEKDAYS.includes(weekday)) return CLARITY_PROMO_AMOUNT_PAISE;
   }
   return session.amountPaise;
 }

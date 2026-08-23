@@ -38,43 +38,37 @@ export const ACCENT = '#F05123';
 
 // ---- Clarity Call flash pricing ----
 // The amount actually charged is only ₹999 (from the full ₹1,999) for calls
-// booked on these IST calendar dates — must match CLARITY_PROMO_DATES/
+// booked on a Tuesday, Wednesday or Thursday (IST) — a recurring weekly
+// offer, not a one-off window. Must match CLARITY_PROMO_WEEKDAYS/
 // CLARITY_PROMO_AMOUNT_PAISE in api/_lib/config.js, which is what Razorpay
 // actually charges; the values here are display-only (see the note on
 // SESSIONS below re: client vs API config).
-export const CLARITY_PROMO_DATES = ['2026-08-18', '2026-08-19', '2026-08-20', '2026-08-21'];
-// The marketing tag/strikethrough (site-wide cards, before a specific call
-// date is picked) runs a little wider than the booking dates themselves —
-// live through the last promo day so the offer is visible in the run-up to
-// and during the window. It's a teaser, not a promise for *every* date: once
-// a user actually picks a call date, getClarityPricing(dateIso) re-checks
-// against the real CLARITY_PROMO_DATES above and falls back to the regular
-// price for any day outside it.
-const CLARITY_PROMO_DISPLAY_FIRST_DATE = '2026-08-18';
-const CLARITY_PROMO_DISPLAY_LAST_DATE = '2026-08-21';
+export const CLARITY_PROMO_WEEKDAYS = ['Tue', 'Wed', 'Thu'];
 const CLARITY_PROMO_PRICE = '₹999';
 const CLARITY_ORIGINAL_PRICE = '₹1,999';
 
-function istDateKey(date) {
-  return date.toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' });
+function istWeekday(date) {
+  return date.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'Asia/Kolkata' });
 }
 
-function isClarityBookingPromoDate(date) {
-  return CLARITY_PROMO_DATES.includes(istDateKey(date));
-}
-
-function isClarityPromoDisplayWindow(date) {
-  const key = istDateKey(date);
-  return key >= CLARITY_PROMO_DISPLAY_FIRST_DATE && key <= CLARITY_PROMO_DISPLAY_LAST_DATE;
+// Accepts either a full ISO datetime (an actual booked slot, e.g. from
+// BookingModal) or a plain YYYY-MM-DD calendar date (the day highlighted in
+// SlotPicker before a specific time is chosen) — both resolve to the same
+// IST weekday check. A plain date is anchored at noon IST so it can't drift
+// onto the neighbouring day when parsed.
+export function isClarityPromoDate(dateStrOrIso) {
+  const iso = /^\d{4}-\d{2}-\d{2}$/.test(dateStrOrIso) ? `${dateStrOrIso}T12:00:00+05:30` : dateStrOrIso;
+  return CLARITY_PROMO_WEEKDAYS.includes(istWeekday(new Date(iso)));
 }
 
 // Effective price for a Clarity Call. With no date given, this is the
-// site-wide teaser price (governed by the wider display window above). With
-// an actual booked-call ISO datetime, it's the real, strictly-dated price
-// that will be charged — used to re-check the price shown once a user picks
-// a specific slot in the booking modal.
+// site-wide teaser price — always the promo price, since the recurring
+// Tue/Wed/Thu offer means a discounted day is always on offer somewhere in
+// the booking window. With an actual booked-call date/datetime, it's the
+// real, day-specific price that will be charged — used to re-check the
+// price shown once a user picks a specific slot in the booking modal.
 export function getClarityPricing(dateIso) {
-  const promo = dateIso ? isClarityBookingPromoDate(new Date(dateIso)) : isClarityPromoDisplayWindow(new Date());
+  const promo = dateIso ? isClarityPromoDate(dateIso) : true;
   return {
     price: promo ? CLARITY_PROMO_PRICE : CLARITY_ORIGINAL_PRICE,
     originalPrice: CLARITY_ORIGINAL_PRICE,
