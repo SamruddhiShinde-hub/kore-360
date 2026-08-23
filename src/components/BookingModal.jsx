@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { track, priceToNumber } from '../lib/analytics.js';
-import { getClarityPricing } from '../data.js';
+import { SESSIONS, getClarityPricing, discountPercent } from '../data.js';
 
 const DAYS_AHEAD = 21;
 
@@ -52,6 +52,13 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
   // the regular price, matching what Razorpay will actually charge.
   const clarityPricing = sessionId === 'clarity' ? getClarityPricing(selectedSlot) : null;
   const displayPrice = clarityPricing ? clarityPricing.price : price;
+
+  // Non-clarity sessions (Q&A, e-book) carry a static promo on their SESSIONS
+  // entry instead of clarity's date-dependent one — fall back to that so the
+  // modal shows the same strikethrough/badge as the page it was opened from.
+  const staticSession = !clarityPricing ? SESSIONS.find((s) => s.sessionId === sessionId) : null;
+  const promoActive = clarityPricing ? clarityPricing.promoActive : Boolean(staticSession?.promoActive);
+  const originalPrice = clarityPricing ? clarityPricing.originalPrice : staticSession?.originalPrice;
 
   useEffect(() => {
     track('begin_checkout', {
@@ -175,12 +182,12 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
 
         <div style={{ fontWeight: 900, fontSize: '22px', letterSpacing: '-0.01em', marginBottom: '4px' }}>{sessionName}</div>
         <div style={{ fontSize: '14.5px', color: 'var(--text-muted)', marginBottom: '22px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-          {clarityPricing?.promoActive && (
-            <span style={{ textDecoration: 'line-through', color: 'var(--text-faint)' }}>{clarityPricing.originalPrice}</span>
+          {promoActive && (
+            <span style={{ textDecoration: 'line-through', color: 'var(--text-faint)' }}>{originalPrice}</span>
           )}
           <span>{displayPrice}</span>
-          {clarityPricing?.promoActive && (
-            <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px' }}>50% OFF</span>
+          {promoActive && (
+            <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '10.5px', fontWeight: 800, padding: '3px 8px', borderRadius: '999px' }}>{discountPercent(displayPrice, originalPrice)}% OFF</span>
           )}
         </div>
 

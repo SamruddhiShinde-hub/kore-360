@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SESSIONS } from '../data.js';
+import { SESSIONS, discountPercent } from '../data.js';
 import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
 import BookingModal from './BookingModal.jsx';
@@ -47,7 +47,7 @@ export default function Sessions() {
                   <div style={{ fontWeight: 900, fontSize: '30px', color: 'var(--text)' }}>{s.price}</div>
                 </div>
                 {s.promoActive && (
-                  <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '11px', fontWeight: 800, letterSpacing: '0.03em', padding: '4px 9px', borderRadius: '999px' }}>50% OFF</span>
+                  <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '11px', fontWeight: 800, letterSpacing: '0.03em', padding: '4px 9px', borderRadius: '999px' }}>{discountPercent(s.price, s.originalPrice)}% OFF</span>
                 )}
               </div>
               {s.soldOut && DEDICATED_PAGES[s.sessionId] ? (

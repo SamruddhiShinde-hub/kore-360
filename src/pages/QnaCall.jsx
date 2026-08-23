@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SESSIONS } from '../data.js';
+import { SESSIONS, discountPercent } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
@@ -66,7 +66,15 @@ export default function QnaCall() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-muted)' }}><PhoneIcon /> Audio call</div>
         </div>
 
-        <div style={{ fontWeight: 900, fontSize: '28px', color: 'var(--text)' }}>{QNA.price}</div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
+          {QNA.promoActive && (
+            <span style={{ fontSize: '15px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{QNA.originalPrice}</span>
+          )}
+          <span style={{ fontWeight: 900, fontSize: '28px', color: 'var(--text)' }}>{QNA.price}</span>
+          {QNA.promoActive && (
+            <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '12px', fontWeight: 800, letterSpacing: '0.02em', padding: '4px 10px', borderRadius: '999px' }}>{discountPercent(QNA.price, QNA.originalPrice)}% OFF</span>
+          )}
+        </div>
       </div>
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 32px 96px', display: 'grid', gridTemplateColumns: 'minmax(0,1fr) 380px', gap: '48px', alignItems: 'start' }} className="grid-2col">

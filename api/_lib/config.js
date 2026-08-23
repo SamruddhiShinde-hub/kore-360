@@ -12,7 +12,7 @@ export const SESSIONS = {
   // and create-hold both refuse it, regardless of what the frontend shows.
   // Flip back to false (or drop the field) to reopen booking.
   webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-08-08T17:00:00+05:30', soldOut: true },
-  qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 49900 },
+  qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 29900 },
   clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 199900 },
   // No slot/Calendar component at all — a straight digital-product purchase
   // fulfilled by emailing the PDF (see razorpay-webhook.js + gmail.js).

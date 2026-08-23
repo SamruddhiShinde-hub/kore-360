@@ -82,6 +82,16 @@ export function getClarityPricing(dateIso) {
   };
 }
 
+// Discount badge percentage for a promo price, derived from price/originalPrice
+// display strings (e.g. '₹299' / '₹499') so the badge never drifts out of sync
+// with the actual numbers shown next to it.
+export function discountPercent(price, originalPrice) {
+  const cur = Number(String(price).replace(/[^\d.]/g, ''));
+  const orig = Number(String(originalPrice).replace(/[^\d.]/g, ''));
+  if (!orig) return 0;
+  return Math.round((1 - cur / orig) * 100);
+}
+
 // Which hero layout to show: 'split' | 'centered' | 'editorial'
 export const HERO_VARIANT = 'centered';
 
@@ -129,7 +139,7 @@ export const MARQUEE = [
 // `details` powers the expanded breakdown on the Education page; the homepage cards only use the fields above it.
 export const SESSIONS = [
   {
-    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', sessionId: 'ebook',
+    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', originalPrice: '₹199', promoActive: true, meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', sessionId: 'ebook',
     details: {
       format: 'Instant PDF download',
       whoFor: "Anyone starting from zero who wants the full map before spending on a call",
@@ -157,7 +167,7 @@ export const SESSIONS = [
     },
   },
   {
-    tag: 'Q&A', name: '1:1 Q&A Call', price: '₹499', meta: '10 min · Audio call', desc: 'Ten minutes, audio only, just you and me. Bring your questions, leave with answers.', cta: 'Book a Q&A', sessionId: 'qna',
+    tag: 'Q&A', name: '1:1 Q&A Call', price: '₹299', originalPrice: '₹499', promoActive: true, meta: '10 min · Audio call', desc: 'Ten minutes, audio only, just you and me. Bring your questions, leave with answers.', cta: 'Book a Q&A', sessionId: 'qna',
     details: {
       format: '10-minute 1:1 audio call',
       whoFor: "Anyone with specific, pointed questions who doesn't need a full strategy session",

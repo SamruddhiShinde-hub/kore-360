@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SESSIONS } from '../data.js';
+import { SESSIONS, discountPercent } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import { track, priceToNumber } from '../lib/analytics.js';
@@ -101,7 +101,15 @@ export default function Ebook() {
 
         <div className="desktop-sticky-card" style={{ position: 'sticky', top: '24px' }}>
           <form onSubmit={handleSubmit} style={{ background: 'var(--surface)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '14px', padding: '22px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            <div style={{ fontWeight: 900, fontSize: '28px', marginBottom: '4px' }}>{EBOOK.price}</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+              {EBOOK.promoActive && (
+                <span style={{ fontSize: '15px', color: 'var(--text-faint)', textDecoration: 'line-through' }}>{EBOOK.originalPrice}</span>
+              )}
+              <span style={{ fontWeight: 900, fontSize: '28px' }}>{EBOOK.price}</span>
+              {EBOOK.promoActive && (
+                <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '12px', fontWeight: 800, letterSpacing: '0.02em', padding: '4px 10px', borderRadius: '999px' }}>{discountPercent(EBOOK.price, EBOOK.originalPrice)}% OFF</span>
+              )}
+            </div>
             <input
               type="text" required placeholder="Your name" value={name} onChange={(e) => setName(e.target.value)}
               style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)' }}

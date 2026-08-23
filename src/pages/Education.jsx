@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SESSIONS } from '../data.js';
+import { SESSIONS, discountPercent } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import PageMeta from '../components/PageMeta.jsx';
@@ -52,7 +52,7 @@ export default function Education() {
                     )}
                     <div className="education-card-price" style={{ fontWeight: 900, fontSize: '20px', color: 'var(--text)', lineHeight: 1 }}>{s.price}</div>
                     {s.promoActive && (
-                      <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '9px', fontWeight: 800, padding: '3px 7px', borderRadius: '999px', whiteSpace: 'nowrap' }}>50% OFF</span>
+                      <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '9px', fontWeight: 800, padding: '3px 7px', borderRadius: '999px', whiteSpace: 'nowrap' }}>{discountPercent(s.price, s.originalPrice)}% OFF</span>
                     )}
                   </div>
                   {s.soldOut && DEDICATED_PAGES[s.sessionId] ? (
