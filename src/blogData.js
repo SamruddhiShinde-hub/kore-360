@@ -7,6 +7,15 @@
 
 export const BLOG_POSTS = [
   {
+    slug: 'event-budget-planning-where-the-money-goes',
+    title: 'Where Event Budgets Actually Go',
+    subtitle: 'The line items nobody shows you, and the five places money quietly leaks.',
+    excerpt: 'A ground-level event budget breakdown: the real line items, the hidden costs, and the five places money quietly leaks on live sports and events.',
+    date: '2026-08-24',
+    readTime: '7 min read',
+    author: 'Krish Lalwani',
+  },
+  {
     slug: 'what-happens-on-match-day',
     title: 'What Actually Happens on Match Day',
     subtitle: 'The fifteen-hour day nobody sees behind three hours of cricket.',
