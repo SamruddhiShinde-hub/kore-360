@@ -32,6 +32,9 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [couponCode, setCouponCode] = useState('');
+  // Only surface "Invalid coupon code" once they've actually tried to check
+  // out with it — not on every keystroke while they're still typing it in.
+  const [couponAttempted, setCouponAttempted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const selectedDateBtnRef = useRef(null);
   const skipPicker = isFixed || Boolean(initialSlot);
@@ -151,6 +154,13 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // A coupon was typed but doesn't match — surface "Invalid coupon code"
+    // now (this is the one moment we show it) and stop short of booking,
+    // rather than silently charging the regular price or booking the slot.
+    if (sessionId === 'clarity' && couponCode.trim() && !clarityPricing.couponValid) {
+      setCouponAttempted(true);
+      return;
+    }
     setErrorMsg('');
     setStep('redirecting');
     try {
@@ -307,14 +317,14 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
               <div>
                 <input
                   type="text" placeholder="Coupon code (optional)" value={couponCode}
-                  onChange={(e) => setCouponCode(e.target.value)}
+                  onChange={(e) => { setCouponCode(e.target.value); setCouponAttempted(false); }}
                   style={{
                     width: '100%', boxSizing: 'border-box', fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px',
                     border: `1px solid ${clarityPricing?.couponValid ? '#22c55e' : 'rgba(var(--border-rgb),0.2)'}`,
                     background: 'transparent', color: 'var(--text)', textTransform: 'uppercase',
                   }}
                 />
-                {couponCode.trim() && (
+                {(clarityPricing?.couponValid || couponAttempted) && couponCode.trim() && (
                   <div style={{ fontSize: '12.5px', marginTop: '5px', color: clarityPricing?.couponValid ? '#22c55e' : 'var(--kore-orange-text)' }}>
                     {clarityPricing?.couponValid ? `Coupon applied — ${clarityPricing.price}` : 'Invalid coupon code'}
                   </div>
