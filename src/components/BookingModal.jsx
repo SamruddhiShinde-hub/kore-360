@@ -31,6 +31,7 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
   const [selectedSlot, setSelectedSlot] = useState(initialSlot || null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [couponCode, setCouponCode] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const selectedDateBtnRef = useRef(null);
   const skipPicker = isFixed || Boolean(initialSlot);
@@ -46,11 +47,10 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
     return [...available, ...booked].sort((a, b) => new Date(a.time) - new Date(b.time));
   }, [slots, bookedSlots]);
 
-  // The Clarity Call's flash price only applies to calls actually booked on
-  // the promo dates — re-derive it from the selected slot (not just "is the
-  // promo live today") so picking a day outside the window falls back to
-  // the regular price, matching what Razorpay will actually charge.
-  const clarityPricing = sessionId === 'clarity' ? getClarityPricing(selectedSlot) : null;
+  // The Clarity Call's ₹999 rate is coupon-gated, not automatic — re-derive
+  // it from whatever's currently typed into the coupon field so the price
+  // shown here always matches what Razorpay will actually charge.
+  const clarityPricing = sessionId === 'clarity' ? getClarityPricing(couponCode) : null;
   const displayPrice = clarityPricing ? clarityPricing.price : price;
 
   // Non-clarity sessions (Q&A, e-book) carry a static promo on their SESSIONS
@@ -150,7 +150,7 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
       const linkRes = await fetch('/api/create-payment-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ holdId: holdData.holdId }),
+        body: JSON.stringify({ holdId: holdData.holdId, couponCode }),
       });
       const linkData = await linkRes.json();
       if (!linkRes.ok) throw new Error(linkData.error || 'Could not start payment.');
@@ -288,6 +288,24 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
               type="email" required placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}
               style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)' }}
             />
+            {sessionId === 'clarity' && (
+              <div>
+                <input
+                  type="text" placeholder="Coupon code (optional)" value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value)}
+                  style={{
+                    width: '100%', boxSizing: 'border-box', fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px',
+                    border: `1px solid ${clarityPricing?.promoActive ? '#22c55e' : 'rgba(var(--border-rgb),0.2)'}`,
+                    background: 'transparent', color: 'var(--text)', textTransform: 'uppercase',
+                  }}
+                />
+                {couponCode.trim() && (
+                  <div style={{ fontSize: '12.5px', marginTop: '5px', color: clarityPricing?.promoActive ? '#22c55e' : 'var(--kore-orange-text)' }}>
+                    {clarityPricing?.promoActive ? `Coupon applied — ${clarityPricing.price}` : 'Invalid coupon code'}
+                  </div>
+                )}
+              </div>
+            )}
             {errorMsg && <div style={{ fontSize: '13px', color: 'var(--kore-orange-text)' }}>{errorMsg}</div>}
             <button
               type="submit" disabled={step === 'redirecting'} className="btn-accent"

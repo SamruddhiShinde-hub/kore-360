@@ -5,7 +5,7 @@ import { getRazorpayClient } from './_lib/razorpay.js';
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { holdId } = req.body || {};
+  const { holdId, couponCode } = req.body || {};
   if (!holdId) return res.status(400).json({ error: 'Missing holdId' });
 
   try {
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
 
     const razorpay = getRazorpayClient();
     const link = await razorpay.paymentLink.create({
-      amount: getAmountPaise(booking.sessionId, booking.slotStart),
+      amount: getAmountPaise(booking.sessionId, couponCode),
       currency: 'INR',
       accept_partial: false,
       description: `${session.name} — KORE 360`,

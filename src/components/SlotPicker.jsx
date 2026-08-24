@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { isClarityPromoDate } from '../data.js';
 
 const DAYS_WINDOW = 21;
 const VISIBLE_DAYS = 5;
@@ -33,21 +32,13 @@ function periodOf(iso) {
 // availability window, same mechanics. The Clarity Call is the one exception:
 // it only ever offers CLARITY_FIXED_HOURS (see api/_lib/config.js), so for it
 // this renders a flat list of those slots instead of the period tabs.
-export default function SlotPicker({ sessionId, heading = 'When should we connect?', confirmLabel = 'Confirm details', onConfirm, onDateChange }) {
+export default function SlotPicker({ sessionId, heading = 'When should we connect?', confirmLabel = 'Confirm details', onConfirm }) {
   const [daysData, setDaysData] = useState(null);
   const [dayWindowStart, setDayWindowStart] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedPeriod, setSelectedPeriod] = useState('morning');
   const [selectedSlot, setSelectedSlot] = useState(null);
   const showPeriodTabs = sessionId !== 'clarity';
-
-  // Lets a parent page (e.g. the Clarity Call price display) react to
-  // whichever day is currently highlighted here, not just the final
-  // confirmed slot.
-  useEffect(() => {
-    onDateChange?.(selectedDate);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedDate]);
 
   useEffect(() => {
     let cancelled = false;
@@ -135,7 +126,6 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
               const hasBookedSlots = (d.bookedSlots?.length || 0) > 0;
               const hasAnySlots = hasSlots || hasBookedSlots;
               const fullyBooked = !hasSlots && hasBookedSlots;
-              const showPromoTag = sessionId === 'clarity' && hasSlots && isClarityPromoDate(d.date);
               return (
                 <button
                   key={d.date}
@@ -161,9 +151,6 @@ export default function SlotPicker({ sessionId, heading = 'When should we connec
                     <span style={{ fontSize: '9px', fontWeight: 700, whiteSpace: 'nowrap', color: isSelected ? '#FFD1D1' : '#ef4444' }}>
                       {d.slots.length} slot{d.slots.length === 1 ? '' : 's'} left
                     </span>
-                  )}
-                  {showPromoTag && (
-                    <span style={{ fontSize: '9px', fontWeight: 800, whiteSpace: 'nowrap', padding: '1px 6px', borderRadius: '999px', background: isSelected ? 'rgba(255,255,255,0.28)' : 'var(--kore-gradient)', color: '#FFFFFF' }}>50% OFF</span>
                   )}
                 </button>
               );

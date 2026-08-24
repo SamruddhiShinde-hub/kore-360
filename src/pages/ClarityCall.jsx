@@ -59,13 +59,11 @@ export default function ClarityCall() {
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [shared, setShared] = useState(false);
-  const [pickerDate, setPickerDate] = useState(null);
   const [activeVideo, setActiveVideo] = useState(null);
 
-  // Mirrors whatever day is highlighted in the slot picker so the price up
-  // top always matches what booking that day would actually charge — ₹999
-  // only while a promo date (18-20 Aug) is selected, ₹1,999 for any other day.
-  const pricing = getClarityPricing(pickerDate);
+  // The ₹999 rate is coupon-gated (see BookingModal) — this page always
+  // shows the full ₹1,999 price up top, before checkout.
+  const pricing = getClarityPricing();
 
   useEffect(() => {
     track('view_item', {
@@ -195,7 +193,6 @@ export default function ClarityCall() {
         <SlotPicker
           sessionId="clarity"
           onConfirm={(slot) => { setSelectedSlot(slot); setShowModal(true); }}
-          onDateChange={setPickerDate}
         />
       </div>
 

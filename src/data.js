@@ -36,41 +36,27 @@ import actorsCricketBashLogo from './assets/brand6.jpg';
 // Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
 export const ACCENT = '#F05123';
 
-// ---- Clarity Call flash pricing ----
-// The amount actually charged is only ₹999 (from the full ₹1,999) for calls
-// booked on a Tuesday, Wednesday or Thursday (IST) — a recurring weekly
-// offer, not a one-off window. Must match CLARITY_PROMO_WEEKDAYS/
-// CLARITY_PROMO_AMOUNT_PAISE in api/_lib/config.js, which is what Razorpay
-// actually charges; the values here are display-only (see the note on
-// SESSIONS below re: client vs API config).
-export const CLARITY_PROMO_WEEKDAYS = ['Tue', 'Wed', 'Thu'];
-const CLARITY_PROMO_PRICE = '₹999';
+// ---- Clarity Call coupon pricing ----
+// Full price is ₹1,999 everywhere by default — no automatic discount. The
+// ₹999 rate only kicks in once someone enters this coupon code in the
+// booking flow. Must match CLARITY_COUPON_CODE/CLARITY_COUPON_AMOUNT_PAISE
+// in api/_lib/config.js, which is what Razorpay actually charges when it
+// receives the same code; the values here are display-only.
+export const CLARITY_COUPON_CODE = 'KRISH500';
+const CLARITY_COUPON_PRICE = '₹999';
 const CLARITY_ORIGINAL_PRICE = '₹1,999';
 
-function istWeekday(date) {
-  return date.toLocaleDateString('en-US', { weekday: 'short', timeZone: 'Asia/Kolkata' });
+function isClarityCoupon(code) {
+  return typeof code === 'string' && code.trim().toUpperCase() === CLARITY_COUPON_CODE;
 }
 
-// Accepts either a full ISO datetime (an actual booked slot, e.g. from
-// BookingModal) or a plain YYYY-MM-DD calendar date (the day highlighted in
-// SlotPicker before a specific time is chosen) — both resolve to the same
-// IST weekday check. A plain date is anchored at noon IST so it can't drift
-// onto the neighbouring day when parsed.
-export function isClarityPromoDate(dateStrOrIso) {
-  const iso = /^\d{4}-\d{2}-\d{2}$/.test(dateStrOrIso) ? `${dateStrOrIso}T12:00:00+05:30` : dateStrOrIso;
-  return CLARITY_PROMO_WEEKDAYS.includes(istWeekday(new Date(iso)));
-}
-
-// Effective price for a Clarity Call. With no date given, this is the
-// site-wide teaser price — always the promo price, since the recurring
-// Tue/Wed/Thu offer means a discounted day is always on offer somewhere in
-// the booking window. With an actual booked-call date/datetime, it's the
-// real, day-specific price that will be charged — used to re-check the
-// price shown once a user picks a specific slot in the booking modal.
-export function getClarityPricing(dateIso) {
-  const promo = dateIso ? isClarityPromoDate(dateIso) : true;
+// Effective price for a Clarity Call. With no coupon code (or a wrong one),
+// this is always the full price. Pass whatever the user has typed into the
+// coupon field so far — it only unlocks the ₹999 rate on an exact match.
+export function getClarityPricing(couponCode) {
+  const promo = isClarityCoupon(couponCode);
   return {
-    price: promo ? CLARITY_PROMO_PRICE : CLARITY_ORIGINAL_PRICE,
+    price: promo ? CLARITY_COUPON_PRICE : CLARITY_ORIGINAL_PRICE,
     originalPrice: CLARITY_ORIGINAL_PRICE,
     promoActive: promo,
   };
