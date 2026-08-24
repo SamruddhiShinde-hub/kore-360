@@ -75,8 +75,6 @@ export default function WhatHappensOnMatchDay() {
           <span style={{ fontWeight: 700, color: 'var(--text)' }}>Krish Lalwani</span>
           <span>·</span>
           <time dateTime={PUBLISH_DATE}>18 August 2026</time>
-          <span>·</span>
-          <span>5 min read</span>
         </div>
 
         <Reveal>

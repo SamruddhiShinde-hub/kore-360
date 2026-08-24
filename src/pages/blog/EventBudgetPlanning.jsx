@@ -75,8 +75,6 @@ export default function EventBudgetPlanning() {
           <span style={{ fontWeight: 700, color: 'var(--text)' }}>Krish Lalwani</span>
           <span>·</span>
           <time dateTime={PUBLISH_DATE}>24 August 2026</time>
-          <span>·</span>
-          <span>7 min read</span>
         </div>
 
         <Reveal>
