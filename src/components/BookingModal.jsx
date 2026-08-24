@@ -69,6 +69,21 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // window.location.href never returns — once redirecting to Razorpay, this
+  // component's JS stays frozen mid-flight forever. If the buyer hits the
+  // browser's Back button, Safari/Chrome restore that exact frozen state
+  // from the back-forward cache: step stuck on 'redirecting', button stuck
+  // disabled, no way to retry. `pageshow` with `persisted: true` fires
+  // whenever the page comes back from that cache — reset out of the dead
+  // end so the form (and coupon field) are usable again.
+  useEffect(() => {
+    const handlePageShow = (e) => {
+      if (e.persisted) setStep((s) => (s === 'redirecting' ? 'details' : s));
+    };
+    window.addEventListener('pageshow', handlePageShow);
+    return () => window.removeEventListener('pageshow', handlePageShow);
+  }, []);
+
   // Default to the first upcoming day that actually has open slots (not just
   // "today") — sessions like the fixed-date webinar would otherwise open on
   // a dead-end "no slots available" day that most people won't scroll past.
