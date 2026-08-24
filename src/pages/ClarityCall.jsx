@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SESSIONS, IMAGES, LINKS, getClarityPricing, TESTIMONIALS, WRITTEN_TESTIMONIALS } from '../data.js';
+import { SESSIONS, IMAGES, LINKS, getClarityPricing, discountPercent, TESTIMONIALS, WRITTEN_TESTIMONIALS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
@@ -129,7 +129,7 @@ export default function ClarityCall() {
           )}
           <span style={{ fontWeight: 900, fontSize: '24px', color: 'var(--text)' }}>{pricing.price}</span>
           {pricing.promoActive && (
-            <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '12px', fontWeight: 800, letterSpacing: '0.02em', padding: '4px 10px', borderRadius: '999px' }}>50% OFF</span>
+            <span style={{ background: 'var(--kore-gradient)', color: '#FFFFFF', fontSize: '12px', fontWeight: 800, letterSpacing: '0.02em', padding: '4px 10px', borderRadius: '999px' }}>{discountPercent(pricing.price, pricing.originalPrice)}% OFF</span>
           )}
         </div>
       </div>

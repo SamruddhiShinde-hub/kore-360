@@ -36,13 +36,14 @@ import actorsCricketBashLogo from './assets/brand6.jpg';
 // Accent colour used across the whole site. Brand shades: '#DB117C' (pink), '#9F3D97' (purple), '#B71E60' (magenta).
 export const ACCENT = '#F05123';
 
-// ---- Clarity Call coupon pricing ----
-// Full price is ₹1,999 everywhere by default — no automatic discount. The
-// ₹999 rate only kicks in once someone enters this coupon code in the
-// booking flow. Must match CLARITY_COUPON_CODE/CLARITY_COUPON_AMOUNT_PAISE
-// in api/_lib/config.js, which is what Razorpay actually charges when it
-// receives the same code; the values here are display-only.
+// ---- Clarity Call pricing ----
+// ₹1,999 is the list price, shown struck through. Regular visitors see
+// ₹1,499 by default, no coupon needed. Entering this coupon code in the
+// booking flow drops it further, to ₹999. Must match CLARITY_COUPON_CODE
+// and the amounts in api/_lib/config.js, which is what Razorpay actually
+// charges; the values here are display-only.
 export const CLARITY_COUPON_CODE = 'KRISH500';
+const CLARITY_DEFAULT_PRICE = '₹1,499';
 const CLARITY_COUPON_PRICE = '₹999';
 const CLARITY_ORIGINAL_PRICE = '₹1,999';
 
@@ -50,15 +51,17 @@ function isClarityCoupon(code) {
   return typeof code === 'string' && code.trim().toUpperCase() === CLARITY_COUPON_CODE;
 }
 
-// Effective price for a Clarity Call. With no coupon code (or a wrong one),
-// this is always the full price. Pass whatever the user has typed into the
-// coupon field so far — it only unlocks the ₹999 rate on an exact match.
+// Effective price for a Clarity Call. `promoActive` is always true (₹1,499
+// is on for everyone) — `couponValid` separately reports whether the code
+// just typed into the coupon field is an exact match, which unlocks the
+// deeper ₹999 rate. Pass whatever's currently in that field so far.
 export function getClarityPricing(couponCode) {
-  const promo = isClarityCoupon(couponCode);
+  const couponValid = isClarityCoupon(couponCode);
   return {
-    price: promo ? CLARITY_COUPON_PRICE : CLARITY_ORIGINAL_PRICE,
+    price: couponValid ? CLARITY_COUPON_PRICE : CLARITY_DEFAULT_PRICE,
     originalPrice: CLARITY_ORIGINAL_PRICE,
-    promoActive: promo,
+    promoActive: true,
+    couponValid,
   };
 }
 

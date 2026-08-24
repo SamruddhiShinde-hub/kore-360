@@ -295,13 +295,13 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
                   onChange={(e) => setCouponCode(e.target.value)}
                   style={{
                     width: '100%', boxSizing: 'border-box', fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px',
-                    border: `1px solid ${clarityPricing?.promoActive ? '#22c55e' : 'rgba(var(--border-rgb),0.2)'}`,
+                    border: `1px solid ${clarityPricing?.couponValid ? '#22c55e' : 'rgba(var(--border-rgb),0.2)'}`,
                     background: 'transparent', color: 'var(--text)', textTransform: 'uppercase',
                   }}
                 />
                 {couponCode.trim() && (
-                  <div style={{ fontSize: '12.5px', marginTop: '5px', color: clarityPricing?.promoActive ? '#22c55e' : 'var(--kore-orange-text)' }}>
-                    {clarityPricing?.promoActive ? `Coupon applied — ${clarityPricing.price}` : 'Invalid coupon code'}
+                  <div style={{ fontSize: '12.5px', marginTop: '5px', color: clarityPricing?.couponValid ? '#22c55e' : 'var(--kore-orange-text)' }}>
+                    {clarityPricing?.couponValid ? `Coupon applied — ${clarityPricing.price}` : 'Invalid coupon code'}
                   </div>
                 )}
               </div>

@@ -13,7 +13,10 @@ export const SESSIONS = {
   // Flip back to false (or drop the field) to reopen booking.
   webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-08-08T17:00:00+05:30', soldOut: true },
   qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 29900 },
-  clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 199900 },
+  // ₹1,499 is the regular price everyone sees and pays by default (down
+  // from a ₹1,999 list price) — see getAmountPaise below for the deeper
+  // ₹999 coupon rate on top of this.
+  clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 149900 },
   // No slot/Calendar component at all — a straight digital-product purchase
   // fulfilled by emailing the PDF (see razorpay-webhook.js + gmail.js).
   ebook: { name: 'Behind the Field (E-book)', amountPaise: 9900 },
@@ -90,11 +93,11 @@ export function getSession(sessionId) {
   return session;
 }
 
-// Clarity Call flash price: ₹999 (99900 paise) instead of the full
-// ₹1,999 (199900 paise) — only when checkout includes this exact coupon
-// code. Not automatic, not date- or day-dependent. Must match
-// CLARITY_COUPON_CODE/prices in src/data.js — that file only controls the
-// display price, this is what Razorpay actually charges.
+// Clarity Call coupon price: ₹999 (99900 paise) instead of the regular
+// ₹1,499 (SESSIONS.clarity.amountPaise above) — only when checkout includes
+// this exact coupon code. Must match CLARITY_COUPON_CODE/prices in
+// src/data.js — that file only controls the display price, this is what
+// Razorpay actually charges.
 const CLARITY_COUPON_CODE = 'KRISH500';
 const CLARITY_COUPON_AMOUNT_PAISE = 99900;
 
