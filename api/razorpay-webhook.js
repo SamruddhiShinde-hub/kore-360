@@ -79,9 +79,6 @@ export default async function handler(req, res) {
       const paymentLink = payload.payload?.payment_link?.entity;
       const payment = payload.payload?.payment?.entity;
       const notes = paymentLink?.notes || {};
-      // Razorpay always collects a contact number during checkout regardless
-      // of session type — not something our own booking form asks for.
-      const phone = payment?.contact || '';
 
       const holdId = notes.holdId;
       if (!holdId) {
@@ -99,10 +96,17 @@ export default async function handler(req, res) {
         return res.status(200).end();
       }
 
+      // Razorpay always collects (and OTP-verifies) a contact number during
+      // checkout regardless of session type — prefer that over whatever the
+      // buyer typed into our own booking form, but fall back to ours in the
+      // rare case Razorpay didn't pass one through. Written back to the
+      // sheet below so the final record reflects the most reliable number.
+      const phone = payment?.contact || booking.userPhone || '';
+
       if (booking.sessionId === 'ebook') {
         // No slot, no Calendar event — just deliver the PDF and stop.
         await deliverEbookPurchase({ userName: booking.userName, userEmail: booking.userEmail });
-        await updateBookingRow(booking._rowNumber, { status: 'paid' });
+        await updateBookingRow(booking._rowNumber, { status: 'paid', userPhone: phone });
         return res.status(200).end();
       }
 
@@ -113,7 +117,7 @@ export default async function handler(req, res) {
       // stuck in "hold" limbo with the webhook retrying forever and no email
       // ever going out. Everything below this point is independently
       // best-effort: one failure must not take another down with it.
-      await updateBookingRow(booking._rowNumber, { status: 'paid' });
+      await updateBookingRow(booking._rowNumber, { status: 'paid', userPhone: phone });
 
       const isWebinar = booking.sessionId === 'webinar';
       let event = null;

@@ -6,15 +6,20 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function isValidPhone(phone) {
+  return /^\+?[0-9]{7,15}$/.test(phone.replace(/[\s-]/g, ''));
+}
+
 // No slot to hold here (see config.js SESSIONS.ebook) — this just records
 // who's buying before handing off to create-payment-link, same pattern as
 // create-hold.js minus the availability check.
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { userName, userEmail } = req.body || {};
+  const { userName, userEmail, userPhone } = req.body || {};
   if (!userName || !userName.trim()) return res.status(400).json({ error: 'Missing userName' });
   if (!userEmail || !isValidEmail(userEmail)) return res.status(400).json({ error: 'Missing or invalid userEmail' });
+  if (!userPhone || !isValidPhone(userPhone)) return res.status(400).json({ error: 'Missing or invalid phone number' });
 
   try {
     const session = getSession('ebook');
@@ -29,6 +34,7 @@ export default async function handler(req, res) {
       slotEnd: now,
       userName: userName.trim(),
       userEmail: userEmail.trim(),
+      userPhone: userPhone.trim(),
     });
 
     res.status(200).json({ holdId });

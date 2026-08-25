@@ -31,6 +31,7 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
   const [selectedSlot, setSelectedSlot] = useState(initialSlot || null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   const [couponCode, setCouponCode] = useState('');
   // Only surface "Invalid coupon code" once they've actually tried to check
   // out with it — not on every keystroke while they're still typing it in.
@@ -167,7 +168,7 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
       const holdRes = await fetch('/api/create-hold', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId, slotStart: selectedSlot, userName: name, userEmail: email }),
+        body: JSON.stringify({ sessionId, slotStart: selectedSlot, userName: name, userEmail: email, userPhone: phone }),
       });
       const holdData = await holdRes.json();
       if (!holdRes.ok) throw new Error(holdData.error || 'That slot is no longer available.');
@@ -311,6 +312,10 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
             />
             <input
               type="email" required placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)}
+              style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)' }}
+            />
+            <input
+              type="tel" required placeholder="Your phone number" value={phone} onChange={(e) => setPhone(e.target.value)}
               style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)' }}
             />
             {sessionId === 'clarity' && (

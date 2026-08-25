@@ -7,14 +7,19 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+function isValidPhone(phone) {
+  return /^\+?[0-9]{7,15}$/.test(phone.replace(/[\s-]/g, ''));
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { sessionId, slotStart, userName, userEmail } = req.body || {};
+  const { sessionId, slotStart, userName, userEmail, userPhone } = req.body || {};
   if (!sessionId) return res.status(400).json({ error: 'Missing sessionId' });
   if (!slotStart) return res.status(400).json({ error: 'Missing slotStart' });
   if (!userName || !userName.trim()) return res.status(400).json({ error: 'Missing userName' });
   if (!userEmail || !isValidEmail(userEmail)) return res.status(400).json({ error: 'Missing or invalid userEmail' });
+  if (!userPhone || !isValidPhone(userPhone)) return res.status(400).json({ error: 'Missing or invalid phone number' });
 
   let session;
   try {
@@ -42,6 +47,7 @@ export default async function handler(req, res) {
       slotEnd,
       userName: userName.trim(),
       userEmail: userEmail.trim(),
+      userPhone: userPhone.trim(),
     });
 
     res.status(200).json({ holdId, slotStart: new Date(slotStart).toISOString(), slotEnd });

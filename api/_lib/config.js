@@ -77,7 +77,10 @@ export const HOLD_TTL_MINUTES = 15;
 
 export const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;
 export const SHEET_ID = process.env.GOOGLE_SHEET_ID;
-export const SHEET_RANGE = 'Sheet1!A:J';
+// Column K holds userPhone, appended after the original A:J layout —
+// appended, not inserted, so historical rows written before phone capture
+// existed stay correctly aligned (see sheet.js COLUMNS).
+export const SHEET_RANGE = 'Sheet1!A:K';
 export const NOTIFY_EMAIL = 'work.krishlalwani@gmail.com';
 
 // "Let's connect" WhatsApp popup leads — a separate sheet from the booking

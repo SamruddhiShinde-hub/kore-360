@@ -3,8 +3,11 @@ import { getGoogleAuth } from './googleAuth.js';
 import { SHEET_ID, SHEET_RANGE, CONNECT_LEADS_SHEET_ID, CONNECT_LEADS_SHEET_RANGE } from './config.js';
 
 // Column order matches the sheet header row:
-// holdId | sessionId | sessionName | slotStart | slotEnd | userName | userEmail | status | paymentLinkId | createdAt
-const COLUMNS = ['holdId', 'sessionId', 'sessionName', 'slotStart', 'slotEnd', 'userName', 'userEmail', 'status', 'paymentLinkId', 'createdAt'];
+// holdId | sessionId | sessionName | slotStart | slotEnd | userName | userEmail | status | paymentLinkId | createdAt | userPhone
+// userPhone (K) was added after the original A:J layout — appended at the
+// end, not inserted in the middle, so every row written before phone
+// capture existed stays correctly aligned under this same COLUMNS order.
+const COLUMNS = ['holdId', 'sessionId', 'sessionName', 'slotStart', 'slotEnd', 'userName', 'userEmail', 'status', 'paymentLinkId', 'createdAt', 'userPhone'];
 
 function sheetsClient() {
   return google.sheets({ version: 'v4', auth: getGoogleAuth() });
@@ -25,14 +28,14 @@ export async function getAllBookings() {
   return rows.slice(1).map((row, i) => ({ ...rowToObject(row), _rowNumber: i + 2 }));
 }
 
-export async function appendHold({ holdId, sessionId, sessionName, slotStart, slotEnd, userName, userEmail }) {
+export async function appendHold({ holdId, sessionId, sessionName, slotStart, slotEnd, userName, userEmail, userPhone }) {
   const sheets = sheetsClient();
   await sheets.spreadsheets.values.append({
     spreadsheetId: SHEET_ID,
     range: SHEET_RANGE,
     valueInputOption: 'RAW',
     requestBody: {
-      values: [[holdId, sessionId, sessionName, slotStart, slotEnd, userName, userEmail, 'hold', '', new Date().toISOString()]],
+      values: [[holdId, sessionId, sessionName, slotStart, slotEnd, userName, userEmail, 'hold', '', new Date().toISOString(), userPhone || '']],
     },
   });
 }
@@ -40,14 +43,14 @@ export async function appendHold({ holdId, sessionId, sessionName, slotStart, sl
 // For flows with no pre-existing hold row (e.g. the webinar's one-click
 // checkout, where Razorpay collects the buyer's details itself) — writes
 // straight to 'paid' instead of going through create-hold first.
-export async function appendPaidBooking({ sessionId, sessionName, slotStart, slotEnd, userName, userEmail, paymentLinkId }) {
+export async function appendPaidBooking({ sessionId, sessionName, slotStart, slotEnd, userName, userEmail, paymentLinkId, userPhone }) {
   const sheets = sheetsClient();
   await sheets.spreadsheets.values.append({
     spreadsheetId: SHEET_ID,
     range: SHEET_RANGE,
     valueInputOption: 'RAW',
     requestBody: {
-      values: [[`pl-${paymentLinkId}`, sessionId, sessionName, slotStart, slotEnd, userName, userEmail, 'paid', paymentLinkId, new Date().toISOString()]],
+      values: [[`pl-${paymentLinkId}`, sessionId, sessionName, slotStart, slotEnd, userName, userEmail, 'paid', paymentLinkId, new Date().toISOString(), userPhone || '']],
     },
   });
 }
@@ -56,14 +59,14 @@ export async function updateBookingRow(rowNumber, updates) {
   const sheets = sheetsClient();
   const current = await sheets.spreadsheets.values.get({
     spreadsheetId: SHEET_ID,
-    range: `Sheet1!A${rowNumber}:J${rowNumber}`,
+    range: `Sheet1!A${rowNumber}:K${rowNumber}`,
   });
   const existing = rowToObject(current.data.values?.[0] || []);
   const merged = { ...existing, ...updates };
   const values = COLUMNS.map((col) => merged[col] ?? '');
   await sheets.spreadsheets.values.update({
     spreadsheetId: SHEET_ID,
-    range: `Sheet1!A${rowNumber}:J${rowNumber}`,
+    range: `Sheet1!A${rowNumber}:K${rowNumber}`,
     valueInputOption: 'RAW',
     requestBody: { values: [values] },
   });
