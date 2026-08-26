@@ -5,6 +5,8 @@
 //  pattern as the dedicated Education session pages).
 // ============================================================
 
+import matchDayCoverImg from './assets/what-actually-happens-on-match-day-cover-image.jpg';
+
 export const BLOG_POSTS = [
   {
     slug: 'event-budget-planning-where-the-money-goes',
@@ -21,5 +23,6 @@ export const BLOG_POSTS = [
     excerpt: 'A ground-level walk through everything that happens on match day, from before sunrise to teardown, written by someone who has actually run it across the IPL, LLC and ISPL.',
     date: '2026-08-18',
     author: 'Krish Lalwani',
+    cover: matchDayCoverImg,
   },
 ];

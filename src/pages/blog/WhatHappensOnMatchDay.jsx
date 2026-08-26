@@ -3,6 +3,7 @@ import { LINKS } from '../../data.js';
 import Reveal from '../../components/Reveal.jsx';
 import PageHeader from '../../components/PageHeader.jsx';
 import PageMeta from '../../components/PageMeta.jsx';
+import coverImage from '../../assets/what-actually-happens-on-match-day-cover-image.jpg';
 
 const SITE_URL = 'https://kore360.in';
 const POST_PATH = '/blog/what-happens-on-match-day';
@@ -60,6 +61,8 @@ export default function WhatHappensOnMatchDay() {
         eyebrow="BLOG"
         title="What Actually Happens on Match Day"
         intro="The fifteen-hour day nobody sees behind three hours of cricket."
+        bgImage={coverImage}
+        bgImageMobile={coverImage}
       />
 
       <article style={{ maxWidth: '760px', margin: '0 auto', padding: '56px 32px 40px' }}>

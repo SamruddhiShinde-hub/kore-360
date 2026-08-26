@@ -26,14 +26,19 @@ export default function Blog() {
               as={Link}
               to={`/blog/${post.slug}`}
               className="card-hover"
-              style={{ display: 'block', textDecoration: 'none', color: 'inherit', background: 'rgba(var(--border-rgb),0.035)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '16px', padding: '28px 30px' }}
+              style={{ display: 'block', textDecoration: 'none', color: 'inherit', background: 'rgba(var(--border-rgb),0.035)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '16px', overflow: 'hidden' }}
             >
-              <div style={{ fontSize: '12px', color: 'var(--text-faint)', letterSpacing: '0.06em', marginBottom: '10px' }}>
-                {new Date(`${post.date}T00:00:00+05:30`).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+              {post.cover && (
+                <img src={post.cover} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} />
+              )}
+              <div style={{ padding: '28px 30px' }}>
+                <div style={{ fontSize: '12px', color: 'var(--text-faint)', letterSpacing: '0.06em', marginBottom: '10px' }}>
+                  {new Date(`${post.date}T00:00:00+05:30`).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </div>
+                <h2 style={{ fontWeight: 800, fontSize: '24px', letterSpacing: '-0.01em', margin: '0 0 8px' }}>{post.title}</h2>
+                <p style={{ fontSize: '15px', lineHeight: 1.6, color: 'var(--text-muted)', margin: '0 0 14px' }}>{post.excerpt}</p>
+                <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--kore-orange-text)' }}>Read the story →</span>
               </div>
-              <h2 style={{ fontWeight: 800, fontSize: '24px', letterSpacing: '-0.01em', margin: '0 0 8px' }}>{post.title}</h2>
-              <p style={{ fontSize: '15px', lineHeight: 1.6, color: 'var(--text-muted)', margin: '0 0 14px' }}>{post.excerpt}</p>
-              <span style={{ fontSize: '14px', fontWeight: 700, color: 'var(--kore-orange-text)' }}>Read the story →</span>
             </Reveal>
           ))}
         </div>
