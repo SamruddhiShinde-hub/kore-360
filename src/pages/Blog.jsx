@@ -10,7 +10,7 @@ export default function Blog() {
       <PageMeta
         title="Blog"
         description="Ground-level stories on how sport is actually run — match days, events and careers, written by the people who've run it, not watched it."
-        path="/blog"
+        path="/blogs"
       />
       <PageHeader
         eyebrow="BLOG"
@@ -24,7 +24,7 @@ export default function Blog() {
               key={post.slug}
               delay={i}
               as={Link}
-              to={`/blog/${post.slug}`}
+              to={`/blogs/${post.slug}`}
               className="card-hover"
               style={{ display: 'block', textDecoration: 'none', color: 'inherit', background: 'rgba(var(--border-rgb),0.035)', border: '1px solid rgba(var(--border-rgb),0.14)', borderRadius: '16px', overflow: 'hidden' }}
             >

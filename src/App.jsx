@@ -46,11 +46,12 @@ export default function App() {
             <Route path="/education/clarity-call" element={<ClarityCall />} />
             <Route path="/education/ebook" element={<Ebook />} />
             <Route path="/education/qa-call" element={<QnaCall />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/what-happens-on-match-day" element={<WhatHappensOnMatchDay />} />
-            <Route path="/blog/event-budget-planning-where-the-money-goes" element={<EventBudgetPlanning />} />
-            <Route path="/blog/5-things-i-wish-i-knew-before-sports-industry" element={<FiveThingsIWishIKnew />} />
-            {/* Old top-level paths — keep working for anyone with an existing bookmark/shared link. */}
+            <Route path="/blogs" element={<Blog />} />
+            <Route path="/blogs/what-happens-on-match-day" element={<WhatHappensOnMatchDay />} />
+            <Route path="/blogs/event-budget-planning-where-the-money-goes" element={<EventBudgetPlanning />} />
+            <Route path="/blogs/5-things-i-wish-i-knew-before-sports-industry" element={<FiveThingsIWishIKnew />} />
+            {/* Old top-level paths — keep working for anyone with an existing bookmark/shared link.
+                /blog(/*) itself 301s at the edge (see vercel.json) before it ever reaches here. */}
             <Route path="/live-webinar" element={<Navigate to="/education/live-webinar" replace />} />
             <Route path="/clarity-call" element={<Navigate to="/education/clarity-call" replace />} />
             <Route path="/ebook" element={<Navigate to="/education/ebook" replace />} />

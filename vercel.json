@@ -1,4 +1,8 @@
 {
+  "redirects": [
+    { "source": "/blog", "destination": "/blogs", "permanent": true },
+    { "source": "/blog/:slug", "destination": "/blogs/:slug", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],

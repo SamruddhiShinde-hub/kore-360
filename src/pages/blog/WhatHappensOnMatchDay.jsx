@@ -6,7 +6,7 @@ import PageMeta from '../../components/PageMeta.jsx';
 import coverImage from '../../assets/what-actually-happens-on-match-day-cover.jpg';
 
 const SITE_URL = 'https://kore360.in';
-const POST_PATH = '/blog/what-happens-on-match-day';
+const POST_PATH = '/blogs/what-happens-on-match-day';
 const POST_URL = `${SITE_URL}${POST_PATH}`;
 const PUBLISH_DATE = '2026-08-18';
 const META_DESCRIPTION = 'A ground-level walk through everything that happens on match day, from before sunrise to teardown, written by someone who has actually run it across the IPL, LLC and ISPL.';
@@ -37,7 +37,7 @@ const BREADCRUMB_JSON_LD = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blogs` },
     { '@type': 'ListItem', position: 3, name: 'What Actually Happens on Match Day', item: POST_URL },
   ],
 };
@@ -69,7 +69,7 @@ export default function WhatHappensOnMatchDay() {
         <nav aria-label="Breadcrumb" style={{ fontSize: '13px', color: 'var(--text-faint)', marginBottom: '28px' }}>
           <Link to="/" style={{ color: 'var(--text-faint)' }}>Home</Link>
           <span style={{ margin: '0 8px' }}>/</span>
-          <Link to="/blog" style={{ color: 'var(--text-faint)' }}>Blog</Link>
+          <Link to="/blogs" style={{ color: 'var(--text-faint)' }}>Blog</Link>
           <span style={{ margin: '0 8px' }}>/</span>
           <span style={{ color: 'var(--text-muted)' }}>What Actually Happens on Match Day</span>
         </nav>

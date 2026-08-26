@@ -6,7 +6,7 @@ import PageMeta from '../../components/PageMeta.jsx';
 import coverImage from '../../assets/5-things-I-wish-someone-taugh-me-cover-image.jpg';
 
 const SITE_URL = 'https://kore360.in';
-const POST_PATH = '/blog/5-things-i-wish-i-knew-before-sports-industry';
+const POST_PATH = '/blogs/5-things-i-wish-i-knew-before-sports-industry';
 const POST_URL = `${SITE_URL}${POST_PATH}`;
 const PUBLISH_DATE = '2026-08-26';
 const META_DESCRIPTION = 'The lessons that shaped a career in live sports and events. What the ground teaches you about being useful, staying ready and earning the next call.';
@@ -37,7 +37,7 @@ const BREADCRUMB_JSON_LD = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blogs` },
     { '@type': 'ListItem', position: 3, name: '5 Things I Wish Someone Taught Me Before Getting Into The Sports Industry', item: POST_URL },
   ],
 };
@@ -70,7 +70,7 @@ export default function FiveThingsIWishIKnew() {
         <nav aria-label="Breadcrumb" style={{ fontSize: '13px', color: 'var(--text-faint)', marginBottom: '28px' }}>
           <Link to="/" style={{ color: 'var(--text-faint)' }}>Home</Link>
           <span style={{ margin: '0 8px' }}>/</span>
-          <Link to="/blog" style={{ color: 'var(--text-faint)' }}>Blog</Link>
+          <Link to="/blogs" style={{ color: 'var(--text-faint)' }}>Blog</Link>
           <span style={{ margin: '0 8px' }}>/</span>
           <span style={{ color: 'var(--text-muted)' }}>5 Things I Wish Someone Taught Me Before Getting Into The Sports Industry</span>
         </nav>
