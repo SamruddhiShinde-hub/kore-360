@@ -3,6 +3,7 @@ import { LINKS } from '../../data.js';
 import Reveal from '../../components/Reveal.jsx';
 import PageHeader from '../../components/PageHeader.jsx';
 import PageMeta from '../../components/PageMeta.jsx';
+import coverImage from '../../assets/budget-cover-image.png';
 
 const SITE_URL = 'https://kore360.in';
 const POST_PATH = '/blog/event-budget-planning-where-the-money-goes';
@@ -60,6 +61,8 @@ export default function EventBudgetPlanning() {
         eyebrow="BLOG"
         title="Where Event Budgets Actually Go"
         intro="The line items nobody shows you, and the five places money quietly leaks."
+        bgImage={coverImage}
+        bgImageMobile={coverImage}
       />
 
       <article style={{ maxWidth: '760px', margin: '0 auto', padding: '56px 32px 40px' }}>
