@@ -3,6 +3,7 @@ import { SESSIONS, discountPercent } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import { track, priceToNumber } from '../lib/analytics.js';
+import heroCoverImg from '../assets/ebook-hero.jpg';
 
 const EBOOK = SESSIONS.find((s) => s.sessionId === 'ebook');
 const ACCENT = 'var(--kore-orange-text)';
@@ -63,12 +64,9 @@ export default function Ebook() {
     <>
       <PageMeta title="Behind the Field — E-book" description={EBOOK.desc} path="/education/ebook" />
 
-      <div style={{ position: 'relative', overflow: 'hidden', background: '#000000', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-        <picture>
-          <source media="(max-width: 768px)" srcSet="/hero-bg-mobile.webp" />
-          <img src="/hero-bg-desktop.webp" alt="" aria-hidden="true" style={{ position: 'absolute', inset: '-40px', width: 'calc(100% + 80px)', height: 'calc(100% + 80px)', objectFit: 'cover', display: 'block', zIndex: 0 }} />
-        </picture>
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.25) 65%, rgba(0,0,0,0.75) 100%)', zIndex: 0 }} />
+      <div style={{ position: 'relative', overflow: 'hidden', minHeight: '440px', background: '#000000', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <img src={heroCoverImg} alt="" aria-hidden="true" style={{ position: 'absolute', inset: '-40px', width: 'calc(100% + 80px)', height: 'calc(100% + 80px)', objectFit: 'cover', objectPosition: '100% 12%', display: 'block', zIndex: 0 }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.05) 35%, rgba(0,0,0,0.1) 65%, rgba(0,0,0,0.55) 100%)', zIndex: 0 }} />
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto', padding: '132px 32px 64px' }}>
           <Reveal>
             <div style={{ fontSize: '13px', letterSpacing: '0.18em', fontWeight: 700, backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', marginBottom: '20px' }}>E-BOOK</div>

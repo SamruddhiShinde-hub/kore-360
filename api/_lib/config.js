@@ -77,6 +77,23 @@ export const HOLD_TTL_MINUTES = 15;
 
 export const CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID;
 export const SHEET_ID = process.env.GOOGLE_SHEET_ID;
+
+// Accepts either a plain Google Drive "share" link or an already-direct
+// download URL — Drive's default share link opens a preview page rather
+// than downloading, so this rewrites it into the direct-download form.
+function toDirectDownloadUrl(url) {
+  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+  if (driveMatch) return `https://drive.google.com/uc?export=download&id=${driveMatch[1]}`;
+  return url;
+}
+
+// The e-book PDF is too large to email as an attachment (Gmail's API rejects
+// messages anywhere near this file's size), so purchase/webinar-bonus emails
+// link to it instead of attaching it — see deliverEbookPurchase/
+// deliverWebinarBonusEbook in ebook.js. Set in Vercel's env vars, not
+// hardcoded, so the file can be swapped without a code deploy.
+export const EBOOK_DOWNLOAD_URL = toDirectDownloadUrl(process.env.EBOOK_DOWNLOAD_URL || '');
+
 // Column K holds userPhone, appended after the original A:J layout —
 // appended, not inserted, so historical rows written before phone capture
 // existed stay correctly aligned (see sheet.js COLUMNS).

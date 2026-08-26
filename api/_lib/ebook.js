@@ -1,21 +1,20 @@
-import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
-import path from 'path';
-import { sendEmailWithAttachment, sendNotifyEmail } from './gmail.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const EBOOK_PATH = path.join(__dirname, 'assets', 'behind-the-field-ebook.pdf');
-const EBOOK_FILENAME = 'Behind The Field - Krish Lalwani.pdf';
+import { sendNotifyEmail } from './gmail.js';
+import { EBOOK_DOWNLOAD_URL } from './config.js';
 
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function downloadButtonHtml() {
+  return `<p style="margin: 0 0 20px;"><a href="${EBOOK_DOWNLOAD_URL}" style="background:#1a73e8;color:#fff;padding:10px 16px;border-radius:4px;text-decoration:none;display:inline-block;">Download the e-book</a></p>`;
 }
 
 function buyerEmailHtml(userName) {
   return `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
       <h2 style="margin-bottom: 4px;">Thanks for buying Behind the Field, ${escapeHtml(userName)}!</h2>
-      <p style="margin: 0 0 16px;">Your e-book is attached to this email — Krish's complete playbook for breaking into sports management.</p>
+      <p style="margin: 0 0 16px;">Krish's complete playbook for breaking into sports management is ready for you.</p>
+      ${downloadButtonHtml()}
       <p style="margin: 0;">Any trouble opening it, just reply to this email.</p>
     </div>
   `;
@@ -25,25 +24,26 @@ function webinarBonusEbookEmailHtml(userName) {
   return `
     <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #1a1a1a;">
       <h2 style="margin-bottom: 4px;">As promised, here's your free e-book, ${escapeHtml(userName)}!</h2>
-      <p style="margin: 0 0 16px;">Thanks for registering for the Live Webinar — Krish's e-book, Behind the Field, is attached to this email.</p>
+      <p style="margin: 0 0 16px;">Thanks for registering for the Live Webinar — Krish's e-book, Behind the Field, is ready for you.</p>
+      ${downloadButtonHtml()}
       <p style="margin: 0;">Any trouble opening it, just reply to this email.</p>
     </div>
   `;
 }
 
-// Must be awaited before the booking is marked paid — this attachment IS the
-// product, there's no fallback delivery path if sending it fails.
+// Must be awaited before the booking is marked paid — this download link IS
+// the product, there's no fallback delivery path if sending it fails.
 export async function deliverEbookPurchase({ userName, userEmail }) {
-  const pdf = readFileSync(EBOOK_PATH);
-  await sendEmailWithAttachment({
+  if (!EBOOK_DOWNLOAD_URL) throw new Error('EBOOK_DOWNLOAD_URL is not configured');
+
+  await sendNotifyEmail({
     to: userEmail,
     subject: 'Your e-book: Behind the Field',
     html: buyerEmailHtml(userName),
-    attachment: { filename: EBOOK_FILENAME, content: pdf, mimeType: 'application/pdf' },
   });
 
   // Best-effort — the purchase already succeeded above, so a Gmail hiccup
-  // here shouldn't cause a Razorpay retry (which would resend the PDF).
+  // here shouldn't cause a Razorpay retry (which would resend the link).
   try {
     await sendNotifyEmail({
       subject: `New e-book sale: ${userName}`,
@@ -60,11 +60,11 @@ export async function deliverEbookPurchase({ userName, userEmail }) {
 // booking confirmed, so a Gmail hiccup here shouldn't block or retry the
 // webhook.
 export async function deliverWebinarBonusEbook({ userName, userEmail }) {
-  const pdf = readFileSync(EBOOK_PATH);
-  await sendEmailWithAttachment({
+  if (!EBOOK_DOWNLOAD_URL) throw new Error('EBOOK_DOWNLOAD_URL is not configured');
+
+  await sendNotifyEmail({
     to: userEmail,
     subject: 'Your free e-book: Behind the Field',
     html: webinarBonusEbookEmailHtml(userName),
-    attachment: { filename: EBOOK_FILENAME, content: pdf, mimeType: 'application/pdf' },
   });
 }
