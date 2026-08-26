@@ -2,6 +2,7 @@ import Reveal from './Reveal.jsx';
 import Eyebrow from './Eyebrow.jsx';
 import { openConnectPopup } from './ConnectPopup.jsx';
 import { track } from '../lib/analytics.js';
+import courseImg from '../assets/go-deeper-with-a-course.png';
 
 const ACCENTS = ['var(--kore-gradient)', 'var(--kore-magenta)', 'var(--kore-orange)'];
 
@@ -28,45 +29,51 @@ export default function Courses() {
         </p>
 
         <Reveal
+          className="grid-2col"
           style={{
             position: 'relative', overflow: 'hidden', borderRadius: '20px',
             border: '1px solid rgba(var(--border-rgb),0.12)', background: 'rgba(var(--border-rgb),0.035)',
-            padding: 'clamp(40px,6vw,72px) clamp(24px,5vw,56px)',
-            textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center',
+            display: 'grid', gridTemplateColumns: 'minmax(0,360px) minmax(0,1fr)', alignItems: 'stretch',
           }}
         >
-          <div style={{ position: 'absolute', top: '-120px', left: '-80px', width: '280px', height: '280px', borderRadius: '50%', background: 'var(--kore-magenta)', opacity: 0.18, filter: 'blur(70px)' }} />
-          <div style={{ position: 'absolute', bottom: '-140px', right: '-100px', width: '320px', height: '320px', borderRadius: '50%', background: 'var(--kore-orange)', opacity: 0.16, filter: 'blur(80px)' }} />
-
-          <div style={{ position: 'relative', width: '72px', height: '72px', borderRadius: '18px', background: 'var(--kore-gradient)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '26px', boxShadow: '0 18px 40px rgba(0,0,0,0.35)' }}>
-            <GraduationCapIcon />
+          <div style={{ position: 'relative', minHeight: '320px' }}>
+            <img src={courseImg} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           </div>
 
-          <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', color: 'var(--kore-orange-text)', marginBottom: '18px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--kore-orange)', boxShadow: '0 0 0 4px rgba(var(--border-rgb),0.12)' }} />
-            COMING SOON
-          </div>
+          <div style={{ position: 'relative', padding: 'clamp(40px,6vw,72px) clamp(24px,5vw,56px)', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'left' }}>
+            <div style={{ position: 'absolute', top: '-120px', right: '-80px', width: '280px', height: '280px', borderRadius: '50%', background: 'var(--kore-magenta)', opacity: 0.18, filter: 'blur(70px)' }} />
+            <div style={{ position: 'absolute', bottom: '-140px', right: '-100px', width: '320px', height: '320px', borderRadius: '50%', background: 'var(--kore-orange)', opacity: 0.16, filter: 'blur(80px)' }} />
 
-          <div style={{ position: 'relative', fontWeight: 900, fontSize: 'clamp(24px,3.2vw,34px)', letterSpacing: '-0.01em', lineHeight: 1.15, maxWidth: '620px', marginBottom: '14px' }}>
-            Stay tuned — the courses are being built right now.
-          </div>
-          <p style={{ position: 'relative', fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '480px', margin: '0 0 30px', textAlign: 'center' }}>
-            We're putting together structured, career-ready programs. Leave your details and we'll let you know the moment they're live.
-          </p>
+            <div style={{ position: 'relative', width: '72px', height: '72px', borderRadius: '18px', background: 'var(--kore-gradient)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '26px', boxShadow: '0 18px 40px rgba(0,0,0,0.35)' }}>
+              <GraduationCapIcon />
+            </div>
 
-          <button
-            type="button"
-            onClick={() => { track('waitlist_signup_click', { content_type: 'courses' }); openConnectPopup(); }}
-            className="btn-accent"
-            style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 26px', borderRadius: '8px', cursor: 'pointer', fontFamily: 'inherit', marginBottom: '30px' }}
-          >
-            Notify me when it's live →
-          </button>
+            <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '13px', fontWeight: 700, letterSpacing: '0.14em', color: 'var(--kore-orange-text)', marginBottom: '18px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--kore-orange)', boxShadow: '0 0 0 4px rgba(var(--border-rgb),0.12)' }} />
+              COMING SOON
+            </div>
 
-          <div style={{ position: 'relative', display: 'flex', gap: '10px' }}>
-            {ACCENTS.map((accent, i) => (
-              <span key={i} style={{ width: '28px', height: '4px', borderRadius: '2px', background: accent }} />
-            ))}
+            <div style={{ position: 'relative', fontWeight: 900, fontSize: 'clamp(24px,3.2vw,34px)', letterSpacing: '-0.01em', lineHeight: 1.15, marginBottom: '14px' }}>
+              Stay tuned — the courses are being built right now.
+            </div>
+            <p style={{ position: 'relative', fontSize: '15.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '480px', margin: '0 0 30px', textAlign: 'left' }}>
+              We're putting together structured, career-ready programs. Leave your details and we'll let you know the moment they're live.
+            </p>
+
+            <button
+              type="button"
+              onClick={() => { track('waitlist_signup_click', { content_type: 'courses' }); openConnectPopup(); }}
+              className="btn-accent"
+              style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 26px', borderRadius: '8px', cursor: 'pointer', fontFamily: 'inherit', marginBottom: '30px' }}
+            >
+              Notify me when it's live →
+            </button>
+
+            <div style={{ position: 'relative', display: 'flex', gap: '10px' }}>
+              {ACCENTS.map((accent, i) => (
+                <span key={i} style={{ width: '28px', height: '4px', borderRadius: '2px', background: accent }} />
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
