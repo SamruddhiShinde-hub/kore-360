@@ -5,7 +5,7 @@
 //  pattern as the dedicated Education session pages).
 // ============================================================
 
-import matchDayCoverImg from './assets/what-actually-happens-on-match-day-cover-image.jpg';
+import matchDayCoverImg from './assets/what-actually-happens-on-match-day-cover.jpg';
 
 export const BLOG_POSTS = [
   {

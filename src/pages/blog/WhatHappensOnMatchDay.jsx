@@ -3,7 +3,7 @@ import { LINKS } from '../../data.js';
 import Reveal from '../../components/Reveal.jsx';
 import PageHeader from '../../components/PageHeader.jsx';
 import PageMeta from '../../components/PageMeta.jsx';
-import coverImage from '../../assets/what-actually-happens-on-match-day-cover-image.jpg';
+import coverImage from '../../assets/what-actually-happens-on-match-day-cover.jpg';
 
 const SITE_URL = 'https://kore360.in';
 const POST_PATH = '/blog/what-happens-on-match-day';
