@@ -65,7 +65,7 @@ export default function Ebook() {
       <PageMeta title="Behind the Field — E-book" description={EBOOK.desc} path="/education/ebook" />
 
       <div style={{ position: 'relative', overflow: 'hidden', height: '50vh', minHeight: '420px', background: '#000000', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-        <img src={heroCoverImg} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block', zIndex: 0 }} />
+        <img src={heroCoverImg} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block', zIndex: 0 }} />
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 35%, rgba(0,0,0,0.2) 65%, rgba(0,0,0,0.6) 100%)', zIndex: 0 }} />
         <div style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', margin: '0 auto', padding: '132px 32px 64px' }}>
           <Reveal>
