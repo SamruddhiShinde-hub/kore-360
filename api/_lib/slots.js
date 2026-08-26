@@ -1,4 +1,4 @@
-import { AVAILABILITY, BLOCKED_DATES, CLARITY_FIXED_HOURS, HOLD_TTL_MINUTES, MANUAL_BOOKED_HOURS, getSession, getSlotStepMinutes } from './config.js';
+import { AVAILABILITY, BLOCKED_DATES, CLARITY_FIXED_HOURS, HOLD_TTL_MINUTES, getFakeBookedHours, getSession, getSlotStepMinutes } from './config.js';
 import { getBusyIntervals } from './calendar.js';
 import { getActiveHolds } from './sheet.js';
 
@@ -56,6 +56,9 @@ function generateDaySlotsDetailed({ dateStr, sessionId, session, busy, activeHol
     for (let start = windowStart; start + durationMs <= windowEnd; start += stepMs) candidateStarts.push(start);
   }
 
+  // Fake "already booked" hours for social proof — Clarity Call only.
+  const fakeBookedHours = sessionId === 'clarity' ? getFakeBookedHours(dateStr) : [];
+
   const slots = [];
   for (const start of candidateStarts) {
     const end = start + durationMs;
@@ -63,9 +66,9 @@ function generateDaySlotsDetailed({ dateStr, sessionId, session, busy, activeHol
 
     const blockedByCalendar = busy.some((b) => overlaps(start, end, new Date(b.start).getTime(), new Date(b.end).getTime()));
     const blockedByHold = !blockedByCalendar && activeHolds.some((h) => overlaps(start, end, new Date(h.slotStart).getTime(), new Date(h.slotEnd).getTime()));
-    const blockedManually = (MANUAL_BOOKED_HOURS[dateStr] || []).includes(istHour(start));
+    const blockedByFakeBooking = fakeBookedHours.includes(istHour(start));
 
-    slots.push({ time: new Date(start).toISOString(), booked: blockedByCalendar || blockedByHold || blockedManually });
+    slots.push({ time: new Date(start).toISOString(), booked: blockedByCalendar || blockedByHold || blockedByFakeBooking });
   }
   return slots;
 }

@@ -49,29 +49,35 @@ export const CLARITY_FIXED_HOURS = [9, 11, 15, 19, 21]; // 9am, 11am, 3pm, 7pm, 
 // unaffected (it's a single fixedStart slot, not this rolling grid).
 export const BLOCKED_DATES = ['2026-08-03'];
 
-// Manually block off specific IST hours on specific dates for the Clarity
-// Call / Q&A grid, on top of whatever the live Calendar/holds already block —
-// for calls Krish booked through other platforms that never touch this
-// Calendar. Keys are IST calendar dates, values are hours-of-day (24h,
-// matching CLARITY_FIXED_HOURS) to mark as booked. 2026-08-15 is fully booked
-// out; the rest have a partial mix.
-export const MANUAL_BOOKED_HOURS = {
-  '2026-08-12': [19],
-  '2026-08-13': [9, 21],
-  '2026-08-14': [11],
-  '2026-08-15': [9, 11, 15, 19, 21],
-  '2026-08-16': [15, 19],
-  '2026-08-17': [9],
-  '2026-08-18': [11, 21],
-  '2026-08-19': [19],
-  '2026-08-20': [9, 15],
-  '2026-08-21': [21],
-  '2026-08-22': [9, 11, 19],
-  '2026-08-23': [15],
-  '2026-08-24': [11, 21],
-  '2026-08-25': [9, 19],
-  '2026-08-26': [15, 21],
-};
+// Tiny deterministic PRNG seeded from a string — same seed always produces
+// the same sequence, so "randomly booked" hours stay stable across repeat
+// requests/reloads for a given date instead of reshuffling every time.
+function seededRandom(seed) {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) {
+    h = (Math.imul(31, h) + seed.charCodeAt(i)) | 0;
+  }
+  return () => {
+    h = (Math.imul(1103515245, h) + 12345) | 0;
+    return ((h >>> 0) % 100000) / 100000;
+  };
+}
+
+// Fake "already booked" hours shown on the Clarity Call grid for social
+// proof/urgency — not real bookings (those come from the live Calendar/holds
+// check in slots.js). Deterministically randomized per date instead of a
+// hand-curated list, so it keeps working on future dates without upkeep.
+// 1-3 of CLARITY_FIXED_HOURS come back marked booked for any given date.
+export function getFakeBookedHours(dateStr) {
+  const rand = seededRandom(dateStr);
+  const pool = [...CLARITY_FIXED_HOURS];
+  const count = 1 + Math.floor(rand() * 3);
+  const picked = [];
+  for (let i = 0; i < count && pool.length; i++) {
+    picked.push(pool.splice(Math.floor(rand() * pool.length), 1)[0]);
+  }
+  return picked;
+}
 
 export const HOLD_TTL_MINUTES = 15;
 
