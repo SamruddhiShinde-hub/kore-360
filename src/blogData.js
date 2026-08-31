@@ -8,8 +8,18 @@
 import matchDayCoverImg from './assets/what-actually-happens-on-match-day-cover.jpg';
 import budgetCoverImg from './assets/budget-cover-image.png';
 import fiveThingsCoverImg from './assets/5-things-I-wish-someone-taugh-me-cover-image.jpg';
+import internshipsCoverImg from './assets/sports-internships-cover.jpg';
 
 export const BLOG_POSTS = [
+  {
+    slug: 'sports-management-internships-india',
+    title: 'Sports Management Internships in India: Every Real Way to Get One',
+    subtitle: 'IPL, BCCI, ISL and beyond — how the internships that actually matter get filled.',
+    excerpt: 'Every real way to land a sports management internship in India — match day operations, franchises, BCCI and state associations, broadcast houses and sponsorship agencies — from someone who has worked 500+ matches across 20+ leagues.',
+    date: '2026-08-31',
+    author: 'Krish Lalwani',
+    cover: internshipsCoverImg,
+  },
   {
     slug: '5-things-i-wish-i-knew-before-sports-industry',
     title: '5 Things I Wish Someone Taught Me Before Getting Into The Sports Industry',

@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node generate-sitemap.js",
     "build": "vite build",
+    "postbuild": "node push-indexnow.js",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -17,12 +17,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://kore360.in/about</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://kore360.in/blogs</loc>
+    <lastmod>2026-08-31</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kore360.in/blogs/what-happens-on-match-day</loc>
-    <lastmod>2026-08-18</lastmod>
+    <loc>https://kore360.in/blogs/sports-management-internships-india</loc>
+    <lastmod>2026-08-31</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/blogs/5-things-i-wish-i-knew-before-sports-industry</loc>
+    <lastmod>2026-08-26</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
@@ -31,8 +41,8 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kore360.in/blogs/5-things-i-wish-i-knew-before-sports-industry</loc>
-    <lastmod>2026-08-26</lastmod>
+    <loc>https://kore360.in/blogs/what-happens-on-match-day</loc>
+    <lastmod>2026-08-18</lastmod>
     <priority>0.7</priority>
   </url>
 </urlset>

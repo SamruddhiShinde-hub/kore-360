@@ -22,6 +22,7 @@ const Blog = lazy(() => import('./pages/Blog.jsx'));
 const WhatHappensOnMatchDay = lazy(() => import('./pages/blog/WhatHappensOnMatchDay.jsx'));
 const EventBudgetPlanning = lazy(() => import('./pages/blog/EventBudgetPlanning.jsx'));
 const FiveThingsIWishIKnew = lazy(() => import('./pages/blog/FiveThingsIWishIKnew.jsx'));
+const SportsManagementInternshipsIndia = lazy(() => import('./pages/blog/SportsManagementInternshipsIndia.jsx'));
 
 export default function App() {
   useEffect(() => {
@@ -50,6 +51,7 @@ export default function App() {
             <Route path="/blogs/what-happens-on-match-day" element={<WhatHappensOnMatchDay />} />
             <Route path="/blogs/event-budget-planning-where-the-money-goes" element={<EventBudgetPlanning />} />
             <Route path="/blogs/5-things-i-wish-i-knew-before-sports-industry" element={<FiveThingsIWishIKnew />} />
+            <Route path="/blogs/sports-management-internships-india" element={<SportsManagementInternshipsIndia />} />
             {/* Old top-level paths — keep working for anyone with an existing bookmark/shared link.
                 /blog(/*) itself 301s at the edge (see vercel.json) before it ever reaches here. */}
             <Route path="/live-webinar" element={<Navigate to="/education/live-webinar" replace />} />
