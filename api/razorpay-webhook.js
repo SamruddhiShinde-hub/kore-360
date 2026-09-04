@@ -105,7 +105,7 @@ export default async function handler(req, res) {
 
       if (booking.sessionId === 'ebook') {
         // No slot, no Calendar event — just deliver the PDF and stop.
-        await deliverEbookPurchase({ userName: booking.userName, userEmail: booking.userEmail });
+        await deliverEbookPurchase({ userName: booking.userName, userEmail: booking.userEmail, holdId });
         await updateBookingRow(booking._rowNumber, { status: 'paid', userPhone: phone });
         return res.status(200).end();
       }
@@ -178,7 +178,7 @@ export default async function handler(req, res) {
       // calendar event above failed — must go out regardless.
       if (isWebinar) {
         try {
-          await deliverWebinarBonusEbook({ userName: booking.userName, userEmail: booking.userEmail });
+          await deliverWebinarBonusEbook({ userName: booking.userName, userEmail: booking.userEmail, holdId });
           console.log(`webinar bonus e-book sent to ${booking.userEmail}`);
         } catch (err) {
           console.error('failed to send webinar bonus e-book', err);
