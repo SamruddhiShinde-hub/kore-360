@@ -19,7 +19,7 @@ export default function Sessions() {
           Pick how you learn
         </Reveal>
         <p style={{ fontSize: '17px', lineHeight: 1.55, color: 'var(--text-muted)', maxWidth: '560px', margin: '0 0 48px', textAlign: 'justify' }}>
-          From a ₹99 read to a 1:1 game plan: start wherever you are.
+          From a ₹49 read to a 1:1 game plan: start wherever you are.
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(248px,1fr))', gap: '18px' }}>
           {SESSIONS.map((s, i) => (

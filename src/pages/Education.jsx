@@ -16,13 +16,13 @@ export default function Education() {
     <>
       <PageMeta
         title="Education: E-Book, Webinar, Q&A and Clarity Calls"
-        description="Learn how sports management hiring actually works, from a ₹99 e-book to a 1:1 clarity call with Krish Lalwani. Pick the format that fits how you learn."
+        description="Learn how sports management hiring actually works, from a ₹49 e-book to a 1:1 clarity call with Krish Lalwani. Pick the format that fits how you learn."
         path="/education"
       />
       <PageHeader
         eyebrow="EDUCATION"
         title="Learn how the industry actually works"
-        intro="From a ₹99 read to a 1:1 game plan with Krish: four ways to get the real picture of how sports management hiring actually works, in as much or as little time as you've got."
+        intro="From a ₹49 read to a 1:1 game plan with Krish: four ways to get the real picture of how sports management hiring actually works, in as much or as little time as you've got."
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '48px 32px 96px' }}>
         <div className="education-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
