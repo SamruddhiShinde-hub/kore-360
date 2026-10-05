@@ -213,8 +213,8 @@ export const COURSES = [
 
 // ---- Careers ----
 export const CAREERS = [
-  { tag: 'GET YOUR FOOT IN', role: 'Internships', desc: 'Hands-on internship roles across teams, agencies, leagues and events. Pick your track and apply through the form.', cta: 'Apply for an internship', href: '#' },
-  { tag: 'FULL-TIME ROLES', role: 'Jobs', desc: "Vetted full-time openings with partners across the sports industry. Tell us what you're after.", cta: 'Browse job openings', href: '#' },
+  { tag: 'GET YOUR FOOT IN', role: 'Internships', desc: 'Hands-on internship roles across teams, agencies, leagues and events. Pick your track and apply through the form.', cta: 'Apply for an internship', href: 'https://forms.gle/KDkKkW1QRkoK2TWM6' },
+  { tag: 'FULL-TIME ROLES', role: 'Jobs', desc: "Vetted full-time openings with partners across the sports industry. Tell us what you're after.", cta: 'Browse job openings', href: 'https://forms.gle/KDkKkW1QRkoK2TWM6' },
 ];
 
 // ---- Events ----
