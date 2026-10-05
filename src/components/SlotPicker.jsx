@@ -28,7 +28,7 @@ function periodOf(iso) {
 }
 
 // Real day/time picker (day-strip + Morning/Midday/Evening filter) shared by
-// every individually-scheduled session page (Clarity Call, Q&A) — same
+// every individually-scheduled session page (Clarity Call) — same
 // availability window, same mechanics. The Clarity Call is the one exception:
 // it only ever offers CLARITY_FIXED_HOURS (see api/_lib/config.js), so for it
 // this renders a flat list of those slots instead of the period tabs.

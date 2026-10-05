@@ -12,14 +12,13 @@ export const SESSIONS = {
   // and create-hold both refuse it, regardless of what the frontend shows.
   // Flip back to false (or drop the field) to reopen booking.
   webinar: { name: 'Live Webinar', durationMinutes: 60, amountPaise: 49900, fixedStart: '2026-08-08T17:00:00+05:30', soldOut: true },
-  qna: { name: '1:1 Q&A Call', durationMinutes: 10, amountPaise: 29900 },
   // ₹1,499 is the regular price everyone sees and pays by default (down
   // from a ₹1,999 list price) — see getAmountPaise below for the deeper
   // ₹999 coupon rate on top of this.
   clarity: { name: 'Clarity Call', durationMinutes: 30, amountPaise: 149900 },
   // No slot/Calendar component at all — a straight digital-product purchase
   // fulfilled by emailing the PDF (see razorpay-webhook.js + gmail.js).
-  ebook: { name: 'Behind the Field (E-book)', amountPaise: 4900 },
+  ebook: { name: 'Behind the Field (E-book)', amountPaise: 9900 },
 };
 
 // Deterministic Calendar event ID for the shared webinar event — lets
@@ -39,12 +38,11 @@ export const AVAILABILITY = {
 };
 
 // The Clarity Call no longer offers a rolling 30-min grid — just these fixed
-// IST start times per day (see generateDaySlots in slots.js). Q&A is
-// unaffected and keeps the regular stepped grid.
+// IST start times per day (see generateDaySlots in slots.js).
 export const CLARITY_FIXED_HOURS = [9, 11, 15, 19, 21]; // 9am, 11am, 3pm, 7pm, 9pm
 
 // IST calendar dates with zero bookable slots for any non-fixed session
-// (Q&A, Clarity Call) — e.g. Krish is unavailable, or a date is deliberately
+// (Clarity Call) — e.g. Krish is unavailable, or a date is deliberately
 // closed to push bookings toward the flash-price window. The webinar is
 // unaffected (it's a single fixedStart slot, not this rolling grid).
 export const BLOCKED_DATES = ['2026-08-03'];
@@ -131,13 +129,6 @@ export function getAmountPaise(sessionId, couponCode) {
   return session.amountPaise;
 }
 
-// The Q&A call is shorter than the Clarity Call (10 min vs 30), but the two
-// should still offer identical start times on their booking pages — so the
-// Q&A grid steps in Clarity-sized increments instead of its own duration.
-// The call itself still only occupies its real 10 minutes on the calendar
-// (see generateDaySlots' use of session.durationMinutes for that half), so
-// a slot only disappears from the Q&A grid once it's actually booked.
 export function getSlotStepMinutes(sessionId) {
-  if (sessionId === 'qna') return SESSIONS.clarity.durationMinutes;
   return getSession(sessionId).durationMinutes;
 }

@@ -122,7 +122,7 @@ export const MARQUEE = [
 // `details` powers the expanded breakdown on the Education page; the homepage cards only use the fields above it.
 export const SESSIONS = [
   {
-    tag: 'E-BOOK', name: 'Behind the Field', price: '₹49', originalPrice: '₹199', promoActive: true, meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', sessionId: 'ebook',
+    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', originalPrice: '₹199', promoActive: true, meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', sessionId: 'ebook',
     details: {
       format: 'Instant PDF download',
       whoFor: "Anyone starting from zero who wants the full map before spending on a call",
@@ -147,15 +147,6 @@ export const SESSIONS = [
       whoFor: 'People who want the bigger picture of how hiring actually works in sport, beyond the entry-level playbook',
       includes: ['How teams, leagues and agencies actually hire', 'What recruiters screen for first', 'Common mistakes that get applications rejected', 'Live audience polls and real examples'],
       outcome: 'Leave the session with a clear, realistic picture of what hiring managers in sport are actually looking for.',
-    },
-  },
-  {
-    tag: 'Q&A', name: '1:1 Q&A Call', price: '₹299', originalPrice: '₹499', promoActive: true, meta: '10 min · Audio call', desc: 'Ten minutes, audio only, just you and me. Bring your questions, leave with answers.', cta: 'Book a Q&A', sessionId: 'qna',
-    details: {
-      format: '10-minute 1:1 audio call',
-      whoFor: "Anyone with specific, pointed questions who doesn't need a full strategy session",
-      includes: ['Direct answers to your specific questions', 'No script, just a conversation', 'A quick gut-check on a decision you’re weighing'],
-      outcome: 'Get unstuck on the one or two questions that have been sitting in your head.',
     },
   },
   {

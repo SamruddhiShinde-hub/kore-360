@@ -28,7 +28,7 @@ export async function getBusyIntervals(timeMinISO, timeMaxISO) {
 
 // Creates a single-attendee booking event with an auto-generated Google Meet
 // link, and invites the customer + notify address via Google's own invite
-// email. Used for qna/clarity: each booking gets its own dedicated event, so
+// email. Used for clarity: each booking gets its own dedicated event, so
 // there's never anyone else on it to accidentally notify — sendUpdates:'all'
 // here only ever reaches the one buyer (+ Krish).
 //

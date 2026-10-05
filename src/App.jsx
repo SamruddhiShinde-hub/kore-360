@@ -18,7 +18,6 @@ const LiveWebinar = lazy(() => import('./pages/LiveWebinar.jsx'));
 const ClarityCall = lazy(() => import('./pages/ClarityCall.jsx'));
 const Ebook = lazy(() => import('./pages/Ebook.jsx'));
 const EbookReader = lazy(() => import('./pages/EbookReader.jsx'));
-const QnaCall = lazy(() => import('./pages/QnaCall.jsx'));
 const Blog = lazy(() => import('./pages/Blog.jsx'));
 const WhatHappensOnMatchDay = lazy(() => import('./pages/blog/WhatHappensOnMatchDay.jsx'));
 const EventBudgetPlanning = lazy(() => import('./pages/blog/EventBudgetPlanning.jsx'));
@@ -54,7 +53,7 @@ export default function App() {
             <Route path="/education/clarity-call" element={<ClarityCall />} />
             <Route path="/education/ebook" element={<Ebook />} />
             <Route path="/education/ebook/read" element={<EbookReader />} />
-            <Route path="/education/qa-call" element={<QnaCall />} />
+            <Route path="/education/qa-call" element={<Navigate to="/education" replace />} />
             <Route path="/blogs" element={<Blog />} />
             <Route path="/blogs/what-happens-on-match-day" element={<WhatHappensOnMatchDay />} />
             <Route path="/blogs/event-budget-planning-where-the-money-goes" element={<EventBudgetPlanning />} />
@@ -65,7 +64,7 @@ export default function App() {
             <Route path="/live-webinar" element={<Navigate to="/education/live-webinar" replace />} />
             <Route path="/clarity-call" element={<Navigate to="/education/clarity-call" replace />} />
             <Route path="/ebook" element={<Navigate to="/education/ebook" replace />} />
-            <Route path="/qa-call" element={<Navigate to="/education/qa-call" replace />} />
+            <Route path="/qa-call" element={<Navigate to="/education" replace />} />
             <Route path="*" element={<Home />} />
           </Routes>
         </Suspense>

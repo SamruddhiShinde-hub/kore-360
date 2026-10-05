@@ -7,7 +7,7 @@ import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
-const DEDICATED_PAGES = { webinar: '/education/live-webinar', clarity: '/education/clarity-call', ebook: '/education/ebook', qna: '/education/qa-call' };
+const DEDICATED_PAGES = { webinar: '/education/live-webinar', clarity: '/education/clarity-call', ebook: '/education/ebook' };
 
 export default function Education() {
   const [booking, setBooking] = useState(null);
@@ -15,14 +15,14 @@ export default function Education() {
   return (
     <>
       <PageMeta
-        title="Education: E-Book, Webinar, Q&A and Clarity Calls"
-        description="Learn how sports management hiring actually works, from a ₹49 e-book to a 1:1 clarity call with Krish Lalwani. Pick the format that fits how you learn."
+        title="Education: E-Book, Webinar and Clarity Calls"
+        description="Learn how sports management hiring actually works, from a ₹99 e-book to a 1:1 clarity call with Krish Lalwani. Pick the format that fits how you learn."
         path="/education"
       />
       <PageHeader
         eyebrow="EDUCATION"
         title="Learn how the industry actually works"
-        intro="From a ₹49 read to a 1:1 game plan with Krish: four ways to get the real picture of how sports management hiring actually works, in as much or as little time as you've got."
+        intro="From a ₹99 read to a 1:1 game plan with Krish: three ways to get the real picture of how sports management hiring actually works, in as much or as little time as you've got."
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '48px 32px 96px' }}>
         <div className="education-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>

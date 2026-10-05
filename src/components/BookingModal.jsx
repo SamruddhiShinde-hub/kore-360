@@ -57,7 +57,7 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
   const clarityPricing = sessionId === 'clarity' ? getClarityPricing(couponCode) : null;
   const displayPrice = clarityPricing ? clarityPricing.price : price;
 
-  // Non-clarity sessions (Q&A, e-book) carry a static promo on their SESSIONS
+  // Non-clarity sessions (e-book) carry a static promo on their SESSIONS
   // entry instead of clarity's date-dependent one — fall back to that so the
   // modal shows the same strikethrough/badge as the page it was opened from.
   const staticSession = !clarityPricing ? SESSIONS.find((s) => s.sessionId === sessionId) : null;
