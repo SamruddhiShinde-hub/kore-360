@@ -25,7 +25,7 @@ export default function Education() {
         intro="From a ₹99 read to a 1:1 game plan with Krish: three ways to get the real picture of how sports management hiring actually works, in as much or as little time as you've got."
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '48px 32px 96px' }}>
-        <div className="education-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+        <div className="education-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>
           {SESSIONS.map((s, i) => {
             const accent = CARD_COLORS[i % CARD_COLORS.length];
             const shortMeta = s.meta.split('·').slice(0, 2).join(' · ');

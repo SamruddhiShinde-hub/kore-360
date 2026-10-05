@@ -147,8 +147,8 @@ a { text-decoration: none; }
   }
 }
 
-/* ---- education page: keep the 4 options in a 2x2 grid so they're all
-   visible without scrolling through one giant card at a time on mobile ---- */
+/* ---- education page: options stack one below the other; compact the
+   cards on mobile so they're all visible without much scrolling ---- */
 @media (max-width: 600px) {
   .education-grid { gap: 10px !important; }
   .education-card { padding: 12px !important; border-radius: 12px !important; }
