@@ -92,7 +92,7 @@ export default function About() {
                 href={LINKS.krishInstagram} target="_blank" rel="noreferrer" className="btn-outline"
                 style={{ display: 'inline-flex', alignItems: 'center', marginTop: '32px', fontSize: '15px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.25)', padding: '13px 22px', borderRadius: '8px' }}
               >
-                Follow Krish on Instagram →
+                Instagram →
               </a>
             </div>
 
