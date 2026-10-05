@@ -82,7 +82,8 @@ export const HERO_VARIANT = 'centered';
 export const LINKS = {
   bookCall: 'https://superprofile.bio/bookings/krishlalwaniofficial?sessionId=699dc00d94cdda00134ba9a0',
   ebook: 'https://superprofile.bio/vp/behind-the-field---krish-lalwani-697',
-  instagram: 'https://www.instagram.com/krishlalwaniofficial/',
+  instagram: 'https://www.instagram.com/kore360.in/',
+  krishInstagram: 'https://www.instagram.com/krishlalwaniofficial/',
   event: '#',
   phone: '+91 91754 12117',
   phoneTel: 'tel:+919175412117',

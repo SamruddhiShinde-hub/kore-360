@@ -88,6 +88,12 @@ export default function About() {
               <p style={{ fontSize: '16.5px', lineHeight: 1.65, fontStyle: 'italic', color: 'var(--text-muted)', borderLeft: '2px solid var(--kore-orange)', paddingLeft: '18px', margin: '32px 0 0' }}>
                 That's the engine KORE360 runs on: someone who has actually done the job, accountable for every brief that comes through the door.
               </p>
+              <a
+                href={LINKS.krishInstagram} target="_blank" rel="noreferrer" className="btn-outline"
+                style={{ display: 'inline-flex', alignItems: 'center', marginTop: '32px', fontSize: '15px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.25)', padding: '13px 22px', borderRadius: '8px' }}
+              >
+                Follow Krish on Instagram →
+              </a>
             </div>
 
             <div>

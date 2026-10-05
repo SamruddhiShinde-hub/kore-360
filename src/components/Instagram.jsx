@@ -25,7 +25,7 @@ export default function Instagram() {
     <section id="instagram" style={{ borderBottom: '1px solid rgba(var(--border-rgb),0.08)', background: 'var(--surface)' }}>
       <div style={{ maxWidth: '760px', margin: '0 auto', padding: '92px 32px', textAlign: 'center' }}>
         <Reveal>
-          <div style={{ fontWeight: 900, fontSize: 'clamp(30px,5vw,52px)', letterSpacing: '-0.02em', marginBottom: '16px' }}>@krishlalwaniofficial</div>
+          <div style={{ fontWeight: 900, fontSize: 'clamp(30px,5vw,52px)', letterSpacing: '-0.02em', marginBottom: '16px' }}>@kore360.in</div>
           <a href={LINKS.instagram} target="_blank" rel="noreferrer" className="foot-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: 700, color: 'var(--kore-orange-text)', marginBottom: '44px' }}>
             <InstagramIcon /> Follow for more
           </a>

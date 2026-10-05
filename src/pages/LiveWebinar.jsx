@@ -129,7 +129,7 @@ export default function LiveWebinar() {
               <img src={IMAGES.heroCentered} alt="Krish Lalwani" style={{ width: '56px', height: '56px', borderRadius: '50%', objectFit: 'cover' }} />
               <div>
                 <div style={{ fontWeight: 800, fontSize: '16px' }}>Krish Lalwani</div>
-                <a href={LINKS.instagram} target="_blank" rel="noreferrer" style={{ fontSize: '13px', color: ACCENT, fontWeight: 600 }}>@krishlalwaniofficial</a>
+                <a href={LINKS.instagram} target="_blank" rel="noreferrer" style={{ fontSize: '13px', color: ACCENT, fontWeight: 600 }}>@kore360.in</a>
               </div>
             </div>
             <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'var(--text-muted)', maxWidth: '560px', margin: 0, textAlign: 'justify' }}>
