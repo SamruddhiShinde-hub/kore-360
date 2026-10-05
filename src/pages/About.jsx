@@ -14,6 +14,16 @@ const PROPERTIES = [
   'Khelo India',
 ];
 
+function InstagramIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+    </svg>
+  );
+}
+
 const pillStyle = {
   fontSize: '14px', fontWeight: 700, letterSpacing: '0.02em',
   color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.18)',
@@ -89,10 +99,10 @@ export default function About() {
                 That's the engine KORE360 runs on: someone who has actually done the job, accountable for every brief that comes through the door.
               </p>
               <a
-                href={LINKS.krishInstagram} target="_blank" rel="noreferrer" className="btn-outline"
-                style={{ display: 'inline-flex', alignItems: 'center', marginTop: '32px', fontSize: '15px', fontWeight: 700, color: 'var(--text)', border: '1px solid rgba(var(--border-rgb),0.25)', padding: '13px 22px', borderRadius: '8px' }}
+                href={LINKS.krishInstagram} target="_blank" rel="noreferrer" className="btn-accent"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '32px', fontSize: '16px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', padding: '15px 26px', borderRadius: '8px' }}
               >
-                Instagram →
+                Instagram <InstagramIcon />
               </a>
             </div>
 
