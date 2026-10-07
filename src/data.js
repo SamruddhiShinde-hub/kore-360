@@ -85,9 +85,9 @@ export const LINKS = {
   instagram: 'https://www.instagram.com/kore360.in/',
   krishInstagram: 'https://www.instagram.com/krishlalwaniofficial/',
   event: '#',
-  phone: '+91 91754 12117',
-  phoneTel: 'tel:+919175412117',
-  whatsapp: 'https://wa.me/919175412117',
+  phone: '+91 95452 29974',
+  phoneTel: 'tel:+919545229974',
+  whatsapp: 'https://wa.me/919545229974',
   decathlonForm: 'https://forms.gle/U4p4S2Fpon1RGcPb6',
   email: 'work.krishlalwani@gmail.com',
 };
