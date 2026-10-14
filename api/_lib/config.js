@@ -132,3 +132,14 @@ export function getAmountPaise(sessionId, couponCode) {
 export function getSlotStepMinutes(sessionId) {
   return getSession(sessionId).durationMinutes;
 }
+
+// Sports & League Management enquiries (Management page → "Tell Us About
+// Your League"). B2B event leads, kept apart from the "Let's connect" rows
+// and from every education booking/purchase. Defaults to a dedicated
+// "League Enquiries" tab inside the connect-leads spreadsheet above — that
+// tab (with a header row) has to exist, or appends to it fail. Set
+// LEAGUE_LEADS_SHEET_ID to route them to a different spreadsheet instead.
+export const LEAGUE_LEADS_SHEET_ID = process.env.LEAGUE_LEADS_SHEET_ID || CONNECT_LEADS_SHEET_ID;
+export const LEAGUE_LEADS_SHEET_RANGE = "'League Enquiries'!A:T";
+// Defaults to the same inbox as booking alerts; override per environment.
+export const LEAGUE_NOTIFY_EMAIL = process.env.LEAGUE_NOTIFY_EMAIL || NOTIFY_EMAIL;

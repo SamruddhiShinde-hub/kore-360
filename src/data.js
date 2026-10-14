@@ -161,31 +161,125 @@ export const SESSIONS = [
   },
 ];
 
-// ---- Management page: sponsorships & hospitality ----
-export const MANAGEMENT_SERVICES = [
+// ---- Management page: CORE / LAUNCH / SCALE league engagement models ----
+// Engagement models, not priced packages — no price, tier or "most popular"
+// field belongs on these. `preview` is how many `deliverables` show before
+// "Explore scope"; the rest, the framework and the outcome sit behind it.
+export const LEAGUE_ENGAGEMENTS = [
   {
-    tag: 'SPONSORSHIPS',
-    title: 'Sponsorship sourcing & negotiation',
-    desc: 'Connect teams, athletes and events with the right brand partners, and structure deals that actually deliver for both sides.',
-    points: [
-      'Identify and approach brands that fit your audience',
-      'Structure sponsorship packages and deliverables',
-      'Negotiate terms, activation rights and renewals',
-      'Manage the relationship once the deal is signed',
+    id: 'core',
+    name: 'CORE',
+    descriptor: 'Plan & Prepare',
+    role: 'Strategic Partner',
+    headline: 'Get your league ready to execute.',
+    desc: 'We work with your team to understand the league, identify what it needs and build a clear roadmap forward.',
+    framework: [
+      { letter: 'C', word: 'Clarity', question: 'What are we working with?', detail: 'Review the league, objectives, existing structure and priorities.' },
+      { letter: 'O', word: 'Opportunity', question: 'Where can we create more value?', detail: 'Explore audience, revenue, sponsorship and partnership opportunities.' },
+      { letter: 'R', word: 'Roadmap', question: 'What will it take?', detail: 'Plan budgets, timelines, resources, vendors and manpower.' },
+      { letter: 'E', word: 'Equip', question: 'What does your team need to take it forward?', detail: 'Prepare action plans, SOPs, checklists, templates and next steps.' },
     ],
+    deliverablesLabel: 'What KORE 360 delivers',
+    deliverables: [
+      'League review and gap assessment',
+      'Operating blueprint',
+      'Budget framework',
+      'Commercial roadmap',
+      'Manpower and vendor requirements',
+      'SOPs and execution toolkit',
+      'Management workshop and handover',
+    ],
+    preview: 5,
+    note: 'Your team stays responsible for on-ground execution unless separately agreed.',
+    outcome: 'Your team knows what to do, who needs to do it and what it will take.',
+    footer: 'Strategy & Consulting',
   },
   {
-    tag: 'HOSPITALITY',
-    title: 'Match-day hospitality & guest experience',
-    desc: 'Plan and run the hospitality side of live sport: corporate boxes, VIP guests and partner entertainment.',
-    points: [
-      'Guest lists, invites and accreditation',
-      'Corporate box and lounge experience design',
-      'On-ground coordination on match day',
-      'Post-event reporting back to sponsors and partners',
+    id: 'launch',
+    name: 'LAUNCH',
+    descriptor: 'Implement & Deliver',
+    role: 'Execution Partner',
+    headline: 'From ready to running.',
+    desc: 'Everything built in CORE now moves into implementation, with KORE 360 actively involved in coordination, deployment and execution.',
+    framework: [
+      { letter: 'L', word: 'Lay the groundwork', detail: 'Convert the blueprint into a working event plan.' },
+      { letter: 'A', word: 'Align', detail: 'Coordinate teams, partners, vendors and timelines.' },
+      { letter: 'U', word: 'Unify', detail: 'Bring the agreed moving parts under one management structure.' },
+      { letter: 'N', word: 'Navigate', detail: 'Manage approvals, dependencies and changes.' },
+      { letter: 'C', word: 'Command', detail: 'Take responsibility for agreed on-ground execution activities.' },
+      { letter: 'H', word: 'Handover', detail: 'Report, review, learn and improve.' },
     ],
+    deliverablesLabel: 'Everything in CORE, plus',
+    deliverables: [
+      'Implementation planning',
+      'Vendor coordination',
+      'Stakeholder management',
+      'Defined KORE 360 project-team deployment',
+      'Manpower coordination',
+      'Agreed on-ground execution responsibilities',
+      'Live operational coordination',
+      'Post-event review and reporting',
+    ],
+    preview: 5,
+    note: 'Deployment, event dates, deliverables, responsibilities and team size follow the agreed project scope.',
+    outcome: 'KORE 360 moves from the plan into delivery.',
+    footer: 'Strategy & Execution',
+  },
+  {
+    id: 'scale',
+    name: 'SCALE',
+    descriptor: 'Operate & Grow',
+    role: 'Operating Partner',
+    headline: 'When KORE 360 becomes part of the business.',
+    desc: 'SCALE begins when the engagement moves beyond a defined event execution mandate into deeper league operations, commercial development and long-term growth.',
+    framework: [
+      { letter: 'S', word: 'Strategy', detail: 'Season planning, business priorities and a growth roadmap.' },
+      { letter: 'C', word: 'Commercial', detail: 'Revenue strategy, sponsorship and commercial partnerships.' },
+      { letter: 'A', word: 'Activate', detail: 'Turn strategy and commercial plans into delivery.' },
+      { letter: 'L', word: 'Lead', detail: 'Coordinate operations, teams, vendors, partners and locations.' },
+      { letter: 'E', word: 'Evolve', detail: 'Review performance, optimise operations and plan future growth.' },
+    ],
+    deliverablesLabel: 'SCALE can expand across',
+    deliverables: [
+      'Multiple cities and venues',
+      'Longer engagement periods',
+      'Larger KORE 360 team deployment',
+      'Season operations',
+      'Sponsorship and revenue',
+      'Commercial partnerships',
+      'Fan and hospitality experiences',
+      'Central management',
+    ],
+    preview: 5,
+    note: 'A custom engagement, shaped by the business requirements of the league. The league and its IP remain yours.',
+    outcome: "We're no longer just delivering a scope. We're working with you on the league.",
+    footer: 'Operating & Commercial Partnership',
+    tag: 'Custom Engagement',
   },
 ];
+
+// No pricing row, by design — see LEAGUE_ENGAGEMENTS above.
+export const LEAGUE_COMPARISON = [
+  { area: 'Role', core: 'Strategic Partner', launch: 'Execution Partner', scale: 'Operating Partner' },
+  { area: 'Strategy', core: 'Included', launch: 'Included', scale: 'Included' },
+  { area: 'Operating Blueprint', core: 'Included', launch: 'Included', scale: 'Included' },
+  { area: 'Implementation', core: 'Client Team', launch: 'KORE 360 + Client', scale: 'Integrated' },
+  { area: 'Team Deployment', core: 'Strategy Team', launch: 'Project Team', scale: 'Central + Ground Teams' },
+  { area: 'On-Ground Delivery', core: 'Not Included', launch: 'Defined Scope', scale: 'Wider / Season' },
+  { area: 'Commercial Strategy', core: 'Included', launch: 'Defined Support', scale: 'Integrated' },
+  { area: 'Sponsorship & Revenue', core: 'Roadmap', launch: 'Scope Based', scale: 'Deeper Involvement' },
+  { area: 'Locations', core: 'Planned', launch: 'Defined', scale: 'Scalable' },
+  { area: 'Duration', core: 'Planning Period', launch: 'Event Window', scale: 'Extended / Season' },
+];
+
+// League enquiry form options — must match the allow-lists in
+// api/submit-league-enquiry.js, which rejects anything else.
+export const LEAGUE_ENQUIRY_OPTIONS = {
+  eventType: ['Sports league', 'Tournament / championship', 'One-off sporting event', 'Corporate or brand event', 'Fan / hospitality experience', 'Other'],
+  stage: ['Planning a new league', 'Preparing to launch', 'Running an existing league', 'Looking to expand or scale'],
+  timeline: ['Within 3 months', '3–6 months', '6–12 months', 'Not finalized'],
+  support: ['Planning and strategy', 'Event execution and operations', 'End-to-end league management', 'Long-term commercial partnership', 'Not sure yet'],
+};
 
 // ---- Talent page: placement & internship partners ----
 export const TALENT_PARTNERS = ['Decathlon', 'MuscleBlaze'];

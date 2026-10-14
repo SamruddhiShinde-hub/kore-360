@@ -1,6 +1,6 @@
 import { google } from 'googleapis';
 import { getGoogleAuth } from './googleAuth.js';
-import { SHEET_ID, SHEET_RANGE, CONNECT_LEADS_SHEET_ID, CONNECT_LEADS_SHEET_RANGE } from './config.js';
+import { SHEET_ID, SHEET_RANGE, CONNECT_LEADS_SHEET_ID, CONNECT_LEADS_SHEET_RANGE, LEAGUE_LEADS_SHEET_ID, LEAGUE_LEADS_SHEET_RANGE } from './config.js';
 
 // Column order matches the sheet header row:
 // holdId | sessionId | sessionName | slotStart | slotEnd | userName | userEmail | status | paymentLinkId | createdAt | userPhone
@@ -100,5 +100,25 @@ export async function appendConnectLead({ name, whatsapp, reason }) {
     requestBody: {
       values: [[new Date().toISOString(), name, whatsapp, reason]],
     },
+  });
+}
+
+// Sports & League Management enquiries — their own tab (see config.js), so
+// B2B event leads never mix with connect-popup or education rows. Column
+// order matches LEAGUE_LEAD_COLUMNS, which is also the header row to use.
+// RAW input keeps user text from ever being evaluated as a formula.
+export const LEAGUE_LEAD_COLUMNS = [
+  'submittedAt', 'leadSource', 'leadType', 'leadCategory', 'fullName', 'organization', 'email', 'phone',
+  'eventType', 'stage', 'location', 'timeline', 'support', 'project', 'pageUrl',
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+];
+
+export async function appendLeagueLead(lead) {
+  const sheets = sheetsClient();
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: LEAGUE_LEADS_SHEET_ID,
+    range: LEAGUE_LEADS_SHEET_RANGE,
+    valueInputOption: 'RAW',
+    requestBody: { values: [LEAGUE_LEAD_COLUMNS.map((col) => lead[col] ?? '')] },
   });
 }
