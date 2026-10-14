@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SESSIONS, discountPercent } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
-import PageHeader from '../components/PageHeader.jsx';
+import PageHero from '../components/PageHero.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import BookingModal from '../components/BookingModal.jsx';
 
@@ -19,10 +19,16 @@ export default function Education() {
         description="Learn how sports management hiring actually works, from a ₹99 e-book to a 1:1 clarity call with Krish Lalwani. Pick the format that fits how you learn."
         path="/education"
       />
-      <PageHeader
+      <PageHero
+        id="education-hero-title"
         eyebrow="EDUCATION"
-        title="Learn how the industry actually works"
+        title={<>
+          <span className="hx-hero-line">Learn how the industry</span>
+          <span className="hx-hero-line hx-hero-title-accent">actually works</span>
+        </>}
         intro="From a ₹99 read to a 1:1 game plan with Krish: three ways to get the real picture of how sports management hiring actually works, in as much or as little time as you've got."
+        image="/education/hero-desktop.webp" imageMobile="/education/hero-mobile.webp" width="1600" height="900"
+        alt="Krish Lalwani on a 1:1 career guidance video call from his laptop"
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '48px 32px 96px' }}>
         <div className="education-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '20px' }}>

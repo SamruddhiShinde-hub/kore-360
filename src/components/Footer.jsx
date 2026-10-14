@@ -1,21 +1,45 @@
 import { Link } from 'react-router-dom';
 import { LINKS } from '../data.js';
 import logo from '../assets/Final - white logo-14.png';
-// Served from public/ — see Hero.jsx for why this is a stable string path
-// rather than a hashed src/assets import.
-const mainHeroBg = '/hero-bg-desktop.webp';
+import { openConnectPopup } from './ConnectPopup.jsx';
 
-const exploreLinks = [
-  { label: 'About Us', to: '/about' },
-  { label: 'Education', to: '/education' },
-  { label: 'Events', to: '/events' },
-  { label: 'Talent Acquisition', to: '/talent' },
-  { label: 'Blog', to: '/blogs' },
-];
-
-const connectLinks = [
-  { label: 'Instagram', href: LINKS.instagram, external: true },
-  { label: 'Book a 1:1', href: LINKS.bookCall, external: true },
+// Services without their own page link to the homepage services section.
+const footerGroups = [
+  {
+    title: 'EVENTS',
+    links: [
+      { label: 'Sports & League Management', to: '/events' },
+      { label: 'Corporate Events', to: '/#services' },
+      { label: 'Brand Activations', to: '/#services' },
+      { label: 'Production', to: '/#services' },
+      { label: 'Hospitality & Logistics', to: '/#services' },
+      { label: 'Sponsorships', to: '/#services' },
+    ],
+  },
+  {
+    title: 'COMPANY',
+    links: [
+      { label: 'About Us', to: '/about' },
+      { label: 'Our Work', to: '/#work' },
+      { label: 'Contact', onClick: openConnectPopup },
+      { label: 'Blog', to: '/blogs' },
+    ],
+  },
+  {
+    title: 'EDUCATION',
+    links: [
+      { label: 'Education Overview', to: '/education' },
+      { label: 'Career Guidance', to: '/education/clarity-call' },
+      { label: 'Learning Resources', to: '/education/ebook' },
+    ],
+  },
+  {
+    title: 'TALENT',
+    links: [
+      { label: 'Talent Services', to: '/talent' },
+      { label: 'Opportunities', to: '/talent' },
+    ],
+  },
 ];
 
 function MailIcon() {
@@ -52,53 +76,50 @@ const socialIcons = [
   { label: 'Instagram', href: LINKS.instagram, Icon: InstagramIcon },
 ];
 
+const linkStyle = { fontSize: '14.5px', color: 'rgba(255,255,255,0.75)', background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: 'inherit', textAlign: 'left' };
+
 export default function Footer() {
   return (
-    <footer style={{ position: 'relative', overflow: 'hidden', color: '#FFFFFF' }}>
-      <img src={mainHeroBg} alt="Footer Background" loading="lazy" decoding="async" style={{
-        position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block', zIndex: 0
-      }} />
-      <div style={{ position: 'relative', zIndex: 1 }}>
-        <div className="footer-grid" style={{ maxWidth: '1200px', margin: '0 auto', padding: '64px 32px 40px', display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: '40px' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <img src={logo} alt="Kore 360 Logo" width="165" height="158" style={{ height: '158px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
-            </div>
-            <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'rgba(255,255,255,0.8)', maxWidth: '320px', margin: '0 0 20px', textAlign: 'justify' }}><strong style={{ color: '#FFFFFF' }}>Careers in sports management</strong>, built with <em style={{ whiteSpace: 'nowrap' }}>Krish Lalwani</em>. Education, Events and Talent, all in one place.</p>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              {socialIcons.map(({ label, href, Icon }) => (
-                <a
-                  key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}
-                  className="foot-icon-link"
-                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)' }}
-                >
-                  <Icon />
-                </a>
-              ))}
-            </div>
+    <footer style={{ background: '#0A0A0A', color: '#FFFFFF', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+      <div className="footer-grid" style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 32px 48px', display: 'grid', gridTemplateColumns: '1.5fr repeat(4, 1fr)', gap: '40px' }}>
+        <div>
+          <img src={logo} alt="KORE 360" width="104" height="100" loading="lazy" style={{ height: '100px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)', marginBottom: '18px' }} />
+          <div style={{ fontWeight: 900, fontSize: '18px', textTransform: 'uppercase', letterSpacing: '0.02em', marginBottom: '10px' }}>Beyond Every Angle.</div>
+          <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'rgba(255,255,255,0.7)', maxWidth: '300px', margin: '0 0 20px' }}>
+            Integrated sports, events, education and talent solutions — bringing strategy, people and execution together.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '14px', marginBottom: '20px' }}>
+            <a href={`mailto:${LINKS.email}`} className="foot-link" style={{ color: 'rgba(255,255,255,0.75)' }}>{LINKS.email}</a>
+            <a href={LINKS.phoneTel} className="foot-link" style={{ color: 'rgba(255,255,255,0.75)' }}>{LINKS.phone}</a>
           </div>
-          <div>
-            <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.6)', marginBottom: '16px' }}>EXPLORE</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '11px', alignItems: 'flex-start' }}>
-              {exploreLinks.map((l) => (
-                <Link key={l.label} to={l.to} className="foot-link" style={{ fontSize: '14.5px', color: 'rgba(255,255,255,0.8)' }}>{l.label}</Link>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: 'rgba(255,255,255,0.6)', marginBottom: '16px' }}>CONNECT</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '11px', alignItems: 'flex-start' }}>
-              {connectLinks.map((l) => (
-                <a key={l.label} href={l.href} className="foot-link" target={l.external ? '_blank' : undefined} rel={l.external ? 'noreferrer' : undefined} style={{ fontSize: '14.5px', color: 'rgba(255,255,255,0.8)' }}>{l.label}</a>
-              ))}
-            </div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            {socialIcons.map(({ label, href, Icon }) => (
+              <a
+                key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}
+                className="foot-icon-link"
+                style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)' }}
+              >
+                <Icon />
+              </a>
+            ))}
           </div>
         </div>
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-          <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 32px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', fontSize: '12.5px', color: 'rgba(255,255,255,0.8)' }}>
-            <span>© 2026 Kore 360. All rights reserved.</span>
-            <span style={{ }}>Sports management · careers · events</span>
-          </div>
+        {footerGroups.map((g) => (
+          <nav key={g.title} aria-label={`${g.title.toLowerCase()} links`}>
+            <div style={{ fontSize: '11.5px', fontWeight: 700, letterSpacing: '0.14em', color: 'rgba(255,255,255,0.5)', marginBottom: '16px' }}>{g.title}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '11px', alignItems: 'flex-start' }}>
+              {g.links.map((l) => (l.to
+                ? <Link key={l.label} to={l.to} className="foot-link" style={linkStyle}>{l.label}</Link>
+                : <button key={l.label} type="button" onClick={l.onClick} className="foot-link" style={linkStyle}>{l.label}</button>
+              ))}
+            </div>
+          </nav>
+        ))}
+      </div>
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 32px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', fontSize: '12.5px', color: 'rgba(255,255,255,0.6)' }}>
+          <span>© 2026 KORE 360. All rights reserved.</span>
+          <span>One Stop. One Brief. Every Angle.</span>
         </div>
       </div>
     </footer>

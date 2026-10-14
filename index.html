@@ -12,19 +12,19 @@
     })(window,document,'script','dataLayer','GTM-5S33Z32B');</script>
     <!-- End Google Tag Manager -->
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <title>KORE 360 · Sports Management Careers, Courses and Sports Jobs</title>
-    <meta name="description" content="KORE 360 is Krish Lalwani's sports management platform: courses, 1:1 clarity calls, and real sports jobs and internships to help you build a career in sports management." />
+    <title>KORE 360 | Sports &amp; Event Management Company</title>
+    <meta name="description" content="KORE 360 provides sports and event management, corporate events, brand activations, production, hospitality and league operations services." />
     <link rel="canonical" href="https://kore360.in/" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="KORE 360" />
-    <meta property="og:title" content="KORE 360 · Sports Management Careers, Courses and Sports Jobs" />
-    <meta property="og:description" content="KORE 360 is Krish Lalwani's sports management platform: courses, 1:1 clarity calls, and real sports jobs and internships to help you build a career in sports management." />
+    <meta property="og:title" content="KORE 360 | Sports &amp; Event Management Company" />
+    <meta property="og:description" content="KORE 360 provides sports and event management, corporate events, brand activations, production, hospitality and league operations services." />
     <meta property="og:url" content="https://kore360.in/" />
     <meta property="og:image" content="https://kore360.in/og-image.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="KORE 360 · Sports Management Careers, Courses and Sports Jobs" />
-    <meta name="twitter:description" content="KORE 360 is Krish Lalwani's sports management platform: courses, 1:1 clarity calls, and real sports jobs and internships to help you build a career in sports management." />
+    <meta name="twitter:title" content="KORE 360 | Sports &amp; Event Management Company" />
+    <meta name="twitter:description" content="KORE 360 provides sports and event management, corporate events, brand activations, production, hospitality and league operations services." />
     <meta name="twitter:image" content="https://kore360.in/og-image.jpg" />
 
     <script type="application/ld+json">
@@ -42,7 +42,8 @@
         "sameAs": [
           "https://www.instagram.com/kore360.in/"
         ],
-        "description": "KORE 360 is Krish Lalwani's sports management platform: courses, 1:1 clarity calls, internships and job placements to help you build a real career in sport."
+        "slogan": "Beyond Every Angle.",
+        "description": "KORE 360 is an integrated sports and event management company: sports and league management, corporate events, brand activations, production, hospitality and sponsorships, with connected education and talent divisions."
       }
     </script>
 
@@ -52,16 +53,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" /></noscript>
 
-    <!-- Preload the homepage hero background so it's discoverable by the
-         browser's preload scanner before React/JS runs (fixes Lighthouse's
-         "LCP request discovery" audit). The desktop file is also Footer's
-         background image on every route, so it's never actually unused;
-         the mobile-only file is homepage-exclusive, so non-home pages will
-         show a benign "preloaded but unused" console note on narrow
-         viewports — an accepted tradeoff for a large homepage LCP win in a
-         single-shell SPA that can't preload per-route. -->
-    <link rel="preload" as="image" href="/hero-bg-desktop.webp" fetchpriority="high" media="(min-width: 769px)" />
-    <link rel="preload" as="image" href="/hero-bg-mobile.webp" fetchpriority="high" media="(max-width: 768px)" />
+    <!-- Preload the homepage hero video's poster frame so the browser's
+         preload scanner finds the LCP image before React/JS runs. Path must
+         match HERO_POSTER in src/pages/Home.jsx. Other routes show a benign
+         "preloaded but unused" note — an accepted tradeoff for the homepage
+         LCP in a single-shell SPA that can't preload per-route. -->
+    <link rel="preload" as="image" href="/home/hero-poster.webp" fetchpriority="high" />
 
     <script>
       (function () {

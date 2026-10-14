@@ -1,6 +1,6 @@
 import { CAREERS, TALENT_PARTNERS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
-import PageHeader from '../components/PageHeader.jsx';
+import PageHero from '../components/PageHero.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import DecathlonBanner from '../components/DecathlonBanner.jsx';
 
@@ -33,10 +33,13 @@ export default function Talent() {
         description="Browse sports jobs and internships with KORE 360. We don't just point you at a job board, we represent you and match you to real openings with brands working in and around sport."
         path="/talent"
       />
-      <PageHeader
+      <PageHero
+        id="talent-hero-title"
         eyebrow="TALENT"
         title="Your talent management partner"
         intro="KORE 360 doesn't just point you at a job board. We represent you, matching you to real internships and placements with brands already working in and around sport, and staying in your corner once you're in the door."
+        image="/talent/hero-desktop.webp" imageMobile="/talent/hero-mobile.webp" width="1600" height="1065"
+        alt="The KORE 360 event crew gathered together on the outfield of a stadium"
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 32px 0' }}>
         <DecathlonBanner />

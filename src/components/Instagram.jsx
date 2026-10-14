@@ -5,7 +5,7 @@ import Reveal from './Reveal.jsx';
 // scrape can do reliably. Reusing the site's own real photos keeps this section honest
 // while linking straight through to the real profile for the actual feed.
 const POSTS = [
-  IMAGES.heroCentered,
+  IMAGES.events,
   MARQUEE[0].img, MARQUEE[1].img, MARQUEE[2].img,
   MARQUEE[3].img, COURSES[0].img, COURSES[1].img, COURSES[2].img,
 ];

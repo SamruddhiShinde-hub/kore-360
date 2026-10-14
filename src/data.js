@@ -3,8 +3,6 @@
 //  Edit everything about your site's text, prices and links here.
 // ============================================================
 
-import heroCenteredImg from './assets/hero-centered.jpg';
-import heroMobileImg from './assets/hero-mobile.jpg';
 import sportsMarketingImg from './assets/sports-marketing.jpg';
 import teamOperationsImg from './assets/team-ops.jpg.jpeg';
 import athleteManagementImg from './assets/athlete-management.jpg';
@@ -353,9 +351,63 @@ export const FAQS = [
 
 // ---- Images ----
 export const IMAGES = {
-  heroSplit: heroMobileImg,
-  heroCentered: heroCenteredImg,
-  heroMobile: heroMobileImg,
-  heroEditorial: heroMobileImg,
   events: eventOpsImg,
+};
+
+// ============================================================
+//  Homepage (events-first) — see src/pages/Home.jsx
+// ============================================================
+
+// Six event services. `to` is a route/section that exists today; services
+// without their own page set `enquire: true` instead, which opens the
+// general event enquiry form pre-filled with that service, so no CTA points
+// at an empty placeholder page.
+export const HOME_SERVICES = [
+  { id: 'league', name: 'Sports & League Management', desc: 'Planning, management and execution support for sports leagues, tournaments, sporting IPs and match-day operations.', cta: 'Explore Sports Management', to: '/events' },
+  { id: 'corporate', name: 'Corporate Events', desc: 'Conferences, annual meets, awards, employee engagement and custom corporate sporting experiences.', cta: 'Enquire about Corporate Events', enquire: true },
+  { id: 'activations', name: 'Brand Activations & Experiences', desc: 'Experiential marketing, product launches, fan engagement and immersive brand experiences.', cta: 'Enquire about Brand Activations', enquire: true },
+  { id: 'production', name: 'Event Production', desc: 'Technical production, staging, audio-visual coordination, infrastructure and event production management.', cta: 'Enquire about Production', enquire: true },
+  { id: 'hospitality', name: 'Hospitality & Logistics', desc: 'Guest services, team logistics, accommodation, travel coordination, accreditation and venue operations.', cta: 'Enquire about Hospitality', enquire: true },
+  { id: 'partnerships', name: 'Sponsorships & Partnerships', desc: 'Commercial strategy, sponsorship opportunities, partnerships and brand integration.', cta: 'Enquire about Partnerships', enquire: true },
+];
+
+// Selected work. Two kinds, never mixed up on the page:
+//   KORE_PROJECTS     — work contracted and delivered by KORE 360 itself.
+//   INDUSTRY_EXPERIENCE — properties the founder/team worked on in their own
+//                         professional capacity, not as KORE 360 clients.
+// Only add an entry once its details are verified. Optional fields:
+// location, year, involvement, img (+ imgAlt), href (case study).
+// KORE_PROJECTS is empty until verified project details are supplied; the
+// homepage hides that group while it's empty.
+export const KORE_PROJECTS = [];
+
+export const INDUSTRY_EXPERIENCE = [
+  { name: 'Indian Premier League (IPL)', category: 'Cricket league' },
+  { name: 'Legends League Cricket', category: 'Cricket league', location: 'India & Doha' },
+  { name: 'Indian Street Premier League (ISPL)', category: 'Cricket league' },
+  { name: 'Entertainers Cricket League (ECL)', category: 'Cricket league' },
+  { name: 'Khelo India', category: 'Multi-sport games' },
+];
+
+export const HOME_PROCESS = [
+  { step: '01', name: 'Discover', desc: "Understand the client's event requirements, objectives, audience and expectations." },
+  { step: '02', name: 'Design', desc: 'Develop the operational strategy, scope, timelines, team structure and execution plan.' },
+  { step: '03', name: 'Deliver', desc: 'Coordinate agreed stakeholders, production, vendors, manpower and on-ground activities.' },
+  { step: '04', name: 'Review', desc: 'Evaluate outcomes, document learnings and identify opportunities for improvement.' },
+];
+
+export const HOME_WHY = [
+  { name: 'Integrated Approach', desc: 'Planning, production, operations and partnerships aligned under one coordinated brief.' },
+  { name: 'On-Ground Understanding', desc: 'An execution-led perspective built on practical industry experience.' },
+  { name: 'Flexible Engagement', desc: 'Support ranging from strategic planning to defined event execution and longer-term partnerships.' },
+  { name: 'Accountability', desc: 'Clear project responsibilities, communication and delivery processes based on the agreed scope.' },
+];
+
+// General (non-league) event enquiry — must match the allow-lists in
+// api/submit-league-enquiry.js (form: 'event'), which rejects anything else.
+export const EVENT_ENQUIRY_OPTIONS = {
+  eventType: ['Sports event or league', 'Corporate event', 'Brand activation', 'Entertainment / live experience', 'Hospitality experience', 'Other'],
+  timeline: ['Within 3 months', '3–6 months', '6–12 months', 'Not finalized'],
+  budget: ['Under ₹10 lakh', '₹10–25 lakh', '₹25 lakh – ₹1 crore', 'Above ₹1 crore', 'Prefer not to say'],
+  services: HOME_SERVICES.map((s) => s.name),
 };

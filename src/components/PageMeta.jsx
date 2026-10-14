@@ -17,9 +17,10 @@ function setMeta(attr, key, value) {
 // <script type="application/ld+json">, added on mount and removed on
 // unmount/change so navigating away from an article doesn't leave stale
 // structured data sitting in <head> for the next page.
-export default function PageMeta({ title, description, path = '/', type = 'website', jsonLd }) {
+// `fullTitle` overrides the usual "<title> · KORE 360" format (homepage).
+export default function PageMeta({ title, fullTitle: fullTitleOverride, description, path = '/', type = 'website', jsonLd }) {
   useEffect(() => {
-    const fullTitle = title ? `${title} · ${SITE_NAME}` : `${SITE_NAME} · Sports Management Careers with Krish Lalwani`;
+    const fullTitle = fullTitleOverride || (title ? `${title} · ${SITE_NAME}` : `${SITE_NAME} · Sports Management Careers with Krish Lalwani`);
     document.title = fullTitle;
 
     if (description) {
@@ -72,7 +73,7 @@ export default function PageMeta({ title, description, path = '/', type = 'websi
       scripts.forEach((s) => s.remove());
       setMeta('property', 'og:type', 'website');
     };
-  }, [title, description, path, type, jsonLd]);
+  }, [title, fullTitleOverride, description, path, type, jsonLd]);
 
   return null;
 }

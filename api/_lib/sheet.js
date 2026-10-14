@@ -1,6 +1,6 @@
 import { google } from 'googleapis';
 import { getGoogleAuth } from './googleAuth.js';
-import { SHEET_ID, SHEET_RANGE, CONNECT_LEADS_SHEET_ID, CONNECT_LEADS_SHEET_RANGE, LEAGUE_LEADS_SHEET_ID, LEAGUE_LEADS_SHEET_RANGE } from './config.js';
+import { SHEET_ID, SHEET_RANGE, CONNECT_LEADS_SHEET_ID, CONNECT_LEADS_SHEET_RANGE, LEAGUE_LEADS_SHEET_ID, LEAGUE_LEADS_SHEET_RANGE, EVENT_LEADS_SHEET_RANGE } from './config.js';
 
 // Column order matches the sheet header row:
 // holdId | sessionId | sessionName | slotStart | slotEnd | userName | userEmail | status | paymentLinkId | createdAt | userPhone
@@ -120,5 +120,23 @@ export async function appendLeagueLead(lead) {
     range: LEAGUE_LEADS_SHEET_RANGE,
     valueInputOption: 'RAW',
     requestBody: { values: [LEAGUE_LEAD_COLUMNS.map((col) => lead[col] ?? '')] },
+  });
+}
+
+// General event enquiries — "Event Enquiries" tab in the league-leads
+// spreadsheet. Column order matches EVENT_LEAD_COLUMNS (also the header row).
+export const EVENT_LEAD_COLUMNS = [
+  'submittedAt', 'leadSource', 'leadType', 'leadCategory', 'fullName', 'organization', 'email', 'phone',
+  'eventType', 'location', 'timeline', 'budget', 'services', 'project', 'pageUrl',
+  'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term',
+];
+
+export async function appendEventLead(lead) {
+  const sheets = sheetsClient();
+  await sheets.spreadsheets.values.append({
+    spreadsheetId: LEAGUE_LEADS_SHEET_ID,
+    range: EVENT_LEADS_SHEET_RANGE,
+    valueInputOption: 'RAW',
+    requestBody: { values: [EVENT_LEAD_COLUMNS.map((col) => lead[col] ?? '')] },
   });
 }

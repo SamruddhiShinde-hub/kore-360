@@ -90,7 +90,7 @@ export default function LiveWebinar() {
             <p style={{ fontSize: '17px', lineHeight: 1.6, color: 'rgba(255,255,255,0.75)', maxWidth: '560px', margin: 0, textAlign: 'justify' }}>{WEBINAR.desc}</p>
           </Reveal>
           <Reveal delay={1} style={{ borderRadius: '16px 16px 0 0', overflow: 'hidden', aspectRatio: '4/3' }}>
-            <img src={IMAGES.heroCentered} alt="Krish Lalwani" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            <img src={IMAGES.events} alt="On-ground coordination pitch-side at a live cricket event" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
           </Reveal>
         </div>
         <div style={{ position: 'relative', zIndex: 1, height: '40px' }} />
@@ -126,7 +126,7 @@ export default function LiveWebinar() {
           <div style={{ borderTop: '1px solid rgba(var(--border-rgb),0.1)', paddingTop: '32px' }}>
             <div style={labelStyle}>YOUR HOST</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
-              <img src={IMAGES.heroCentered} alt="Krish Lalwani" style={{ width: '56px', height: '56px', borderRadius: '50%', objectFit: 'cover' }} />
+              <div aria-hidden="true" style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--kore-gradient)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '22px', flex: 'none' }}>K</div>
               <div>
                 <div style={{ fontWeight: 800, fontSize: '16px' }}>Krish Lalwani</div>
                 <a href={LINKS.instagram} target="_blank" rel="noreferrer" style={{ fontSize: '13px', color: ACCENT, fontWeight: 600 }}>@kore360.in</a>

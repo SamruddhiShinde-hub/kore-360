@@ -143,3 +143,9 @@ export const LEAGUE_LEADS_SHEET_ID = process.env.LEAGUE_LEADS_SHEET_ID || CONNEC
 export const LEAGUE_LEADS_SHEET_RANGE = "'League Enquiries'!A:T";
 // Defaults to the same inbox as booking alerts; override per environment.
 export const LEAGUE_NOTIFY_EMAIL = process.env.LEAGUE_NOTIFY_EMAIL || NOTIFY_EMAIL;
+
+// General event enquiries (homepage → "Tell Us About Your Event"). Same
+// spreadsheet as league enquiries, own "Event Enquiries" tab — which (with a
+// header row, see EVENT_LEAD_COLUMNS in sheet.js) has to exist, or appends
+// to it fail. Alerts go to the same inbox as league enquiries.
+export const EVENT_LEADS_SHEET_RANGE = "'Event Enquiries'!A:T";
