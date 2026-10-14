@@ -161,7 +161,7 @@ export const SESSIONS = [
   },
 ];
 
-// ---- Management page: CORE / LAUNCH / SCALE league engagement models ----
+// ---- Events page: CORE / LAUNCH / SCALE league engagement models ----
 // Engagement models, not priced packages — no price, tier or "most popular"
 // field belongs on these. `preview` is how many `deliverables` show before
 // "Explore scope"; the rest, the framework and the outcome sit behind it.

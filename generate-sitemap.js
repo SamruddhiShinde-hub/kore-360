@@ -18,7 +18,7 @@ const SITE_URL = 'https://kore360.in';
 const STATIC_PAGES = [
   { path: '/', priority: '1.0' },
   { path: '/education', priority: '0.8' },
-  { path: '/management', priority: '0.8' },
+  { path: '/events', priority: '0.8' },
   { path: '/talent', priority: '0.8' },
   { path: '/about', priority: '0.6' },
   { path: '/blogs', priority: '0.7' },

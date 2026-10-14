@@ -20,7 +20,7 @@ function isDirectClarityLanding() {
 const PHONE_CHARS_REGEX = /^[0-9+\-\s()]*$/;
 const PHONE_VALID_REGEX = /^\+?[0-9][0-9\s\-()]{6,19}$/;
 
-// Lets any button elsewhere in the app (e.g. Management page's "Get in
+// Lets any button elsewhere in the app (e.g. Events page's "Get in
 // touch" cards) open this same modal on click, without needing to lift its
 // state up through the tree — ConnectPopup is mounted once at the App root.
 export function openConnectPopup() {

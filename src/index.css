@@ -248,7 +248,7 @@ a { text-decoration: none; }
   .fab-call { display: none !important; }
 }
 
-/* ---- Management page: CORE / LAUNCH / SCALE league engagement section ----
+/* ---- Events page: CORE / LAUNCH / SCALE league engagement section ----
    Everything here is scoped to league-* classes so no other page changes.
    Cards follow the light/dark theme tokens; the CTA band and the brand
    gradient accents stay fixed, like PageHeader. */

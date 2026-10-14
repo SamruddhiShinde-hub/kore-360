@@ -8,7 +8,7 @@ const mainHeroBg = '/hero-bg-desktop.webp';
 const exploreLinks = [
   { label: 'About Us', to: '/about' },
   { label: 'Education', to: '/education' },
-  { label: 'Management', to: '/management' },
+  { label: 'Events', to: '/events' },
   { label: 'Talent Acquisition', to: '/talent' },
   { label: 'Blog', to: '/blogs' },
 ];
@@ -64,7 +64,7 @@ export default function Footer() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
               <img src={logo} alt="Kore 360 Logo" width="165" height="158" style={{ height: '158px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
             </div>
-            <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'rgba(255,255,255,0.8)', maxWidth: '320px', margin: '0 0 20px', textAlign: 'justify' }}><strong style={{ color: '#FFFFFF' }}>Careers in sports management</strong>, built with <em style={{ whiteSpace: 'nowrap' }}>Krish Lalwani</em>. Education, Management and Talent, all in one place.</p>
+            <p style={{ fontSize: '14.5px', lineHeight: 1.6, color: 'rgba(255,255,255,0.8)', maxWidth: '320px', margin: '0 0 20px', textAlign: 'justify' }}><strong style={{ color: '#FFFFFF' }}>Careers in sports management</strong>, built with <em style={{ whiteSpace: 'nowrap' }}>Krish Lalwani</em>. Education, Events and Talent, all in one place.</p>
             <div style={{ display: 'flex', gap: '10px' }}>
               {socialIcons.map(({ label, href, Icon }) => (
                 <a
