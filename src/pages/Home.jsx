@@ -14,8 +14,8 @@ import { HOME_SERVICES, KORE_PROJECTS, INDUSTRY_EXPERIENCE, LEAGUE_ENGAGEMENTS, 
 // 720p for desktop, 480p for phones — and the poster is its first frame.
 // The other photos are generated from the real event photos in src/assets
 // with sharp — see the homepage revamp notes.
-const HERO_VIDEO_DESKTOP = '/home/hero-desktop.mp4';
-const HERO_VIDEO_MOBILE = '/home/hero-mobile.mp4';
+const HERO_VIDEO_DESKTOP = '/home/hero-desktop-v2.mp4';
+const HERO_VIDEO_MOBILE = '/home/hero-mobile-v2.mp4';
 const HERO_POSTER = '/home/hero-poster.webp';
 const IMG_ON_GROUND = '/home/on-ground.webp';
 const IMG_MATCH_DAY = '/home/match-day.webp';
