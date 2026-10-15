@@ -35,6 +35,7 @@ const WhatHappensOnMatchDay = lazy(() => import('./pages/blog/WhatHappensOnMatch
 const EventBudgetPlanning = lazy(() => import('./pages/blog/EventBudgetPlanning.jsx'));
 const FiveThingsIWishIKnew = lazy(() => import('./pages/blog/FiveThingsIWishIKnew.jsx'));
 const SportsManagementInternshipsIndia = lazy(() => import('./pages/blog/SportsManagementInternshipsIndia.jsx'));
+const Article = lazy(() => import('./pages/blog/Article.jsx'));
 
 export default function App() {
   const { pathname } = useLocation();
@@ -80,6 +81,8 @@ export default function App() {
             <Route path="/blogs/event-budget-planning-where-the-money-goes" element={<EventBudgetPlanning />} />
             <Route path="/blogs/5-things-i-wish-i-knew-before-sports-industry" element={<FiveThingsIWishIKnew />} />
             <Route path="/blogs/sports-management-internships-india" element={<SportsManagementInternshipsIndia />} />
+            {/* Data-driven posts (src/pages/blog/articles.js); the explicit routes above win. */}
+            <Route path="/blogs/:slug" element={<Article />} />
             {/* Old top-level paths — keep working for anyone with an existing bookmark/shared link.
                 /blog(/*) itself 301s at the edge (see vercel.json) before it ever reaches here. */}
             <Route path="/live-webinar" element={<Navigate to="/education/live-webinar" replace />} />
