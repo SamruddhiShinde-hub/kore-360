@@ -4,7 +4,6 @@ import LegalPageLayout from '../../components/LegalPageLayout.jsx';
 import EventEnquiryModal from '../../components/EventEnquiryModal.jsx';
 import { openConnectPopup } from '../../components/ConnectPopup.jsx';
 import { BUSINESS, OPERATIONS } from '../../legal/config.js';
-import { openCookieSettings } from '../../lib/consent.js';
 import { track } from '../../lib/analytics.js';
 
 const mailto = (subject) => `mailto:${BUSINESS.supportEmail}?subject=${encodeURIComponent(subject)}`;
@@ -27,21 +26,6 @@ export function Contact() {
       id: 'education', title: 'Education support',
       desc: 'E-book access, paid calls, webinars, courses and billing questions. Include the email you used at checkout and your payment reference.',
       action: <a className="hx-btn hx-btn--ghost-dark" href={mailto('Education support')}>Email education support</a>,
-    },
-    {
-      id: 'privacy', title: 'Privacy requests',
-      desc: 'Ask what information we hold, correct or delete it, or withdraw consent. Cookie choices can be changed straight away in Cookie Settings.',
-      action: (
-        <div className="lg-actions">
-          <a className="hx-btn hx-btn--ghost-dark" href={`mailto:${BUSINESS.privacyEmail}?subject=${encodeURIComponent('Privacy request')}`}>Email a privacy request</a>
-          <button type="button" className="lg-linkbtn" onClick={openCookieSettings}>Cookie Settings</button>
-        </div>
-      ),
-    },
-    {
-      id: 'grievance', title: 'Grievances',
-      desc: 'Formal complaints about a purchase, booking, refund or how we handled your information.',
-      action: <Link className="hx-btn hx-btn--ghost-dark" to="/grievance-redressal">How to raise a grievance</Link>,
     },
   ];
 
