@@ -10,7 +10,7 @@ import { HOME_SERVICES, KORE_PROJECTS, INDUSTRY_EXPERIENCE, LEAGUE_ENGAGEMENTS, 
 
 // Served from public/home/ (not hashed src/assets imports) so index.html can
 // preload the hero poster by a stable URL. The hero videos are silent
-// (audio track removed) H.264 re-encodes of src/assets/new-hero-video.mp4 —
+// (audio track removed) H.264 re-encodes of src/assets/hero-section-homepage.mp4 —
 // 720p for desktop, 480p for phones — and the poster is its first frame.
 // The other photos are generated from the real event photos in src/assets
 // with sharp — see the homepage revamp notes.
