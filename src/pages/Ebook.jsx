@@ -4,6 +4,7 @@ import Reveal from '../components/Reveal.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import { track, priceToNumber } from '../lib/analytics.js';
 import heroCoverImg from '../assets/e-book-hero-image.png';
+import CheckoutConsent from '../components/CheckoutConsent.jsx';
 
 const EBOOK = SESSIONS.find((s) => s.sessionId === 'ebook');
 const ACCENT = 'var(--kore-orange-text)';
@@ -15,6 +16,7 @@ export default function Ebook() {
   const [phone, setPhone] = useState('');
   const [status, setStatus] = useState('idle'); // idle | redirecting
   const [errorMsg, setErrorMsg] = useState('');
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   useEffect(() => {
     track('view_item', {
@@ -122,6 +124,8 @@ export default function Ebook() {
               style={{ fontFamily: 'inherit', fontSize: '14.5px', padding: '12px 14px', borderRadius: '8px', border: '1px solid rgba(var(--border-rgb),0.2)', background: 'transparent', color: 'var(--text)' }}
             />
 
+            <CheckoutConsent kind="ebook" checked={termsAccepted} onChange={setTermsAccepted} />
+
             <button
               type="submit" disabled={status === 'redirecting'} className="btn-accent mobile-inline-cta"
               style={{ width: '100%', fontFamily: 'inherit', fontSize: '15px', fontWeight: 700, color: '#FFFFFF', background: 'var(--kore-gradient)', border: 'none', padding: '14px 22px', borderRadius: '8px', cursor: status === 'redirecting' ? 'default' : 'pointer', opacity: status === 'redirecting' ? 0.7 : 1 }}
@@ -139,7 +143,7 @@ export default function Ebook() {
               </button>
             </div>
 
-            <p style={{ fontSize: '12px', color: 'var(--text-faint)', margin: 0 }}>The e-book PDF is sent to this email right after payment.</p>
+            <p style={{ fontSize: '12px', color: 'var(--text-faint)', margin: 0 }}>Your reading link is emailed to this address once payment is confirmed.</p>
           </form>
         </div>
       </div>

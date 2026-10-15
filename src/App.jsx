@@ -7,6 +7,7 @@ import ScrollToTop from './components/ScrollToTop.jsx';
 import SmoothScroll from './components/SmoothScroll.jsx';
 import FloatingActions from './components/FloatingActions.jsx';
 import ConnectPopup from './components/ConnectPopup.jsx';
+import CookieConsent from './components/CookieConsent.jsx';
 import Home from './pages/Home.jsx';
 
 const About = lazy(() => import('./pages/About.jsx'));
@@ -19,6 +20,17 @@ const ClarityCall = lazy(() => import('./pages/ClarityCall.jsx'));
 const Ebook = lazy(() => import('./pages/Ebook.jsx'));
 const EbookReader = lazy(() => import('./pages/EbookReader.jsx'));
 const Blog = lazy(() => import('./pages/Blog.jsx'));
+const legal = (name) => lazy(() => import('./pages/legal/Policies.jsx').then((m) => ({ default: m[name] })));
+const support = (name) => lazy(() => import('./pages/legal/Support.jsx').then((m) => ({ default: m[name] })));
+const PrivacyPolicy = legal('PrivacyPolicy');
+const Terms = legal('Terms');
+const RefundPolicy = legal('RefundPolicy');
+const DeliveryPolicy = legal('DeliveryPolicy');
+const CookiePolicy = legal('CookiePolicy');
+const Disclaimer = legal('Disclaimer');
+const Grievance = legal('Grievance');
+const Contact = support('Contact');
+const EducationFaq = support('EducationFaq');
 const WhatHappensOnMatchDay = lazy(() => import('./pages/blog/WhatHappensOnMatchDay.jsx'));
 const EventBudgetPlanning = lazy(() => import('./pages/blog/EventBudgetPlanning.jsx'));
 const FiveThingsIWishIKnew = lazy(() => import('./pages/blog/FiveThingsIWishIKnew.jsx'));
@@ -53,6 +65,15 @@ export default function App() {
             <Route path="/education/clarity-call" element={<ClarityCall />} />
             <Route path="/education/ebook" element={<Ebook />} />
             <Route path="/education/ebook/read" element={<EbookReader />} />
+            <Route path="/education/faq" element={<EducationFaq />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-and-conditions" element={<Terms />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
+            <Route path="/digital-delivery-policy" element={<DeliveryPolicy />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
+            <Route path="/grievance-redressal" element={<Grievance />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/education/qa-call" element={<Navigate to="/education" replace />} />
             <Route path="/blogs" element={<Blog />} />
             <Route path="/blogs/what-happens-on-match-day" element={<WhatHappensOnMatchDay />} />
@@ -72,6 +93,9 @@ export default function App() {
       {!isEbookReader && <Footer />}
       {!isEbookReader && <FloatingActions />}
       {!isEbookReader && <ConnectPopup />}
+      {/* Mounted on every route (incl. the reader, which just hides the
+          banner) so Cookie Settings can always reopen preferences. */}
+      <CookieConsent hideBanner={isEbookReader} />
     </>
   );
 }

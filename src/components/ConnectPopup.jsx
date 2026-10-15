@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { WEB3FORMS_ACCESS_KEY } from '../data.js';
 import { track } from '../lib/analytics.js';
+import { hasConsent } from '../lib/consent.js';
 
 const SHOW_DELAY_MS = 8000;
 const OPEN_EVENT = 'kore-open-connect-popup';
@@ -23,6 +24,16 @@ const PHONE_VALID_REGEX = /^\+?[0-9][0-9\s\-()]{6,19}$/;
 // Lets any button elsewhere in the app (e.g. Events page's "Get in
 // touch" cards) open this same modal on click, without needing to lift its
 // state up through the tree — ConnectPopup is mounted once at the App root.
+// "Already seen this session" is a functional-cookie use: persisted to
+// sessionStorage only with that consent, otherwise remembered in memory
+// until the next full page load.
+let seenInMemory = false;
+function markSeen() {
+  seenInMemory = true;
+  if (!hasConsent('functional')) return;
+  try { sessionStorage.setItem('kore-connect-popup-seen', '1'); } catch { /* storage unavailable */ }
+}
+
 export function openConnectPopup() {
   window.dispatchEvent(new CustomEvent(OPEN_EVENT));
 }
@@ -45,9 +56,9 @@ export default function ConnectPopup() {
   };
 
   useEffect(() => {
-    let alreadyHandled = false;
+    let alreadyHandled = seenInMemory;
     try {
-      alreadyHandled = sessionStorage.getItem('kore-connect-popup-seen') === '1';
+      alreadyHandled = alreadyHandled || sessionStorage.getItem('kore-connect-popup-seen') === '1';
     } catch { /* storage unavailable */ }
     if (alreadyHandled) return;
     if (isDirectClarityLanding()) return;
@@ -66,7 +77,7 @@ export default function ConnectPopup() {
 
   const close = () => {
     setVisible(false);
-    try { sessionStorage.setItem('kore-connect-popup-seen', '1'); } catch { /* storage unavailable */ }
+    markSeen();
   };
 
   const handleSubmit = async (e) => {
@@ -103,7 +114,7 @@ export default function ConnectPopup() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: form.name.value, whatsapp, reason: form.reason.value }),
         }).catch(() => {});
-        try { sessionStorage.setItem('kore-connect-popup-seen', '1'); } catch { /* storage unavailable */ }
+        markSeen();
       } else {
         setStatus('error');
         setError(data.message || 'Something went wrong. Please try again.');

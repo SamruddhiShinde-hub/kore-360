@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { LINKS } from '../data.js';
 import logo from '../assets/Final - white logo-14.png';
 import { openConnectPopup } from './ConnectPopup.jsx';
+import { openCookieSettings } from '../lib/consent.js';
 
 // Services without their own page link to the homepage services section.
 const footerGroups = [
@@ -38,6 +39,21 @@ const footerGroups = [
     links: [
       { label: 'Talent Services', to: '/talent' },
       { label: 'Opportunities', to: '/talent' },
+    ],
+  },
+  {
+    title: 'LEGAL & SUPPORT',
+    links: [
+      { label: 'Privacy Policy', to: '/privacy-policy' },
+      { label: 'Terms & Conditions', to: '/terms-and-conditions' },
+      { label: 'Cancellation & Refund Policy', to: '/refund-policy' },
+      { label: 'Digital Product Delivery Policy', to: '/digital-delivery-policy' },
+      { label: 'Cookie Policy', to: '/cookie-policy' },
+      { label: 'Cookie Settings', onClick: openCookieSettings },
+      { label: 'Disclaimer', to: '/disclaimer' },
+      { label: 'Grievance Redressal', to: '/grievance-redressal' },
+      { label: 'Help & FAQs', to: '/education/faq' },
+      { label: 'Contact & Support', to: '/contact' },
     ],
   },
 ];
@@ -81,7 +97,7 @@ const linkStyle = { fontSize: '14.5px', color: 'rgba(255,255,255,0.75)', backgro
 export default function Footer() {
   return (
     <footer style={{ background: '#0A0A0A', color: '#FFFFFF', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
-      <div className="footer-grid" style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 32px 48px', display: 'grid', gridTemplateColumns: '1.5fr repeat(4, 1fr)', gap: '40px' }}>
+      <div className="footer-grid" style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 32px 48px', display: 'grid', gridTemplateColumns: '1.4fr repeat(5, 1fr)', gap: '40px' }}>
         <div>
           <img src={logo} alt="KORE 360" width="104" height="100" loading="lazy" style={{ height: '100px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)', marginBottom: '18px' }} />
           <div style={{ fontWeight: 900, fontSize: '18px', textTransform: 'uppercase', letterSpacing: '0.02em', marginBottom: '10px' }}>Beyond Every Angle.</div>
@@ -118,7 +134,7 @@ export default function Footer() {
       </div>
       <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 32px', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', fontSize: '12.5px', color: 'rgba(255,255,255,0.6)' }}>
-          <span>© 2026 KORE 360. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} KORE 360. All rights reserved.</span>
           <span>One Stop. One Brief. Every Angle.</span>
         </div>
       </div>

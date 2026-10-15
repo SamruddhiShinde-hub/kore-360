@@ -26,6 +26,42 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kore360.in/contact</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/education/faq</loc>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/privacy-policy</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/terms-and-conditions</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/refund-policy</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/digital-delivery-policy</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/cookie-policy</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/disclaimer</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://kore360.in/grievance-redressal</loc>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://kore360.in/blogs/sports-management-internships-india</loc>
     <lastmod>2026-08-31</lastmod>
     <priority>0.7</priority>

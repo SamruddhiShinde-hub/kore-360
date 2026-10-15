@@ -22,6 +22,15 @@ const STATIC_PAGES = [
   { path: '/talent', priority: '0.8' },
   { path: '/about', priority: '0.6' },
   { path: '/blogs', priority: '0.7' },
+  { path: '/contact', priority: '0.5' },
+  { path: '/education/faq', priority: '0.5' },
+  { path: '/privacy-policy', priority: '0.3' },
+  { path: '/terms-and-conditions', priority: '0.3' },
+  { path: '/refund-policy', priority: '0.3' },
+  { path: '/digital-delivery-policy', priority: '0.3' },
+  { path: '/cookie-policy', priority: '0.3' },
+  { path: '/disclaimer', priority: '0.3' },
+  { path: '/grievance-redressal', priority: '0.3' },
 ];
 
 export function readBlogPosts() {

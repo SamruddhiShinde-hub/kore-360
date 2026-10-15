@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/Final - white logo-14.png';
+import { hasConsent } from '../lib/consent.js';
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -14,7 +15,11 @@ export default function Nav() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('kore-theme-v2', theme);
+    // Remembering the theme across visits is a functional-cookie use — only
+    // persisted with that consent; otherwise it lasts for this page view.
+    try {
+      if (hasConsent('functional')) localStorage.setItem('kore-theme-v2', theme);
+    } catch { /* storage unavailable */ }
   }, [theme]);
 
   const toggleTheme = () => {

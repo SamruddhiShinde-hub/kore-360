@@ -8,7 +8,7 @@ import { track, priceToNumber } from '../lib/analytics.js';
 const COPY = {
   ebook: {
     title: 'Payment received',
-    intro: "Your e-book is on its way — check your email for the PDF, it can take a couple of minutes to arrive.",
+    intro: "Your e-book is on its way — check your email for your personal reading link. It can take a couple of minutes to arrive.",
     followUp: "If you don't see it within 15 minutes, check your spam folder or reach out and we'll sort it out.",
   },
   session: {

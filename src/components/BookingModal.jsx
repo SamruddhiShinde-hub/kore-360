@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { track, priceToNumber } from '../lib/analytics.js';
 import { SESSIONS, getClarityPricing, discountPercent } from '../data.js';
+import CheckoutConsent from './CheckoutConsent.jsx';
 
 const DAYS_AHEAD = 21;
 
@@ -33,6 +34,7 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [couponCode, setCouponCode] = useState('');
+  const [termsAccepted, setTermsAccepted] = useState(false);
   // Only surface "Invalid coupon code" once they've actually tried to check
   // out with it — not on every keystroke while they're still typing it in.
   const [couponAttempted, setCouponAttempted] = useState(false);
@@ -336,6 +338,7 @@ export default function BookingModal({ sessionId, sessionName, price, initialSlo
                 )}
               </div>
             )}
+            <CheckoutConsent kind={sessionId === 'ebook' ? 'ebook' : 'session'} checked={termsAccepted} onChange={setTermsAccepted} />
             {errorMsg && <div style={{ fontSize: '13px', color: 'var(--kore-orange-text)' }}>{errorMsg}</div>}
             <button
               type="submit" disabled={step === 'redirecting'} className="btn-accent"

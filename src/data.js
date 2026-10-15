@@ -121,9 +121,9 @@ export const MARQUEE = [
 // `details` powers the expanded breakdown on the Education page; the homepage cards only use the fields above it.
 export const SESSIONS = [
   {
-    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', originalPrice: '₹199', promoActive: true, meta: 'PDF · Instant download', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', sessionId: 'ebook',
+    tag: 'E-BOOK', name: 'Behind the Field', price: '₹99', originalPrice: '₹199', promoActive: true, meta: 'E-book · Read online', desc: 'My complete playbook for breaking into sports management: the roles, the routes, the real talk.', cta: 'Buy the e-book', sessionId: 'ebook',
     details: {
-      format: 'Instant PDF download',
+      format: 'Read online in your browser — a personal link is emailed to you once payment is confirmed',
       whoFor: "Anyone starting from zero who wants the full map before spending on a call",
       includes: ['Every entry route into sports management, mapped out', 'Real job titles and what they actually pay', 'A breakdown of which skills matter for which roles', "Krish's personal do's and don'ts from five years in the industry"],
       outcome: "Walk away knowing exactly which corner of the industry fits you before you spend a rupee on anything else.",
