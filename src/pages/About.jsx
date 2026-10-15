@@ -15,6 +15,12 @@ const IMG_FOUNDER = '/about/founder.webp';
 const IMG_LEAGUE_OPS = '/about/league-ops.webp';
 const IMG_LOGISTICS = '/about/team-logistics.webp';
 const IMG_STADIUM = '/about/stadium.webp';
+const BTS_PHOTOS = [
+  { src: '/about/bts-planning.webp', w: 560, h: 799, tag: 'Planning', cls: 'ab-bts-tile--tall', alt: 'Two KORE 360 team members talking through plans on the field in front of the stage set before a cricket league event' },
+  { src: '/about/bts-production.webp', w: 710, h: 533, tag: 'On-ground', cls: '', alt: 'Event crew coordinating on the field while a camera operator films during live match production' },
+  { src: '/about/bts-studio.webp', w: 800, h: 600, tag: 'Production', cls: '', alt: 'A studio shoot set up with softbox lights and a camera on a tripod' },
+  { src: '/about/bts-crew.webp', w: 800, h: 350, tag: 'The crew', cls: 'ab-bts-tile--wide', alt: 'Accredited operations crew standing together on the pitch inside an indoor cricket arena' },
+];
 
 const PRINCIPLES = [
   { name: 'Think beyond the brief', desc: 'Understand the objective, identify the challenges and approach every requirement with a broader perspective.' },
@@ -57,6 +63,16 @@ const ABOUT_JSON_LD = {
     sameAs: [LINKS.instagram],
   },
 };
+
+function InstagramIcon() {
+  return (
+    <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+    </svg>
+  );
+}
 
 function Arrow() {
   return <span aria-hidden="true" className="hx-arrow">→</span>;
@@ -173,6 +189,39 @@ function Expertise() {
             </Reveal>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function BehindKore() {
+  return (
+    <section className="ab-bts" aria-labelledby="ab-bts">
+      <div className="ab-bts-glow" aria-hidden="true" />
+      <div className="hx-shell ab-bts-grid">
+        <Reveal className="ab-bts-copy">
+          <div className="hx-eyebrow">BEHIND KORE 360</div>
+          <h2 id="ab-bts" className="hx-h2">More than what you see.</h2>
+          <p className="ab-lead">There's more to KORE 360 than the final event.</p>
+          <p className="hx-body">From planning rooms and on-ground execution to creative ideas, collaborations and the people bringing everything together, our journey continues beyond the spotlight.</p>
+          <p className="hx-body">Follow along for a closer look at what we're building, the work happening behind the scenes and everything taking shape at KORE 360.</p>
+          <a
+            href={LINKS.instagram} target="_blank" rel="noopener noreferrer"
+            className="hx-btn hx-btn--primary ab-bts-cta"
+            aria-label="Follow KORE 360 on Instagram (opens in a new tab)"
+          >
+            <InstagramIcon /> Follow KORE 360 on Instagram <span aria-hidden="true">↗</span>
+          </a>
+          <div className="ab-bts-handle">@kore360.in</div>
+        </Reveal>
+        <Reveal delay={1} className="ab-bts-collage">
+          {BTS_PHOTOS.map((p) => (
+            <figure key={p.src} className={`hx-photo ab-bts-tile ${p.cls}`.trim()}>
+              <img src={p.src} alt={p.alt} loading="lazy" decoding="async" width={p.w} height={p.h} />
+              <figcaption className="ab-bts-tag">{p.tag}</figcaption>
+            </figure>
+          ))}
+        </Reveal>
       </div>
     </section>
   );
@@ -345,6 +394,7 @@ export default function About() {
       />
       <AboutHero />
       <Founder />
+      <BehindKore />
       <WhoWeAre />
       <Philosophy />
       <Expertise />
