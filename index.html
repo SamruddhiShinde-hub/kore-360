@@ -92,15 +92,9 @@
     <link rel="preload" as="image" href="/home/hero-poster.webp" fetchpriority="high" />
 
     <script>
-      (function () {
-        try {
-          var stored = localStorage.getItem('kore-theme-v2');
-          if (stored === 'dark') {
-            document.documentElement.setAttribute('data-theme', 'dark');
-          }
-          // Defaults to light mode as defined on the html tag
-        } catch (e) {}
-      })();
+      // The light/dark toggle was removed — the site is light-only now.
+      // Clear any preference saved by the old toggle.
+      try { localStorage.removeItem('kore-theme-v2'); } catch (e) {}
     </script>
   </head>
   <body>

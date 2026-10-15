@@ -337,7 +337,6 @@ const COOKIE_ROWS = {
     ['kore-utm', 'KORE 360', 'Remembers which campaign link brought you here, so enquiries can be attributed to it', 'First-party (session storage)', 'Until you close the tab'],
   ],
   functional: [
-    ['kore-theme-v2', 'KORE 360', 'Remembers whether you chose light or dark mode', 'First-party (local storage)', 'Until you change it or clear your browser data'],
     ['kore-connect-popup-seen', 'KORE 360', 'Stops the “Connect with us” popup reappearing during your visit', 'First-party (session storage)', 'Until you close the tab'],
   ],
 };

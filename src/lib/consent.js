@@ -29,7 +29,7 @@ const CATEGORY_COOKIES = {
 };
 const CATEGORY_STORAGE = {
   marketing: { session: ['kore-utm'], local: [] },
-  functional: { session: ['kore-connect-popup-seen'], local: ['kore-theme-v2'] },
+  functional: { session: ['kore-connect-popup-seen'], local: [] },
   analytics: { session: [], local: [] },
 };
 
