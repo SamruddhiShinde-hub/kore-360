@@ -186,20 +186,20 @@ function FounderAndTeam() {
 function Gateways() {
   return (
     <div className="hx-gateways">
-      <section className="hx-gateway hx-gateway--light" aria-labelledby="hx-education">
+      <section className="hx-gateway hx-gateway--light" aria-labelledby="hx-events">
+        <Reveal className="hx-gateway-card">
+          <div className="hx-eyebrow">FOR LEAGUES & EVENT ORGANISERS</div>
+          <h2 id="hx-events" className="hx-h2 hx-h2--gateway">KORE 360 Events</h2>
+          <p className="hx-body">Sports leagues, live tournaments, corporate events and brand experiences delivered from strategy to showtime.</p>
+          <Link to="/events" className="hx-btn hx-btn--dark">Explore Events <Arrow /></Link>
+        </Reveal>
+      </section>
+      <section className="hx-gateway hx-gateway--dark" aria-labelledby="hx-education">
         <Reveal className="hx-gateway-card">
           <div className="hx-eyebrow">FOR STUDENTS & CAREER-SWITCHERS</div>
           <h2 id="hx-education" className="hx-h2 hx-h2--gateway">KORE 360 Education</h2>
           <p className="hx-body">Learn how sports management hiring actually works, from a ₹99 e-book to a 1:1 Clarity Call with Krish.</p>
-          <Link to="/education" className="hx-btn hx-btn--dark">Explore Education <Arrow /></Link>
-        </Reveal>
-      </section>
-      <section className="hx-gateway hx-gateway--talent" aria-labelledby="hx-talent">
-        <Reveal className="hx-gateway-card">
-          <div className="hx-eyebrow">FOR CANDIDATES & EMPLOYERS</div>
-          <h2 id="hx-talent" className="hx-h2 hx-h2--gateway">KORE 360 Talent</h2>
-          <p className="hx-body">Internships, jobs and recruitment drives with brands working in and around sport.</p>
-          <Link to="/talent" className="hx-btn hx-btn--ghost">Explore Talent <Arrow /></Link>
+          <Link to="/education" className="hx-btn hx-btn--ghost">Explore Education <Arrow /></Link>
         </Reveal>
       </section>
     </div>
