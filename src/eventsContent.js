@@ -90,27 +90,22 @@ export const KORE_RELATIONSHIPS = ['client', 'league-partner', 'sponsor'];
 export const visibleLogos = (relationships) => PARTNER_LOGOS.filter((l) => relationships.includes(l.relationship) && (l.approved || SHOW_DRAFTS));
 
 // ---- Leagues, Events & Teams (/events portfolio grid) ----
-// Krish Lalwani's own role credits (see FOUNDER_ROLES in workContent.js),
-// one card per competition, in this reading order. Repeat seasons sit under
-// one identity; agencies (RISE, SSPARK, Deepali) appear only as a credit.
+// Competitions and teams worked across, one card per competition, in this reading order.
 // Logos live in public/events/logos/ — sourced from each competition's own
 // site or brand book, trimmed, never redrawn. `size` is the [max width,
 // max height] in px the mark may take in its 88px stage — tuned by eye so
 // wide wordmarks, detailed lockups and tall crests read at a similar weight.
 // A card without `logo` renders as a text-only tile.
 export const EVENTS_PORTFOLIO = [
-  { id: 'ipl', name: 'Indian Premier League', role: 'Venue Team Assistant, Cricket Operations', logo: '/events/logos/ipl.png', w: 600, h: 411, size: [132, 62] },
-  { id: 'llc', name: 'Legends League Cricket', role: 'Central Logistics Head', logo: '/events/logos/llc.png', w: 106, h: 80, size: [110, 66] },
-  {
-    id: 'ispl', name: 'Indian Street Premier League', role: 'Central Cricket & Venue Operations Manager', logo: '/events/logos/ispl.png', w: 98, h: 130, size: [96, 78],
-    franchise: { name: 'Chennai Singams', role: 'Senior Operations Manager', logo: '/events/logos/chennai-singams.png', w: 106, h: 136 },
-  },
-  { id: 't20-mumbai', name: 'T20 Mumbai', role: 'Assistant Production Coordinator', credit: 'via RISE Worldwide', logo: '/events/logos/t20-mumbai.png', w: 600, h: 473, size: [124, 80] },
-  { id: 'rajasthan-royals', name: 'Rajasthan Royals', role: 'Entertainment Manager', credit: 'via SSPARK', logo: '/events/logos/rajasthan-royals.png', w: 151, h: 238, size: [96, 80] },
-  { id: 'kiyg', name: 'Khelo India Youth Games', role: 'Assistant Venue Manager', credit: 'via Deepali Designs & Exhibits', logo: null, edition: 'Madhya Pradesh 2022' },
-  { id: 'wt20c', name: "Women's T20 Challenge", role: 'Venue Team Assistant, Cricket Operations', logo: '/events/logos/wt20c-2022.webp', w: 346, h: 217, size: [150, 76] },
-  { id: 'ecl', name: 'Entertainers Cricket League', role: 'Cricket Operations Manager', logo: '/events/logos/ecl.png', w: 199, h: 120, size: [130, 60] },
-  { id: 'acb', name: 'Actors Cricket Bash', role: 'Cricket Operations Manager', logo: '/events/logos/actors-cricket-bash.png', w: 600, h: 358, size: [132, 64] },
+  { id: 'ipl', name: 'Indian Premier League', logo: '/events/logos/ipl.png', w: 600, h: 411, size: [132, 62] },
+  { id: 'llc', name: 'Legends League Cricket', logo: '/events/logos/llc.png', w: 106, h: 80, size: [110, 66] },
+  { id: 'ispl', name: 'Indian Street Premier League', logo: '/events/logos/ispl.png', w: 98, h: 130, size: [96, 78] },
+  { id: 't20-mumbai', name: 'T20 Mumbai', logo: '/events/logos/t20-mumbai.png', w: 600, h: 473, size: [124, 80] },
+  { id: 'rajasthan-royals', name: 'Rajasthan Royals', logo: '/events/logos/rajasthan-royals.png', w: 151, h: 238, size: [96, 80] },
+  { id: 'kiyg', name: 'Khelo India Youth Games', logo: null, edition: 'Madhya Pradesh 2022' },
+  { id: 'wt20c', name: "Women's T20 Challenge", logo: '/events/logos/wt20c-2022.webp', w: 346, h: 217, size: [150, 76] },
+  { id: 'ecl', name: 'Entertainers Cricket League', logo: '/events/logos/ecl.png', w: 199, h: 120, size: [130, 60] },
+  { id: 'acb', name: 'Actors Cricket Bash', logo: '/events/logos/actors-cricket-bash.png', w: 600, h: 358, size: [132, 64] },
 ];
 
 // ---- Event Services (/events) ----
