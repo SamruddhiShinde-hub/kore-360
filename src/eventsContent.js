@@ -102,7 +102,7 @@ export const EVENTS_PORTFOLIO = [
   { id: 'ispl', name: 'Indian Street Premier League', logo: '/events/logos/ispl.png', w: 98, h: 130, size: [96, 78] },
   { id: 't20-mumbai', name: 'T20 Mumbai', logo: '/events/logos/t20-mumbai.png', w: 600, h: 473, size: [124, 80] },
   { id: 'rajasthan-royals', name: 'Rajasthan Royals', logo: '/events/logos/rajasthan-royals.png', w: 151, h: 238, size: [96, 80] },
-  { id: 'kiyg', name: 'Khelo India Youth Games', logo: null, edition: 'Madhya Pradesh 2022' },
+  { id: 'kiyg', name: 'Khelo India Youth Games', logo: '/events/logos/khelo-india.png', w: 600, h: 352, size: [120, 70] },
   { id: 'wt20c', name: "Women's T20 Challenge", logo: '/events/logos/wt20c-2022.webp', w: 346, h: 217, size: [150, 76] },
   { id: 'ecl', name: 'Entertainers Cricket League', logo: '/events/logos/ecl.png', w: 199, h: 120, size: [130, 60] },
   { id: 'acb', name: 'Actors Cricket Bash', logo: '/events/logos/actors-cricket-bash.png', w: 600, h: 358, size: [132, 64] },

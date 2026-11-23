@@ -25,7 +25,6 @@ const footerGroups = [
     links: [
       { label: 'About Us', to: '/about' },
       { label: 'Our Work', to: '/work' },
-      { label: 'Events', to: '/events' },
       { label: 'Contact', to: '/contact' },
       { label: 'Blog', to: '/blogs' },
     ],
@@ -36,6 +35,7 @@ const footerGroups = [
       { label: 'Education Overview', to: '/education' },
       { label: 'Career Guidance', to: '/education/clarity-call' },
       { label: 'Learning Resources', to: '/education/ebook' },
+      { label: 'Help & FAQs', to: '/education/faq' },
     ],
   },
   {
@@ -47,18 +47,14 @@ const footerGroups = [
     ],
   },
   {
-    title: 'LEGAL & SUPPORT',
+    title: 'LEGAL',
     links: [
       { label: 'Privacy Policy', to: '/privacy-policy' },
       { label: 'Terms & Conditions', to: '/terms-and-conditions' },
       { label: 'Cancellation & Refund Policy', to: '/refund-policy' },
-      { label: 'Digital Product Delivery Policy', to: '/digital-delivery-policy' },
       { label: 'Cookie Policy', to: '/cookie-policy' },
       { label: 'Cookie Settings', onClick: openCookieSettings },
       { label: 'Disclaimer', to: '/disclaimer' },
-      { label: 'Grievance Redressal', to: '/grievance-redressal' },
-      { label: 'Help & FAQs', to: '/education/faq' },
-      { label: 'Contact & Support', to: '/contact' },
     ],
   },
 ];
