@@ -4,6 +4,7 @@ import Reveal from '../components/Reveal.jsx';
 import PageHero from '../components/PageHero.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import DecathlonBanner from '../components/DecathlonBanner.jsx';
+import WhatsAppCta from '../components/WhatsAppCta.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)'];
 
@@ -41,6 +42,7 @@ export default function Talent() {
         intro="KORE 360 doesn't just point you at a job board. We represent you, matching you to real internships and placements with brands already working in and around sport, and staying in your corner once you're in the door."
         image="/talent/hero-desktop.webp" imageMobile="/talent/hero-mobile.webp" width="1600" height="1065"
         alt="The KORE 360 event crew gathered together on the outfield of a stadium"
+        actions={<WhatsAppCta source="talent_hero" text="Hi KORE 360, I'm interested in internships and jobs through KORE 360 Talent." />}
       />
       <nav className="tl-paths" aria-label="Talent routes">
         <a href="#candidates" className="tl-path"><span className="tl-path-for">For candidates</span><span className="tl-path-name">Internships &amp; jobs</span></a>

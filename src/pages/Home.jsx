@@ -6,6 +6,7 @@ import EventEnquiryModal from '../components/EventEnquiryModal.jsx';
 import ProjectShowcase from '../components/ProjectCard.jsx';
 import EventMetrics from '../components/EventMetrics.jsx';
 import { openConnectPopup } from '../components/ConnectPopup.jsx';
+import WhatsAppCta from '../components/WhatsAppCta.jsx';
 import { track } from '../lib/analytics.js';
 import { usePrefersReducedMotion } from '../lib/motion.js';
 import { HOME_PROCESS } from '../data.js';
@@ -88,7 +89,7 @@ function HomeHero({ onEnquire }) {
           KORE 360 plans and delivers sports leagues, corporate events and brand experiences, from venue setup to live production.
         </p>
         <div className="hx-ctas">
-          <Link to="/work" className="hx-btn hx-btn--primary">View Our Work <Arrow /></Link>
+          <WhatsAppCta source="home_hero" text="Hi KORE 360, I'm planning an event and would like to discuss it." />
           <button type="button" className="hx-btn hx-btn--ghost" onClick={() => onEnquire(undefined, 'home_hero')} aria-haspopup="dialog">Tell Us About Your Event <Arrow /></button>
         </div>
       </div>

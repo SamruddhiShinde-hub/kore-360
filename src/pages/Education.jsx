@@ -5,6 +5,7 @@ import Reveal from '../components/Reveal.jsx';
 import PageHero from '../components/PageHero.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import { usePrefersReducedMotion } from '../lib/motion.js';
+import WhatsAppCta from '../components/WhatsAppCta.jsx';
 
 const CARD_COLORS = ['var(--kore-orange-text)', 'var(--kore-magenta-text)', 'var(--kore-orange-text)', 'var(--kore-magenta-text)'];
 const DEDICATED_PAGES = { webinar: '/education/live-webinar', clarity: '/education/clarity-call', ebook: '/education/ebook' };
@@ -119,6 +120,7 @@ export default function Education() {
         intro="From a ₹99 read to a 1:1 game plan with Krish: three ways to get the real picture of how sports management hiring actually works, in as much or as little time as you've got."
         image="/education/hero-desktop.webp" imageMobile="/education/hero-mobile.webp" width="1600" height="900"
         alt="Krish Lalwani on a 1:1 career guidance video call from his laptop"
+        actions={<WhatsAppCta source="education_hero" label="Ask Krish on WhatsApp" text="Hi Krish, I have a question about KORE 360 Education." />}
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '64px 32px 96px' }}>
         <div className="ed-head">

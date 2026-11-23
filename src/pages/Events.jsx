@@ -1,5 +1,4 @@
 import { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
 import PageHero from '../components/PageHero.jsx';
 import PageMeta from '../components/PageMeta.jsx';
 import LeagueEngagements from '../components/LeagueEngagements.jsx';
@@ -11,6 +10,7 @@ import EventEnquiryModal from '../components/EventEnquiryModal.jsx';
 import { VISIBLE_PROJECTS } from '../workContent.js';
 import { track } from '../lib/analytics.js';
 import heroImg from '../assets/events/events_page_hero_image.webp';
+import WhatsAppCta from '../components/WhatsAppCta.jsx';
 
 // Capabilities page. Section content lives in src/eventsContent.js and
 // projects in src/workContent.js. /events#league-management is the direct
@@ -44,7 +44,7 @@ export default function Events() {
         alt="Floodlit cricket stadium in Doha at dusk."
         intro="KORE 360 works with league owners, event organisers and sports IP holders to plan, launch and grow sporting leagues, from strategy and structure to on-ground execution and long-term operations."
         actions={<>
-          <Link to="/work" className="hx-btn hx-btn--primary">View Our Work <span aria-hidden="true" className="hx-arrow">→</span></Link>
+          <WhatsAppCta source="events_hero" text="Hi KORE 360, I'd like to talk about an event or league we're planning." />
           <button type="button" className="hx-btn hx-btn--ghost" onClick={() => openEvent(undefined, 'events_hero')} aria-haspopup="dialog">Tell Us About Your Event <span aria-hidden="true" className="hx-arrow">→</span></button>
         </>}
       />

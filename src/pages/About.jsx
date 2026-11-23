@@ -4,6 +4,7 @@ import PageMeta from '../components/PageMeta.jsx';
 import Reveal from '../components/Reveal.jsx';
 import EventEnquiryModal from '../components/EventEnquiryModal.jsx';
 import Gallery from '../components/Gallery.jsx';
+import WhatsAppCta from '../components/WhatsAppCta.jsx';
 import { track } from '../lib/analytics.js';
 import { INDUSTRY_EXPERIENCE, LINKS } from '../data.js';
 
@@ -109,6 +110,9 @@ function AboutHero() {
         <p className="hx-hero-copy">
           KORE 360 is an integrated sports and event management company bringing strategy, operations, partnerships and people together to create meaningful events and experiences.
         </p>
+        <div className="hx-ctas">
+          <WhatsAppCta source="about_hero" text="Hi KORE 360, I'd like to know more about working with you on an event." />
+        </div>
       </div>
     </section>
   );
