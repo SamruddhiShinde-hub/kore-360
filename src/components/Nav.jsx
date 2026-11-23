@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logo from '../assets/Final - white logo-14.png';
 
@@ -7,15 +7,6 @@ export default function Nav() {
   const location = useLocation();
 
   const close = () => setOpen(false);
-
-  // Close the menu on navigation and on Escape.
-  useEffect(() => { setOpen(false); }, [location.pathname]);
-  useEffect(() => {
-    if (!open) return undefined;
-    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [open]);
 
   return (
     <header
@@ -30,7 +21,6 @@ export default function Nav() {
     >
       {open && (
         <div
-          id="nav-mobile-menu"
           className="nav-mobile-menu"
           style={{
             position: 'fixed',
@@ -48,7 +38,6 @@ export default function Nav() {
         >
           <Link to="/education" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>Education</Link>
           <Link to="/events" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>Events</Link>
-          <Link to="/work" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>Work</Link>
           <Link to="/talent" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>Talent</Link>
           <Link to="/about" className="nav-link-bar" onClick={close} style={{ fontSize: '24px', fontWeight: 500, color: '#FFFFFF', letterSpacing: '0.05em' }}>About Us</Link>
         </div>
@@ -71,31 +60,24 @@ export default function Nav() {
           <img src={logo} alt="Kore 360 Logo" width="115" height="110" style={{ height: '110px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
         </Link>
 
-        {/* Desktop nav — logo stays centred between the two link groups */}
-        <nav className="nav-desktop" style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', gap: 'clamp(32px, 6vw, 120px)', width: '100%', color: '#FFFFFF', fontWeight: 600, fontSize: '15px', letterSpacing: '0.08em' }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'clamp(32px, 6vw, 120px)' }}>
-            <Link to="/education" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Education</Link>
-            <Link to="/events" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Events</Link>
-            <Link to="/work" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Work</Link>
-          </div>
+        {/* Desktop nav */}
+        <nav className="nav-desktop" style={{ display: 'flex', alignItems: 'center', gap: '120px', color: '#FFFFFF', fontWeight: 600, fontSize: '15px', letterSpacing: '0.08em' }}>
+          <Link to="/education" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Education</Link>
+          <Link to="/events" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Events</Link>
 
           <Link to="/" onClick={() => window.scrollTo(0, 0)} className="nav-logo" aria-label="Home">
             <img src={logo} alt="Kore 360 Logo" width="115" height="110" style={{ height: '110px', width: 'auto', display: 'block', filter: 'brightness(0) invert(1)' }} />
           </Link>
 
-          <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 'clamp(32px, 6vw, 120px)' }}>
-            <Link to="/talent" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Talent</Link>
-            <Link to="/about" className="nav-link-bar" style={{ color: '#FFFFFF' }}>About Us</Link>
-          </div>
+          <Link to="/talent" className="nav-link-bar" style={{ color: '#FFFFFF' }}>Talent</Link>
+          <Link to="/about" className="nav-link-bar" style={{ color: '#FFFFFF' }}>About Us</Link>
         </nav>
 
         {/* Mobile controls */}
         <div className="nav-mobile-controls" style={{ display: 'none', alignItems: 'center', gap: '20px', position: 'absolute', right: '24px' }}>
-          <button
+          <button 
             onClick={() => setOpen(!open)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
-            aria-expanded={open}
-            aria-controls="nav-mobile-menu"
+            aria-label="Toggle menu"
             style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#FFFFFF' }}
           >
             {open ? (
@@ -116,3 +98,4 @@ export default function Nav() {
     </header>
   );
 }
+
