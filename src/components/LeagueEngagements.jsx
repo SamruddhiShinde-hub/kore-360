@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { LEAGUE_ENGAGEMENTS, LEAGUE_COMPARISON } from '../data.js';
 import { track } from '../lib/analytics.js';
 import Reveal from './Reveal.jsx';
@@ -10,10 +10,10 @@ function EngagementCard({ model, index, expanded, onToggle }) {
   const more = model.deliverables.slice(model.preview);
 
   return (
-    // Reveal wraps the card rather than being it — its stagger delay would
-    // otherwise also delay the card's own hover transitions.
-    <Reveal delay={index} style={{ height: '100%' }}>
-      <article className="league-card" aria-labelledby={`league-name-${model.id}`}>
+    // Reveal wraps the card rather than being it, so its fade-in transition
+    // doesn't also slow the card's own hover transitions.
+    <Reveal>
+      <article id={`league-${model.id}`} className="league-card" aria-labelledby={`league-name-${model.id}`}>
         <div className="league-card-head">
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '12px', flexWrap: 'wrap' }}>
             <h3 id={`league-name-${model.id}`} className="league-card-name">{model.name}</h3>
@@ -105,60 +105,33 @@ function EngagementCard({ model, index, expanded, onToggle }) {
   );
 }
 
-export default function LeagueEngagements() {
+// Sticky-rail layout: on wide screens the heading and the three package
+// labels stay in view on the left while the cards scroll past on the right
+// in normal document flow; the card nearest the middle of the screen marks
+// its label as current. The rail is plain anchor links, so it still works
+// (and the cards still read in order) without JS or with reduced motion.
+//
+// `beforeCta` renders between the comparison and the closing CTA band.
+// `onEventEnquire` turns that band into a general event enquiry with the
+// league form as the secondary action.
+export default function LeagueEngagements({ beforeCta = null, onEventEnquire }) {
   const sectionRef = useRef(null);
   const [enquiryOpen, setEnquiryOpen] = useState(false);
   const [expanded, setExpanded] = useState({});
-  const gridRef = useRef(null);
+  const [active, setActive] = useState(LEAGUE_ENGAGEMENTS[0].id);
 
-  // Side by side, each matching block (intro, deliverables, how it works,
-  // note, outcome, footer) takes the tallest card's height for that block,
-  // so every section starts on the same line across all three cards.
-  // Re-measured on resize since wrapping changes with card width.
-  useLayoutEffect(() => {
-    const grid = gridRef.current;
-    if (!grid) return;
-    const rows = ['.league-card-head', ...['intro', 'more', 'framework', 'note'].map((r) => `[data-row="${r}"]`), '.league-outcome', '.league-card-footer'];
-    // getBoundingClientRect, not offsetHeight — offsetHeight rounds, and
-    // the rounding drifts blocks lower down by a pixel.
-    const height = (el) => el.getBoundingClientRect().height;
-    const equalize = () => {
-      const sideBySide = window.matchMedia('(min-width: 981px)').matches;
-      rows.forEach((sel) => {
-        const boxes = [...grid.querySelectorAll(sel)];
-        boxes.forEach((b) => { b.style.minHeight = ''; });
-        if (!sideBySide) return;
-        if (sel === '[data-row="more"]') {
-          // The deliverables list is split across the preview and the
-          // expandable remainder — size them as one block, padding only the
-          // remainder, so the list never shows a gap in its middle.
-          const previews = [...grid.querySelectorAll('[data-row="preview"]')];
-          const totals = boxes.map((b, i) => height(previews[i]) + height(b));
-          const tallest = Math.max(...totals);
-          boxes.forEach((b, i) => { b.style.minHeight = `${tallest - height(previews[i])}px`; });
-          return;
-        }
-        const tallest = Math.max(...boxes.map(height));
-        boxes.forEach((b) => { b.style.minHeight = `${tallest}px`; });
-      });
-    };
-    equalize();
-    window.addEventListener('resize', equalize);
-    return () => window.removeEventListener('resize', equalize);
-  }, []);
-
-  // Side by side (desktop), the cards open and close together so they stay
-  // the same height and line up for comparison. Stacked (tablet/mobile),
-  // each opens on its own so the page doesn't balloon.
-  const toggleScope = (id) => {
-    const sideBySide = window.matchMedia('(min-width: 981px)').matches;
-    setExpanded((prev) => {
-      const next = !prev[id];
-      if (!sideBySide) return { ...prev, [id]: next };
-      return Object.fromEntries(LEAGUE_ENGAGEMENTS.map((m) => [m.id, next]));
-    });
-  };
+  const toggleScope = (id) => setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
   const closeEnquiry = useCallback(() => setEnquiryOpen(false), []);
+
+  // Current package = the card crossing the middle band of the viewport.
+  useEffect(() => {
+    const cards = LEAGUE_ENGAGEMENTS.map((m) => document.getElementById(`league-${m.id}`)).filter(Boolean);
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id.replace('league-', '')); });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    cards.forEach((c) => obs.observe(c));
+    return () => obs.disconnect();
+  }, []);
 
   // Fires once per page view, the first time the section is actually seen.
   useEffect(() => {
@@ -186,19 +159,35 @@ export default function LeagueEngagements() {
     <>
       <section ref={sectionRef} id="league-management" aria-labelledby="league-heading" className="league-section">
         <div className="league-shell">
-          <Reveal style={{ maxWidth: '760px', marginBottom: '48px' }}>
-            <div className="league-eyebrow" style={{ marginBottom: '18px' }}>SPORTS & LEAGUE MANAGEMENT</div>
-            <h2 id="league-heading" className="league-h2">Three levels. Different depths of involvement.</h2>
-            <p className="league-lede">
-              Whether you're building a new sporting league, preparing for execution or looking for a long-term operating partner, KORE 360 brings the strategy, structure and execution expertise to move your vision forward.
-            </p>
-          </Reveal>
+          <div className="league-rail-layout">
+            <aside className="league-rail">
+              <div className="league-eyebrow" style={{ marginBottom: '18px' }}>SPORTS & LEAGUE MANAGEMENT</div>
+              <h2 id="league-heading" className="league-h2 league-rail-title">Three levels. Different depths of involvement.</h2>
+              <p className="league-lede league-rail-lede">
+                Whether you're building a new sporting league, preparing for execution or looking for a long-term operating partner, KORE 360 brings the strategy, structure and execution expertise to move your vision forward.
+              </p>
+              <nav className="league-rail-nav" aria-label="League packages">
+                <ol>
+                  {LEAGUE_ENGAGEMENTS.map((m, i) => (
+                    <li key={m.id}>
+                      <a href={`#league-${m.id}`} className={`league-rail-link${active === m.id ? ' is-active' : ''}`} aria-current={active === m.id ? 'true' : undefined}>
+                        <span className="league-rail-num">0{i + 1}</span>
+                        <span className="league-rail-name">{m.name}</span>
+                        <span className="league-rail-desc">{m.descriptor}</span>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+                <a href="#league-compare" className="league-rail-compare">Compare all three <span aria-hidden="true">↓</span></a>
+              </nav>
+            </aside>
 
-          <div ref={gridRef} className="league-grid">
-            {LEAGUE_ENGAGEMENTS.map((m, i) => <EngagementCard key={m.id} model={m} index={i} expanded={!!expanded[m.id]} onToggle={() => toggleScope(m.id)} />)}
+            <div className="league-stack">
+              {LEAGUE_ENGAGEMENTS.map((m, i) => <EngagementCard key={m.id} model={m} index={i} expanded={!!expanded[m.id]} onToggle={() => toggleScope(m.id)} />)}
+            </div>
           </div>
 
-          <Reveal style={{ marginTop: '88px' }}>
+          <Reveal id="league-compare" className="league-compare-block">
             <h2 id="league-compare-heading" className="league-h2" style={{ fontSize: 'clamp(26px,3.6vw,40px)', marginBottom: '28px' }}>One model. Three levels of involvement.</h2>
             <div className="league-compare-wrap">
               <table className="league-compare" aria-labelledby="league-compare-heading">
@@ -223,22 +212,41 @@ export default function LeagueEngagements() {
             <p className="league-disclaimer">
               Every engagement is tailored to the scope, locations, event days, duration, team deployment and operational complexity. The level of KORE 360 involvement is determined by the agreed scope of work; third-party, production, travel, accommodation, venue and statutory costs are scoped separately during the proposal process.
             </p>
+            <button type="button" onClick={openEnquiry} className="hx-link league-compare-cta" aria-haspopup="dialog">
+              Tell Us About Your League <span aria-hidden="true" className="hx-arrow">→</span>
+            </button>
           </Reveal>
         </div>
       </section>
 
+      {beforeCta}
+
       <section aria-labelledby="league-cta-heading" className="league-cta">
         <div className="league-cta-glow" aria-hidden="true" />
-        <Reveal className="league-shell" style={{ position: 'relative', textAlign: 'center' }}>
-          <div className="league-eyebrow" style={{ marginBottom: '18px' }}>LET'S TALK LEAGUES</div>
-          <h2 id="league-cta-heading" className="league-cta-title">Want us to run your league?</h2>
-          <p className="league-cta-text">
-            Whether you're building a new league, preparing for your next season or looking for an experienced operating partner, tell us what you have in mind. We'll help define the right level of KORE 360 involvement.
-          </p>
-          <button type="button" onClick={openEnquiry} className="btn-accent league-cta-btn" aria-haspopup="dialog">
-            Tell Us About Your League →
-          </button>
-        </Reveal>
+        {onEventEnquire ? (
+          <Reveal className="league-shell" style={{ position: 'relative', textAlign: 'center' }}>
+            <div className="league-eyebrow" style={{ marginBottom: '18px' }}>LET'S TALK</div>
+            <h2 id="league-cta-heading" className="league-cta-title">Tell us about your event</h2>
+            <p className="league-cta-text">
+              A league season, a corporate event or a brand experience: tell us what you're planning and we'll scope the services and level of involvement that fit.
+            </p>
+            <div className="hx-ctas hx-ctas--center">
+              <button type="button" onClick={() => onEventEnquire(undefined, 'events_final')} className="btn-accent league-cta-btn" aria-haspopup="dialog">Tell Us About Your Event →</button>
+              <button type="button" onClick={openEnquiry} className="hx-btn hx-btn--ghost" aria-haspopup="dialog">Tell Us About Your League →</button>
+            </div>
+          </Reveal>
+        ) : (
+          <Reveal className="league-shell" style={{ position: 'relative', textAlign: 'center' }}>
+            <div className="league-eyebrow" style={{ marginBottom: '18px' }}>LET'S TALK LEAGUES</div>
+            <h2 id="league-cta-heading" className="league-cta-title">Want us to run your league?</h2>
+            <p className="league-cta-text">
+              Whether you're building a new league, preparing for your next season or looking for an experienced operating partner, tell us what you have in mind. We'll help define the right level of KORE 360 involvement.
+            </p>
+            <button type="button" onClick={openEnquiry} className="btn-accent league-cta-btn" aria-haspopup="dialog">
+              Tell Us About Your League →
+            </button>
+          </Reveal>
+        )}
       </section>
 
       <LeagueEnquiryModal open={enquiryOpen} onClose={closeEnquiry} />

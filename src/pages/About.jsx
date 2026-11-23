@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PageMeta from '../components/PageMeta.jsx';
 import Reveal from '../components/Reveal.jsx';
 import EventEnquiryModal from '../components/EventEnquiryModal.jsx';
+import Gallery from '../components/Gallery.jsx';
 import { track } from '../lib/analytics.js';
 import { INDUSTRY_EXPERIENCE, LINKS } from '../data.js';
 
@@ -15,6 +16,16 @@ const IMG_FOUNDER = '/about/founder.webp';
 const IMG_LEAGUE_OPS = '/about/league-ops.webp';
 const IMG_LOGISTICS = '/about/team-logistics.webp';
 const IMG_STADIUM = '/about/stadium.webp';
+
+// Founder's own experience at Legends League Cricket Masters in Doha —
+// before KORE 360, not a KORE 360 project. Captions describe only what the
+// photos show.
+const INTERNATIONAL_PHOTOS = [
+  { src: '/about/intl-doha-dusk.webp', srcSmall: '/about/intl-doha-dusk-800.webp', w: 1600, h: 1200, alt: 'A Legends League Cricket Masters match under floodlights at dusk in Doha, with Qatar Airways boards around the ground', caption: 'LLC Masters under lights, Doha' },
+  { src: '/about/intl-llc-pitchside.webp', srcSmall: '/about/intl-llc-pitchside-800.webp', w: 1200, h: 1600, focal: 'center 30%', alt: 'Krish Lalwani pitchside in a Legends League Cricket jacket and accreditation, standing with an India Maharajas player after a match', caption: 'Pitchside at LLC Masters, on tournament accreditation' },
+  { src: IMG_LOGISTICS, w: 1100, h: 733, alt: 'Players arriving with their luggage from the team bus at a Legends League Cricket venue in Qatar', caption: 'Team arrivals — the logistics side of the tournament' },
+  { src: '/about/intl-raina-doha.webp', srcSmall: '/about/intl-raina-doha-800.webp', w: 1200, h: 1600, focal: 'center 35%', alt: 'Krish Lalwani with former India cricketer Suresh Raina in Doha', caption: 'With Suresh Raina in Doha' },
+];
 const BTS_PHOTOS = [
   { src: '/about/bts-planning.webp', w: 560, h: 799, tag: 'Planning', cls: 'ab-bts-tile--tall', alt: 'Two KORE 360 team members talking through plans on the field in front of the stage set before a cricket league event' },
   { src: '/about/bts-production.webp', w: 710, h: 533, tag: 'On-ground', cls: '', alt: 'Event crew coordinating on the field while a camera operator films during live match production' },
@@ -174,7 +185,10 @@ function Expertise() {
             <h3 className="ab-vertical-name ab-vertical-name--lg">{events.name}</h3>
             <div className="ab-vertical-tagline">{events.tagline}</div>
             <p className="hx-body">{events.desc}</p>
-            <Link to={events.to} className="hx-btn hx-btn--primary">{events.cta} <Arrow /></Link>
+            <div className="hx-ctas" style={{ marginTop: '14px' }}>
+              <Link to={events.to} className="hx-btn hx-btn--primary">{events.cta} <Arrow /></Link>
+              <Link to="/work" className="hx-btn hx-btn--ghost">View Our Work <Arrow /></Link>
+            </div>
           </div>
         </Reveal>
 
@@ -237,15 +251,18 @@ function Founder() {
         <Reveal delay={1}>
           <div className="hx-eyebrow">MEET THE FOUNDER</div>
           <h2 id="ab-founder" className="hx-h2 ab-founder-name">Krish Lalwani</h2>
-          <div className="ab-founder-role">Founder — KORE 360</div>
+          <div className="ab-founder-role">Founder, KORE 360 · Sports Presenter</div>
           <p className="ab-founder-headline">From the field to building the business.</p>
-          <p className="hx-body">Krish Lalwani is a sports management professional and entrepreneur whose journey has been shaped by hands-on experience across major sporting events and cricket leagues.</p>
-          <p className="hx-body">From managing team logistics and operational requirements to coordinating stakeholders and working within live event environments, his experience has provided a practical understanding of what goes into delivering large-scale sporting properties.</p>
-          <p className="hx-body">Having worked across different aspects of event operations, Krish recognized the need for a more connected approach — one that brings strategy, execution, industry relationships and operational expertise together.</p>
+          <div className="ab-label">Founder&apos;s experience</div>
+          <p className="hx-body">Krish Lalwani&apos;s work in sport started on the ground: league logistics, event operations and sports presenting across cricket leagues and major sporting events, in India and in Doha.</p>
+          <p className="hx-body">Moving teams, coordinating stakeholders and working inside live event environments showed him how much has to come together before an audience sees anything. He saw the need for one partner that connects strategy, people and execution.</p>
           <p className="ab-founder-pull">That thinking became the foundation of KORE 360.</p>
-          <p className="hx-body">Today, through KORE 360, Krish is focused on building an integrated sports and events company that supports event organizers, brands, sporting properties and businesses with structured, execution-led solutions.</p>
-          <p className="hx-body">Alongside the events business, he also shares practical industry insights and career guidance with aspiring sports management professionals through KORE 360 Education.</p>
-          <a href={LINKS.krishInstagram} target="_blank" rel="noreferrer" className="hx-link">Follow Krish on Instagram <Arrow /></a>
+          <div className="ab-label">The company today</div>
+          <p className="hx-body">Through KORE 360, Krish works with organisers, brands and sporting properties on structured, execution-led events, and shares practical career guidance through KORE 360 Education.</p>
+          <div className="ab-founder-links">
+            <Link to="/work" className="hx-link">See KORE 360&apos;s work <Arrow /></Link>
+            <a href={LINKS.krishInstagram} target="_blank" rel="noreferrer" className="hx-link">Follow Krish on Instagram <Arrow /></a>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -271,11 +288,8 @@ function IndustryExperience() {
           ))}
         </ul>
 
-        <div className="hx-split hx-split--wide ab-experience-split">
-          <Reveal className="hx-photo hx-photo--wide">
-            <img src={IMG_LOGISTICS} alt="Players arriving with their luggage from the team bus at a Legends League Cricket venue in Qatar" loading="lazy" decoding="async" width="1100" height="733" />
-          </Reveal>
-          <Reveal delay={1}>
+        <div className="ab-experience-split">
+          <Reveal>
             <h3 className="hx-h3">Selected professional experience</h3>
             <p className="hx-note">
               Selected professional experience of the founder prior to and outside KORE 360 engagements. These are not KORE 360 client projects.
@@ -290,6 +304,22 @@ function IndustryExperience() {
             </ul>
           </Reveal>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function InternationalExperience() {
+  return (
+    <section className="hx-section hx-section--charcoal" aria-labelledby="ab-intl">
+      <div className="hx-shell">
+        <Reveal className="hx-head">
+          <div className="hx-eyebrow">INTERNATIONAL EXPERIENCE</div>
+          <h2 id="ab-intl" className="hx-h2 hx-h2--gateway">Legends League Cricket Masters, Doha.</h2>
+          <div className="ab-label ab-label--dark">Founder experience · before KORE 360 · not a KORE 360 project</div>
+          <p className="hx-lede">Krish worked at Legends League Cricket Masters in Doha in his own professional capacity, inside the tournament&apos;s team logistics and match-day environment. It&apos;s where much of his international, on-ground experience comes from.</p>
+        </Reveal>
+        <Gallery images={INTERNATIONAL_PHOTOS} label="Legends League Cricket Masters, Doha" id="ab-intl-gallery" />
       </div>
     </section>
   );
@@ -399,6 +429,7 @@ export default function About() {
       <Philosophy />
       <Expertise />
       <IndustryExperience />
+      <InternationalExperience />
       <WhyKore />
       <Approach />
       <Vision />

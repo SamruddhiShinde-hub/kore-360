@@ -18,7 +18,7 @@ const EVENT_OPTIONS = {
   eventType: ['Sports event or league', 'Corporate event', 'Brand activation', 'Entertainment / live experience', 'Hospitality experience', 'Other'],
   timeline: ['Within 3 months', '3–6 months', '6–12 months', 'Not finalized'],
   budget: ['Under ₹10 lakh', '₹10–25 lakh', '₹25 lakh – ₹1 crore', 'Above ₹1 crore', 'Prefer not to say'],
-  services: ['Sports & League Management', 'Corporate Events', 'Brand Activations & Experiences', 'Event Production', 'Hospitality & Logistics', 'Sponsorships & Partnerships'],
+  services: ['Décor & Venue Styling', 'Sports & League Management', 'Corporate Events', 'Brand Activations & Experiences', 'Event Production', 'Hospitality & Logistics', 'Sponsorships & Partnerships', 'Entertainment & Talent Coordination'],
 };
 
 const LEAD_SOURCE = 'KORE 360 Website';

@@ -14,6 +14,8 @@ const About = lazy(() => import('./pages/About.jsx'));
 const Education = lazy(() => import('./pages/Education.jsx'));
 const Events = lazy(() => import('./pages/Events.jsx'));
 const Talent = lazy(() => import('./pages/Talent.jsx'));
+const Work = lazy(() => import('./pages/Work.jsx'));
+const Project = lazy(() => import('./pages/Project.jsx'));
 const BookingConfirmed = lazy(() => import('./pages/BookingConfirmed.jsx'));
 const LiveWebinar = lazy(() => import('./pages/LiveWebinar.jsx'));
 const ClarityCall = lazy(() => import('./pages/ClarityCall.jsx'));
@@ -61,6 +63,9 @@ export default function App() {
             <Route path="/education" element={<Education />} />
             <Route path="/events" element={<Events />} />
             <Route path="/talent" element={<Talent />} />
+            <Route path="/work" element={<Work />} />
+            <Route path="/work/:slug" element={<Project />} />
+            <Route path="/portfolio" element={<Navigate to="/work" replace />} />
             <Route path="/booking-confirmed" element={<BookingConfirmed />} />
             <Route path="/education/live-webinar" element={<LiveWebinar />} />
             <Route path="/education/clarity-call" element={<ClarityCall />} />

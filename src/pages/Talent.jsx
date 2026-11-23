@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { CAREERS, TALENT_PARTNERS } from '../data.js';
 import Reveal from '../components/Reveal.jsx';
 import PageHero from '../components/PageHero.jsx';
@@ -41,11 +42,18 @@ export default function Talent() {
         image="/talent/hero-desktop.webp" imageMobile="/talent/hero-mobile.webp" width="1600" height="1065"
         alt="The KORE 360 event crew gathered together on the outfield of a stadium"
       />
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '72px 32px 0' }}>
-        <DecathlonBanner />
-      </div>
+      <nav className="tl-paths" aria-label="Talent routes">
+        <a href="#candidates" className="tl-path"><span className="tl-path-for">For candidates</span><span className="tl-path-name">Internships &amp; jobs</span></a>
+        <a href="#recruitment" className="tl-path"><span className="tl-path-for">For candidates</span><span className="tl-path-name">Live recruitment drives</span></a>
+        <Link to="/events#service-athlete-artist" className="tl-path"><span className="tl-path-for">For event organisers</span><span className="tl-path-name">Book athletes &amp; artists</span></Link>
+      </nav>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 32px 0' }}>
+      <section id="candidates" className="tl-section" aria-labelledby="tl-candidates">
+        <div className="tl-head">
+          <div className="hx-eyebrow">FOR CANDIDATES</div>
+          <h2 id="tl-candidates" className="league-h2">Internships &amp; jobs</h2>
+          <p className="league-lede">Apply once and we match you to openings across teams, agencies, leagues and events. Internships are for getting your foot in; jobs are vetted full-time roles.</p>
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '20px', marginBottom: '20px' }}>
           {CAREERS.map((k, i) => {
             const Icon = ICONS[i % ICONS.length];
@@ -63,9 +71,18 @@ export default function Talent() {
             );
           })}
         </div>
-      </div>
+      </section>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '36px 32px 96px' }}>
+      <section id="recruitment" className="tl-section" aria-labelledby="tl-recruitment">
+        <div className="tl-head">
+          <div className="hx-eyebrow">RECRUITMENT &amp; PARTNER OPPORTUNITIES</div>
+          <h2 id="tl-recruitment" className="league-h2">Live recruitment drives</h2>
+          <p className="league-lede">Roles we&apos;re sourcing for directly on behalf of partner brands. Applications go to the partner&apos;s hiring team through KORE 360.</p>
+        </div>
+        <DecathlonBanner />
+      </section>
+
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '36px 32px 64px' }}>
         <Reveal>
           <div style={{ fontSize: '11px', letterSpacing: '0.12em', color: 'var(--text-faint)', marginBottom: '18px', textAlign: 'center' }}>WHERE OUR TALENT HAS LANDED</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
@@ -96,6 +113,17 @@ export default function Talent() {
           </p>
         </Reveal>
       </div>
+
+      <section className="tl-booking" aria-labelledby="tl-booking">
+        <div className="tl-booking-inner">
+          <div>
+            <div className="hx-eyebrow">FOR EVENT ORGANISERS</div>
+            <h2 id="tl-booking" className="league-h2" style={{ fontSize: 'clamp(26px,3.4vw,40px)', margin: '0 0 10px' }}>Booking athletes or artists?</h2>
+            <p className="league-lede">Appearances, performances and hosts for your event are handled by our events team.</p>
+          </div>
+          <Link to="/events#service-athlete-artist" className="hx-btn hx-btn--primary">Athlete &amp; Artist Management →</Link>
+        </div>
+      </section>
     </>
   );
 }

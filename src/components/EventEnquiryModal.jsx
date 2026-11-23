@@ -32,7 +32,7 @@ function validate(v) {
 
 const FIELD_ORDER = ['fullName', 'email', 'phone', 'eventType', 'services'];
 
-export default function EventEnquiryModal({ open, onClose, initialService }) {
+export default function EventEnquiryModal({ open, onClose, initialService, initialProject }) {
   const uid = useId();
   const panelRef = useRef(null);
   const submittingRef = useRef(false);
@@ -43,12 +43,17 @@ export default function EventEnquiryModal({ open, onClose, initialService }) {
 
   const id = (name) => `${uid}-${name}`;
 
-  // A service CTA ("Enquire about Production") pre-ticks that service.
+  // A service CTA ("Enquire about Production") pre-ticks that service, and a
+  // project page's "Discuss a similar event" seeds the project notes — only
+  // if the visitor hasn't written anything there yet.
   useEffect(() => {
     if (open && initialService) {
       setValues((v) => (v.services.includes(initialService) ? v : { ...v, services: [...v.services, initialService] }));
     }
   }, [open, initialService]);
+  useEffect(() => {
+    if (open && initialProject) setValues((v) => (v.project.trim() ? v : { ...v, project: initialProject }));
+  }, [open, initialProject]);
 
   useEffect(() => {
     if (!open) return;

@@ -1,6 +1,7 @@
 // ============================================================
 //  KORE 360 — blog post index
-//  Each entry here is a card on /blog. Add the actual article as its own
+//  Each entry here is a card on /blog. `topic` is 'events' (planning and
+//  running events — linked to the event services) or 'careers'. Add the actual article as its own
 //  page under src/pages/blog/, then register its route in App.jsx (same
 //  pattern as the dedicated Education session pages).
 // ============================================================
@@ -13,6 +14,7 @@ import internshipsCoverImg from './assets/sports-internships-cover.jpg';
 export const BLOG_POSTS = [
   {
     slug: 'sports-management-colleges-india',
+    topic: 'careers',
     title: "Sports Management Colleges in India: How to Choose the Right Course",
     subtitle: "Seven questions to ask before you enrol, and why no list is a universal ranking.",
     excerpt: "How to compare sports management colleges and courses in India on curriculum, practical exposure, total cost and verified outcomes before applying.",
@@ -23,6 +25,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'sports-management-courses-vs-experience',
+    topic: 'careers',
     title: "Sports Management Courses vs Real-World Experience: What Matters Most?",
     subtitle: "A qualification and practical experience solve different problems.",
     excerpt: "Should you study sports management or start with internships? How to weigh courses, hands-on experience and transferable skills for your background.",
@@ -33,6 +36,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'event-management-pune-mumbai-guide',
+    topic: 'events',
     title: "Event Management in Pune and Mumbai: How to Choose the Right Partner",
     subtitle: "The questions that separate a good pitch from good execution.",
     excerpt: "How to brief, compare and choose an event management company in Pune or Mumbai, from on-ground leads to like-for-like proposal comparisons.",
@@ -43,6 +47,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'careers-in-cricket-beyond-playing',
+    topic: 'careers',
     title: "Careers in Cricket Beyond Playing: Jobs Behind the Game",
     subtitle: "Twelve roles that keep professional cricket running.",
     excerpt: "Twelve careers behind the game, from team logistics and match-day operations to sponsorship, content and grassroots programmes, and how to get started.",
@@ -53,6 +58,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'corporate-event-ideas-employees-india',
+    topic: 'events',
     title: "Corporate Event Ideas: 15 Experiences Employees Can Actually Enjoy",
     subtitle: "Sports, culture and learning formats, and how to choose between them.",
     excerpt: "Fifteen practical corporate event ideas for employees in India, from sports days and wellness activities to award nights, hackathons and off-sites.",
@@ -63,6 +69,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'corporate-sports-events-india',
+    topic: 'events',
     title: "Corporate Sports Events: A Guide to Employee Engagement Through Sport",
     subtitle: "Formats, inclusion and budgets for sports days and corporate tournaments.",
     excerpt: "How to plan corporate sports events in India, from cricket tournaments to multi-sport days, with inclusive formats, budgets and engagement measures.",
@@ -73,6 +80,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'how-to-get-job-sports-management-india',
+    topic: 'careers',
     title: "How to Get a Job in Sports Management in India",
     subtitle: "Pick a department, build proof of work and apply with focus.",
     excerpt: "A realistic route into sports management jobs in India: choosing a function, building proof of work, finding internships and a 30-day entry plan.",
@@ -83,6 +91,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'how-to-organise-sports-tournament',
+    topic: 'events',
     title: "How to Organise a Sports Tournament: From Fixtures to Finals",
     subtitle: "Nine steps from the brief to the final handover.",
     excerpt: "A step-by-step guide to organising a cricket, football or multi-sport tournament: formats, fixtures, venues, officials, staffing and event-day control.",
@@ -93,6 +102,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'corporate-event-management-india',
+    topic: 'events',
     title: "Corporate Event Management in India: A Practical Guide for Businesses",
     subtitle: "From the brief to the review: how corporate events actually get delivered.",
     excerpt: "What corporate event management involves, how to plan a corporate event step by step, and how to choose an event management partner in India.",
@@ -103,6 +113,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'event-planning-checklist',
+    topic: 'events',
     title: "Event Planning Checklist: The Complete Guide from Brief to Show Day",
     subtitle: "Seven phases, one master checklist, and the rule that holds it together.",
     excerpt: "A practical event planning checklist for corporate events, tournaments and live experiences, covering budget, vendors, venue, staffing, safety and show day.",
@@ -113,6 +124,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'sports-management-internships-india',
+    topic: 'careers',
     title: 'Sports Management Internships in India: Every Real Way to Get One',
     subtitle: 'IPL, BCCI, ISL and beyond — how the internships that actually matter get filled.',
     excerpt: 'Every real way to land a sports management internship in India — match day operations, franchises, BCCI and state associations, broadcast houses and sponsorship agencies — from someone who has worked 500+ matches across 20+ leagues.',
@@ -122,6 +134,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: '5-things-i-wish-i-knew-before-sports-industry',
+    topic: 'careers',
     title: '5 Things I Wish Someone Taught Me Before Getting Into The Sports Industry',
     subtitle: 'The lessons that shaped how I work. Learned in the one place they actually stick, on the ground.',
     excerpt: 'The lessons that shaped a career in live sports and events — what the ground teaches you about being useful, staying ready and earning the next call.',
@@ -131,6 +144,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'event-budget-planning-where-the-money-goes',
+    topic: 'events',
     title: 'Where Event Budgets Actually Go',
     subtitle: 'The line items nobody shows you, and the five places money quietly leaks.',
     excerpt: 'A ground-level event budget breakdown: the real line items, the hidden costs, and the five places money quietly leaks on live sports and events.',
@@ -140,6 +154,7 @@ export const BLOG_POSTS = [
   },
   {
     slug: 'what-happens-on-match-day',
+    topic: 'events',
     title: 'What Actually Happens on Match Day',
     subtitle: 'The fifteen-hour day nobody sees behind three hours of cricket.',
     excerpt: 'A ground-level walk through everything that happens on match day, from before sunrise to teardown, written by someone who has actually run it across the IPL, LLC and ISPL.',

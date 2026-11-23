@@ -1,31 +1,44 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import LegalPageLayout from '../../components/LegalPageLayout.jsx';
 import EventEnquiryModal from '../../components/EventEnquiryModal.jsx';
 import { openConnectPopup } from '../../components/ConnectPopup.jsx';
 import { BUSINESS, OPERATIONS } from '../../legal/config.js';
 import { track } from '../../lib/analytics.js';
+import { EVENT_ENQUIRY_OPTIONS } from '../../data.js';
+import { findProject } from '../../workContent.js';
 
 const mailto = (subject) => `mailto:${BUSINESS.supportEmail}?subject=${encodeURIComponent(subject)}`;
 
 /* ============================================================ CONTACT */
+// /contact?service=Corporate%20Events or /contact?project=<slug> carries the
+// context into the event form (service pre-ticked, project noted).
 export function Contact() {
+  const [params] = useSearchParams();
+  const service = EVENT_ENQUIRY_OPTIONS.services.includes(params.get('service')) ? params.get('service') : undefined;
+  const project = findProject(params.get('project') || '');
   const [enquiryOpen, setEnquiryOpen] = useState(false);
   const openEnquiry = () => {
     setEnquiryOpen(true);
-    track('event_enquiry_opened', { lead_type: 'event', service: '', source: 'contact' });
+    track('event_enquiry_opened', { lead_type: 'event', service: service || '', source: 'contact' });
   };
+  const context = [service, project?.title && `similar to ${project.title}`].filter(Boolean).join(', ');
 
   const paths = [
     {
-      id: 'events', title: 'Events enquiries',
-      desc: 'Corporate events, sports leagues, brand activations and partnerships.',
+      id: 'events', title: 'Event enquiries', primary: true,
+      desc: context ? `Décor, corporate events, sports leagues, brand activations and partnerships. You're enquiring about: ${context}.` : 'Décor and venue styling, corporate events, sports leagues, brand activations and partnerships.',
       action: <button type="button" className="hx-btn hx-btn--primary" onClick={openEnquiry} aria-haspopup="dialog">Tell us about your event</button>,
     },
     {
       id: 'education', title: 'Education support',
       desc: 'E-book access, paid calls, webinars, courses and billing questions. Include the email you used at checkout and your payment reference.',
       action: <a className="hx-btn hx-btn--ghost-dark" href={mailto('Education support')}>Email education support</a>,
+    },
+    {
+      id: 'talent', title: 'Talent applications',
+      desc: 'Internships, jobs and live recruitment drives with partner brands.',
+      action: <Link className="hx-btn hx-btn--ghost-dark" to="/talent">Go to Talent</Link>,
     },
   ];
 
@@ -37,7 +50,7 @@ export function Contact() {
     >
       <div className="lg-cards">
         {paths.map((p) => (
-          <section key={p.id} className="lg-card" aria-labelledby={`ct-${p.id}`}>
+          <section key={p.id} className={`lg-card${p.primary ? ' lg-card--primary' : ''}`} aria-labelledby={`ct-${p.id}`}>
             <h2 id={`ct-${p.id}`}>{p.title}</h2>
             <p>{p.desc}</p>
             {p.action}
@@ -58,7 +71,7 @@ export function Contact() {
         <p>Prefer a quick chat? <button type="button" className="lg-linkbtn" onClick={openConnectPopup}>Leave your WhatsApp number</button> and we'll get back to you. Payments are processed by {OPERATIONS.paymentGateway}; for education orders, see the <Link to="/education/faq">Education FAQs</Link> first — the answer may already be there.</p>
       </section>
 
-      <EventEnquiryModal open={enquiryOpen} onClose={() => setEnquiryOpen(false)} />
+      <EventEnquiryModal open={enquiryOpen} onClose={() => setEnquiryOpen(false)} initialService={service} initialProject={project ? `Similar to: ${project.title}` : undefined} />
     </LegalPageLayout>
   );
 }

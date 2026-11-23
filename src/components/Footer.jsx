@@ -1,28 +1,32 @@
 import { Link } from 'react-router-dom';
 import { LINKS } from '../data.js';
 import logo from '../assets/Final - white logo-14.png';
-import { openConnectPopup } from './ConnectPopup.jsx';
 import { openCookieSettings } from '../lib/consent.js';
+import { projectsIn } from '../workContent.js';
 
-// Services without their own page link to the homepage services section.
+// A service with published work links to its portfolio filter; otherwise
+// to its section on /events.
+const serviceLink = (category, fallback) => (category && projectsIn(category).length ? `/work?category=${category}` : fallback);
+
 const footerGroups = [
   {
     title: 'EVENTS',
     links: [
-      { label: 'Sports & League Management', to: '/events' },
-      { label: 'Corporate Events', to: '/#services' },
-      { label: 'Brand Activations', to: '/#services' },
-      { label: 'Production', to: '/#services' },
-      { label: 'Hospitality & Logistics', to: '/#services' },
-      { label: 'Sponsorships', to: '/#services' },
+      { label: 'Décor & Venue Styling', to: serviceLink('decor', '/events#service-decor') },
+      { label: 'Sports & League Management', to: '/events#league-management' },
+      { label: 'Corporate Events', to: serviceLink('corporate', '/events#services') },
+      { label: 'Brand Activations', to: serviceLink('activations', '/events#service-design-branding') },
+      { label: 'Production & Broadcast', to: serviceLink('production', '/events#service-production-broadcast') },
+      { label: 'Hospitality & Logistics', to: '/events#service-hospitality' },
     ],
   },
   {
     title: 'COMPANY',
     links: [
       { label: 'About Us', to: '/about' },
-      { label: 'Our Work', to: '/#work' },
-      { label: 'Contact', onClick: openConnectPopup },
+      { label: 'Our Work', to: '/work' },
+      { label: 'Events', to: '/events' },
+      { label: 'Contact', to: '/contact' },
       { label: 'Blog', to: '/blogs' },
     ],
   },
@@ -38,7 +42,8 @@ const footerGroups = [
     title: 'TALENT',
     links: [
       { label: 'Talent Services', to: '/talent' },
-      { label: 'Opportunities', to: '/talent' },
+      { label: 'Internships & Jobs', to: '/talent#candidates' },
+      { label: 'Recruitment Drives', to: '/talent#recruitment' },
     ],
   },
   {
