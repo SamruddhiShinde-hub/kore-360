@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { categoryById, isDraft } from '../workContent.js';
+import { categoryById, isDraft, isFounderWork } from '../workContent.js';
 import { Media } from './Gallery.jsx';
 import Reveal from './Reveal.jsx';
 
@@ -7,14 +7,17 @@ import Reveal from './Reveal.jsx';
 // (so they read on touch devices), scope and location underneath.
 export function ProjectCard({ project: p, headingLevel: H = 'h3' }) {
   const category = categoryById(p.categories[0]);
-  const meta = [p.location, p.scope].filter(Boolean).join(' · ');
+  const founder = isFounderWork(p);
+  const meta = founder
+    ? [p.roles?.[0]?.role, p.roles?.length > 1 ? `${p.roles.length} roles` : p.roles?.[0]?.dates].filter(Boolean).join(' · ')
+    : [p.location, p.scope].filter(Boolean).join(' · ');
   return (
     <Link to={`/work/${p.slug}`} className="wk-card">
       <div className="wk-card-photo">
         <Media img={p.cover ? { ...p.cover, caption: 'Cover photo needed' } : { caption: 'Cover photo needed' }} sizes="(max-width: 700px) 100vw, (max-width: 980px) 50vw, 400px" />
         <div className="wk-card-shade" aria-hidden="true" />
         <div className="wk-card-tags">
-          {category && <span className="wk-tag">{category.label}</span>}
+          {founder ? <span className="wk-tag">Founder experience</span> : category && <span className="wk-tag">{category.label}</span>}
           {p.status === 'in-progress' && <span className="wk-tag wk-tag--light">In progress</span>}
           {isDraft(p) && <span className="ev-draft-tag wk-tag-draft">Draft · not published</span>}
         </div>

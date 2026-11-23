@@ -12,11 +12,11 @@ const footerGroups = [
   {
     title: 'EVENTS',
     links: [
-      { label: 'Décor & Venue Styling', to: serviceLink('decor', '/events#service-decor') },
+      { label: 'Décor & Venue Styling', to: serviceLink('decor', '/events#service-branding') },
       { label: 'Sports & League Management', to: '/events#league-management' },
       { label: 'Corporate Events', to: serviceLink('corporate', '/events#services') },
-      { label: 'Brand Activations', to: serviceLink('activations', '/events#service-design-branding') },
-      { label: 'Production & Broadcast', to: serviceLink('production', '/events#service-production-broadcast') },
+      { label: 'Brand Activations', to: serviceLink('activations', '/events#service-branding') },
+      { label: 'Production & Broadcast', to: serviceLink('production', '/events#service-production') },
       { label: 'Hospitality & Logistics', to: '/events#service-hospitality' },
     ],
   },

@@ -169,6 +169,10 @@ export const LEAGUE_ENGAGEMENTS = [
     name: 'CORE',
     descriptor: 'Plan & Prepare',
     role: 'Strategic Partner',
+    // Collapsed-folder line on /events: "when would I choose this?"
+    summary: 'Choose CORE when you need the plan: a league review, budget framework and operating blueprint that your own team executes.',
+    // Pre-selects this option in the league enquiry form.
+    enquirySupport: 'Planning and strategy',
     headline: 'Get your league ready to execute.',
     desc: 'We work with your team to understand the league, identify what it needs and build a clear roadmap forward.',
     framework: [
@@ -197,6 +201,8 @@ export const LEAGUE_ENGAGEMENTS = [
     name: 'LAUNCH',
     descriptor: 'Implement & Deliver',
     role: 'Execution Partner',
+    summary: 'Choose LAUNCH when you want KORE 360 on the ground with you, coordinating vendors, teams and agreed match-day execution.',
+    enquirySupport: 'Event execution and operations',
     headline: 'From ready to running.',
     desc: 'Everything built in CORE now moves into implementation, with KORE 360 actively involved in coordination, deployment and execution.',
     framework: [
@@ -228,6 +234,8 @@ export const LEAGUE_ENGAGEMENTS = [
     name: 'SCALE',
     descriptor: 'Operate & Grow',
     role: 'Operating Partner',
+    summary: 'Choose SCALE when the league needs a long-term operating and commercial partner across seasons, cities and sponsorship.',
+    enquirySupport: 'Long-term commercial partnership',
     headline: 'When KORE 360 becomes part of the business.',
     desc: 'SCALE begins when the engagement moves beyond a defined event execution mandate into deeper league operations, commercial development and long-term growth.',
     framework: [
@@ -357,16 +365,6 @@ export const IMAGES = {
 // ============================================================
 //  Homepage (events-first) — see src/pages/Home.jsx
 // ============================================================
-
-// Properties the founder/team worked on in their own professional capacity,
-// not as KORE 360 clients. KORE 360's own projects live in src/workContent.js.
-export const INDUSTRY_EXPERIENCE = [
-  { name: 'Indian Premier League (IPL)', category: 'Cricket league' },
-  { name: 'Legends League Cricket', category: 'Cricket league', location: 'India & Doha' },
-  { name: 'Indian Street Premier League (ISPL)', category: 'Cricket league' },
-  { name: 'Entertainers Cricket League (ECL)', category: 'Cricket league' },
-  { name: 'Khelo India', category: 'Multi-sport games' },
-];
 
 export const HOME_PROCESS = [
   { step: '01', name: 'Discover', desc: "Understand the client's event requirements, objectives, audience and expectations." },

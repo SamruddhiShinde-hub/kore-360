@@ -3,9 +3,9 @@ import { Link, useSearchParams } from 'react-router-dom';
 import PageMeta from '../components/PageMeta.jsx';
 import Reveal from '../components/Reveal.jsx';
 import EventEnquiryModal from '../components/EventEnquiryModal.jsx';
+import ExperienceTimeline from '../components/ExperienceTimeline.jsx';
 import { ProjectCard } from '../components/ProjectCard.jsx';
-import { ACTIVE_CATEGORIES, categoryById, projectsIn } from '../workContent.js';
-import { EVENT_CAPABILITIES } from '../eventsContent.js';
+import { ACTIVE_CATEGORIES, FOUNDER_WORK, KORE_PROJECTS, categoryById } from '../workContent.js';
 import { track } from '../lib/analytics.js';
 
 // Filters are plain links (/work?category=decor), so a filtered view can be
@@ -25,10 +25,36 @@ function Filters({ active }) {
   );
 }
 
+function CardGrid({ projects }) {
+  return (
+    <ul className="wk-grid">
+      {projects.map((p, i) => (
+        <Reveal as="li" key={p.slug} delay={i % 3}><ProjectCard project={p} headingLevel="h3" /></Reveal>
+      ))}
+    </ul>
+  );
+}
+
+// Krish's own roles, kept apart from KORE 360's projects.
+function FounderExperience() {
+  return (
+    <section className="wk-xp" aria-labelledby="wk-xp-title">
+      <div className="wk-xp-head">
+        <h2 id="wk-xp-title" className="wk-h2">Krish Lalwani&apos;s experience</h2>
+        <p className="wk-xp-note">Roles Krish has held himself across cricket leagues and sporting events, listed separately from KORE 360&apos;s own projects.</p>
+      </div>
+      {FOUNDER_WORK.length > 0 && <CardGrid projects={FOUNDER_WORK} />}
+      <h3 className="wk-xp-sub">Full timeline</h3>
+      <ExperienceTimeline />
+    </section>
+  );
+}
+
 export default function Work() {
   const [params] = useSearchParams();
   const category = categoryById(params.get('category'));
-  const projects = projectsIn(category?.id);
+  const showFounder = !category || category.id === 'experience';
+  const kore = category ? KORE_PROJECTS.filter((p) => p.categories.includes(category.id)) : KORE_PROJECTS;
   const [enquiry, setEnquiry] = useState({ open: false, service: undefined });
 
   const enquire = useCallback((service, source) => {
@@ -40,67 +66,53 @@ export default function Work() {
     <>
       <PageMeta
         title={category ? `${category.label}: Our Work` : 'Our Work: Event Portfolio'}
-        description="Event projects delivered by KORE 360: décor and venue styling, sports leagues, corporate events, brand activations and production."
+        description="Event work by KORE 360 and the league experience of its founder, Krish Lalwani: Legends League Cricket, Entertainers Cricket League, C11CL and more."
         path={category ? `/work?category=${category.id}` : '/work'}
       />
       <header className="wk-header">
         <div className="ev-shell">
           <div className="league-eyebrow" style={{ marginBottom: '18px' }}>OUR WORK</div>
           <h1 className="wk-title">{category ? category.label : 'Work'}</h1>
-          <p className="wk-intro">Events we&apos;ve planned and delivered, with what KORE 360 handled on each one.</p>
+          <p className="wk-intro">
+            {category?.id === 'experience'
+              ? 'The leagues and events Krish Lalwani has worked on, and the roles he held.'
+              : 'Events we’ve planned and delivered, and the league experience behind them.'}
+          </p>
         </div>
       </header>
 
       <div className="ev-shell wk-page">
         <Filters active={category?.id} />
-        <p className="sr-only" aria-live="polite">{projects.length} {projects.length === 1 ? 'project' : 'projects'} shown</p>
 
-        {projects.length > 0 ? (
-          <ul className="wk-grid">
-            {projects.map((p, i) => (
-              <Reveal as="li" key={p.slug} delay={i % 3}><ProjectCard project={p} headingLevel="h2" /></Reveal>
-            ))}
-          </ul>
-        ) : category ? (
-          <div className="wk-empty">
-            <h2 className="wk-empty-title">No published {category.label.toLowerCase()} projects yet</h2>
-            <p>We can walk you through relevant work on a call. Tell us about your event and we&apos;ll come back with examples that match your brief.</p>
-            <div className="hx-ctas">
-              <button type="button" className="hx-btn hx-btn--primary" onClick={() => enquire(category.service, 'work_empty_category')} aria-haspopup="dialog">Tell Us About Your Event</button>
-              <Link to="/work" className="hx-link">See all work <span aria-hidden="true" className="hx-arrow">→</span></Link>
-            </div>
-          </div>
+        {category?.id !== 'experience' && (kore.length > 0 ? (
+          <section aria-labelledby="wk-kore-title" className="wk-kore">
+            <h2 id="wk-kore-title" className={category ? 'sr-only' : 'wk-h2'}>KORE 360 projects</h2>
+            <CardGrid projects={kore} />
+          </section>
         ) : (
-          <div className="wk-empty">
-            <h2 className="wk-empty-title">Case studies are on their way</h2>
-            <p>We&apos;re putting together full write-ups and galleries from recent events. In the meantime, tell us what you&apos;re planning and we&apos;ll share the work that&apos;s closest to your brief.</p>
-            <ul className="wk-empty-services">
-              {EVENT_CAPABILITIES.map((c) => (
-                <li key={c.id}>
-                  <button type="button" className="wk-empty-service" onClick={() => enquire(c.service, 'work_empty')} aria-haspopup="dialog">
-                    <span>{c.name}</span><span aria-hidden="true" className="hx-arrow">→</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+          <div className="wk-note">
+            <div>
+              <h2 className="wk-note-title">{category ? `No published ${category.label.toLowerCase()} projects yet` : 'KORE 360 case studies are on their way'}</h2>
+              <p>Tell us about your event and we&apos;ll walk you through the work closest to your brief.</p>
+            </div>
+            <button type="button" className="hx-btn hx-btn--primary" onClick={() => enquire(category?.service, category ? 'work_empty_category' : 'work_empty')} aria-haspopup="dialog">Tell Us About Your Event</button>
           </div>
-        )}
+        ))}
+
+        {showFounder && <FounderExperience />}
       </div>
 
-      {projects.length > 0 && (
-        <section className="wk-band" aria-labelledby="wk-band-title">
-          <div className="ev-shell wk-band-inner">
-            <div>
-              <h2 id="wk-band-title" className="league-h2" style={{ fontSize: 'clamp(26px,3.4vw,40px)', margin: '0 0 10px' }}>Planning something similar?</h2>
-              <p className="league-lede">Tell us about the event. Every project is scoped to the brief.</p>
-            </div>
-            <button type="button" className="hx-btn hx-btn--primary" onClick={() => enquire(category?.service, 'work_footer')} aria-haspopup="dialog">Tell Us About Your Event</button>
+      <section className="wk-band" aria-labelledby="wk-band-title">
+        <div className="ev-shell wk-band-inner">
+          <div>
+            <h2 id="wk-band-title" className="league-h2" style={{ fontSize: 'clamp(26px,3.4vw,40px)', margin: '0 0 10px' }}>Planning something similar?</h2>
+            <p className="league-lede">Tell us about the event. Every project is scoped to the brief.</p>
           </div>
-        </section>
-      )}
+          <button type="button" className="hx-btn hx-btn--primary" onClick={() => enquire(category?.service, 'work_footer')} aria-haspopup="dialog">Tell Us About Your Event</button>
+        </div>
+      </section>
 
       <EventEnquiryModal open={enquiry.open} onClose={() => setEnquiry((e) => ({ ...e, open: false }))} initialService={enquiry.service} />
     </>
   );
 }
-

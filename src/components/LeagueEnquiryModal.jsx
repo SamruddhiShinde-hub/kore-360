@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { LEAGUE_ENQUIRY_OPTIONS } from '../data.js';
 import { track } from '../lib/analytics.js';
 import { getUtm } from '../lib/attribution.js';
@@ -32,7 +32,10 @@ function validate(v) {
 // Order matters: the first invalid field in this list gets focus on submit.
 const FIELD_ORDER = ['fullName', 'email', 'phone', 'eventType', 'stage', 'support'];
 
-export default function LeagueEnquiryModal({ open, onClose }) {
+// `initialSupport` (optional) pre-selects "What support are you looking
+// for?" — e.g. from a package's CTA on /events. It replaces an earlier
+// pre-fill but never a choice the visitor made themselves.
+export default function LeagueEnquiryModal({ open, onClose, initialSupport }) {
   const uid = useId();
   const panelRef = useRef(null);
   const submittingRef = useRef(false);
@@ -44,6 +47,17 @@ export default function LeagueEnquiryModal({ open, onClose }) {
   const [serverError, setServerError] = useState('');
 
   const id = (name) => `${uid}-${name}`;
+
+  // Layout effect so the right option is already ticked on the first paint.
+  const presetSupport = useRef('');
+  useLayoutEffect(() => {
+    if (!open || !initialSupport) return;
+    setValues((v) => {
+      if (v.support && v.support !== presetSupport.current) return v;
+      presetSupport.current = initialSupport;
+      return { ...v, support: initialSupport };
+    });
+  }, [open, initialSupport]);
 
   // Scroll lock + focus management + keyboard handling while open.
   useEffect(() => {

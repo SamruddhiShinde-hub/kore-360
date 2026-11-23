@@ -5,7 +5,7 @@ import Reveal from '../components/Reveal.jsx';
 import Gallery, { Media } from '../components/Gallery.jsx';
 import EventEnquiryModal from '../components/EventEnquiryModal.jsx';
 import { ProjectCard } from '../components/ProjectCard.jsx';
-import { VISIBLE_PROJECTS, categoryById, findProject, formatProjectDate, isDraft, orderedGallery } from '../workContent.js';
+import { VISIBLE_PROJECTS, categoryById, findProject, formatProjectDate, isDraft, isFounderWork, orderedGallery } from '../workContent.js';
 import { track } from '../lib/analytics.js';
 
 // Click-to-play: nothing downloads until asked for.
@@ -39,8 +39,11 @@ export default function Project() {
 
   const primary = categoryById(p.categories[0]);
   const gallery = orderedGallery(p);
-  const related = VISIBLE_PROJECTS.filter((o) => o.slug !== p.slug)
-    .sort((a, b) => Number(b.categories.some((c) => p.categories.includes(c))) - Number(a.categories.some((c) => p.categories.includes(c))))[0];
+  const founder = isFounderWork(p);
+  // Same kind (KORE 360 project vs founder experience) first, then a shared category.
+  const score = (o) => (isFounderWork(o) === founder ? 2 : 0) + (o.categories.some((c) => p.categories.includes(c)) ? 1 : 0);
+  const related = VISIBLE_PROJECTS.filter((o) => o.slug !== p.slug).sort((a, b) => score(b) - score(a))[0];
+  const portraitCover = p.cover && p.cover.h > p.cover.w;
   const facts = [
     ['Client', p.client],
     ['Location', p.location],
@@ -64,6 +67,7 @@ export default function Project() {
           <Link to={primary ? `/work?category=${primary.id}` : '/work'} className="wk-back">
             <span aria-hidden="true">←</span> {primary ? primary.label : 'All work'}
           </Link>
+          {founder && <div className="wk-founder-chip">Founder experience · Krish Lalwani&apos;s role</div>}
           {isDraft(p) && <div className="ev-draft-tag" style={{ marginBottom: '14px' }}>Draft · not published{p.cover?.placeholder ? ' · placeholder imagery' : ''}</div>}
           <h1 className="wk-title">{p.title}</h1>
           <div className="wk-project-tags">
@@ -75,7 +79,7 @@ export default function Project() {
         </div>
       </header>
 
-      <div className="wk-cover">
+      <div className={`wk-cover${portraitCover ? ' wk-cover--portrait' : ''}`}>
         <Media img={p.cover ? { ...p.cover, caption: 'Cover photo needed' } : { caption: 'Cover photo needed' }} eager sizes="100vw" />
       </div>
 
@@ -86,6 +90,21 @@ export default function Project() {
               <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
             ))}
           </dl>
+        )}
+
+        {p.roles?.length > 0 && (
+          <section aria-labelledby="wk-roles-title" className="wk-section">
+            <h2 id="wk-roles-title" className="wk-h2">{p.roles.length > 1 ? 'Krish’s roles' : 'Krish’s role'}</h2>
+            <ol className="xp-timeline">
+              {p.roles.map((r) => (
+                <li key={`${r.role}-${r.dates}`} className="xp-row">
+                  <span className="xp-dates">{r.dates}</span>
+                  <span className="xp-main"><span className="xp-org">{r.role}</span></span>
+                  {r.location && <span className="xp-loc">{r.location}</span>}
+                </li>
+              ))}
+            </ol>
+          </section>
         )}
 
         {gallery.length > 0 && (

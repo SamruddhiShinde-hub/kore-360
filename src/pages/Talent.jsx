@@ -47,7 +47,7 @@ export default function Talent() {
       <nav className="tl-paths" aria-label="Talent routes">
         <a href="#candidates" className="tl-path"><span className="tl-path-for">For candidates</span><span className="tl-path-name">Internships &amp; jobs</span></a>
         <a href="#recruitment" className="tl-path"><span className="tl-path-for">For candidates</span><span className="tl-path-name">Live recruitment drives</span></a>
-        <Link to="/events#service-athlete-artist" className="tl-path"><span className="tl-path-for">For event organisers</span><span className="tl-path-name">Book athletes &amp; artists</span></Link>
+        <Link to="/events#service-teams" className="tl-path"><span className="tl-path-for">For event organisers</span><span className="tl-path-name">Book athletes &amp; artists</span></Link>
       </nav>
 
       <section id="candidates" className="tl-section" aria-labelledby="tl-candidates">
@@ -123,7 +123,7 @@ export default function Talent() {
             <h2 id="tl-booking" className="league-h2" style={{ fontSize: 'clamp(26px,3.4vw,40px)', margin: '0 0 10px' }}>Booking athletes or artists?</h2>
             <p className="league-lede">Appearances, performances and hosts for your event are handled by our events team.</p>
           </div>
-          <Link to="/events#service-athlete-artist" className="hx-btn hx-btn--primary">Athlete &amp; Artist Management →</Link>
+          <Link to="/events#service-teams" className="hx-btn hx-btn--primary">Athlete &amp; Artist Management →</Link>
         </div>
       </section>
     </>

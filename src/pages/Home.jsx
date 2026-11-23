@@ -11,7 +11,7 @@ import { track } from '../lib/analytics.js';
 import { usePrefersReducedMotion } from '../lib/motion.js';
 import { HOME_PROCESS } from '../data.js';
 import { EVENT_CAPABILITIES, FOUNDER, KORE_RELATIONSHIPS, visibleLogos, EVENT_METRICS } from '../eventsContent.js';
-import { VISIBLE_PROJECTS, projectsIn } from '../workContent.js';
+import { KORE_PROJECTS, projectsIn } from '../workContent.js';
 import { SHOW_DRAFTS } from '../lib/drafts.js';
 
 // Served from public/home/ (not hashed src/assets imports) so index.html can
@@ -173,7 +173,10 @@ function FounderAndTeam() {
               <li key={p.step}><span className="hx-team-step-name">{p.name}</span><span className="hx-team-step-desc">{p.desc}</span></li>
             ))}
           </ol>
-          <Link to="/about" className="hx-link">Meet the team <Arrow /></Link>
+          <div className="hx-team-links">
+            <Link to="/work?category=experience" className="hx-link">See Krish&apos;s experience <Arrow /></Link>
+            <Link to="/about" className="hx-link">Meet the team <Arrow /></Link>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -227,10 +230,10 @@ function FinalCta({ onEnquire }) {
 function pickSelected() {
   const picked = [];
   [['decor'], ['sports'], ['corporate', 'activations']].forEach((group) => {
-    const p = VISIBLE_PROJECTS.find((x) => !picked.includes(x) && x.categories.some((c) => group.includes(c)));
+    const p = KORE_PROJECTS.find((x) => !picked.includes(x) && x.categories.some((c) => group.includes(c)));
     if (p) picked.push(p);
   });
-  VISIBLE_PROJECTS.forEach((p) => { if (picked.length < 3 && !picked.includes(p)) picked.push(p); });
+  KORE_PROJECTS.forEach((p) => { if (picked.length < 3 && !picked.includes(p)) picked.push(p); });
   return picked;
 }
 

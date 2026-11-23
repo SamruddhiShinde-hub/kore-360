@@ -6,7 +6,9 @@ import EventEnquiryModal from '../components/EventEnquiryModal.jsx';
 import Gallery from '../components/Gallery.jsx';
 import WhatsAppCta from '../components/WhatsAppCta.jsx';
 import { track } from '../lib/analytics.js';
-import { INDUSTRY_EXPERIENCE, LINKS } from '../data.js';
+import { LINKS } from '../data.js';
+import ExperienceTimeline from '../components/ExperienceTimeline.jsx';
+import { FOUNDER_EDUCATION } from '../workContent.js';
 
 // Served from public/about/ — WebP crops of the real event photos in
 // src/assets, generated with sharp the same way as public/home/.
@@ -264,7 +266,7 @@ function Founder() {
           <div className="ab-label">The company today</div>
           <p className="hx-body">Through KORE 360, Krish works with organisers, brands and sporting properties on structured, execution-led events, and shares practical career guidance through KORE 360 Education.</p>
           <div className="ab-founder-links">
-            <Link to="/work" className="hx-link">See KORE 360&apos;s work <Arrow /></Link>
+            <Link to="/work?category=experience" className="hx-link">See Krish&apos;s experience <Arrow /></Link>
             <a href={LINKS.krishInstagram} target="_blank" rel="noreferrer" className="hx-link">Follow Krish on Instagram <Arrow /></a>
           </div>
         </Reveal>
@@ -294,18 +296,12 @@ function IndustryExperience() {
 
         <div className="ab-experience-split">
           <Reveal>
-            <h3 className="hx-h3">Selected professional experience</h3>
+            <h3 className="hx-h3">Krish&apos;s professional experience</h3>
             <p className="hx-note">
-              Selected professional experience of the founder prior to and outside KORE 360 engagements. These are not KORE 360 client projects.
+              Roles Krish has held himself, listed separately from KORE 360&apos;s own projects.
             </p>
-            <ul className="hx-experience">
-              {INDUSTRY_EXPERIENCE.map((e) => (
-                <li key={e.name}>
-                  <span className="hx-experience-name">{e.name}</span>
-                  <span className="hx-experience-meta">{[e.category, e.location].filter(Boolean).join(' · ')}</span>
-                </li>
-              ))}
-            </ul>
+            <ExperienceTimeline />
+            <p className="ab-education"><span>Education</span>{FOUNDER_EDUCATION}</p>
           </Reveal>
         </div>
       </div>
@@ -321,7 +317,7 @@ function InternationalExperience() {
           <div className="hx-eyebrow">INTERNATIONAL EXPERIENCE</div>
           <h2 id="ab-intl" className="hx-h2 hx-h2--gateway">Legends League Cricket Masters, Doha.</h2>
           <div className="ab-label ab-label--dark">Founder experience · before KORE 360 · not a KORE 360 project</div>
-          <p className="hx-lede">Krish worked at Legends League Cricket Masters in Doha in his own professional capacity, inside the tournament&apos;s team logistics and match-day environment. It&apos;s where much of his international, on-ground experience comes from.</p>
+          <p className="hx-lede">Krish was Assistant Venue &amp; Cricket Operations Manager at Legends League Cricket Masters in Doha, Qatar (Feb – Mar 2023), in his own professional capacity, on the tournament&apos;s venue and cricket operations.</p>
         </Reveal>
         <Gallery images={INTERNATIONAL_PHOTOS} label="Legends League Cricket Masters, Doha" id="ab-intl-gallery" />
       </div>
