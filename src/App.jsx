@@ -22,6 +22,7 @@ const ClarityCall = lazy(() => import('./pages/ClarityCall.jsx'));
 const Ebook = lazy(() => import('./pages/Ebook.jsx'));
 const EbookReader = lazy(() => import('./pages/EbookReader.jsx'));
 const Blog = lazy(() => import('./pages/Blog.jsx'));
+const CollegeGuidanceThankYou = lazy(() => import('./pages/CollegeGuidanceThankYou.jsx'));
 const legal = (name) => lazy(() => import('./pages/legal/Policies.jsx').then((m) => ({ default: m[name] })));
 const support = (name) => lazy(() => import('./pages/legal/Support.jsx').then((m) => ({ default: m[name] })));
 const PrivacyPolicy = legal('PrivacyPolicy');
@@ -45,6 +46,9 @@ export default function App() {
   // the marketing nav/footer/popups would just sit on top of the watermark
   // overlay and controls.
   const isEbookReader = pathname === '/education/ebook/read';
+  // The college-guidance thank-you is a standalone note from Krish — the
+  // visitor is done, so no nav, footer, floating CTAs or popups.
+  const isStandalone = isEbookReader || pathname.replace(/\/+$/, '') === '/education/college-guidance/thank-you';
 
   useEffect(() => {
     document.getElementById('root')?.style.setProperty('--accent', ACCENT);
@@ -54,7 +58,7 @@ export default function App() {
     <>
       <SmoothScroll />
       <ScrollToTop />
-      {!isEbookReader && <Nav />}
+      {!isStandalone && <Nav />}
       <main>
         <Suspense fallback={null}>
           <Routes>
@@ -72,6 +76,7 @@ export default function App() {
             <Route path="/education/ebook" element={<Ebook />} />
             <Route path="/education/ebook/read" element={<EbookReader />} />
             <Route path="/education/faq" element={<EducationFaq />} />
+            <Route path="/education/college-guidance/thank-you" element={<CollegeGuidanceThankYou />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-and-conditions" element={<Terms />} />
             <Route path="/refund-policy" element={<RefundPolicy />} />
@@ -98,12 +103,12 @@ export default function App() {
           </Routes>
         </Suspense>
       </main>
-      {!isEbookReader && <Footer />}
-      {!isEbookReader && <FloatingActions />}
-      {!isEbookReader && <ConnectPopup />}
+      {!isStandalone && <Footer />}
+      {!isStandalone && <FloatingActions />}
+      {!isStandalone && <ConnectPopup />}
       {/* Mounted on every route (incl. the reader, which just hides the
           banner) so Cookie Settings can always reopen preferences. */}
-      <CookieConsent hideBanner={isEbookReader} />
+      <CookieConsent hideBanner={isStandalone} />
     </>
   );
 }

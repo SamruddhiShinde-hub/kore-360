@@ -1072,3 +1072,18 @@ a.xp-org:focus-visible { outline: 2px solid var(--kore-orange); outline-offset: 
   .pk-panel { padding: 0 18px; }
   .pk-panel-summary { display: block; margin: 0; padding: 18px 0 0; font-size: 15px; line-height: 1.5; color: #3d3d3d; }
 }
+
+/* /education/college-guidance/thank-you — a short personal note from Krish.
+   Always white/charcoal regardless of the site theme. */
+.cg-thanks { min-height: 100vh; min-height: 100svh; background: #FFFFFF; color: #222222; display: flex; align-items: center; justify-content: center; padding: 64px 32px; box-sizing: border-box; }
+.cg-thanks-note { width: 100%; max-width: 520px; text-align: left; }
+.cg-thanks-logo { display: block; width: 56px; height: auto; margin: 0 0 36px; }
+.cg-thanks-title { font-weight: 900; letter-spacing: -0.02em; line-height: 1.05; font-size: clamp(34px, 5vw, 48px); color: #222222; margin: 0 0 20px; }
+.cg-thanks-body { font-size: 17.5px; line-height: 1.6; color: #222222; margin: 0 0 32px; }
+.cg-thanks-sign { font-size: 16px; line-height: 1.5; color: #222222; margin: 0; }
+.cg-thanks-sign strong { font-weight: 800; }
+@media (max-width: 600px) {
+  .cg-thanks { align-items: flex-start; padding: 56px 24px 40px; }
+  .cg-thanks-logo { width: 48px; margin-bottom: 28px; }
+  .cg-thanks-body { font-size: 17px; }
+}

@@ -6,6 +6,9 @@
     { "source": "/portfolio", "destination": "/work", "permanent": true },
     { "source": "/league-management", "destination": "/events#league-management", "permanent": true }
   ],
+  "headers": [
+    { "source": "/education/college-guidance/thank-you", "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ],

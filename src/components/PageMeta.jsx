@@ -18,7 +18,8 @@ function setMeta(attr, key, value) {
 // unmount/change so navigating away from an article doesn't leave stale
 // structured data sitting in <head> for the next page.
 // `fullTitle` overrides the usual "<title> · KORE 360" format (homepage).
-export default function PageMeta({ title, fullTitle: fullTitleOverride, description, path = '/', type = 'website', jsonLd }) {
+// `noindex` adds <meta name="robots" content="noindex">, removed on unmount.
+export default function PageMeta({ title, fullTitle: fullTitleOverride, description, path = '/', type = 'website', jsonLd, noindex = false }) {
   useEffect(() => {
     const fullTitle = fullTitleOverride || (title ? `${title} · ${SITE_NAME}` : `${SITE_NAME} · Sports Management Careers with Krish Lalwani`);
     document.title = fullTitle;
@@ -43,6 +44,14 @@ export default function PageMeta({ title, fullTitle: fullTitleOverride, descript
       document.head.appendChild(canonical);
     }
     canonical.setAttribute('href', url);
+
+    let robots = null;
+    if (noindex) {
+      robots = document.createElement('meta');
+      robots.setAttribute('name', 'robots');
+      robots.setAttribute('content', 'noindex');
+      document.head.appendChild(robots);
+    }
 
     const scripts = [];
     if (jsonLd) {
@@ -71,9 +80,10 @@ export default function PageMeta({ title, fullTitle: fullTitleOverride, descript
 
     return () => {
       scripts.forEach((s) => s.remove());
+      robots?.remove();
       setMeta('property', 'og:type', 'website');
     };
-  }, [title, fullTitleOverride, description, path, type, jsonLd]);
+  }, [title, fullTitleOverride, description, path, type, jsonLd, noindex]);
 
   return null;
 }
