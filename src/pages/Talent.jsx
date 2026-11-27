@@ -40,8 +40,8 @@ export default function Talent() {
         eyebrow="TALENT"
         title="Your talent management partner"
         intro="KORE 360 doesn't just point you at a job board. We represent you, matching you to real internships and placements with brands already working in and around sport, and staying in your corner once you're in the door."
-        image="/talent/hero-desktop.webp" imageMobile="/talent/hero-mobile.webp" width="1600" height="1065"
-        alt="The KORE 360 event crew gathered together on the outfield of a stadium"
+        image="/talent/hero-v2-desktop.webp" imageMobile="/talent/hero-v2-mobile.webp" width="1600" height="1065"
+        alt="Krish Lalwani checking on an injured player on the field during an Entertainers Cricket League match"
         actions={<WhatsAppCta source="talent_hero" text="Hi KORE 360, I'm interested in internships and jobs through KORE 360 Talent." />}
       />
       <nav className="tl-paths" aria-label="Talent routes">

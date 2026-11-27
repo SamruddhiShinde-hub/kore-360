@@ -18,8 +18,8 @@ export default function CollegeGuidanceThankYou() {
       <section className="cg-thanks">
         {/* Same dark photo plate + shade as the site's page headers. */}
         <picture>
-          <source media="(max-width: 768px)" srcSet="/hero-bg-mobile.webp" />
-          <img src="/hero-bg-desktop.webp" alt="" aria-hidden="true" className="cg-thanks-bg" />
+          <source media="(max-width: 768px)" srcSet="/hero-bg-v2-mobile.webp" />
+          <img src="/hero-bg-v2-desktop.webp" alt="" aria-hidden="true" className="cg-thanks-bg" />
         </picture>
         <div className="cg-thanks-shade" aria-hidden="true" />
         <div className="cg-thanks-note">

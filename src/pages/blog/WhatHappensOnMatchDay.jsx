@@ -18,7 +18,7 @@ const ARTICLE_JSON_LD = {
   '@type': 'BlogPosting',
   headline: 'What Actually Happens on Match Day',
   description: META_DESCRIPTION,
-  image: `${SITE_URL}/og-image.jpg`,
+  image: `${SITE_URL}/og-image-v2.jpg`,
   datePublished: PUBLISH_DATE,
   dateModified: PUBLISH_DATE,
   inLanguage: 'en',

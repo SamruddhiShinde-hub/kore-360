@@ -88,7 +88,7 @@ export default function Article() {
       '@type': 'BlogPosting',
       headline: article.title,
       description: article.description,
-      image: post.cover.startsWith('/') ? `${SITE_URL}${post.cover}` : `${SITE_URL}/og-image.jpg`,
+      image: post.cover.startsWith('/') ? `${SITE_URL}${post.cover}` : `${SITE_URL}/og-image-v2.jpg`,
       datePublished: post.date,
       dateModified: post.date,
       inLanguage: 'en',

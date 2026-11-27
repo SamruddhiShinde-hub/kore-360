@@ -18,7 +18,7 @@ const ARTICLE_JSON_LD = {
   '@type': 'BlogPosting',
   headline: '5 Things I Wish Someone Taught Me Before Getting Into The Sports Industry',
   description: META_DESCRIPTION,
-  image: `${SITE_URL}/og-image.jpg`,
+  image: `${SITE_URL}/og-image-v2.jpg`,
   datePublished: PUBLISH_DATE,
   dateModified: PUBLISH_DATE,
   inLanguage: 'en',

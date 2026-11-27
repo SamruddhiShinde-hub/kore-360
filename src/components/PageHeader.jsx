@@ -2,8 +2,8 @@ import Reveal from './Reveal.jsx';
 
 // Same background plate as the homepage hero (see Hero.jsx) — served from public/
 // so the path is a stable string, not a hashed src/assets import.
-const mainHeroBg = '/hero-bg-desktop.webp';
-const mainHeroBgMobile = '/hero-bg-mobile.webp';
+const mainHeroBg = '/hero-bg-v2-desktop.webp';
+const mainHeroBgMobile = '/hero-bg-v2-mobile.webp';
 
 const eyebrowStyle = { fontSize: '13px', letterSpacing: '0.18em', fontWeight: 700, backgroundImage: 'var(--kore-gradient)', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent' };
 

@@ -12,13 +12,13 @@ import { FOUNDER_EDUCATION } from '../workContent.js';
 
 // Served from public/about/ — WebP crops of the real event photos in
 // src/assets, generated with sharp the same way as public/home/.
-const HERO_DESKTOP = '/about/hero-desktop.webp';
-const HERO_MOBILE = '/about/hero-mobile.webp';
+const HERO_DESKTOP = '/about/hero-v2-desktop.webp';
+const HERO_MOBILE = '/about/hero-v2-mobile.webp';
 const IMG_TEAMWORK = '/about/teamwork.webp';
 const IMG_FOUNDER = '/about/founder.webp';
 const IMG_LEAGUE_OPS = '/about/league-ops.webp';
 const IMG_LOGISTICS = '/about/team-logistics.webp';
-const IMG_STADIUM = '/about/stadium.webp';
+const IMG_STADIUM = '/about/stadium-night.webp';
 
 // Founder's own experience at Legends League Cricket Masters in Doha —
 // before KORE 360, not a KORE 360 project. Captions describe only what the
@@ -30,7 +30,7 @@ const INTERNATIONAL_PHOTOS = [
   { src: '/about/intl-raina-doha.webp', srcSmall: '/about/intl-raina-doha-800.webp', w: 1200, h: 1600, focal: 'center 35%', alt: 'Krish Lalwani with former India cricketer Suresh Raina in Doha', caption: 'With Suresh Raina in Doha' },
 ];
 const BTS_PHOTOS = [
-  { src: '/about/bts-planning.webp', w: 560, h: 799, tag: 'Planning', cls: 'ab-bts-tile--tall', alt: 'Two KORE 360 team members talking through plans on the field in front of the stage set before a cricket league event' },
+  { src: '/about/bts-venue-recce.webp', w: 700, h: 1000, tag: 'Planning', cls: 'ab-bts-tile--tall', alt: 'A KORE 360 team member checking the venue from the stands before a cricket match' },
   { src: '/about/bts-production.webp', w: 710, h: 533, tag: 'On-ground', cls: '', alt: 'Event crew coordinating on the field while a camera operator films during live match production' },
   { src: '/about/bts-studio.webp', w: 800, h: 600, tag: 'Production', cls: '', alt: 'A studio shoot set up with softbox lights and a camera on a tripod' },
   { src: '/about/bts-crew.webp', w: 800, h: 350, tag: 'The crew', cls: 'ab-bts-tile--wide', alt: 'Accredited operations crew standing together on the pitch inside an indoor cricket arena' },
@@ -98,7 +98,7 @@ function AboutHero() {
       <picture>
         <source media="(max-width: 768px)" srcSet={HERO_MOBILE} />
         <img
-          src={HERO_DESKTOP} alt="Match-day crew measuring and marking the pitch before a live cricket league game"
+          src={HERO_DESKTOP} alt="Krish Lalwani carrying the match stumps out on the field at an Entertainers Cricket League game"
           fetchpriority="high" decoding="async" width="1600" height="1065" className="hx-hero-img"
         />
       </picture>
