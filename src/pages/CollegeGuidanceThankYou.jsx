@@ -1,5 +1,5 @@
 import PageMeta from '../components/PageMeta.jsx';
-import logo from '../assets/logo.png';
+import logo from '../assets/Final - white logo-14.png';
 
 // Landing page for the college-guidance link in Krish's email. The visitor
 // has already done the one thing we asked, so this is display-only: no form,
@@ -16,12 +16,21 @@ export default function CollegeGuidanceThankYou() {
         noindex
       />
       <section className="cg-thanks">
+        {/* Same dark photo plate + shade as the site's page headers. */}
+        <picture>
+          <source media="(max-width: 768px)" srcSet="/hero-bg-mobile.webp" />
+          <img src="/hero-bg-desktop.webp" alt="" aria-hidden="true" className="cg-thanks-bg" />
+        </picture>
+        <div className="cg-thanks-shade" aria-hidden="true" />
         <div className="cg-thanks-note">
-          <img src={logo} alt="KORE 360" width="272" height="170" className="cg-thanks-logo" />
-          <h1 className="cg-thanks-title">Thanks for your interest!</h1>
+          <img src={logo} alt="KORE 360" width="261" height="250" className="cg-thanks-logo" />
+          <h1 className="cg-thanks-title">
+            Thanks for your <span className="cg-thanks-accent">interest!</span>
+          </h1>
           <p className="cg-thanks-body">
             I’ll have someone from the admissions team at a suitable sports management college reach out to you.
           </p>
+          <span className="cg-thanks-rule" aria-hidden="true" />
           <p className="cg-thanks-sign">
             <strong>Krish Lalwani</strong>
             <br />
