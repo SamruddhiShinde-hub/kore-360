@@ -20,7 +20,7 @@ export const BLOG_POSTS = [
     excerpt: "How to compare sports management colleges and courses in India on curriculum, practical exposure, total cost and verified outcomes before applying.",
     date: '2026-10-14',
     author: 'KORE 360 Editorial Team',
-    cover: '/blog/sports-management-colleges.webp',
+    cover: '/blog-covers/sports-management-colleges.webp',
     coverAlt: "Students listening and taking notes in a university lecture hall",
   },
   {
@@ -31,7 +31,7 @@ export const BLOG_POSTS = [
     excerpt: "Should you study sports management or start with internships? How to weigh courses, hands-on experience and transferable skills for your background.",
     date: '2026-10-13',
     author: 'KORE 360 Editorial Team',
-    cover: '/blog/courses-vs-experience.webp',
+    cover: '/blog-covers/courses-vs-experience.webp',
     coverAlt: "A student studying and writing notes at a table by the window",
   },
   {
@@ -42,7 +42,7 @@ export const BLOG_POSTS = [
     excerpt: "How to brief, compare and choose an event management company in Pune or Mumbai, from on-ground leads to like-for-like proposal comparisons.",
     date: '2026-10-12',
     author: 'KORE 360 Editorial Team',
-    cover: '/blog/event-management-pune-mumbai.webp',
+    cover: '/blog-covers/event-management-pune-mumbai.webp',
     coverAlt: "The Bandra-Worli Sea Link stretching toward the Mumbai skyline",
   },
   {
@@ -64,7 +64,7 @@ export const BLOG_POSTS = [
     excerpt: "Fifteen practical corporate event ideas for employees in India, from sports days and wellness activities to award nights, hackathons and off-sites.",
     date: '2026-10-09',
     author: 'KORE 360 Editorial Team',
-    cover: '/blog/corporate-event-ideas.webp',
+    cover: '/blog-covers/corporate-event-ideas.webp',
     coverAlt: "A team of colleagues joining hands in a huddle",
   },
   {
@@ -75,7 +75,7 @@ export const BLOG_POSTS = [
     excerpt: "How to plan corporate sports events in India, from cricket tournaments to multi-sport days, with inclusive formats, budgets and engagement measures.",
     date: '2026-10-07',
     author: 'KORE 360 Editorial Team',
-    cover: '/blog/corporate-sports-events.webp',
+    cover: '/blog-covers/corporate-sports-events.webp',
     coverAlt: "A group of teammates posing together with footballs before a match",
   },
   {
@@ -86,7 +86,7 @@ export const BLOG_POSTS = [
     excerpt: "A realistic route into sports management jobs in India: choosing a function, building proof of work, finding internships and a 30-day entry plan.",
     date: '2026-10-05',
     author: 'KORE 360 Editorial Team',
-    cover: '/blog/sports-management-job.webp',
+    cover: '/blog-covers/sports-management-job.webp',
     coverAlt: "A candidate shaking hands with an interviewer across a table",
   },
   {
@@ -97,7 +97,7 @@ export const BLOG_POSTS = [
     excerpt: "A step-by-step guide to organising a cricket, football or multi-sport tournament: formats, fixtures, venues, officials, staffing and event-day control.",
     date: '2026-10-04',
     author: 'KORE 360 Editorial Team',
-    cover: '/blog/organise-sports-tournament.webp',
+    cover: '/blog-covers/organise-sports-tournament.webp',
     coverAlt: "A batter and wicketkeeper during a local cricket tournament match",
   },
   {
@@ -108,7 +108,7 @@ export const BLOG_POSTS = [
     excerpt: "What corporate event management involves, how to plan a corporate event step by step, and how to choose an event management partner in India.",
     date: '2026-10-02',
     author: 'KORE 360 Editorial Team',
-    cover: '/blog/corporate-event-management.webp',
+    cover: '/blog-covers/corporate-event-management.webp',
     coverAlt: "A speaker presenting on stage at a corporate event",
   },
   {
@@ -119,7 +119,7 @@ export const BLOG_POSTS = [
     excerpt: "A practical event planning checklist for corporate events, tournaments and live experiences, covering budget, vendors, venue, staffing, safety and show day.",
     date: '2026-10-01',
     author: 'KORE 360 Editorial Team',
-    cover: '/blog/event-planning-checklist.webp',
+    cover: '/blog-covers/event-planning-checklist.webp',
     coverAlt: "A hand ticking items off a handwritten checklist",
   },
   {

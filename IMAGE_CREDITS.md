@@ -1,6 +1,6 @@
 # Stock image credits
 
-Blog cover photos in `public/blog/` come from Unsplash under the Unsplash License
+Blog cover photos in `public/blog-covers/` come from Unsplash under the Unsplash License
 (free for commercial use, no attribution required). Sources are kept here for reference.
 
 | File | Unsplash source image |
